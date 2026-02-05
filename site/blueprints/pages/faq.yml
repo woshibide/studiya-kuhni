@@ -1,0 +1,22 @@
+title: FAQ
+
+status:
+  draft: true
+  listed: true
+columns:
+  main:
+    width: 2/3
+    sections:
+      fields:
+        type: fields
+        fields:
+          questions:
+            label: часто задаваемые вопросы
+            type: structure
+            fields:
+              question:
+                label: вопрос
+                type: text
+              answer:
+                label: ответ
+                type: textarea

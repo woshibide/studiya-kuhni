@@ -1,0 +1,5 @@
+title: Designers
+
+fields:
+  title:
+    type: text

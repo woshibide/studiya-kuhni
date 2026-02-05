@@ -1,0 +1,16 @@
+Title: Часто задаваемые вопросы
+
+----
+
+Questions:
+
+- 
+  question: 'вопрос? '
+  answer: ответ!
+- 
+  question: другой вопрос
+  answer: другой ответ!
+
+----
+
+Uuid: sjjcfxyung2eueqt

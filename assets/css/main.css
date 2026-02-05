@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "suisse";
+    src: url("../fonts/SuisseIntl-FreeTrial/SuisseIntlTrial-Book.woff2");
+}
+
+
+
+* {
+    font-family: "suisse", Arial, Helvetica, sans-serif;
+}
+
+
+main {
+    min-height: 100vh;
+}
