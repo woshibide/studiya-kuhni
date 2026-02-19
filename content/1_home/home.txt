@@ -2,4 +2,60 @@ Title: Главная
 
 ----
 
+Text: 
+
+----
+
+Gallery-heading: Для Кого
+
+----
+
+Gallery-autoplay: true
+
+----
+
+Gallery-images:
+
+- file://j7fgabogydxnjr5h
+- file://rtvdnlf7qntfuspu
+- file://tfcjwharfpp0iog3
+
+----
+
+Benefits-heading: 
+
+----
+
+Benefits-items:
+
+- 
+  image: [ ]
+  alt: ""
+  title: ""
+  text: ""
+- 
+  image: [ ]
+  alt: ""
+  title: ""
+  text: ""
+- 
+  image: [ ]
+  alt: ""
+  title: ""
+  text: ""
+
+----
+
+Cta-heading: this is homepage call to action
+
+----
+
+Cta-text: 
+
+----
+
+Cta-button: 
+
+----
+
 Uuid: vlwhvzhr7fsdl1dq

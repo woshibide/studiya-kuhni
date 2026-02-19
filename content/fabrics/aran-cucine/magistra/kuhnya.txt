@@ -1,0 +1,36 @@
+Title: Magistra
+
+----
+
+Benefits-heading: 
+
+----
+
+Benefits-items:
+
+- 
+  image: [ ]
+  alt: ""
+  title: ""
+  text: ""
+- 
+  image: [ ]
+  alt: ""
+  title: ""
+  text: ""
+
+----
+
+Cta-heading: 
+
+----
+
+Cta-text: 
+
+----
+
+Cta-button: 
+
+----
+
+Uuid: kjyozheherayaq2n

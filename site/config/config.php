@@ -3,7 +3,20 @@
 ini_set('memory_limit', '512M');
 
 return [
+    
     'debug' => true,
+    'users' => [
+        'admin' => [
+            'email' => 'test@test.test',
+            'password' => '1q2w3e4r', 
+        ],
+    ],
+
+
+    // version control for css and js
+    'pixelopen.asset-version.active' => true,
+
+
     'cache' => [
         'pages' => [
             'active' => false,

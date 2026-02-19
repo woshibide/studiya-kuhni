@@ -1,0 +1,24 @@
+# reusable gallery field group
+label: галерея
+type: group
+fields:
+  gallery_heading:
+    label: заголовок галереи
+    type: text
+    default: Галерея
+
+  gallery_autoplay:
+    label: autoplay
+    type: toggle
+    text:
+      - 'off'
+      - 'on'
+    default: false
+
+  gallery_images:
+    label: изображения
+    type: files
+    multiple: true
+    max: 6
+    layout: cards
+    query: page.images

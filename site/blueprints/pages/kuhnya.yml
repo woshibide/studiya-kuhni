@@ -1,0 +1,25 @@
+title: Кухня
+
+fields:
+  title:
+    type: text
+
+  benefits_heading:
+    label: заголовок преимуществ
+    type: text
+    default: Преимущества
+  benefits_items:
+    extends: fields/benefits
+
+  cta_heading:
+    label: заголовок cta
+    type: text
+    default: Call to Action
+  cta_text:
+    label: текст cta
+    type: textarea
+    default: Оставьте Заявку или Свяжитесь с Нами
+  cta_button:
+    label: кнопка cta
+    type: text
+    default: Свяжитесь со мной

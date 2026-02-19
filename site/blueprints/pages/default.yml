@@ -10,6 +10,18 @@ columns:
           text:
             type: textarea
             size: huge
+          cta_heading:
+            label: заголовок cta
+            type: text
+            default: Call to Action
+          cta_text:
+            label: текст cta
+            type: textarea
+            default: Оставьте Заявку или Свяжитесь с Нами
+          cta_button:
+            label: кнопка cta
+            type: text
+            default: Свяжитесь со мной
   sidebar:
     width: 1/3
     sections:

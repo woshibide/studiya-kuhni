@@ -1,0 +1,23 @@
+Title:
+
+Светлая кухня
+
+----
+
+Intro: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.
+
+----
+
+Cover: - file://mymec9ow4m0zbaws
+
+----
+
+Date: 2026-02-19
+
+----
+
+Blocks: 
+
+----
+
+Uuid: er8d4fyl3zfih60i

@@ -1,0 +1,35 @@
+# reusable benefits structure field
+label: преимущества
+type: structure
+max: 5
+help: до 5 элементов
+columns:
+  title:
+    label: заголовок
+    width: 1/3
+  text:
+    label: текст
+    width: 2/3
+fields:
+  image:
+    label: изображение
+    type: files
+    max: 1
+    layout: cards
+    query: page.images
+  alt:
+    label: alt
+    type: text
+    width: 1/2
+  title:
+    label: заголовок
+    type: text
+    maxlength: 25
+    counter: true
+  text:
+    label: текст
+    type: textarea
+    maxlength: 180
+    counter: true
+    buttons: false
+    size: small

@@ -1,7 +1,11 @@
 <?php snippet('header') ?>
 
-<main>
-  <h1><?= $page->headline()->or($page->title()) ?></h1>
+<main id="swup" class="transition-fade">
+  
+  <section>
+      <?php snippet('simple-hero') ?>
+  </section>
+
   
   <?php if ($page->text()->isNotEmpty()): ?>
     <div class="faq-text">
@@ -9,7 +13,10 @@
     </div>
   <?php endif ?>
 
-  <?php snippet('faq-section', ['items' => $page->questions()->toStructure()]) ?>
+  <section>
+    <?php snippet('faq-section') ?>
+  </section>
+
 </main>
 
 <?php snippet('footer') ?>

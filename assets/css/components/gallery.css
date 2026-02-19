@@ -1,0 +1,79 @@
+#gallery {
+    /* background-color: dodgerblue; */
+}
+
+
+.gallery {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    display: grid;
+    gap: var(--space-md);
+}
+
+.gallery__main {
+    width: 100%;
+}
+
+.gallery__main img {
+    display: block;
+    width: 100%;
+    height: clamp(280px, 80vh, 100svh);
+    object-fit: cover;
+}
+
+/* embla thumbs */
+.gallery__thumbs {
+    display: flex;
+    justify-content: center;
+}
+
+.embla__viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.embla__container {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.embla__slide {
+    flex: 0 0 auto;
+}
+
+.gallery__thumb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery__thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--soft-grey);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+}
+
+.gallery__thumb img {
+    display: block;
+    width: 16rem;
+    height: 9rem;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.gallery__thumb[aria-current="true"] {
+    border-color: var(--black);
+}
+
+.gallery__thumb[aria-current="true"]::after {
+    opacity: 1;
+}

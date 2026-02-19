@@ -2,4 +2,34 @@ Title: Производство
 
 ----
 
+Gallery-heading:
+
+Слава цеху! Слава героям труда!
+
+----
+
+Gallery-autoplay: true
+
+----
+
+Gallery-images:
+
+- file://dbd2e8suzd9asczh
+- file://5jknppkrmlox94y7
+- file://pnz5hqinrwfzhw6r
+
+----
+
+Cta-heading: 
+
+----
+
+Cta-text: 
+
+----
+
+Cta-button: 
+
+----
+
 Uuid: dxean4jcsh24ffow

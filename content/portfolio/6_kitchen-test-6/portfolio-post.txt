@@ -1,0 +1,23 @@
+Title:
+
+Шикарная кухня
+
+----
+
+Intro: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.
+
+----
+
+Cover: - file://i8md9wji18cbt6bg
+
+----
+
+Date: 2026-02-19
+
+----
+
+Blocks: 
+
+----
+
+Uuid: 6mjzuf09huey0eqg

@@ -1,33 +1,44 @@
 <?php snippet('header') ?>
 
-<main>
+<main id="swup" class="transition-fade">
 
-    <section id="hero">
-        hero
+    <section>
+        <?php snippet('full-hero') ?>
     </section>
-    <section id="who">
-        who
+
+    <section>
+        <?php snippet('gallery') ?>
     </section>
+
     <section id="brands">
-        brands
+        <h2>
+            brands  
+        </h2>
     </section>
-    <section id="benefits">
-        benefits
+
+    <section>
+        <?php snippet('benefits')?>
     </section>
+
     <section id="design-solution">
-        design-solution
+        <h2>
+            design-solution 
+        </h2>
+        <!-- <?php snippet('gallery') ?> -->
     </section>
-    <section id="cta">
-        cta
+
+    <section>
+        <?php snippet('cta') ?>
     </section>
-    <section id="faq">
-        <?php if ($faqPage = page('faq')): ?>
-            <?php snippet('faq-section', ['items' => $faqPage->questions()->toStructure()]) ?>
-        <?php endif ?>
+
+    <section>
+        <?php snippet('faq-section') ?>
     </section>
-    <section id="blog-posts">
-        blog
+
+    <section>
+        <?php snippet('portfolio-posts') ?>
     </section>
+
     
 </main>
 

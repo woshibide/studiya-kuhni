@@ -27,7 +27,15 @@ if ($isFirstVisit) {
         'assets/css/normalize.css',
         'assets/css/main.css',
         'assets/css/footer.css',
-        'assets/css/navbar.css'
+        'assets/css/navbar.css',
+
+        'assets/css/components/cta.css',
+        'assets/css/components/benefits.css',
+        'assets/css/components/portfolio-posts.css',
+        'assets/css/components/gallery.css',
+        'assets/css/components/full-hero.css',
+        'assets/css/components/faq-section.css',
+        'assets/css/components/simple-hero.css'
     ]) ?>
 
     <?= css('@auto') ?>
@@ -39,14 +47,7 @@ if ($isFirstVisit) {
 
 <body>
 
-<nav>
-    this is navbar
-</nav>
-
-<!-- 
-    <noscript><div><img src="https://mc.yandex.ru/watch/105447913" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3728991;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
-    -->
+<?php snippet('navbar') ?>
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script> -->
