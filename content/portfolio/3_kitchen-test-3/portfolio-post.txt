@@ -1,6 +1,6 @@
 Title:
 
-Большая кухня
+Большая кухня в Махачкале
 
 ----
 
@@ -13,6 +13,16 @@ Cover: - file://5kv3ozbgexmbsqhl
 ----
 
 Date: 2026-02-19
+
+----
+
+Location:
+
+Махачкала
+
+----
+
+Showcase-kitchen: - page://7q0uqwjlquqm34nt
 
 ----
 

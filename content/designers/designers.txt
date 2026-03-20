@@ -2,15 +2,64 @@ Title: Дизайнерам
 
 ----
 
-Cta-heading: this is designers call to action
+Benefits-heading: 
 
 ----
 
-Cta-text: 
+Benefits-items:
+
+- 
+  image: [ ]
+  alt: ""
+  title: Хорошая компания
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus.
+- 
+  image: [ ]
+  alt: ""
+  title: Надежный партнер
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus.
+- 
+  image: [ ]
+  alt: ""
+  title: Все на равных правах
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus.
+- 
+  image: [ ]
+  alt: ""
+  title: Достойные условия
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus.
 
 ----
 
-Cta-button: 
+Cta-heading: Давайте расти вместе
+
+----
+
+Cta-text: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit.
+
+----
+
+Cta-button: Хочу сотрудничать
 
 ----
 

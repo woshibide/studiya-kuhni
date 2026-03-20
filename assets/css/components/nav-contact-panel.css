@@ -1,0 +1,164 @@
+.nav-right {
+    position: relative;
+
+    .nav-contact-panel {
+        --panel-width: calc((var(--grid-col) * 4 - 1rem));
+
+        position: absolute;
+        top: calc(100% + var(--space-sm));
+        right: 0;
+        width: var(--panel-width);
+        max-width: min(92vw, var(--panel-width));
+        border: 1px var(--black);
+        background: var(--white);
+        /* box-shadow: var(--shadow-m); */
+        padding: var(--space-md);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-0.25rem);
+        transition: opacity 180ms ease, transform 220ms ease, visibility 0s linear 220ms;
+        pointer-events: none;
+        z-index: 1200;
+
+        .nav-contact-panel__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+
+            h2 {
+                margin: 0;
+                font-size: var(--fs-md);
+            }
+
+            .nav-contact-panel__close {
+                font-size: var(--fs-xs);
+                text-transform: lowercase;
+                color: var(--soft-grey);
+            }
+        }
+
+        .nav-contact-panel__content {
+            display: grid;
+            gap: var(--space-sm);
+        }
+
+        .nav-contact-section {
+            width: auto;
+            display: grid;
+            gap: var(--space-sm);
+
+            .nav-contact-title {
+                margin: 0;
+                font-size: var(--fs-sm);
+                color: var(--grey);
+            }
+
+            .nav-contact-phone {
+                font-size: var(--fs-md);
+                width: fit-content;
+            }
+
+            .nav-contact-messengers,
+            .nav-contact-maps {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--space-sm);
+
+                a {
+                    width: fit-content;
+                }
+            }
+
+            &.nav-contact-callback {
+                border-top: 1px solid color-mix(in oklab, var(--black), transparent 85%);
+                border-bottom: 1px solid color-mix(in oklab, var(--black), transparent 85%);
+                padding-block: var(--space-md);
+            }
+
+            .nav-contact-form {
+                display: grid;
+                gap: var(--space-sm);
+
+                input {
+                    width: 100%;
+                    border: none;
+                    border-bottom: 1px solid color-mix(in oklab, var(--black), transparent 80%);
+                    padding: 0.55rem 0.7rem;
+                    font-size: var(--fs-sm);
+                    background: color-mix(in oklab, white, var(--silver) 5%);
+                }
+
+                .nav-contact-consent {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.5rem;
+                    font-size: var(--fs-xs);
+                    line-height: 1.35;
+
+                    input[type="checkbox"] {
+                        width: 1.1rem;
+                        height: 1.1rem;
+                        min-width: 1.1rem;
+                        min-height: 1.1rem;
+                        aspect-ratio: 1 / 1;
+                        margin-top: 0.12rem;
+                        padding: 0;
+                        flex: 0 0 auto;
+                        border: 1px solid var(--black);
+                    }
+                }
+            }
+
+            &.nav-contact-primary {
+                .nav-contact-primary__header {
+                    display: grid;
+                    gap: 0.25rem;
+                }
+
+                h3 {
+                    margin: 0;
+                    font-size: var(--fs-sm);
+                }
+
+                p,
+                address {
+                    margin: 0;
+                    font-size: var(--fs-sm);
+                    color: var(--grey);
+                    line-height: 1.4;
+                }
+
+                .nav-contact-hours {
+                    margin-top: var(--space-xs);
+                }
+            }
+        }
+    }
+
+    &[data-nav-contact].is-open {
+        .nav-contact-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            transition: opacity 180ms ease, transform 220ms ease, visibility 0s;
+            pointer-events: auto;
+        }
+
+        .nav-contact-toggle {
+            background-size: 100% 1px;
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .nav-right {
+        .nav-contact-panel {
+            right: 0;
+            width: min(92vw, 36rem);
+            max-height: min(78vh, 44rem);
+            overflow-y: auto;
+        }
+    }
+}

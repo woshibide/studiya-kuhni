@@ -1,0 +1,18 @@
+section .big-message {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    align-items: center;
+    width: 100%;
+    min-height: clamp(8rem, 22vh, 14rem);
+
+    .big-message__text {
+        grid-column: 1 / -1;
+        margin: 0;
+        text-align: center;
+        color: var(--grey);
+        font-size: clamp(var(--fs-md), var(--fs-lg), var(--fs-xl));
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        white-space: nowrap;
+    }
+}

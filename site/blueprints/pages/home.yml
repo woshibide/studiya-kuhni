@@ -1,24 +1,57 @@
 title: Home Page
 
-columns:
-  main:
-    width: 2/3
+tabs:
+  content:
+    label: Контент
+    columns:
+      - width: 2/3
+        sections:
+          gallery_section:
+            type: fields
+            fields:
+              gallery:
+                extends: fields/gallery
+      - width: 1/3
+        sections:
+          files:
+            type: files
+
+  benefits:
+    label: Преимущества
     sections:
-      fields:
+      benefits_fields:
         type: fields
         fields:
-
-          gallery:
-            extends: fields/gallery
-
           benefits_heading:
             label: заголовок преимуществ
             type: text
             default: Преимущества
-
           benefits_items:
             extends: fields/benefits
 
+  cta_warmup:
+    label: CTA Warmup
+    sections:
+      warmup_fields:
+        type: fields
+        fields:
+          cta_warmup_heading:
+            label: заголовок cta warmup
+            type: text
+            default: CTA warm up
+          cta_warmup_text:
+            label: текст cta warmup
+            type: textarea
+            size: medium
+            buttons: false
+            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit.
+
+  cta:
+    label: CTA
+    sections:
+      cta_fields:
+        type: fields
+        fields:
           cta_heading:
             label: заголовок cta
             type: text
@@ -26,14 +59,10 @@ columns:
           cta_text:
             label: текст cta
             type: textarea
-            default: Оставьте Заявку или Свяжитесь с Нами
+            size: small
+            buttons: false
+            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
           cta_button:
             label: кнопка cta
             type: text
             default: Свяжитесь со мной
-
-  sidebar:
-    width: 1/3
-    sections:
-      files:
-        type: files

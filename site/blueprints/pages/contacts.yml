@@ -1,0 +1,148 @@
+title: Контакты
+
+status:
+  draft: true
+  listed: true
+
+tabs:
+  contacts:
+    label: Контакты
+    columns:
+      main:
+        width: 2/3
+        sections:
+          contact_fields:
+            type: fields
+            fields:
+              panel_title:
+                label: заголовок панели контактов
+                type: text
+                default: Контакты
+              panel_close_text:
+                label: текст кнопки закрытия панели
+                type: text
+                default: Закрыть
+              panel_close_aria_label:
+                label: aria-label кнопки закрытия панели
+                type: text
+                default: Закрыть окно связи
+              help_title:
+                label: заголовок блока контактов
+                type: text
+                default: Контакты
+              intro_text:
+                label: вступительный текст
+                type: textarea
+                size: medium
+                default: Выберите удобный способ связи и оставьте заявку, если хотите обратный звонок.
+              phone:
+                label: телефон
+                type: tel
+                placeholder: +7 968 263-82-70
+                default: +7 968 263-82-70
+              messengers:
+                label: мессенджеры
+                type: structure
+                fields:
+                  title:
+                    label: название
+                    type: text
+                    required: true
+                  url:
+                    label: ссылка
+                    type: url
+                    required: true
+      sidebar:
+        width: 1/3
+        sections:
+          files:
+            type: files
+
+  form:
+    label: Форма обратной связи
+    columns:
+      main:
+        width: 2/3
+        sections:
+          form_fields:
+            type: fields
+            fields:
+              callback_title:
+                label: заголовок формы обратной связи
+                type: text
+                default: Форма обратной связи
+              callback_phone_placeholder:
+                label: placeholder поля телефона
+                type: text
+                default: Ваш номер телефона?
+              callback_name_placeholder:
+                label: placeholder поля имени
+                type: text
+                default: Как к Вам обращаться?
+              callback_email_placeholder:
+                label: placeholder поля email
+                type: text
+                default: Электронная почта?
+              consent_text:
+                label: текст согласия
+                type: textarea
+                buttons: false
+                default: С порядком обработки данных ознакомился и даю согласие на обратную связь
+              callback_button_text:
+                label: текст кнопки формы
+                type: text
+                default: Перезвоните мне
+      side:
+        width: 1/3
+        sections:
+          form_info:
+            type: info
+            text: Поля этой вкладки используются на странице контактов и в панели контактов в шапке сайта.
+
+  address:
+    label: Адрес и карты
+    columns:
+      main:
+        width: 2/3
+        sections:
+          address_fields:
+            type: fields
+            fields:
+              address_section_title:
+                label: заголовок блока адреса
+                type: text
+                default: Адрес и карты
+              studio_name:
+                label: название студии
+                type: text
+                default: Студия Кухни
+              email:
+                label: email
+                type: email
+                placeholder: info@petru-grupp.ru
+              address:
+                label: адрес
+                type: textarea
+                buttons: false
+              hours:
+                label: график работы
+                type: text
+                default: Ежедневно с 10:00 до 22:00
+              map_links:
+                label: ссылки на карты
+                type: structure
+                fields:
+                  title:
+                    label: название
+                    type: text
+                    required: true
+                  url:
+                    label: ссылка
+                    type: url
+                    required: true
+      side:
+        width: 1/3
+        sections:
+          info:
+            type: info
+            text: Эти поля используются одновременно на странице контактов и в панели контактов в шапке сайта.

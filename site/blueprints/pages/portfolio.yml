@@ -1,27 +1,48 @@
 title: Портфолио
 
-sections:
+tabs:
   posts:
-    type: pages
-    headline: Посты
-    templates:
-      - portfolio-post
-    layout: cards
+    label: Посты
+    sections:
+      posts:
+        type: pages
+        headline: Посты
+        templates:
+          - portfolio-post
+        layout: cards
 
   content:
-    type: fields
-    fields:
-      title:
-        type: text
-      cta_heading:
-        label: заголовок cta
-        type: text
-        default: Call to Action
-      cta_text:
-        label: текст cta
-        type: textarea
-        default: Оставьте Заявку или Свяжитесь с Нами
-      cta_button:
-        label: кнопка cta
-        type: text
-        default: Свяжитесь со мной
+    label: Контент
+    columns:
+      - width: 2/3
+        sections:
+          main:
+            type: fields
+            fields:
+              title:
+                type: text
+      - width: 1/3
+        sections:
+          files:
+            type: files
+
+  cta:
+    label: CTA
+    sections:
+      cta_fields:
+        type: fields
+        fields:
+          cta_heading:
+            label: заголовок cta
+            type: text
+            default: Call to Action
+          cta_text:
+            label: текст cta
+            type: textarea
+            size: small
+            buttons: false
+            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
+          cta_button:
+            label: кнопка cta
+            type: text
+            default: Свяжитесь со мной

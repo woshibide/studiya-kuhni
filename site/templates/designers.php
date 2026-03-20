@@ -13,6 +13,11 @@
     </section>
     
     <section>
+        <?php snippet('brands') ?>
+    </section>
+
+
+    <section>
         <?php snippet('benefits') ?>
     </section>
     

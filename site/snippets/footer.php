@@ -10,22 +10,44 @@
             </p>
         </div>
         <div class="links">
-            <div>
-                <?php
-                $socialMedias = ['Связь', 'FAQ', 'Портфолио'];
-                foreach ($socialMedias as $social): ?>
-                    <a>
-                        <?php echo $social; ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
             <ul>
             <?php
-            $socialMedias = ['Instagram', 'Telegram', 'TikTok', 'Вконтакте', 'Петру Групп', 'Instagram', 'Telegram', 'TikTok', 'Вконтакте', 'Петру Групп'];
-            foreach ($socialMedias as $social): ?>
+            $socialLinks = [
+                ['title' => 'Связь', 'url' => page('contacts') ? page('contacts')->url() : '/contacts'],
+                ['title' => 'FAQ', 'url' => page('faq') ? page('faq')->url() : '/faq'],
+                ['title' => 'Портфолио', 'url' => page('portfolio') ? page('portfolio')->url() : '/portfolio'],
+            ];
+            foreach ($socialLinks as $socialLink): ?>
                 <li>
-                    <a>
-                        <?php echo $social; ?>
+                    <a href="<?= $socialLink['url'] ?>">
+                        <?= $socialLink['title'] ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+            <ul>
+            <?php
+            $fabricsPage = page('fabrics');
+            $fabrics = $fabricsPage ? $fabricsPage->children() : [];
+            foreach ($fabrics as $fabric): ?>
+                <li>
+                    <a href="<?= $fabric->url() ?>">
+                        <?= $fabric->title() ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+            <ul>
+            <?php
+            $footerPages = [
+                ['title' => 'Дизайнерам', 'url' => page('designers') ? page('designers')->url() : '/designers', 'external' => false],
+                ['title' => 'Часть альянса Петру Групп', 'url' => 'https://mebelkmv.ru', 'external' => true],
+                ['title' => 'Политика Конфиденциальности', 'url' => page('privacy') ? page('privacy')->url() : '/privacy', 'external' => false],
+            ];
+            foreach ($footerPages as $footerPage): ?>
+                <li>
+                    <a href="<?= $footerPage['url'] ?>"<?= $footerPage['external'] ? ' class="external-link" target="_blank" rel="noopener noreferrer"' : '' ?>>
+                        <?= $footerPage['title'] ?>
                     </a>
                 </li>
             <?php endforeach; ?>
@@ -39,6 +61,7 @@
 
 <!-- debug grid overlay -->
 <script src="/assets/js/debug.js" defer></script>
+<script src="/assets/js/smooth-scroll.js" defer></script>
 <div id="debug-grid">
     <?php for($i = 0; $i < 24; $i++): ?>
         <div></div>
@@ -46,8 +69,8 @@
 </div>
 
 <!-- page transitions -->
-<script src="https://cdn.jsdelivr.net/npm/swup@4.8.2/dist/Swup.umd.js" defer></script>
-<script src="/assets/js/swup.js" defer></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/swup@4.8.2/dist/Swup.umd.js" defer></script>
+<script src="/assets/js/swup.js" defer></script> -->
 
 <!-- embla carousel -->
 <script src="/assets/js/node_modules/embla-carousel/embla-carousel.umd.js" defer></script>
@@ -55,5 +78,19 @@
 
 <!-- gallery section -->
 <script src="/assets/js/gallery.js" defer></script>
+<script src="/assets/js/navbar-contact.js" defer></script>
+<script src="/assets/js/faq.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+<script src="/assets/js/fabric-info-map.js" defer></script>
+
+<?php
+$template = $page->intendedTemplate()->name();
+$jsFile = "assets/js/templates/{$template}.js";
+$jsPath = kirby()->root('index') . '/' . $jsFile;
+
+if (file_exists($jsPath)): ?>
+    <script src="<?= url($jsFile) ?>" defer></script>
+<?php endif ?>
+
 
 </body>

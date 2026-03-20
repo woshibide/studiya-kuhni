@@ -24,7 +24,7 @@ fields:
   title:
     label: заголовок
     type: text
-    maxlength: 25
+    maxlength: 50
     counter: true
   text:
     label: текст

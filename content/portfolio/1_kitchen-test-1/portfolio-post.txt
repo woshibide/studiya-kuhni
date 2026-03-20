@@ -1,6 +1,6 @@
 Title:
 
-Кухня вот такая
+Кухня в Ставрополе
 
 ----
 
@@ -13,6 +13,14 @@ Cover: - file://ivvftbd68epxvvjg
 ----
 
 Date: 2026-02-19
+
+----
+
+Location: Пятигорск
+
+----
+
+Showcase-kitchen: - page://baphbnkrc4ssisvq
 
 ----
 

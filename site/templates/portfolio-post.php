@@ -1,9 +1,19 @@
 <?php snippet('header') ?>
 
+<?php
+$kitchen = $page->showcase_kitchen()->toPage();
+$fabric = $kitchen?->parent();
+$location = $page->location()->or('локация не указана');
+?>
+
 <main id="swup" class="transition-fade">
 
     <section>
-        <?php snippet('simple-hero') ?>
+
+    </section>
+
+    <section class="kuhnya-hero">
+        <?php snippet('kuhnya-card-overview') ?>
     </section>
 
 
@@ -16,7 +26,9 @@
     <?php endif ?>
 
     <section>
-        <?php snippet('portfolio-posts') ?>
+        <?php snippet('portfolio-posts', [
+            'posts' => $page->siblings()->listed()->sortBy('date', 'desc')->not($page)->limit(3)
+        ]) ?>
     </section>
 
 </main>

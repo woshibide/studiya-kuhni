@@ -1,0 +1,94 @@
+.other-fabrics-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.other-fabrics-section > h2 {
+    margin: 0;
+    font-size: var(--fs-lg);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+}
+
+.other-fabrics-section .fabric-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: stretch;
+    gap: 1rem;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.other-fabrics-section .fabric-card {
+    position: relative;
+    flex: 2 1 0;
+    min-width: 0;
+    min-height: clamp(24rem, 60vh, 40rem);
+    overflow: hidden;
+}
+
+.other-fabrics-section .fabric-card__media {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.other-fabrics-section .fabric-card__header {
+    position: relative;
+    z-index: 1;
+    width: auto;
+    display: flex;
+    align-items: flex-start;
+    padding: var(--space-sm);
+    background: var(--black);
+}
+
+.other-fabrics-section .fabric-card__header h2 {
+    margin: 0;
+    font-size: var(--fs-md);
+    color: var(--white);
+}
+
+.other-fabrics-section .fabric-card ul {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin: 0;
+    padding: var(--space-sm);
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.other-fabrics-section .fabric-card li {
+    margin: 0;
+}
+
+.other-fabrics-section .fabric-card ul a {
+    display: inline-block;
+    color: var(--white);
+    background-color: var(--black);
+    padding-inline: var(--space-sm);
+    width: auto;
+}
+
+.other-fabrics-section .fabric-card ul a:hover {
+    color: var(--black);
+    background-color: var(--white);
+}
+
+@media (max-width: 960px) {
+    .other-fabrics-section .fabric-grid {
+        flex-direction: column;
+    }
+
+    .other-fabrics-section .fabric-card {
+        width: 100%;
+        min-height: clamp(20rem, 45vh, 26rem);
+    }
+}

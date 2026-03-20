@@ -4,7 +4,7 @@ function initGallery(root) {
 	const emblaRoot = root.querySelector('[data-gallery-embla]')
 	const emblaViewport = root.querySelector('[data-gallery-embla-viewport]')
 	const shouldAutoplay = root.dataset.galleryAutoplay === 'true'
-	const debug = root.dataset.galleryDebug === 'true'
+	const debug = root.dataset.galleryDebug === 'false'
 
 	if (debug) {
 		console.log('[gallery] init', {

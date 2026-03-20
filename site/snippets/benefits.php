@@ -1,10 +1,12 @@
 <?php
-$benefitsHeading = $page->benefits_heading()->or('Преимущества');
+$benefitsHeading = $page->benefits_heading();
 $benefitsItems = $page->benefits_items()->toStructure()->limit(5);
 ?>
 
 <div class="section-wrapper" id="benefits">
-    <h2><?= esc($benefitsHeading) ?></h2>
+    <?php if ($benefitsHeading->isNotEmpty()): ?>
+        <h2><?= esc($benefitsHeading->value()) ?></h2>
+    <?php endif ?>
     <div class="benefits-container">
         <?php if ($benefitsItems->isEmpty()): ?>
             <figure>

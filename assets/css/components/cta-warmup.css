@@ -1,0 +1,23 @@
+#cta-warmup {
+
+    .section-sticky-content {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: var(--space-sm);
+    }
+
+    .cta-warmup-media {
+        /* margin-top: var(--space-lg); */
+    }
+
+    h2 {
+        /* align-self: end; */
+    }
+
+    img {
+        display: block;
+        width: 100%;
+    }
+
+}

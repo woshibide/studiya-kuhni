@@ -1,4 +1,6 @@
-Title: Крутая кузня
+Title:
+
+Кухня с видом на сад
 
 ----
 
@@ -11,6 +13,14 @@ Cover: - file://exalbpdziledn6g7
 ----
 
 Date: 2026-02-19
+
+----
+
+Location: КМВ
+
+----
+
+Showcase-kitchen: - page://exupvb7udhxgdwqj
 
 ----
 

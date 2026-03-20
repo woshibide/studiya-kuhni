@@ -1,6 +1,6 @@
 Title:
 
-Кухня сякая
+Кухня в Ессентуках
 
 ----
 
@@ -13,6 +13,14 @@ Cover: - file://hosxt1hxougm47wu
 ----
 
 Date: 2026-02-19
+
+----
+
+Location: Ессентуки
+
+----
+
+Showcase-kitchen: - page://knqok2sf5m1qlzdj
 
 ----
 

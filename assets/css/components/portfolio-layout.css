@@ -1,0 +1,121 @@
+.portfolio-layout-sticky-index {
+    position: sticky;
+    top: 10vh;
+    z-index: 20;
+}
+
+.portfolio-layout-sticky-inner {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    /* gap: var(--space-xs) var(--space-md); */
+    padding: var(--space-sm) 0;
+}
+
+.portfolio-layout-index-link {
+    grid-column: 2 / -1;
+    font-size: var(--fs-sm);
+    color: var(--black);
+    text-decoration: none;
+    transition: opacity .2s ease;
+}
+
+.portfolio-layout-index-link:hover {
+    opacity: 1;
+}
+
+.portfolio-layout-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--base-space);
+}
+
+.portfolio-layout-feed {
+    grid-column: 4 / span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxl);
+    min-width: 0;
+}
+
+.portfolio-layout-item {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--space-sm) var(--grid-gap);
+}
+
+.portfolio-layout-media {
+    grid-column: 5 / span 4;
+    display: block;
+}
+
+.portfolio-layout-media img {
+    width: 100%;
+    height: clamp(240px, 50vh, 640px);
+    object-fit: cover;
+    display: block;
+}
+
+.portfolio-layout-meta {
+    margin: 0;
+    color: var(--grey);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.portfolio-layout-title {
+    grid-column: 1 / span 4;
+    margin: 0;
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+}
+
+.portfolio-layout-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.portfolio-layout-intro {
+    margin: 0;
+    color: var(--grey);
+}
+
+.portfolio-layout-copy {
+    grid-column: 5 / span 4;
+    display: grid;
+    gap: var(--space-xs);
+}
+
+.portfolio-layout-empty {
+    margin: 0;
+    color: var(--grey);
+}
+
+.portfolio-post-context {
+    padding-top: var(--space-md);
+}
+
+@media (max-width: 1100px) {
+    .portfolio-layout-grid {
+        grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    }
+
+    .portfolio-layout-column-spacer {
+        display: none;
+    }
+
+    .portfolio-layout-feed,
+    .portfolio-layout-index-link {
+        grid-column: 1 / -1;
+    }
+
+    .portfolio-layout-item {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+
+    .portfolio-layout-title,
+    .portfolio-layout-media,
+    .portfolio-layout-copy {
+        grid-column: 1 / -1;
+    }
+}

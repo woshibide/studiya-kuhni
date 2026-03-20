@@ -1,6 +1,6 @@
 Title:
 
-Светлая кухня
+Светлая кухня в Пятигорске
 
 ----
 
@@ -13,6 +13,14 @@ Cover: - file://mymec9ow4m0zbaws
 ----
 
 Date: 2026-02-19
+
+----
+
+Location: Пятигорск
+
+----
+
+Showcase-kitchen: - page://kovvbqmmg3tuvmel
 
 ----
 

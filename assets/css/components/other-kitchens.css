@@ -1,0 +1,21 @@
+.other-kitchens-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.other-kitchens-section h2 {
+    margin: 0;
+    font-size: var(--fs-lg);
+    letter-spacing: -0.02em;
+}
+
+.other-kitchens-section__fabric-link {
+    /* color: var(--soft-grey); */
+}
+
+.other-kitchens-section .kitchens-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}

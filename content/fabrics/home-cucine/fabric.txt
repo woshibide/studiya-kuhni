@@ -2,4 +2,44 @@ Title: Home Cucine
 
 ----
 
+Fabric-info-title: Фабрика из предгорья Альп
+
+----
+
+Fabric-info-text: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+----
+
+Fabric-logo: - file://yeig8bfnk7s4quwd
+
+----
+
+Fabric-map-lat: 46.012002
+
+----
+
+Fabric-map-lng: 12.142432
+
+----
+
+Fabric-map-zoom: 
+
+----
+
+Fabric-map-label: 
+
+----
+
+Cta-heading: 
+
+----
+
+Cta-text: 
+
+----
+
+Cta-button: 
+
+----
+
 Uuid: qgjqyhl3ixfm9kfs

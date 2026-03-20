@@ -1,6 +1,6 @@
 Title:
 
-Шикарная кухня
+Шикарная кухня в Кисловодске
 
 ----
 
@@ -13,6 +13,14 @@ Cover: - file://i8md9wji18cbt6bg
 ----
 
 Date: 2026-02-19
+
+----
+
+Location: Кисловодск
+
+----
+
+Showcase-kitchen: - page://gfiiadwrr1jueneq
 
 ----
 

@@ -6,17 +6,23 @@
         <?php snippet('simple-hero') ?>
     </section>
 
-    
-    <div class="kitchens-grid">
+    <section>
+        <?php snippet('fabric-info') ?>
+    </section>
+
+    <section class="kitchens-grid">
         <?php foreach ($page->childrenAndDrafts() as $kitchen): ?>
-        <article class="kitchen-card">
-            <a href="<?= $kitchen->url() ?>">
-                <h2><?= $kitchen->title() ?></h2>
-            </a>
-        </article>
+            <?php snippet('kuhnya-card-overview', ['kuhnya' => $kitchen, 'showLink' => true]) ?>
         <?php endforeach ?>
-    </div>
-    
+    </section>
+
+    <section>
+        <?php snippet('portfolio-posts') ?>
+    </section>
+
+    <section>
+        <?php snippet('other-fabrics', ['contextPage' => $page, 'currentFabric' => $page]) ?>
+    </section>
 </main>
 
 <?php snippet('footer') ?>

@@ -1,25 +1,91 @@
 title: Кухня
 
-fields:
-  title:
-    type: text
+tabs:
+  overview:
+    label: Карточка
+    columns:
+      - width: 2/3
+        sections:
+          main:
+            type: fields
+            fields:
+              title:
+                type: text
+              intro:
+                label: краткое описание
+                type: textarea
+                buttons: false
+                size: small
+                maxlength: 180
+                placeholder: краткое описание кухни до 180 символов
+                default: Сдержанная кухня с продуманной эргономикой, аккуратными линиями и практичными материалами для комфортной жизни.
 
-  benefits_heading:
-    label: заголовок преимуществ
-    type: text
-    default: Преимущества
-  benefits_items:
-    extends: fields/benefits
+      - width: 1/3
+        sections:
+          facts:
+            type: fields
+            fields:
+              country_of_origin:
+                label: страна происхождения
+                type: text
+                placeholder: Италия
+                default: Италия
+              price:
+                label: цена
+                type: text
+                placeholder: от 0,000,000 рублей
+                default: от 0,000,000 рублей
+              kitchen_specs:
+                label: дополнительные пункты
+                type: structure
+                help: добавляйте дополнительные характеристики для карточки кухни
+                columns:
+                  label:
+                    width: 1/3
+                  value:
+                    width: 2/3
+                fields:
+                  label:
+                    label: пункт
+                    type: text
+                    required: true
+                  value:
+                    label: значение
+                    type: text
 
-  cta_heading:
-    label: заголовок cta
-    type: text
-    default: Call to Action
-  cta_text:
-    label: текст cta
-    type: textarea
-    default: Оставьте Заявку или Свяжитесь с Нами
-  cta_button:
-    label: кнопка cta
-    type: text
-    default: Свяжитесь со мной
+          files:
+            type: files
+
+  benefits:
+    label: Преимущества
+    sections:
+      benefits_fields:
+        type: fields
+        fields:
+          benefits_heading:
+            label: заголовок преимуществ
+            type: text
+            default: Преимущества
+          benefits_items:
+            extends: fields/benefits
+
+  cta:
+    label: CTA
+    sections:
+      cta_fields:
+        type: fields
+        fields:
+          cta_heading:
+            label: заголовок cta
+            type: text
+            default: Call to Action
+          cta_text:
+            label: текст cta
+            type: textarea
+            size: small
+            buttons: false
+            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
+          cta_button:
+            label: кнопка cta
+            type: text
+            default: Свяжитесь со мной

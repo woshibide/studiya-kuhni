@@ -1,27 +1,96 @@
 title: Фабрика
 
-sections:
-  pages:
-    type: pages
-    headline: Коллекции
-    templates:
-      - kuhnya
-    layout: cards
-  
-  content:
-    type: fields
-    fields:
-      title:
-        type: text
-      cta_heading:
-        label: заголовок cta
-        type: text
-        default: Call to Action
-      cta_text:
-        label: текст cta
-        type: textarea
-        default: Оставьте Заявку или Свяжитесь с Нами
-      cta_button:
-        label: кнопка cta
-        type: text
-        default: Свяжитесь со мной
+tabs:
+  card:
+    label: Карточка
+    columns:
+      - width: 2/3
+        sections:
+          main:
+            type: fields
+            fields:
+              title:
+                label: название фабрики
+                type: text
+              fabric_info_title:
+                label: заголовок блока о фабрике
+                type: text
+                default: О фабрике
+              fabric_info_text:
+                label: текст блока о фабрике
+                type: textarea
+                buttons: false
+                size: medium
+                help: этот текст будет показан на странице фабрики и на страницах кухонь этой фабрики
+
+      - width: 1/3
+        sections:
+          brand_media:
+            type: fields
+            fields:
+              fabric_logo:
+                label: логотип фабрики
+                type: files
+                multiple: false
+                max: 1
+                layout: cards
+                size: tiny
+                query: page.images.template("fabric-logo")
+                uploads:
+                  template: fabric-logo
+                help: загрузите логотип в формате svg или png
+
+          map:
+            type: fields
+            fields:
+              fabric_map_lat:
+                label: карта широта
+                type: number
+                default: 55.709744
+                step: 0.000001
+              fabric_map_lng:
+                label: карта долгота
+                type: number
+                default: 37.592538
+                step: 0.000001
+              fabric_map_zoom:
+                label: карта zoom
+                type: number
+                default: 13
+                min: 1
+                max: 19
+              fabric_map_label:
+                label: подпись маркера на карте
+                type: text
+                placeholder: название фабрики
+
+  cta:
+    label: CTA
+    sections:
+      cta_fields:
+        type: fields
+        fields:
+          cta_heading:
+            label: заголовок cta
+            type: text
+            default: Call to Action
+          cta_text:
+            label: текст cta
+            type: textarea
+            size: small
+            buttons: false
+            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
+          cta_button:
+            label: кнопка cta
+            type: text
+            default: Свяжитесь со мной
+
+  collections:
+    label: Кухни
+    sections:
+      pages:
+        type: pages
+        headline: Кухни
+        templates:
+          - kuhnya
+        layout: cards
