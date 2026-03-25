@@ -24,6 +24,43 @@ $hours = $contactsPage ? $contactsPage->hours()->value() : '';
 
 $messengers = $contactsPage && $contactsPage->messengers()->isNotEmpty() ? $contactsPage->messengers()->toStructure() : [];
 $mapLinks = $contactsPage && $contactsPage->map_links()->isNotEmpty() ? $contactsPage->map_links()->toStructure() : [];
+
+$resolveContactIcon = static function (string $title, string $url): ?string {
+    $label = function_exists('mb_strtolower') ? mb_strtolower($title . ' ' . $url) : strtolower($title . ' ' . $url);
+
+    if (
+        str_contains($label, 'telegram') ||
+        str_contains($label, 't.me') ||
+        str_contains($label, 'телеграм')
+    ) {
+        return '/assets/icons/tlg.svg';
+    }
+
+    if (
+        str_contains($label, 'whatsapp') ||
+        str_contains($label, 'wa.me') ||
+        str_contains($label, 'ватсап')
+    ) {
+        return '/assets/icons/wa.svg';
+    }
+
+    if (
+        str_contains($label, 'yandex') ||
+        str_contains($label, 'яндекс') ||
+        str_contains($label, 'ya.ru')
+    ) {
+        return '/assets/icons/ya.svg';
+    }
+
+    if (
+        str_contains($label, '2gis') ||
+        str_contains($label, '2гис')
+    ) {
+        return '/assets/icons/2gis.svg';
+    }
+
+    return null;
+};
 ?>
 
 <aside class="nav-contact-panel" id="nav-contact-panel" aria-hidden="true" hidden>
@@ -44,8 +81,16 @@ $mapLinks = $contactsPage && $contactsPage->map_links()->isNotEmpty() ? $contact
             <?php if (!empty($messengers)): ?>
                 <div class="nav-contact-messengers">
                     <?php foreach ($messengers as $messenger): ?>
-                        <a href="<?= esc($messenger->url()) ?>" target="_blank" rel="noopener noreferrer">
-                            <?= esc($messenger->title()) ?>
+                        <?php
+                        $messengerTitle = (string)$messenger->title();
+                        $messengerUrl = (string)$messenger->url();
+                        $messengerIcon = $resolveContactIcon($messengerTitle, $messengerUrl);
+                        ?>
+                        <a class="nav-contact-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
+                            <?php if ($messengerIcon): ?>
+                                <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                            <?php endif ?>
+                            <span><?= esc($messengerTitle) ?></span>
                         </a>
                     <?php endforeach; ?>
                 </div>
@@ -80,8 +125,16 @@ $mapLinks = $contactsPage && $contactsPage->map_links()->isNotEmpty() ? $contact
             <?php if (!empty($mapLinks)): ?>
                 <div class="nav-contact-maps">
                     <?php foreach ($mapLinks as $mapLink): ?>
-                        <a href="<?= esc($mapLink->url()) ?>" target="_blank" rel="noopener noreferrer">
-                            <?= esc($mapLink->title()) ?>
+                        <?php
+                        $mapTitle = (string)$mapLink->title();
+                        $mapUrl = (string)$mapLink->url();
+                        $mapIcon = $resolveContactIcon($mapTitle, $mapUrl);
+                        ?>
+                        <a class="nav-contact-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
+                            <?php if ($mapIcon): ?>
+                                <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                            <?php endif ?>
+                            <span><?= esc($mapTitle) ?></span>
                         </a>
                     <?php endforeach; ?>
                 </div>

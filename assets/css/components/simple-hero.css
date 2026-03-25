@@ -6,7 +6,7 @@
     flex-direction: row;
     align-items: start;
     height: clamp(4rem, 30vh, 50vh);
-    /* padding-top: var(--base-space); */
+    /* padding-top: var(--space-base); */
 
     & h1{
         width: 100%;

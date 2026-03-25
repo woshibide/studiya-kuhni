@@ -18,7 +18,7 @@
     }
     a:hover,
     a:focus {
-      color: var(--black);
+      color: var(--jet-black);
     }
     p {
       max-width: 30em;

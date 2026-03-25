@@ -10,19 +10,21 @@ SuisseIntl-SemiBold.woff */
 }
 
 :root {
-    --the-width: clamp(90vw, 80% ,calc(100% - var(--base-space)));
+    --the-width: clamp(90vw, 80% ,calc(100% - var(--space-base)));
 
     /* easing */
     --out: cubic-bezier(0.19, 1, 0.22, 1); /* nice ease out 2**10 */
+    --in: cubic-bezier(0.5, 0, 0.75, 0) ; /* nice ease in 2**10 */
+
 
     /* negative space */
-    --base-space: 1rem;
-    --space-xs: calc(var(--base-space) * 0.5);
-    --space-sm: calc(var(--base-space) * 0.75);
-    --space-md: calc(var(--base-space) * 2);
-    --space-lg: calc(var(--base-space) * 3);
-    --space-xl: calc(var(--base-space) * 5);
-    --space-xxl: calc(var(--base-space) * 20);
+    --space-base: 1rem;
+    --space-xs: calc(var(--space-base) * 0.5);
+    --space-sm: calc(var(--space-base) * 0.75);
+    --space-md: calc(var(--space-base) * 2);
+    --space-lg: calc(var(--space-base) * 3);
+    --space-xl: calc(var(--space-base) * 5);
+    --space-xxl: calc(var(--space-base) * 20);
 
     /* typography */
     font-size: 12px;
@@ -33,13 +35,14 @@ SuisseIntl-SemiBold.woff */
     --fs-md: clamp(1.25rem, 1.25rem + 0.6vw, 1.35rem);
     --fs-lg: clamp(1.5rem, 1.5rem + 1vw, 2rem);
     --fs-xl: clamp(2rem, 2rem + 1.5vw, 3rem);
+    --fs-xxl: clamp(4rem, 4vw, 72px);
     --fs-display: clamp(var(--fs-xl), 15vw, 128px);
 
     /* debug grid settings */
     --grid-columns: 12;
     --grid-gap: 1rem;
     --grid-padding: 0;
-    --grid-color: rgba(255, 0, 0, 0.05);
+    --grid-color: rgba(0, 0, 200, 0.05);
 
     /* grid helpers */
     --grid-col: calc(
@@ -51,11 +54,12 @@ SuisseIntl-SemiBold.woff */
     --shadow-s: 0px 0px 4px #00000012, 4px 0px 16px 2px #00000006;
     --shadow-m: 0px 0px 8px #00000012, 4px 0px 24px 8px #00000012;
 
-    --white: rgba(243, 243, 241, 0.9);
+    --the-white: rgba(243, 243, 241, 0.9);
+    --super-white: rgb(255,255,255);
     --silver: #f5f5f5;
     --soft-grey: rgba(0, 0, 0, 0.30);
     --grey: rgba(0, 0, 0, 0.75);
-    --black: rgb(0, 0, 0);
+    --jet-black: rgb(0, 0, 0);
 }
 
 html:not(.is-debug-grid) #debug-grid {
@@ -82,11 +86,14 @@ html:not(.is-debug-grid) #debug-grid {
 
 #debug-grid div {
     background: var(--grid-color);
-    border-left: 1px solid rgba(255, 0, 0, 0.1);
-    border-right: 1px solid rgba(255, 0, 0, 0.1);
+    border-left: 1px solid rgba(0, 0, 255, 0.1);
+    border-right: 1px solid rgba(0, 0, 255, 0.1);
 }
 
-
+body {
+    color: var(--jet-black, #000);
+    background-color: var(--the-white, #fff);
+}
 
 * {
     font-family: var(--swiss);
@@ -116,7 +123,7 @@ a,
     background-repeat: no-repeat;
     background-position: 0 calc(100% - 0.06em);
     background-size: 0% 1px;
-    transition: background-size 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 300ms var(--out);
 }
 
 a:hover,
@@ -133,6 +140,20 @@ a:focus-visible,
     content: " →";
 }
 
+.internal-link__hidden::after {
+    margin-left: 0.35em;
+    height: 0.5em;
+    width: 0.5em;
+    content: " →";
+    opacity: 0;
+    transition: all 300ms var(--out);
+}
+
+.internal-link__hidden:hover::after,
+.internal-link__hidden:focus-visible::after {
+    opacity: 1;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -143,8 +164,6 @@ main {
 
 section {
     width: var(--the-width);
-    /* border: 1px black dotted; */
-    margin-top: 2rem;
     min-height: 15vh;
 
     & div.section-wrapper .section-sticky {
@@ -153,10 +172,10 @@ section {
         z-index: 5;
         display: flex;
         flex-direction: column;
-        gap: var(--space-md);
+        gap: var(--space-sm);
         padding: 1rem;
-        background: var(--black);
-        color: var(--white);
+        background: var(--jet-black);
+        color: var(--the-white);
         width: calc(var(--grid-col) * 4 + 1rem);
     }
 
@@ -181,6 +200,25 @@ section {
         margin-top: 0;
         margin-bottom: 0;
         border: 0;
+    }
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
+}
+
+.main-grid > .main-grid-item {
+    --col-start: auto;
+    --col-span: 1;
+    grid-column: var(--col-start) / span var(--col-span);
+    min-width: 0;
+}
+
+@media (max-width: 48rem) {
+    .main-grid > .main-grid-item {
+        grid-column: var(--col-start-mobile, 1) / span var(--col-span-mobile, var(--grid-columns));
     }
 }
 
@@ -262,21 +300,20 @@ input[type="checkbox"]:focus-visible {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    width: fit-content;
+    width: 100%;
     padding: var(--space-sm) var(--space-md);
     border: 1px solid currentColor;
-    border-radius: 999px;
-    transition: all 150ms ease;
+    transition: all 300ms var(--out);
     font-size: var(--fs-base);
     
     &:hover {
-        color: var(--white);
-        background-color: var(--black);
-        border-color: var(--black);
+        background-color: var(--super-white);
+        color: var(--jet-black);
+        border-color: var(--the-white);
     }
 
     &:active {
-        color: var(--white);
+        color: var(--the-white);
         background-color: var(--grey);
         border-color: var(--grey);
     }
@@ -315,37 +352,37 @@ input[type="checkbox"]:focus-visible {
     }
 
     html.is-changing .transition-fade {
-        transition: opacity 0.45s var(--out), transform 0.45s var(--out), filter 0.45s var(--out);
+        transition: all 0.45s var(--out);
         opacity: 1;
-        filter: blur(0);
+        /* filter: blur(0); */
     }
 
     html.is-animating .transition-fade {
         opacity: 0;
-        filter: blur(2px);
+        /* filter: blur(2rem); */
     }
 }
 
 @keyframes page-in {
     from {
         opacity: 0;
-        filter: blur(3px);
+        /* filter: blur(3px); */
     }
 
     to {
         opacity: 1;
-        filter: blur(0);
+        /* filter: blur(0); */
     }
 }
 
 @keyframes page-out {
     from {
         opacity: 1;
-        filter: blur(0);
+        /* filter: blur(0); */
     }
 
     to {
         opacity: 0;
-        filter: blur(2px);
+        /* filter: blur(2px); */
     }
 }

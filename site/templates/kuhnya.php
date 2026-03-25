@@ -43,11 +43,16 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
 ?>
 
 <main id="swup" class="transition-fade">
-    <section>
-        <?php snippet('simple-hero') ?>
+
+    <section id="kuhnya-intro">
+        <h1><?= $page->title() ?></h1>
+        <!-- <div class="kuhnya-intro__meta">
+            <p><?= esc($kuhnyaBrand) ?></p>
+            <p><?= esc($kuhnyaCountry) ?></p>
+        </div> -->
     </section>
 
-    <!-- make it sticky from here -->
+    <!-- sticky scope -->
     <div class="kunya-sticky-scope">
         <div class="kunya-sticky-overview" data-kunya-sticky-overview>
             <div class="kunya-sticky-overview__inner">
@@ -117,7 +122,11 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
             <?php snippet('cta') ?>
         </section>
     </div>
-    <!-- make it sticky till here -->
+    <!-- sticky scope -->
+
+    <section>
+        <?php snippet('gallery') ?>
+    </section>
 
     <section>
         <?php snippet('faq-section') ?>

@@ -1,4 +1,13 @@
 #cta-warmup {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
+    align-items: start;
+
+    .section-sticky {
+        grid-column: 9 / span 4;
+        justify-self: end;
+    }
 
     .section-sticky-content {
         display: flex;
@@ -8,7 +17,7 @@
     }
 
     .cta-warmup-media {
-        /* margin-top: var(--space-lg); */
+        grid-column: 1 / span 8;
     }
 
     h2 {
@@ -18,6 +27,13 @@
     img {
         display: block;
         width: 100%;
+    }
+
+    @media (max-width: 48rem) {
+        .section-sticky,
+        .cta-warmup-media {
+            grid-column: 1 / -1;
+        }
     }
 
 }

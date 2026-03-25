@@ -1,6 +1,32 @@
 title: Home Page
 
 tabs:
+  hero:
+    label: Hero 
+    columns:
+      - width: 2/3
+        sections:
+          hero_words_listing:
+            type: fields
+            fields:
+              hero_heading:
+                label: заголовок hero
+                type: text
+                default: Кухни для
+              hero_words:
+                label: слова с эффектом печати
+                type: structure
+                help: эти слова будут печататься и стираться по кругу в hero
+                columns:
+                  word:
+                    label: слово
+                    width: 1/1
+                fields:
+                  word:
+                    label: слово
+                    type: text
+                    required: true
+
   content:
     label: Контент
     columns:

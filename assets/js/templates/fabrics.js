@@ -2,6 +2,27 @@ const FABRIC_GRID_SELECTOR = '.fabric-grid';
 const FABRIC_CARD_SELECTOR = '[data-fabric-card]';
 const FABRIC_MEDIA_SELECTOR = '.fabric-card__media';
 const FABRIC_KITCHEN_LINK_SELECTOR = 'ul a[data-fabric-image]';
+const FABRIC_ITEM_SELECTOR = '[data-fabric-item]';
+
+const setActiveKitchenLink = (card, activeLink) => {
+    const links = Array.from(card.querySelectorAll(FABRIC_KITCHEN_LINK_SELECTOR));
+
+    links.forEach((link) => {
+        const isActive = link === activeLink;
+        link.classList.toggle('is-active', isActive);
+
+        if (isActive) {
+            link.setAttribute('aria-current', 'true');
+        } else {
+            link.removeAttribute('aria-current');
+        }
+    });
+};
+
+const resetActiveKitchenLink = (card) => {
+    const defaultLink = card.querySelector(FABRIC_KITCHEN_LINK_SELECTOR);
+    setActiveKitchenLink(card, defaultLink);
+};
 
 const setCardImage = (card, imageUrl) => {
     const media = card.querySelector(FABRIC_MEDIA_SELECTOR);
@@ -19,7 +40,13 @@ const setExpandedCard = (grid, cards, nextExpandedCard) => {
         const isExpanded = card === nextExpandedCard;
         card.classList.toggle('is-expanded', isExpanded);
 
+        const cardItem = card.closest(FABRIC_ITEM_SELECTOR);
+        if (cardItem) {
+            cardItem.classList.toggle('is-expanded', isExpanded);
+        }
+
         setCardImage(card, card.dataset.defaultImage || '/assets/placeholder.svg');
+        resetActiveKitchenLink(card);
     });
 };
 
@@ -63,6 +90,7 @@ const initFabricsCards = () => {
             }
 
             setCardImage(card, link.dataset.fabricImage);
+            setActiveKitchenLink(card, link);
         });
 
         grid.addEventListener('mouseout', (event) => {
@@ -77,6 +105,7 @@ const initFabricsCards = () => {
             }
 
             setCardImage(card, card.dataset.defaultImage || '/assets/placeholder.svg');
+            resetActiveKitchenLink(card);
         });
 
         grid.addEventListener('focusin', (event) => {
@@ -91,6 +120,7 @@ const initFabricsCards = () => {
             }
 
             setCardImage(card, link.dataset.fabricImage);
+            setActiveKitchenLink(card, link);
         });
 
         grid.addEventListener('focusout', (event) => {
@@ -105,6 +135,7 @@ const initFabricsCards = () => {
             }
 
             setCardImage(card, card.dataset.defaultImage || '/assets/placeholder.svg');
+            resetActiveKitchenLink(card);
         });
 
         grid.dataset.fabricsBound = 'true';

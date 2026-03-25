@@ -7,14 +7,13 @@
 .portfolio-layout-sticky-inner {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-    /* gap: var(--space-xs) var(--space-md); */
     padding: var(--space-sm) 0;
 }
 
 .portfolio-layout-index-link {
     grid-column: 2 / -1;
     font-size: var(--fs-sm);
-    color: var(--black);
+    color: var(--jet-black);
     text-decoration: none;
     transition: opacity .2s ease;
 }
@@ -26,11 +25,19 @@
 .portfolio-layout-grid {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-    gap: var(--base-space);
+    gap: var(--grid-gap);
+}
+
+.portfolio-layout-column-spacer {
+    grid-column: 1 / span 1;
+}
+
+.portfolio-layout-column-spacer:last-child {
+    grid-column: -2 / -1;
 }
 
 .portfolio-layout-feed {
-    grid-column: 4 / span 8;
+    grid-column: 2 / -1;
     display: flex;
     flex-direction: column;
     gap: var(--space-xxl);
@@ -39,13 +46,16 @@
 
 .portfolio-layout-item {
     display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
     gap: var(--space-sm) var(--grid-gap);
 }
 
 .portfolio-layout-media {
-    grid-column: 5 / span 4;
+    grid-column: 4 / -1;
     display: block;
+    width: 100%;
+    min-width: 0;
+    background-image: none;
 }
 
 .portfolio-layout-media img {
@@ -60,13 +70,13 @@
     color: var(--grey);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: .08em;
 }
 
 .portfolio-layout-title {
-    grid-column: 1 / span 4;
+    grid-column: 1 / -1;
+    letter-spacing: -0.02em;
     margin: 0;
-    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    font-size: var(--fs-xxl);
 }
 
 .portfolio-layout-title a {
@@ -80,7 +90,7 @@
 }
 
 .portfolio-layout-copy {
-    grid-column: 5 / span 4;
+    grid-column: 8 / span 5;
     display: grid;
     gap: var(--space-xs);
 }

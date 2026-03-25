@@ -19,7 +19,7 @@ const initKunyaHeroEffects = () => {
         const progress = clamp((viewportHeight - mediaRect.top) / (viewportHeight + mediaRect.height), 0, 1);
 
         // tiny parallax shift and zoom-in to keep movement subtle.
-        const parallaxY = (progress - 0.5) * 40;
+        const parallaxY = (progress - 0.5) * 80;
         const scale = 1.02 + progress * 0.05;
 
         image.style.transform = `translate3d(0, ${parallaxY}px, 0) scale(${scale})`;
@@ -40,27 +40,10 @@ const initKunyaHeroEffects = () => {
     window.addEventListener('resize', onScroll);
 };
 
-const initKunyaContactButton = () => {
-    const cta = document.querySelector('[data-open-nav-contact]');
-    const toggle = document.querySelector('[data-nav-contact] .nav-contact-toggle');
-
-    if (!cta || !toggle) {
-        return;
-    }
-
-    cta.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        toggle.click();
-    });
-};
-
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initKunyaHeroEffects();
-        initKunyaContactButton();
     });
 } else {
     initKunyaHeroEffects();
-    initKunyaContactButton();
 }

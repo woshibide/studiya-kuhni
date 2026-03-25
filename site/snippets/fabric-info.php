@@ -45,7 +45,7 @@ if ($fabricInfoText === '') {
                     <figcaption class="fabric-info__eyebrow"><?= esc($sourcePage->title()) ?></figcaption>
                 </figure>
             <?php else: ?>
-                <p class="fabric-info__eyebrow"><?= esc($sourcePage->title()) ?></p>
+                <a href="/fabrics/<?= esc($sourcePage->title()) ?>>" class="fabric-info__eyebrow"><?= esc($sourcePage->title()) ?></a>
             <?php endif ?>
             <h2><?= esc($fabricInfoTitle) ?></h2>
             <p class="fabric-info__text"><?= esc($fabricInfoText) ?></p>

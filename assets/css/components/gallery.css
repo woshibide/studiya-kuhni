@@ -71,7 +71,7 @@
 }
 
 .gallery__thumb[aria-current="true"] {
-    border-color: var(--black);
+    border-color: var(--jet-black);
 }
 
 .gallery__thumb[aria-current="true"]::after {

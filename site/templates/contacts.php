@@ -22,6 +22,43 @@ $hours = $page->hours()->value();
 
 $messengers = $page->messengers()->isNotEmpty() ? $page->messengers()->toStructure() : [];
 $mapLinks = $page->map_links()->isNotEmpty() ? $page->map_links()->toStructure() : [];
+
+$resolveContactIcon = static function (string $title, string $url): ?string {
+    $label = function_exists('mb_strtolower') ? mb_strtolower($title . ' ' . $url) : strtolower($title . ' ' . $url);
+
+    if (
+        str_contains($label, 'telegram') ||
+        str_contains($label, 't.me') ||
+        str_contains($label, 'телеграм')
+    ) {
+        return '/assets/icons/tlg.svg';
+    }
+
+    if (
+        str_contains($label, 'whatsapp') ||
+        str_contains($label, 'wa.me') ||
+        str_contains($label, 'ватсап')
+    ) {
+        return '/assets/icons/wa.svg';
+    }
+
+    if (
+        str_contains($label, 'yandex') ||
+        str_contains($label, 'яндекс') ||
+        str_contains($label, 'ya.ru')
+    ) {
+        return '/assets/icons/ya.svg';
+    }
+
+    if (
+        str_contains($label, '2gis') ||
+        str_contains($label, '2гис')
+    ) {
+        return '/assets/icons/2gis.svg';
+    }
+
+    return null;
+};
 ?>
 
 <main id="swup" class="transition-fade contacts-page">
@@ -68,8 +105,16 @@ $mapLinks = $page->map_links()->isNotEmpty() ? $page->map_links()->toStructure()
                     <?php if (!empty($mapLinks)): ?>
                         <div class="contacts-links" aria-label="Карты">
                             <?php foreach ($mapLinks as $mapLink): ?>
-                                <a class="external-link" href="<?= esc($mapLink->url()) ?>" target="_blank" rel="noopener noreferrer">
-                                    <?= esc($mapLink->title()) ?>
+                                <?php
+                                $mapTitle = (string)$mapLink->title();
+                                $mapUrl = (string)$mapLink->url();
+                                $mapIcon = $resolveContactIcon($mapTitle, $mapUrl);
+                                ?>
+                                <a class="contacts-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
+                                    <?php if ($mapIcon): ?>
+                                        <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                                    <?php endif ?>
+                                    <span><?= esc($mapTitle) ?></span>
                                 </a>
                             <?php endforeach; ?>
                         </div>
@@ -93,8 +138,16 @@ $mapLinks = $page->map_links()->isNotEmpty() ? $page->map_links()->toStructure()
                     <?php if (!empty($messengers)): ?>
                         <div class="contacts-links" aria-label="Мессенджеры">
                             <?php foreach ($messengers as $messenger): ?>
-                                <a class="external-link" href="<?= esc($messenger->url()) ?>" target="_blank" rel="noopener noreferrer">
-                                    <?= esc($messenger->title()) ?>
+                                <?php
+                                $messengerTitle = (string)$messenger->title();
+                                $messengerUrl = (string)$messenger->url();
+                                $messengerIcon = $resolveContactIcon($messengerTitle, $messengerUrl);
+                                ?>
+                                <a class="contacts-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
+                                    <?php if ($messengerIcon): ?>
+                                        <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                                    <?php endif ?>
+                                    <span><?= esc($messengerTitle) ?></span>
                                 </a>
                             <?php endforeach; ?>
                         </div>

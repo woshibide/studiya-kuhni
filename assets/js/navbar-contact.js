@@ -1,3 +1,5 @@
+const NAV_CONTACT_TRIGGER_SELECTOR = '[data-open-nav-contact]';
+
 const initNavbarContact = () => {
     const shells = document.querySelectorAll('[data-nav-contact]');
 
@@ -42,4 +44,41 @@ const initNavbarContact = () => {
     });
 };
 
-document.addEventListener('DOMContentLoaded', initNavbarContact);
+const initGlobalNavbarContactTriggers = () => {
+    if (document.documentElement.dataset.navContactTriggerReady === 'true') {
+        return;
+    }
+
+    document.documentElement.dataset.navContactTriggerReady = 'true';
+
+    document.addEventListener('click', (event) => {
+        const trigger = event.target.closest(NAV_CONTACT_TRIGGER_SELECTOR);
+        if (!trigger) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const toggle = document.querySelector('[data-nav-contact] .nav-contact-toggle');
+        if (!toggle) {
+            return;
+        }
+
+        if (toggle.getAttribute('aria-expanded') !== 'true') {
+            toggle.click();
+        }
+    });
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initNavbarContact();
+        initGlobalNavbarContactTriggers();
+    });
+} else {
+    initNavbarContact();
+    initGlobalNavbarContactTriggers();
+}
+
+document.addEventListener('swup:content:replace', initNavbarContact);
+document.addEventListener('swup:page:view', initNavbarContact);

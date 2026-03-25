@@ -41,6 +41,8 @@ footer {
         }
 
         & .links {
+
+
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
@@ -59,8 +61,23 @@ footer {
                 list-style: none;
 
                 & li a {
-                    display: inline-block;
+                    display: inline-flex;
+                    align-items: center;
                     white-space: nowrap;
+
+                    &::after {
+                        content: " →";
+                        margin-left: 0.35em;
+                        opacity: 0;
+                        transform: translateX(-0.2em);
+                        transition: all 300ms var(--out);
+                    }
+
+                    &:hover::after,
+                    &:focus-visible::after {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
                 }
             }
         }

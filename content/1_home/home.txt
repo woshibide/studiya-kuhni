@@ -64,7 +64,7 @@ Benefits-items:
 
 ----
 
-Cta-warmup-heading: Подготовим дизайн решение
+Cta-warmup-heading: Нужен дизайн план?
 
 ----
 
@@ -72,7 +72,7 @@ Cta-warmup-text: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque 
 
 ----
 
-Cta-heading: Закажите новую жизнь
+Cta-heading: Созрели для новой кухни?
 
 ----
 
@@ -80,7 +80,7 @@ Cta-text: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibu
 
 ----
 
-Cta-button: Связаться с нами
+Cta-button: Узнать подробности
 
 ----
 

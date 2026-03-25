@@ -1,7 +1,7 @@
 #brands.brands {
-	background: var(--black);
-	color: var(--white);
-    min-height: 105vh;
+	background: var(--jet-black);
+	color: var(--the-white);
+    /* min-height: 105vh; */
 
 	.section-wrapper {
 		display: grid;
@@ -68,7 +68,7 @@
 			font-size: var(--fs-sm);
 			text-transform: uppercase;
 			letter-spacing: 0.06em;
-			color: var(--white);
+			color: var(--the-white);
 		}
 	}
 

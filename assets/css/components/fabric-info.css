@@ -4,21 +4,22 @@
 
 .fabric-info__layout {
     display: grid;
-    grid-template-columns: minmax(280px, 1fr) minmax(0, 1.35fr);
-    gap: var(--space-lg);
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
     align-items: start;
 }
 
 .fabric-info__map-wrap {
-    position: sticky;
-    top: calc(var(--space-lg) * 2);
+    grid-column: span 8;
+    height: 100%;
 }
 
 .fabric-info__map {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
+    aspect-ratio: 16 / 9;
     min-height: 280px;
-    border: 1px solid var(--black);
+    border: 1px solid var(--jet-black);
     overflow: hidden;
 }
 
@@ -34,15 +35,18 @@
     display: none;
 }
 
-.fabric-info__map .leaflet-control-zoom {
-    /* display: none; */
-}
-
 .fabric-info__inner {
-    width: min(100%, calc(var(--grid-col-gap) * 8));
+    grid-column: span 4;
+    align-self: end;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+
+    h2 {
+        margin: 0;
+    }
 }
 
 .fabric-info__brand {
@@ -53,12 +57,11 @@
 }
 
 .fabric-info__logo {
-    width: min(100%, calc(var(--grid-col-gap) * 2));
-    aspect-ratio: 16 / 9;
+    width: min(100%, calc(var(--grid-col) * 4));
+    aspect-ratio: 1 / 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-xs);
+    align-items: start;
+    justify-content: start;
 }
 
 .fabric-info__logo img {
@@ -86,14 +89,17 @@
 
 @media (max-width: 768px) {
     .fabric-info__layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
     }
 
     .fabric-info__map-wrap {
+        grid-column: span var(--grid-columns);
         position: static;
     }
 
     .fabric-info__inner {
+        grid-column: span var(--grid-columns);
+        align-self: start;
         width: 100%;
     }
 

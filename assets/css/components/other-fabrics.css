@@ -27,6 +27,8 @@
     min-width: 0;
     min-height: clamp(24rem, 60vh, 40rem);
     overflow: hidden;
+    margin: 0;
+    --other-fabric-scale: 1.02;
 }
 
 .other-fabrics-section .fabric-card__media {
@@ -35,51 +37,118 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    transform: translate3d(0, var(--other-fabric-parallax-y, 0px), 0)
+        scale(calc(var(--other-fabric-scale) + var(--other-fabric-parallax-scale, 0)));
+    transform-origin: center;
+    opacity: 1;
+    transition: transform 620ms var(--out), opacity 260ms var(--out), filter 260ms ease;
+    will-change: transform;
 }
 
-.other-fabrics-section .fabric-card__header {
-    position: relative;
+.other-fabrics-section .fabric-card__media.is-image-fading {
+    opacity: 0;
+    filter: saturate(0.92);
+}
+
+.other-fabrics-section .fabric-card__kitchens {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
     z-index: 1;
-    width: auto;
-    display: flex;
-    align-items: flex-start;
-    padding: var(--space-sm);
-    background: var(--black);
-}
-
-.other-fabrics-section .fabric-card__header h2 {
     margin: 0;
-    font-size: var(--fs-md);
-    color: var(--white);
-}
-
-.other-fabrics-section .fabric-card ul {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    margin: 0;
-    padding: var(--space-sm);
+    padding: 0;
     list-style: none;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-xs);
 }
 
-.other-fabrics-section .fabric-card li {
+.other-fabrics-section .fabric-card__kitchens li {
     margin: 0;
 }
 
-.other-fabrics-section .fabric-card ul a {
+.other-fabrics-section .fabric-card__kitchens a {
     display: inline-block;
-    color: var(--white);
-    background-color: var(--black);
-    padding-inline: var(--space-sm);
-    width: auto;
+    background-color: transparent;
+    color: var(--jet-black);
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-0.75rem) scaleX(0.96);
+    overflow: hidden;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: all 360ms var(--out);
+    transition-delay: calc((var(--kitchen-count) - var(--kitchen-index)) * 48ms);
 }
 
-.other-fabrics-section .fabric-card ul a:hover {
-    color: var(--black);
-    background-color: var(--white);
+.other-fabrics-section .fabric-card__kitchens a:hover,
+.other-fabrics-section .fabric-card__kitchens a:focus-visible,
+.other-fabrics-section .fabric-card__kitchens a.is-active {
+    color: var(--the-white);
+    background-color: var(--jet-black);
+    opacity: 1;
+}
+
+.other-fabrics-section .fabric-card__kitchens a.internal-link::after {
+    opacity: 0;
+    transform: translateX(-0.2em);
+    transition: all 300ms var(--out);
+}
+
+.other-fabrics-section .fabric-card__kitchens a.internal-link:hover::after,
+.other-fabrics-section .fabric-card__kitchens a.internal-link:focus-visible::after,
+.other-fabrics-section .fabric-card__kitchens a.internal-link.is-active::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.other-fabrics-section .fabric-card__caption {
+    position: absolute;
+    z-index: 1;
+    left: var(--space-sm);
+    bottom: var(--space-sm);
+    margin: 0;
+}
+
+.other-fabrics-section .fabric-card__caption a {
+    color: var(--the-white);
+    background-color: var(--jet-black);
+    padding-inline: var(--space-sm);
+}
+
+.other-fabrics-section .fabric-card__caption a::after {
+    content: " \2192";
+    margin-left: 0.35em;
+    opacity: 0;
+    transform: translateX(-0.2em);
+    transition: all 300ms var(--out);
+}
+
+.other-fabrics-section .fabric-card__caption a:hover::after,
+.other-fabrics-section .fabric-card__caption a:focus-visible::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.other-fabrics-section .fabric-card:hover .fabric-card__kitchens a,
+.other-fabrics-section .fabric-card:focus-within .fabric-card__kitchens a {
+    max-width: 24rem;
+    padding-inline: var(--space-sm);
+    opacity: 0.85;
+    transform: translateX(0) scaleX(1);
+    pointer-events: auto;
+    transition-delay: calc(var(--kitchen-index) * 46ms);
+}
+
+.other-fabrics-section .fabric-card:hover .fabric-card__kitchens a.is-active,
+.other-fabrics-section .fabric-card:focus-within .fabric-card__kitchens a.is-active {
+    opacity: 1;
+}
+
+.other-fabrics-section .fabric-card:hover .fabric-card__media,
+.other-fabrics-section .fabric-card:focus-within .fabric-card__media {
+    --other-fabric-scale: 1.06;
 }
 
 @media (max-width: 960px) {
@@ -90,5 +159,13 @@
     .other-fabrics-section .fabric-card {
         width: 100%;
         min-height: clamp(20rem, 45vh, 26rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .other-fabrics-section .fabric-card__media,
+    .other-fabrics-section .fabric-card__kitchens a,
+    .other-fabrics-section .fabric-card__caption a::after {
+        transition-duration: 0ms;
     }
 }

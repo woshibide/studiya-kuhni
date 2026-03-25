@@ -14,6 +14,7 @@ if ($layout === 'column') {
 $wrapperClass = 'section-wrapper ' . $layoutClass;
 ?>
 
+<h2>Истории из кухонь, в которых хочется жить</h2>
 <div class="<?= esc($wrapperClass) ?>" id="portfolio-posts">
     <?php foreach ($posts as $post): ?>
         <?php

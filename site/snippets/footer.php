@@ -1,7 +1,8 @@
 <footer>
     <div id="footer-details">
         <div class="info">
-            <p>Студия Кухни, 2008 — 2026</p>
+            <p><a href="/">Студия Кухни</a>, 2008 — 2026</p>
+            <p>Часть альянса <a class="external-link" target="_blank" href="https://mebelkmv.ru">Петру Групп</a></p>
             <address>
                  Пятигорск, Ермолова 14, 357500
             </address>
@@ -11,46 +12,40 @@
         </div>
         <div class="links">
             <ul>
-            <?php
-            $socialLinks = [
-                ['title' => 'Связь', 'url' => page('contacts') ? page('contacts')->url() : '/contacts'],
-                ['title' => 'FAQ', 'url' => page('faq') ? page('faq')->url() : '/faq'],
-                ['title' => 'Портфолио', 'url' => page('portfolio') ? page('portfolio')->url() : '/portfolio'],
-            ];
-            foreach ($socialLinks as $socialLink): ?>
                 <li>
-                    <a href="<?= $socialLink['url'] ?>">
-                        <?= $socialLink['title'] ?>
-                    </a>
+                    <a href="/contacts">Связь</a>
                 </li>
-            <?php endforeach; ?>
+                <li>
+                    <a href="/faq">FAQ</a>
+                </li>
+                <li>
+                    <a href="/portfolio">Портфолио</a>
+                </li>
             </ul>
             <ul>
-            <?php
-            $fabricsPage = page('fabrics');
-            $fabrics = $fabricsPage ? $fabricsPage->children() : [];
-            foreach ($fabrics as $fabric): ?>
                 <li>
-                    <a href="<?= $fabric->url() ?>">
-                        <?= $fabric->title() ?>
-                    </a>
+                    <a href="/fabrics/aran-cucine">Aran Cucine</a>
                 </li>
-            <?php endforeach; ?>
+                <li>
+                    <a href="/fabrics/aster-cucine">Aster Cucine</a>
+                </li>
+                <li>
+                    <a href="/fabrics/home-cucine">Home Cucine</a>
+                </li>
+                <li>
+                    <a href="/fabrics/mossman">Mossman</a>
+                </li>
+                <li>
+                    <a href="/fabrics/scavolini">Scavolini</a>
+                </li>
             </ul>
             <ul>
-            <?php
-            $footerPages = [
-                ['title' => 'Дизайнерам', 'url' => page('designers') ? page('designers')->url() : '/designers', 'external' => false],
-                ['title' => 'Часть альянса Петру Групп', 'url' => 'https://mebelkmv.ru', 'external' => true],
-                ['title' => 'Политика Конфиденциальности', 'url' => page('privacy') ? page('privacy')->url() : '/privacy', 'external' => false],
-            ];
-            foreach ($footerPages as $footerPage): ?>
                 <li>
-                    <a href="<?= $footerPage['url'] ?>"<?= $footerPage['external'] ? ' class="external-link" target="_blank" rel="noopener noreferrer"' : '' ?>>
-                        <?= $footerPage['title'] ?>
-                    </a>
+                    <a href="/designers">Дизайнерам</a>
                 </li>
-            <?php endforeach; ?>
+                <li>
+                    <a href="/privacy">Политика Конфиденциальности</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -82,6 +77,7 @@
 <script src="/assets/js/faq.js" defer></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="/assets/js/fabric-info-map.js" defer></script>
+<script src="/assets/js/other-fabrics.js" defer></script>
 
 <?php
 $template = $page->intendedTemplate()->name();

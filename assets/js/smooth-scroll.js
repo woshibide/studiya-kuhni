@@ -9,10 +9,30 @@
         return;
     }
 
+    const getMaxScrollableY = () => {
+        const root = document.documentElement;
+        const body = document.body;
+
+        if (!root || !body) {
+            return Math.max(0, window.pageYOffset);
+        }
+
+        const contentHeight = Math.max(
+            root.scrollHeight,
+            root.offsetHeight,
+            root.clientHeight,
+            body.scrollHeight,
+            body.offsetHeight,
+            body.clientHeight
+        );
+
+        return Math.max(0, contentHeight - window.innerHeight);
+    };
+
     const state = {
         currentY: window.pageYOffset,
         targetY: window.pageYOffset,
-        maxY: Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
+        maxY: getMaxScrollableY(),
         easing: 0.08,
         wheelStep: 1.1,
         isAnimating: false,
@@ -21,11 +41,14 @@
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
     const refreshBounds = () => {
-        state.maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        state.maxY = getMaxScrollableY();
+        state.currentY = clamp(state.currentY, 0, state.maxY);
         state.targetY = clamp(state.targetY, 0, state.maxY);
     };
 
     const animate = () => {
+        refreshBounds();
+
         const diff = state.targetY - state.currentY;
 
         if (Math.abs(diff) < 0.1) {
@@ -53,6 +76,8 @@
     window.addEventListener('wheel', (event) => {
         event.preventDefault();
 
+        refreshBounds();
+
         state.targetY = clamp(
             state.targetY + event.deltaY * state.wheelStep,
             0,
@@ -64,6 +89,8 @@
 
     // keep in sync with keyboard, scrollbar drag, anchor jumps and script-driven scrolls
     window.addEventListener('scroll', () => {
+        refreshBounds();
+
         if (state.isAnimating) {
             return;
         }
@@ -78,4 +105,16 @@
     }, { passive: true });
 
     window.addEventListener('load', refreshBounds, { passive: true });
+
+    // recalc bounds when lazy-loaded media or dynamic blocks change page height
+    if (typeof ResizeObserver === 'function') {
+        const observer = new ResizeObserver(() => {
+            refreshBounds();
+        });
+
+        observer.observe(document.documentElement);
+        if (document.body) {
+            observer.observe(document.body);
+        }
+    }
 })();
