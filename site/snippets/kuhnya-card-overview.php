@@ -6,7 +6,16 @@ $fabricPage = $kuhnya->parent();
 $fabricsIndex = site()->find('fabrics');
 $cardBrand = $fabricPage ? $fabricPage->title()->value() : 'Название фабрики';
 $cardBrandUrl = $fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#');
-$cardImage = $kuhnya->images()->first();
+$cardGalleryImages = $kuhnya->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+if ($cardGalleryImages->isEmpty()) {
+    $cardGalleryImages = $kuhnya->images()
+        ->filterBy('type', 'image')
+        ->filter(function ($image) {
+            return strtolower($image->extension()) !== 'svg';
+        });
+}
+
+$cardImage = $cardGalleryImages->first();
 $cardImageUrl = $cardImage ? $cardImage->url() : '/assets/placeholder.svg';
 $cardIntro = $kuhnya->intro()->or('Сдержанная кухня с продуманной эргономикой, аккуратными линиями и практичными материалами для комфортной жизни.')->value();
 $cardCountry = $kuhnya->country_of_origin()->or('Италия')->value();

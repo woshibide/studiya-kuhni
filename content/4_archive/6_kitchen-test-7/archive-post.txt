@@ -1,0 +1,29 @@
+Title: Первые шаги во вкусе
+
+----
+
+Intro: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.
+
+----
+
+Date: 2026-03-25
+
+----
+
+Location: Железноводск
+
+----
+
+Showcase-kitchen: - page://t5km9wxzclvfnxmj
+
+----
+
+Cover: - file://3ug9cgb9olvksuj6
+
+----
+
+Blocks: [{"content":{"text":"<p><strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </strong></p>"},"id":"5aba51d5-2270-45b8-ba93-794f7a428cc4","isHidden":false,"type":"text"},{"content":{"location":"kirby","image":["file://ohmdn16hk8m1xmbq"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"32dadf19-cefd-4d41-a37a-eedb6c4fbdfa","isHidden":false,"type":"image"},{"content":{"location":"kirby","image":["file://v4dhdtqqho3hk1hz"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"eb272595-bc93-4c90-ad4a-ba86871c1c1f","isHidden":false,"type":"image"},{"content":{"level":"h2","text":"<strong>Lorem ipsum dolor sit amet consectetur adipisicing elit.</strong>"},"id":"d0125782-129f-406c-93b5-1be9a0de41a2","isHidden":false,"type":"heading"},{"content":{"location":"kirby","image":["file://kd10f4cyzjebprfx"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"b7d55714-e715-4ee9-92b7-9d3618ff2711","isHidden":false,"type":"image"},{"content":{"text":"<p><strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </strong></p>"},"id":"88f46aa8-c180-478a-ac9a-c1252b262452","isHidden":false,"type":"text"},{"content":{"location":"kirby","image":["file://3ug9cgb9olvksuj6"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"b23560cb-3586-46bf-94c3-d9464df082e4","isHidden":false,"type":"image"},{"content":{"images":["file://ohmdn16hk8m1xmbq","file://v4dhdtqqho3hk1hz","file://kd10f4cyzjebprfx","file://3ug9cgb9olvksuj6"],"caption":"","ratio":"","crop":"false"},"id":"8d1573ac-be71-4c85-8d01-152f448621ba","isHidden":false,"type":"gallery"}]
+
+----
+
+Uuid: ifyv6prda1zq6ydv

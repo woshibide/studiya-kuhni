@@ -1,9 +1,39 @@
 <?php snippet('header') ?>
 
 <?php
-$heroImage = $page->images()->first();
+$heroGalleryImages = $page->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+if ($heroGalleryImages->isEmpty()) {
+    $heroGalleryImages = $page->images()
+        ->filterBy('type', 'image')
+        ->filter(function ($image) {
+            return strtolower($image->extension()) !== 'svg';
+        });
+}
+
+$heroImage = $heroGalleryImages->first();
 $heroImageUrl = $heroImage ? $heroImage->url() : '/assets/placeholder.svg';
 $heroImageAlt = $heroImage ? $heroImage->alt()->or($page->title())->value() : $page->title()->value();
+$kuhnyaLayoutImages = $heroGalleryImages->limit(6);
+$kuhnyaImageSlots = [
+    [
+        'style' => '--col-start: 7; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12;',
+    ],
+    [
+        'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
+    ],
+    [
+        'style' => '--col-start: 5; --col-span: 7; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: calc(var(--space-xxl) * 1.5);',
+    ],
+    [
+        'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
+    ],
+    [
+        'style' => '--col-start: 8; --col-span: 5; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-xxl);',
+    ],
+    [
+        'style' => '--col-start: 1; --col-span: 7; --col-start-mobile: 1; --col-span-mobile: 12;',
+    ],
+];
 $kuhnyaTitle = trim((string)$page->title()->value());
 $fabricPage = $page->parent();
 $fabricsIndex = site()->find('fabrics');
@@ -32,6 +62,13 @@ if ($kuhnyaPrice === '') {
 }
 
 $kuhnyaSpecs = $page->kitchen_specs()->toStructure();
+$kuhnyaFeatures = $page->kitchen_features()->toStructure();
+$hasOtherKitchens = $fabricPage
+    ? $fabricPage
+        ->childrenAndDrafts()
+        ->filter(fn ($kitchen) => $kitchen->id() !== $page->id())
+        ->isNotEmpty()
+    : false;
 
 if (function_exists('mb_strlen') && function_exists('mb_substr')) {
     if (mb_strlen($kuhnyaIntro) > 180) {
@@ -89,20 +126,92 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
             </div>
         </div>
 
+
         <section id="kunya-hero" class="section-full" data-kunya-hero>
             <div class="kunya-hero__media" data-kunya-media>
                 <img src="<?= esc($heroImageUrl, 'attr') ?>" alt="<?= esc($heroImageAlt, 'attr') ?>" data-kunya-media-image>
             </div>
         </section>
 
+        <section id="features">
+            <?php if ($kuhnyaFeatures->isNotEmpty()): ?>
+                <ul class="kuhnya-features-list">
+                    <?php foreach ($kuhnyaFeatures as $feature): ?>
+                        <?php
+                        $featureText = trim($feature->text()->value());
+                        $featureImage = $feature->image()->toFile();
+                        if ($featureText === '' && !$featureImage) {
+                            continue;
+                        }
+                        ?>
+                        <li class="kuhnya-features-list__item">
+                            <?php if ($featureImage): ?>
+                                <img
+                                    class="kuhnya-features-list__image"
+                                    src="<?= esc($featureImage->url(), 'attr') ?>"
+                                    alt="<?= esc($featureImage->alt()->or($featureText)->or($kuhnyaTitle)->value(), 'attr') ?>"
+                                >
+                            <?php endif ?>
+                            <?php if ($featureText !== ''): ?>
+                                <p class="kuhnya-features-list__text"><?= esc($featureText) ?></p>
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            <?php endif ?>
+        </section>
+
         <section id="about-the-brand">
             <?php snippet('fabric-info') ?>
-        </section>
+        </section>        
 
         <section id="details">
-            <h2>details</h2>
+            <?php if ($kuhnyaLayoutImages->isNotEmpty()): ?>
+                <div class="kuhnya-layout-grid main-grid">
+                    <?php $layoutSlotIndex = 0; ?>
+                    <?php foreach ($kuhnyaLayoutImages as $layoutImage): ?>
+                        <?php
+                        $slot = $kuhnyaImageSlots[$layoutSlotIndex] ?? null;
+                        if (!$slot) {
+                            continue;
+                        }
+                        $layoutAlt = $layoutImage->alt()->or($page->title())->value();
+                        ?>
+                        <figure
+                            class="main-grid-item kuhnya-layout-card"
+                            style="<?= esc($slot['style'], 'attr') ?>"
+                            data-kuhnya-layout-card
+                        >
+                            <div class="kuhnya-layout-media">
+                                <img
+                                    src="<?= esc($layoutImage->url(), 'attr') ?>"
+                                    alt="<?= esc($layoutAlt, 'attr') ?>"
+                                    loading="lazy"
+                                >
+                            </div>
+
+                            <button
+                                class="kuhnya-layout-toggle"
+                                type="button"
+                                data-kuhnya-layout-toggle
+                                aria-expanded="false"
+                                aria-label="Expand image"
+                            >
+                                <span aria-hidden="true">+</span>
+                            </button>
+                        </figure>
+                        <?php $layoutSlotIndex++; ?>
+                    <?php endforeach ?>
+                </div>
+            <?php endif ?>
         </section>
 
+
+        <section id="benefits">
+            <?php snippet('benefits') ?>
+        </section>
+
+        <!-- 
         <section id="table-top">
             <h2>stoleshnitsa</h2>
         </section>
@@ -111,12 +220,7 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
             <h2>materials</h2>
             <h2>handles</h2>
             <h2>oblitsovka</h2>
-            <h2>tehnika</h2>
-        </section>
-
-        <section>
-            <?php snippet('benefits') ?>
-        </section>
+        </section> -->
 
         <section id="cta">
             <?php snippet('cta') ?>
@@ -125,20 +229,28 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
     <!-- sticky scope -->
 
     <section>
+        <!-- only for kitchens -->
         <?php snippet('gallery') ?>
+    </section>
+
+    <?php if ($hasOtherKitchens): ?>
+        <section>
+            <?php snippet('other-kitchens', ['kuhnya' => $page]) ?>
+        </section>
+    <?php endif ?>
+
+    <section>
+        <?php snippet('other-fabrics', ['contextPage' => $page]) ?>
+    </section>
+
+    <section>
+        <?php snippet('archive-posts') ?>
     </section>
 
     <section>
         <?php snippet('faq-section') ?>
     </section>
 
-    <section>
-        <?php snippet('portfolio-posts') ?>
-    </section>
-
-    <?php snippet('other-kitchens', ['kuhnya' => $page]) ?>
-
-    <?php snippet('other-fabrics', ['contextPage' => $page]) ?>
 
 </main>
 

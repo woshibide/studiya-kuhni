@@ -5,15 +5,19 @@
     <section>
         <?php snippet('simple-hero') ?>
     </section>
-    
+
+
     <section>
-        <h2>        
-            about us
-        </h2>
+        Студия кухни это
     </section>
+
     
     <section>
         <?php snippet('brands') ?>
+    </section>
+
+    <section>
+        <?php snippet('big-message') ?>
     </section>
 
 
@@ -22,7 +26,7 @@
     </section>
     
     <section>
-        <h2>        
+        <h2>
             who works with us
         </h2>
     </section>
@@ -32,13 +36,9 @@
             what is the format of work
         </h2>
     </section>
-    
+        
     <section>
-        <?php snippet('cta') ?>
-    </section>
-    
-    <section>
-        <?php snippet('portfolio-posts') ?>
+        <?php snippet('archive-posts') ?>
     </section>
 
 

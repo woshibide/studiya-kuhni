@@ -1,5 +1,4 @@
 const heroTyped = document.querySelector('#home-hero-typed')
-const heroCaret = document.querySelector('#home-hero-caret')
 
 if (heroTyped) {
 	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -19,54 +18,47 @@ if (heroTyped) {
 		words = [heroTyped.textContent.trim() || 'тебя']
 	}
 
-	const TYPE_DELAY_MS = 95
-	const ERASE_DELAY_MS = 55
-	const FULL_WORD_PAUSE_MS = 1200
-	const EMPTY_WORD_PAUSE_MS = 260
+    const TYPE_DELAY_MS = 143
+    const ERASE_DELAY_MS = 82
+    const FULL_WORD_PAUSE_MS = 1500
+    const EMPTY_WORD_PAUSE_MS = 400
+    const TYPE_VARIANCE_MS = 14
+    const ERASE_VARIANCE_MS = 8
+
+	const nextDelay = (base, variance) => {
+		const swing = Math.round((Math.random() * 2 - 1) * variance)
+		return Math.max(16, base + swing)
+	}
 
 	const wait = (ms) => new Promise((resolve) => {
 		window.setTimeout(resolve, ms)
 	})
 
-	const blinkCaret = () => {
-		if (!heroCaret || reducedMotion) {
-			return null
-		}
-
-		const intervalId = window.setInterval(() => {
-			heroCaret.classList.toggle('is-hidden')
-		}, 520)
-
-		return intervalId
-	}
-
 	if (reducedMotion || words.length === 1) {
 		heroTyped.textContent = words[0]
-		if (heroCaret) {
-			heroCaret.classList.add('is-hidden')
-		}
+		heroTyped.classList.add('is-static')
 	} else {
-		const caretIntervalId = blinkCaret()
-
 		const typeWord = async (word) => {
 			for (let index = 1; index <= word.length; index += 1) {
 				heroTyped.textContent = word.slice(0, index)
-				await wait(TYPE_DELAY_MS)
+				await wait(nextDelay(TYPE_DELAY_MS, TYPE_VARIANCE_MS))
 			}
 		}
 
 		const eraseWord = async (word) => {
 			for (let index = word.length - 1; index >= 0; index -= 1) {
 				heroTyped.textContent = word.slice(0, index)
-				await wait(ERASE_DELAY_MS)
+				await wait(nextDelay(ERASE_DELAY_MS, ERASE_VARIANCE_MS))
 			}
 		}
 
 		const cycle = async () => {
 			let wordIndex = 0
+			heroTyped.textContent = ''
 
 			while (true) {
 				const activeWord = words[wordIndex]
+				heroTyped.textContent = ''
 				await typeWord(activeWord)
 				await wait(FULL_WORD_PAUSE_MS)
 				await eraseWord(activeWord)
@@ -76,12 +68,6 @@ if (heroTyped) {
 		}
 
 		cycle()
-
-		window.addEventListener('beforeunload', () => {
-			if (caretIntervalId) {
-				window.clearInterval(caretIntervalId)
-			}
-		})
 	}
 }
 
@@ -91,16 +77,15 @@ const HOME_FABRIC_ROW_SELECTOR = '[data-home-fabric-row]'
 const HOME_FABRIC_MEDIA_SELECTOR = '.home-fabric-media'
 const HOME_FABRIC_KITCHEN_LINK_SELECTOR = 'a[data-fabric-image]'
 const HOME_FABRIC_TOGGLE_SELECTOR = '[data-home-fabric-toggle]'
+const HOME_FABRIC_EMBLA_VIEWPORT_SELECTOR = '[data-home-embla-viewport]'
+const HOME_FABRIC_EMBLA_SLIDE_SELECTOR = '.home-fabric-media__slide'
 const HOME_EXPANDED_COL_START = '1'
 const HOME_EXPANDED_COL_SPAN = '12'
-const HOME_AUTOPLAY_INTERVAL_MS = 4600
-const HOME_AUTOPLAY_STAGGER_MS = 520
-const HOME_IMAGE_FADE_OUT_MS = 180
+const HOME_AUTOPLAY_INTERVAL_MS = 3000
+const HOME_EMBLA_DEBUG = window.location.search.includes('emblaDebug=1') || window.localStorage.getItem('emblaDebug') === '1'
 const homeReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const homeCardState = new WeakMap()
-let homeFabricsParallaxCleanup = null
-
-const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
+let homeFabricsEmblaCleanup = null
 
 const getHomeCardState = (card) => {
 	if (homeCardState.has(card)) {
@@ -110,78 +95,54 @@ const getHomeCardState = (card) => {
 	const links = Array.from(card.querySelectorAll(HOME_FABRIC_KITCHEN_LINK_SELECTOR))
 	const state = {
 		links,
-		activeIndex: links.length ? 0 : -1,
+		activeIndex: 0,
+		emblaApi: null,
 		isPointerInside: false,
 		isFocusInside: false,
-		autoplayStartTimeoutId: null,
-		autoplayIntervalId: null,
-		imageSwapTimeoutId: null,
+		autoplayTimerId: null,
 	}
 
 	homeCardState.set(card, state)
 	return state
 }
 
-const clearHomeAutoplay = (card) => {
+const destroyHomeCardEmbla = (card) => {
 	const state = getHomeCardState(card)
-	if (state.autoplayStartTimeoutId) {
-		window.clearTimeout(state.autoplayStartTimeoutId)
-		state.autoplayStartTimeoutId = null
-	}
-
-	if (state.autoplayIntervalId) {
-		window.clearInterval(state.autoplayIntervalId)
-		state.autoplayIntervalId = null
+	if (state.emblaApi) {
+		state.emblaApi.destroy()
+		state.emblaApi = null
 	}
 }
 
-const setHomeFabricImage = (card, imageUrl, options = {}) => {
-	const { animate = true } = options
-	const media = card.querySelector(HOME_FABRIC_MEDIA_SELECTOR)
-	if (!media || !imageUrl) {
-		return
-	}
+const clearHomeCardAutoplay = (card) => {
 	const state = getHomeCardState(card)
-
-	if (media.dataset.currentImage === imageUrl) {
-		return
+	if (state.autoplayTimerId) {
+		window.clearTimeout(state.autoplayTimerId)
+		state.autoplayTimerId = null
 	}
-
-	if (!animate || homeReducedMotion) {
-		media.style.backgroundImage = `url("${imageUrl.replace(/"/g, '\\"')}")`
-		media.dataset.currentImage = imageUrl
-		media.classList.remove('is-image-fading')
-		if (state.imageSwapTimeoutId) {
-			window.clearTimeout(state.imageSwapTimeoutId)
-			state.imageSwapTimeoutId = null
-		}
-		return
-	}
-
-	if (state.imageSwapTimeoutId) {
-		window.clearTimeout(state.imageSwapTimeoutId)
-	}
-
-	media.classList.add('is-image-fading')
-	state.imageSwapTimeoutId = window.setTimeout(() => {
-		media.style.backgroundImage = `url("${imageUrl.replace(/"/g, '\\"')}")`
-		media.dataset.currentImage = imageUrl
-		window.requestAnimationFrame(() => {
-			media.classList.remove('is-image-fading')
-		})
-		state.imageSwapTimeoutId = null
-	}, HOME_IMAGE_FADE_OUT_MS)
 }
 
-const resetHomeFabricImage = (card) => {
-	setHomeFabricImage(card, card.dataset.defaultImage || '/assets/placeholder.svg', { animate: false })
+const getHomeSlideCount = (state) => {
+	if (!state.emblaApi) {
+		return 0
+	}
+
+	return state.emblaApi.scrollSnapList().length
 }
 
-const setHomeActiveKitchenLink = (card, activeLink) => {
+const setHomeActiveKitchenLink = (card, activeIndex) => {
 	const state = getHomeCardState(card)
-	const links = state.links
-	links.forEach((link) => {
-		const isActive = link === activeLink
+	if (!state.links.length) {
+		state.activeIndex = 0
+		return
+	}
+
+	const normalizedIndex = state.links.length === 1
+		? 0
+		: ((activeIndex % state.links.length) + state.links.length) % state.links.length
+
+	state.links.forEach((link, index) => {
+		const isActive = index === normalizedIndex
 		link.classList.toggle('is-active', isActive)
 		if (isActive) {
 			link.setAttribute('aria-current', 'true')
@@ -189,39 +150,95 @@ const setHomeActiveKitchenLink = (card, activeLink) => {
 			link.removeAttribute('aria-current')
 		}
 	})
-
-	const nextIndex = links.indexOf(activeLink)
-	if (nextIndex >= 0) {
-		state.activeIndex = nextIndex
-	}
+	state.activeIndex = normalizedIndex
 }
 
 const resetHomeActiveKitchenLink = (card) => {
 	const state = getHomeCardState(card)
-	const defaultLink = state.links[0] || null
-	setHomeActiveKitchenLink(card, defaultLink)
+	if (!state.links.length) {
+		return
+	}
+
+	setHomeActiveKitchenLink(card, 0)
 }
 
 const setHomeCardByIndex = (card, index, options = {}) => {
-	const { animate = true } = options
+	const { jump = false } = options
 	const state = getHomeCardState(card)
 	if (!state.links.length) {
 		return
 	}
 
 	const normalized = ((index % state.links.length) + state.links.length) % state.links.length
-	const targetLink = state.links[normalized]
-	setHomeActiveKitchenLink(card, targetLink)
-	setHomeFabricImage(card, targetLink.dataset.fabricImage || card.dataset.defaultImage || '/assets/placeholder.svg', { animate })
+	setHomeActiveKitchenLink(card, normalized)
+
+	if (state.emblaApi) {
+		state.emblaApi.scrollTo(normalized, jump)
+	}
+}
+
+const getHomeLinkIndex = (state, link) => {
+	const datasetIndex = Number(link.dataset.homeSlideIndex)
+	if (Number.isInteger(datasetIndex) && datasetIndex >= 0) {
+		return datasetIndex
+	}
+
+	return state.links.indexOf(link)
+}
+
+const initHomeCardEmbla = (card) => {
+	const state = getHomeCardState(card)
+	const media = card.querySelector(HOME_FABRIC_MEDIA_SELECTOR)
+	if (!media) {
+		return
+	}
+
+	const viewport = media.querySelector(HOME_FABRIC_EMBLA_VIEWPORT_SELECTOR)
+	if (!viewport) {
+		return
+	}
+
+	destroyHomeCardEmbla(card)
+
+	const slideCount = media.querySelectorAll(HOME_FABRIC_EMBLA_SLIDE_SELECTOR).length
+	if (slideCount <= 1 || typeof EmblaCarousel !== 'function') {
+		setHomeCardByIndex(card, 0, { jump: true })
+		return
+	}
+
+	state.emblaApi = EmblaCarousel(viewport, {
+		axis: 'y',
+		loop: true,
+		align: 'start',
+		containScroll: false,
+		dragFree: false,
+		duration: homeReducedMotion ? 20 : 32,
+	})
+
+	const syncSelection = () => {
+		if (!state.emblaApi) {
+			return
+		}
+
+		setHomeActiveKitchenLink(card, state.emblaApi.selectedScrollSnap())
+	}
+
+	state.emblaApi.on('select', syncSelection)
+	state.emblaApi.on('reInit', syncSelection)
+	syncSelection()
 }
 
 const shouldHomeCardAutoplay = (card) => {
-	const state = getHomeCardState(card)
-	if (state.links.length <= 1) {
+	if (homeReducedMotion) {
 		return false
 	}
 
-	if (state.isPointerInside || state.isFocusInside) {
+	const state = getHomeCardState(card)
+	if (!state.emblaApi || getHomeSlideCount(state) <= 1) {
+		return false
+	}
+
+	if (!state.isPointerInside && !state.isFocusInside) {
 		return false
 	}
 
@@ -238,74 +255,35 @@ const advanceHomeCardAutoplay = (card) => {
 	}
 
 	const state = getHomeCardState(card)
-	const nextIndex = state.activeIndex + 1
-	setHomeCardByIndex(card, nextIndex)
+	state.emblaApi.scrollNext()
 }
 
-const setupHomeCardAutoplay = (card, order) => {
-	clearHomeAutoplay(card)
+const queueHomeCardAutoplay = (card, delay = HOME_AUTOPLAY_INTERVAL_MS) => {
+	clearHomeCardAutoplay(card)
+
+	if (!shouldHomeCardAutoplay(card)) {
+		return
+	}
+
 	const state = getHomeCardState(card)
-	if (state.links.length <= 1) {
-		return
-	}
+	state.autoplayTimerId = window.setTimeout(() => {
+		state.autoplayTimerId = null
 
-	state.autoplayStartTimeoutId = window.setTimeout(() => {
-		advanceHomeCardAutoplay(card)
-		state.autoplayIntervalId = window.setInterval(() => {
-			advanceHomeCardAutoplay(card)
-		}, HOME_AUTOPLAY_INTERVAL_MS)
-	}, order * HOME_AUTOPLAY_STAGGER_MS)
-}
-
-const initHomeFabricsParallax = (listing) => {
-	if (homeFabricsParallaxCleanup) {
-		homeFabricsParallaxCleanup()
-		homeFabricsParallaxCleanup = null
-	}
-
-	if (homeReducedMotion || !listing) {
-		return
-	}
-
-	const mediaItems = Array.from(listing.querySelectorAll(HOME_FABRIC_MEDIA_SELECTOR))
-	if (!mediaItems.length) {
-		return
-	}
-
-	let ticking = false
-
-	const update = () => {
-		const viewportHeight = window.innerHeight || document.documentElement.clientHeight
-
-		mediaItems.forEach((media) => {
-			const mediaRect = media.getBoundingClientRect()
-			const progress = clamp((viewportHeight - mediaRect.top) / (viewportHeight + mediaRect.height), 0, 1)
-			const parallaxY = (progress - 0.5) * 80
-			const parallaxScale = progress * 0.05
-
-			media.style.setProperty('--home-fabric-parallax-y', `${parallaxY.toFixed(2)}px`)
-			media.style.setProperty('--home-fabric-parallax-scale', parallaxScale.toFixed(4))
-		})
-
-		ticking = false
-	}
-
-	const onScroll = () => {
-		if (ticking) {
+		if (!shouldHomeCardAutoplay(card)) {
 			return
 		}
 
-		ticking = true
-		window.requestAnimationFrame(update)
-	}
+		advanceHomeCardAutoplay(card)
+		queueHomeCardAutoplay(card, HOME_AUTOPLAY_INTERVAL_MS)
+	}, delay)
+}
 
-	update()
-	window.addEventListener('scroll', onScroll, { passive: true })
-	window.addEventListener('resize', onScroll)
+const setupHomeCardAutoplay = (card) => {
+	clearHomeCardAutoplay(card)
+	const state = getHomeCardState(card)
 
-	homeFabricsParallaxCleanup = () => {
-		window.removeEventListener('scroll', onScroll)
-		window.removeEventListener('resize', onScroll)
+	if (homeReducedMotion || !state.emblaApi || getHomeSlideCount(state) <= 1) {
+		return
 	}
 }
 
@@ -453,6 +431,11 @@ const setExpandedHomeCard = (row, targetCard) => {
 }
 
 const initHomeFabrics = () => {
+	if (homeFabricsEmblaCleanup) {
+		homeFabricsEmblaCleanup()
+		homeFabricsEmblaCleanup = null
+	}
+
 	const listing = document.querySelector(HOME_FABRICS_SELECTOR)
 	if (!listing) {
 		return
@@ -467,16 +450,32 @@ const initHomeFabrics = () => {
 		return
 	}
 
-	initHomeFabricsParallax(listing)
+	let homeEmblaInitializedCount = 0
 
-	cards.forEach((card, index) => {
+	const cardCleanupHandlers = []
+
+	cards.forEach((card) => {
 		getHomeCardState(card)
 		applyHomeCardLayout(card, 'default')
-		resetHomeFabricImage(card)
 		resetHomeActiveKitchenLink(card)
 		setHomeCardToggleState(card, false)
-		setupHomeCardAutoplay(card, index)
+		initHomeCardEmbla(card)
+		setupHomeCardAutoplay(card)
+		homeEmblaInitializedCount += 1
+
+		cardCleanupHandlers.push(() => {
+			clearHomeCardAutoplay(card)
+			destroyHomeCardEmbla(card)
+		})
 	})
+
+	if (HOME_EMBLA_DEBUG) {
+		console.info('[home embla debug] initialized immediately', {
+			totalCards: cards.length,
+			initializedCards: homeEmblaInitializedCount,
+			hasIntersectionObserverInit: false,
+		})
+	}
 
 	const onKitchenHover = (event) => {
 		const link = event.target.closest(HOME_FABRIC_KITCHEN_LINK_SELECTOR)
@@ -490,92 +489,11 @@ const initHomeFabrics = () => {
 		}
 
 		const state = getHomeCardState(card)
+		const linkIndex = getHomeLinkIndex(state, link)
 		state.isPointerInside = true
-		const linkIndex = state.links.indexOf(link)
+		queueHomeCardAutoplay(card)
 		if (linkIndex >= 0) {
 			setHomeCardByIndex(card, linkIndex)
-		}
-	}
-
-	const onKitchenLeave = (event) => {
-		const link = event.target.closest(HOME_FABRIC_KITCHEN_LINK_SELECTOR)
-		if (!link || !listing.contains(link)) {
-			return
-		}
-
-		const card = link.closest(HOME_FABRIC_CARD_SELECTOR)
-		if (!card) {
-			return
-		}
-
-		if (card.contains(event.relatedTarget)) {
-			return
-		}
-
-		if (card.classList.contains('is-expanded')) {
-			return
-		}
-
-		setHomeCardByIndex(card, 0)
-	}
-
-	const onCardMouseOver = (event) => {
-		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
-		if (!card || !listing.contains(card)) {
-			return
-		}
-
-		if (card.contains(event.relatedTarget)) {
-			return
-		}
-
-		const state = getHomeCardState(card)
-		state.isPointerInside = true
-	}
-
-	const onCardMouseOut = (event) => {
-		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
-		if (!card || !listing.contains(card)) {
-			return
-		}
-
-		if (card.contains(event.relatedTarget)) {
-			return
-		}
-
-		const state = getHomeCardState(card)
-		state.isPointerInside = false
-
-		if (!card.classList.contains('is-expanded')) {
-			setHomeCardByIndex(card, 0)
-		}
-	}
-
-	const onCardFocusIn = (event) => {
-		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
-		if (!card || !listing.contains(card)) {
-			return
-		}
-
-		const state = getHomeCardState(card)
-		state.isFocusInside = true
-	}
-
-	const onCardFocusOut = (event) => {
-		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
-		if (!card || !listing.contains(card)) {
-			return
-		}
-
-		if (card.contains(event.relatedTarget)) {
-			return
-		}
-
-		const state = getHomeCardState(card)
-		state.isFocusInside = false
-
-		if (!card.classList.contains('is-expanded')) {
-			setHomeCardByIndex(card, 0)
 		}
 	}
 
@@ -602,6 +520,64 @@ const initHomeFabrics = () => {
 		setExpandedHomeCard(row, card)
 	}
 
+	const onCardMouseOver = (event) => {
+		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
+		if (!card || !listing.contains(card)) {
+			return
+		}
+
+		if (card.contains(event.relatedTarget)) {
+			return
+		}
+
+		const state = getHomeCardState(card)
+		state.isPointerInside = true
+		queueHomeCardAutoplay(card)
+	}
+
+	const onCardMouseOut = (event) => {
+		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
+		if (!card || !listing.contains(card)) {
+			return
+		}
+
+		if (card.contains(event.relatedTarget)) {
+			return
+		}
+
+		const state = getHomeCardState(card)
+		state.isPointerInside = false
+		clearHomeCardAutoplay(card)
+		queueHomeCardAutoplay(card)
+	}
+
+	const onCardFocusIn = (event) => {
+		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
+		if (!card || !listing.contains(card)) {
+			return
+		}
+
+		const state = getHomeCardState(card)
+		state.isFocusInside = true
+		queueHomeCardAutoplay(card)
+	}
+
+	const onCardFocusOut = (event) => {
+		const card = event.target.closest(HOME_FABRIC_CARD_SELECTOR)
+		if (!card || !listing.contains(card)) {
+			return
+		}
+
+		if (card.contains(event.relatedTarget)) {
+			return
+		}
+
+		const state = getHomeCardState(card)
+		state.isFocusInside = false
+		clearHomeCardAutoplay(card)
+		queueHomeCardAutoplay(card)
+	}
+
 	const onToggleClick = (event) => {
 		const toggle = event.target.closest(HOME_FABRIC_TOGGLE_SELECTOR)
 		if (!toggle || !listing.contains(toggle)) {
@@ -623,14 +599,16 @@ const initHomeFabrics = () => {
 
 	listing.addEventListener('mouseover', onKitchenHover)
 	listing.addEventListener('focusin', onKitchenHover)
-	listing.addEventListener('mouseout', onKitchenLeave)
-	listing.addEventListener('focusout', onKitchenLeave)
 	listing.addEventListener('mouseover', onCardMouseOver)
 	listing.addEventListener('mouseout', onCardMouseOut)
 	listing.addEventListener('focusin', onCardFocusIn)
 	listing.addEventListener('focusout', onCardFocusOut)
 	listing.addEventListener('click', onCardImageClick)
 	listing.addEventListener('click', onToggleClick)
+
+	homeFabricsEmblaCleanup = () => {
+		cardCleanupHandlers.forEach((cleanup) => cleanup())
+	}
 
 	listing.dataset.homeFabricsBound = 'true'
 }

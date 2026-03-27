@@ -1,0 +1,92 @@
+Title: Производство
+
+----
+
+Benefits-heading: 
+
+----
+
+Benefits-items:
+
+- 
+  image:
+    - file://e8dbv7mlhwcgok01
+  alt: ""
+  title: Быстрая доставка
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus leo eu aenean
+- 
+  image:
+    - file://vzhckxmwai6o1nlw
+  alt: ""
+  title: КМВ это наш дом
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus leo eu aenean
+- 
+  image:
+    - file://qy6i0dkwopaugqqw
+  alt: ""
+  title: >
+    Профессионалы своего
+    дела
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus leo eu aenean
+- 
+  image:
+    - file://gymlzbkqpk0xi6ik
+  alt: ""
+  title: >
+    Ко всему подходим с
+    любовью
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus leo eu aenean
+
+----
+
+Gallery-heading:
+
+Слава цеху! Слава героям труда!
+
+----
+
+Gallery-autoplay: true
+
+----
+
+Gallery-images:
+
+- file://dbd2e8suzd9asczh
+- file://5jknppkrmlox94y7
+- file://pnz5hqinrwfzhw6r
+
+----
+
+Cta-heading: 
+
+----
+
+Cta-text: 
+
+----
+
+Cta-button: 
+
+----
+
+Uuid: dxean4jcsh24ffow

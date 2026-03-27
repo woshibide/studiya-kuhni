@@ -2,6 +2,14 @@ Title: Главная
 
 ----
 
+Hero-heading: 
+
+----
+
+Hero-words: 
+
+----
+
 Gallery-heading: Для Кого
 
 ----
@@ -25,7 +33,8 @@ Benefits-heading:
 Benefits-items:
 
 - 
-  image: [ ]
+  image:
+    - file://rrqdydelhhl7tvmq
   alt: ""
   title: >
     Работаем со всем
@@ -37,7 +46,8 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus.
 - 
-  image: [ ]
+  image:
+    - file://ns2euefphcpqn8ek
   alt: ""
   title: >
     Занимаемся кухнями 00
@@ -49,8 +59,11 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus.
 - 
-  image: [ ]
-  alt: ""
+  image:
+    - file://7twacghu9qrji5mu
+  alt: >
+    иконка кавказских
+    минеральных вод
   title: >
     Кавказские
     Минеральные Воды это
@@ -72,7 +85,9 @@ Cta-warmup-text: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque 
 
 ----
 
-Cta-heading: Созрели для новой кухни?
+Cta-heading:
+
+Созрели для новой кухни?
 
 ----
 
@@ -80,7 +95,7 @@ Cta-text: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibu
 
 ----
 
-Cta-button: Узнать подробности
+Cta-button: Оставить заявку
 
 ----
 

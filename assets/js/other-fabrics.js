@@ -3,13 +3,13 @@ const OTHER_FABRICS_SELECTOR = '.other-fabrics-section .fabric-grid';
 const OTHER_FABRIC_CARD_SELECTOR = '[data-fabric-card]';
 const OTHER_FABRIC_MEDIA_SELECTOR = '.fabric-card__media';
 const OTHER_FABRIC_KITCHEN_LINK_SELECTOR = 'a[data-fabric-image]';
-const OTHER_FABRICS_AUTOPLAY_INTERVAL_MS = 4600;
-const OTHER_FABRICS_AUTOPLAY_STAGGER_MS = 520;
-const OTHER_FABRICS_IMAGE_FADE_OUT_MS = 180;
+const OTHER_FABRIC_EMBLA_VIEWPORT_SELECTOR = '[data-other-embla-viewport]';
+const OTHER_FABRIC_EMBLA_SLIDE_SELECTOR = '.fabric-card__media-slide';
+const OTHER_FABRICS_AUTOPLAY_INTERVAL_MS = 3000;
+const OTHER_FABRICS_EMBLA_DEBUG = window.location.search.includes('emblaDebug=1') || window.localStorage.getItem('emblaDebug') === '1';
 const otherFabricsReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const otherFabricsCardState = new WeakMap();
-
-const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+let otherFabricsCleanup = null;
 
 const getOtherFabricCardState = (card) => {
     if (otherFabricsCardState.has(card)) {
@@ -19,64 +19,54 @@ const getOtherFabricCardState = (card) => {
     const links = Array.from(card.querySelectorAll(OTHER_FABRIC_KITCHEN_LINK_SELECTOR));
     const state = {
         links,
-        activeIndex: links.length ? 0 : -1,
+        activeIndex: 0,
         isPointerInside: false,
         isFocusInside: false,
-        autoplayStartTimeoutId: null,
-        autoplayIntervalId: null,
-        imageSwapTimeoutId: null,
+        emblaApi: null,
+        autoplayTimerId: null,
     };
 
     otherFabricsCardState.set(card, state);
     return state;
 };
 
-const setOtherFabricImage = (card, imageUrl, options = {}) => {
-    const { animate = true } = options;
-    const media = card.querySelector(OTHER_FABRIC_MEDIA_SELECTOR);
-    if (!media || !imageUrl) {
-        return;
-    }
-
+const destroyOtherFabricEmbla = (card) => {
     const state = getOtherFabricCardState(card);
-
-    if (media.dataset.currentImage === imageUrl) {
-        return;
+    if (state.emblaApi) {
+        state.emblaApi.destroy();
+        state.emblaApi = null;
     }
-
-    if (!animate || otherFabricsReducedMotion) {
-        media.style.backgroundImage = `url("${imageUrl.replace(/"/g, '\\"')}")`;
-        media.dataset.currentImage = imageUrl;
-        media.classList.remove('is-image-fading');
-
-        if (state.imageSwapTimeoutId) {
-            window.clearTimeout(state.imageSwapTimeoutId);
-            state.imageSwapTimeoutId = null;
-        }
-
-        return;
-    }
-
-    if (state.imageSwapTimeoutId) {
-        window.clearTimeout(state.imageSwapTimeoutId);
-    }
-
-    media.classList.add('is-image-fading');
-    state.imageSwapTimeoutId = window.setTimeout(() => {
-        media.style.backgroundImage = `url("${imageUrl.replace(/"/g, '\\"')}")`;
-        media.dataset.currentImage = imageUrl;
-        window.requestAnimationFrame(() => {
-            media.classList.remove('is-image-fading');
-        });
-        state.imageSwapTimeoutId = null;
-    }, OTHER_FABRICS_IMAGE_FADE_OUT_MS);
 };
 
-const setOtherFabricActiveKitchenLink = (card, activeLink) => {
+const clearOtherFabricAutoplay = (card) => {
     const state = getOtherFabricCardState(card);
+    if (state.autoplayTimerId) {
+        window.clearTimeout(state.autoplayTimerId);
+        state.autoplayTimerId = null;
+    }
+};
 
-    state.links.forEach((link) => {
-        const isActive = link === activeLink;
+const getOtherFabricSlideCount = (state) => {
+    if (!state.emblaApi) {
+        return 0;
+    }
+
+    return state.emblaApi.scrollSnapList().length;
+};
+
+const setOtherFabricActiveKitchenLink = (card, activeIndex) => {
+    const state = getOtherFabricCardState(card);
+    if (!state.links.length) {
+        state.activeIndex = 0;
+        return;
+    }
+
+    const normalizedIndex = state.links.length === 1
+        ? 0
+        : ((activeIndex % state.links.length) + state.links.length) % state.links.length;
+
+    state.links.forEach((link, index) => {
+        const isActive = index === normalizedIndex;
         link.classList.toggle('is-active', isActive);
 
         if (isActive) {
@@ -86,14 +76,11 @@ const setOtherFabricActiveKitchenLink = (card, activeLink) => {
         }
     });
 
-    const nextIndex = state.links.indexOf(activeLink);
-    if (nextIndex >= 0) {
-        state.activeIndex = nextIndex;
-    }
+    state.activeIndex = normalizedIndex;
 };
 
 const setOtherFabricCardByIndex = (card, index, options = {}) => {
-    const { animate = true } = options;
+    const { jump = false } = options;
     const state = getOtherFabricCardState(card);
 
     if (!state.links.length) {
@@ -101,38 +88,80 @@ const setOtherFabricCardByIndex = (card, index, options = {}) => {
     }
 
     const normalized = ((index % state.links.length) + state.links.length) % state.links.length;
-    const targetLink = state.links[normalized];
+    setOtherFabricActiveKitchenLink(card, normalized);
 
-    setOtherFabricActiveKitchenLink(card, targetLink);
-    setOtherFabricImage(card, targetLink.dataset.fabricImage || card.dataset.defaultImage || '/assets/placeholder.svg', { animate });
+    if (state.emblaApi) {
+        state.emblaApi.scrollTo(normalized, jump);
+    }
 };
 
 const resetOtherFabricCard = (card) => {
-    setOtherFabricCardByIndex(card, 0, { animate: false });
+    setOtherFabricCardByIndex(card, 0, { jump: true });
 };
 
-const clearOtherFabricAutoplay = (card) => {
+const getOtherFabricLinkIndex = (state, link) => {
+    const datasetIndex = Number(link.dataset.otherSlideIndex);
+    if (Number.isInteger(datasetIndex) && datasetIndex >= 0) {
+        return datasetIndex;
+    }
+
+    return state.links.indexOf(link);
+};
+
+const initOtherFabricEmbla = (card) => {
     const state = getOtherFabricCardState(card);
-
-    if (state.autoplayStartTimeoutId) {
-        window.clearTimeout(state.autoplayStartTimeoutId);
-        state.autoplayStartTimeoutId = null;
+    const media = card.querySelector(OTHER_FABRIC_MEDIA_SELECTOR);
+    if (!media) {
+        return;
     }
 
-    if (state.autoplayIntervalId) {
-        window.clearInterval(state.autoplayIntervalId);
-        state.autoplayIntervalId = null;
+    const viewport = media.querySelector(OTHER_FABRIC_EMBLA_VIEWPORT_SELECTOR);
+    if (!viewport) {
+        return;
     }
+
+    destroyOtherFabricEmbla(card);
+
+    const slideCount = media.querySelectorAll(OTHER_FABRIC_EMBLA_SLIDE_SELECTOR).length;
+    if (slideCount <= 1 || typeof EmblaCarousel !== 'function') {
+        resetOtherFabricCard(card);
+        return;
+    }
+
+    state.emblaApi = EmblaCarousel(viewport, {
+        axis: 'y',
+        loop: true,
+        align: 'start',
+        containScroll: false,
+        dragFree: false,
+        duration: otherFabricsReducedMotion ? 20 : 32,
+    });
+
+    const syncSelection = () => {
+        if (!state.emblaApi) {
+            return;
+        }
+
+        setOtherFabricActiveKitchenLink(card, state.emblaApi.selectedScrollSnap());
+    };
+
+    state.emblaApi.on('select', syncSelection);
+    state.emblaApi.on('reInit', syncSelection);
+    syncSelection();
 };
 
 const shouldOtherFabricAutoplay = (card) => {
-    const state = getOtherFabricCardState(card);
-
-    if (state.links.length <= 1) {
+    if (otherFabricsReducedMotion) {
         return false;
     }
 
-    if (state.isPointerInside || state.isFocusInside) {
+    const state = getOtherFabricCardState(card);
+
+    if (!state.emblaApi || getOtherFabricSlideCount(state) <= 1) {
+        return false;
+    }
+
+    if (!state.isPointerInside && !state.isFocusInside) {
         return false;
     }
 
@@ -145,73 +174,50 @@ const advanceOtherFabricAutoplay = (card) => {
     }
 
     const state = getOtherFabricCardState(card);
-    setOtherFabricCardByIndex(card, state.activeIndex + 1);
+    state.emblaApi.scrollNext();
 };
 
-const setupOtherFabricAutoplay = (card, order) => {
+const queueOtherFabricAutoplay = (card, delay = OTHER_FABRICS_AUTOPLAY_INTERVAL_MS) => {
     clearOtherFabricAutoplay(card);
 
+    if (!shouldOtherFabricAutoplay(card)) {
+        return;
+    }
+
     const state = getOtherFabricCardState(card);
-    if (state.links.length <= 1) {
-        return;
-    }
+    state.autoplayTimerId = window.setTimeout(() => {
+        state.autoplayTimerId = null;
 
-    state.autoplayStartTimeoutId = window.setTimeout(() => {
-        advanceOtherFabricAutoplay(card);
-
-        state.autoplayIntervalId = window.setInterval(() => {
-            advanceOtherFabricAutoplay(card);
-        }, OTHER_FABRICS_AUTOPLAY_INTERVAL_MS);
-    }, order * OTHER_FABRICS_AUTOPLAY_STAGGER_MS);
-};
-
-const initOtherFabricsParallax = (grid) => {
-    if (otherFabricsReducedMotion || !grid) {
-        return;
-    }
-
-    const mediaItems = Array.from(grid.querySelectorAll(OTHER_FABRIC_MEDIA_SELECTOR));
-    if (!mediaItems.length) {
-        return;
-    }
-
-    let ticking = false;
-
-    const update = () => {
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-        mediaItems.forEach((media) => {
-            const mediaRect = media.getBoundingClientRect();
-            const progress = clamp((viewportHeight - mediaRect.top) / (viewportHeight + mediaRect.height), 0, 1);
-            const parallaxY = (progress - 0.5) * 80;
-            const parallaxScale = progress * 0.05;
-
-            media.style.setProperty('--other-fabric-parallax-y', `${parallaxY.toFixed(2)}px`);
-            media.style.setProperty('--other-fabric-parallax-scale', parallaxScale.toFixed(4));
-        });
-
-        ticking = false;
-    };
-
-    const onScroll = () => {
-        if (ticking) {
+        if (!shouldOtherFabricAutoplay(card)) {
             return;
         }
 
-        ticking = true;
-        window.requestAnimationFrame(update);
-    };
+        advanceOtherFabricAutoplay(card);
+        queueOtherFabricAutoplay(card, OTHER_FABRICS_AUTOPLAY_INTERVAL_MS);
+    }, delay);
+};
 
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+const setupOtherFabricAutoplay = (card) => {
+    clearOtherFabricAutoplay(card);
+
+    const state = getOtherFabricCardState(card);
+    if (otherFabricsReducedMotion || !state.emblaApi || getOtherFabricSlideCount(state) <= 1) {
+        return;
+    }
 };
 
 const initOtherFabrics = () => {
+    if (otherFabricsCleanup) {
+        otherFabricsCleanup();
+        otherFabricsCleanup = null;
+    }
+
     const grids = Array.from(document.querySelectorAll(OTHER_FABRICS_SELECTOR));
     if (!grids.length) {
         return;
     }
+
+    const cleanupHandlers = [];
 
     grids.forEach((grid) => {
         if (grid.dataset.otherFabricsBound === 'true') {
@@ -223,15 +229,30 @@ const initOtherFabrics = () => {
             return;
         }
 
-        initOtherFabricsParallax(grid);
+        let otherEmblaInitializedCount = 0;
 
-        cards.forEach((card, index) => {
+        cards.forEach((card) => {
             getOtherFabricCardState(card);
+            initOtherFabricEmbla(card);
             resetOtherFabricCard(card);
-            setupOtherFabricAutoplay(card, index);
+            setupOtherFabricAutoplay(card);
+            otherEmblaInitializedCount += 1;
+
+            cleanupHandlers.push(() => {
+                clearOtherFabricAutoplay(card);
+                destroyOtherFabricEmbla(card);
+            });
         });
 
-        grid.addEventListener('mouseover', (event) => {
+        if (OTHER_FABRICS_EMBLA_DEBUG) {
+            console.info('[other fabrics embla debug] initialized immediately', {
+                totalCards: cards.length,
+                initializedCards: otherEmblaInitializedCount,
+                hasIntersectionObserverInit: false,
+            });
+        }
+
+        const onKitchenHover = (event) => {
             const link = event.target.closest(OTHER_FABRIC_KITCHEN_LINK_SELECTOR);
             if (!link || !grid.contains(link)) {
                 return;
@@ -244,14 +265,15 @@ const initOtherFabrics = () => {
 
             const state = getOtherFabricCardState(card);
             state.isPointerInside = true;
+            queueOtherFabricAutoplay(card);
 
-            const linkIndex = state.links.indexOf(link);
+            const linkIndex = getOtherFabricLinkIndex(state, link);
             if (linkIndex >= 0) {
                 setOtherFabricCardByIndex(card, linkIndex);
             }
-        });
+        };
 
-        grid.addEventListener('mouseover', (event) => {
+        const onCardMouseOver = (event) => {
             const card = event.target.closest(OTHER_FABRIC_CARD_SELECTOR);
             if (!card || !grid.contains(card)) {
                 return;
@@ -263,9 +285,10 @@ const initOtherFabrics = () => {
 
             const state = getOtherFabricCardState(card);
             state.isPointerInside = true;
-        });
+            queueOtherFabricAutoplay(card);
+        };
 
-        grid.addEventListener('mouseout', (event) => {
+        const onCardMouseOut = (event) => {
             const card = event.target.closest(OTHER_FABRIC_CARD_SELECTOR);
             if (!card || !grid.contains(card)) {
                 return;
@@ -277,10 +300,11 @@ const initOtherFabrics = () => {
 
             const state = getOtherFabricCardState(card);
             state.isPointerInside = false;
-            setOtherFabricCardByIndex(card, 0);
-        });
+            clearOtherFabricAutoplay(card);
+            queueOtherFabricAutoplay(card);
+        };
 
-        grid.addEventListener('focusin', (event) => {
+        const onCardFocusIn = (event) => {
             const card = event.target.closest(OTHER_FABRIC_CARD_SELECTOR);
             if (!card || !grid.contains(card)) {
                 return;
@@ -288,29 +312,20 @@ const initOtherFabrics = () => {
 
             const state = getOtherFabricCardState(card);
             state.isFocusInside = true;
+            queueOtherFabricAutoplay(card);
 
             const link = event.target.closest(OTHER_FABRIC_KITCHEN_LINK_SELECTOR);
             if (!link) {
                 return;
             }
 
-            const linkIndex = state.links.indexOf(link);
+            const linkIndex = getOtherFabricLinkIndex(state, link);
             if (linkIndex >= 0) {
                 setOtherFabricCardByIndex(card, linkIndex);
             }
-        });
+        };
 
-        grid.addEventListener('focusin', (event) => {
-            const card = event.target.closest(OTHER_FABRIC_CARD_SELECTOR);
-            if (!card || !grid.contains(card)) {
-                return;
-            }
-
-            const state = getOtherFabricCardState(card);
-            state.isFocusInside = true;
-        });
-
-        grid.addEventListener('focusout', (event) => {
+        const onCardFocusOut = (event) => {
             const card = event.target.closest(OTHER_FABRIC_CARD_SELECTOR);
             if (!card || !grid.contains(card)) {
                 return;
@@ -322,11 +337,32 @@ const initOtherFabrics = () => {
 
             const state = getOtherFabricCardState(card);
             state.isFocusInside = false;
-            setOtherFabricCardByIndex(card, 0);
+            clearOtherFabricAutoplay(card);
+            queueOtherFabricAutoplay(card);
+        };
+
+        grid.addEventListener('mouseover', onKitchenHover);
+        grid.addEventListener('focusin', onKitchenHover);
+        grid.addEventListener('mouseover', onCardMouseOver);
+        grid.addEventListener('mouseout', onCardMouseOut);
+        grid.addEventListener('focusin', onCardFocusIn);
+        grid.addEventListener('focusout', onCardFocusOut);
+
+        cleanupHandlers.push(() => {
+            grid.removeEventListener('mouseover', onKitchenHover);
+            grid.removeEventListener('focusin', onKitchenHover);
+            grid.removeEventListener('mouseover', onCardMouseOver);
+            grid.removeEventListener('mouseout', onCardMouseOut);
+            grid.removeEventListener('focusin', onCardFocusIn);
+            grid.removeEventListener('focusout', onCardFocusOut);
         });
 
         grid.dataset.otherFabricsBound = 'true';
     });
+
+    otherFabricsCleanup = () => {
+        cleanupHandlers.forEach((cleanup) => cleanup());
+    };
 };
 
 if (document.readyState === 'loading') {

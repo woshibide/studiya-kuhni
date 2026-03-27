@@ -1,0 +1,36 @@
+title: Архив
+
+tabs:
+  content:
+    label: Контент
+    sections:
+      hero_fields:
+        type: fields
+        fields:
+          title:
+            label: название страницы
+            type: text
+          simple_hero_heading:
+            label: заголовок simple hero
+            type: text
+            help: если пусто, используется название страницы
+          simple_hero_description:
+            label: описание simple hero
+            type: textarea
+            size: small
+            buttons: false
+          simple_hero_button_label:
+            label: текст кнопки simple hero
+            type: text
+            placeholder: давайте)
+
+  posts:
+    label: Посты
+    sections:
+      posts:
+        type: pages
+        headline: Посты
+        templates:
+          - archive-post
+        layout: cards
+

@@ -1,0 +1,29 @@
+Title: От Lab13 к постели
+
+----
+
+Intro: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.
+
+----
+
+Date: 2026-02-19
+
+----
+
+Location: Пятигорск
+
+----
+
+Showcase-kitchen: - page://baphbnkrc4ssisvq
+
+----
+
+Cover: - file://vlluxazzclrs5hus
+
+----
+
+Blocks: [{"content":{"location":"kirby","image":["file://ktgtrtb5qvtxgip0"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"31828b7e-e0e7-4287-8529-24e6eb4a3c45","isHidden":false,"type":"image"},{"content":{"level":"h2","text":"<strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.</strong>"},"id":"c112068c-c301-40fb-842a-b002009b87eb","isHidden":false,"type":"heading"},{"content":{"location":"kirby","image":["file://gln63slotrdd8gjx"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"b0017691-9bb5-459f-ba6e-1d82c005a0a6","isHidden":false,"type":"image"},{"content":{"location":"kirby","image":["file://tdq4iihfy2wvp8t2"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"f37510f0-e6b9-456f-bb44-4ff4d2bbb665","isHidden":false,"type":"image"},{"content":{"text":"<p><strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </strong></p>"},"id":"bf539f4d-b0de-4247-a4aa-6d0de26c25a1","isHidden":false,"type":"text"},{"content":{"location":"kirby","image":["file://vlluxazzclrs5hus"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"e3b645bd-43b3-4974-a44b-71863a1f45a9","isHidden":false,"type":"image"},{"content":{"images":["file://ktgtrtb5qvtxgip0","file://gln63slotrdd8gjx","file://vlluxazzclrs5hus","file://tdq4iihfy2wvp8t2"],"caption":"","ratio":"","crop":"false"},"id":"395daa21-cfaa-4878-a584-740467f2bb62","isHidden":false,"type":"gallery"}]
+
+----
+
+Uuid: 4zx3cwabe6qfb8di

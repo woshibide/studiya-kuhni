@@ -1,0 +1,29 @@
+Title: Маленькие радости ночи с Atelier
+
+----
+
+Intro: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.
+
+----
+
+Date: 2026-02-19
+
+----
+
+Location: Ессентуки
+
+----
+
+Showcase-kitchen: - page://knqok2sf5m1qlzdj
+
+----
+
+Cover: - file://biajcqep0nejmnt6
+
+----
+
+Blocks: [{"content":{"location":"kirby","image":["file://biajcqep0nejmnt6"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"b1a34811-9e69-4ce1-9f65-cc50802a1972","isHidden":false,"type":"image"},{"content":{"text":"<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </p>"},"id":"84308c97-9983-48a5-ab80-fe44c5f2015b","isHidden":false,"type":"text"},{"content":{"location":"kirby","image":["file://p7gs7snrftxk6u83"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"dceb6117-bd9e-432b-ab7e-0b1ea75faa46","isHidden":false,"type":"image"},{"content":{"location":"kirby","image":["file://5chw3mjpecnhlx2s"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"ace10afb-5cf6-4654-b46a-d3a44622e29d","isHidden":false,"type":"image"},{"content":{"level":"h2","text":"Lorem ipsum dolor sit amet consectetur adipisicing elit."},"id":"476b7500-f7a1-44b3-b37b-f5f3a0672c1f","isHidden":false,"type":"heading"},{"content":{"location":"kirby","image":["file://fyndnkrx18ogixhd"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"93d15b5c-022e-4d49-9efd-9e2fdb558d8f","isHidden":false,"type":"image"},{"content":{"text":"<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </p>"},"id":"bcf14acb-8e23-4af1-9391-95ae8d8a5224","isHidden":false,"type":"text"},{"content":{"location":"kirby","image":["file://6jdrukkz89wucg6b"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"3d623390-5765-4315-8014-4e184b14a978","isHidden":false,"type":"image"},{"content":{"location":"kirby","image":["file://eftmvugbs9xg8ems"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"1da92ed9-01f1-4568-b471-c2fb8928dcdd","isHidden":false,"type":"image"},{"content":{"images":["file://biajcqep0nejmnt6","file://p7gs7snrftxk6u83","file://5chw3mjpecnhlx2s","file://fyndnkrx18ogixhd","file://6jdrukkz89wucg6b","file://eftmvugbs9xg8ems"],"caption":"","ratio":"","crop":"false"},"id":"e0caf432-8d5b-4074-be9a-1d9781d071a0","isHidden":false,"type":"gallery"}]
+
+----
+
+Uuid: skgwquvwm3xmnwko

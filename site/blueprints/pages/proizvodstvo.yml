@@ -1,6 +1,48 @@
 title: Proizvodstvo
 
 tabs:
+  content:
+    label: Контент
+    sections:
+      hero_fields:
+        type: fields
+        fields:
+          title:
+            label: название страницы
+            type: text
+          simple_hero_heading:
+            label: заголовок simple hero
+            type: text
+            help: если пусто, используется название страницы
+          simple_hero_description:
+            label: описание simple hero
+            type: textarea
+            size: small
+            buttons: false
+          simple_hero_button_label:
+            label: текст кнопки simple hero
+            type: text
+            placeholder: давайте)
+
+  benefits:
+    label: Преимущества
+    columns:
+      - width: 2/3
+        sections:
+          benefits_fields:
+            type: fields
+            fields:
+              benefits_heading:
+                label: заголовок преимуществ
+                type: text
+                default: Преимущества
+              benefits_items:
+                extends: fields/benefits
+      - width: 1/3
+        sections:
+          files:
+            type: files
+
   gallery:
     label: Галерея
     sections:
@@ -23,7 +65,7 @@ tabs:
           cta_heading:
             label: заголовок cta
             type: text
-            default: Call to Action
+            default: Отпразднуем вашу новую кухню?
           cta_text:
             label: текст cta
             type: textarea

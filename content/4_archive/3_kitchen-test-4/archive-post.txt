@@ -1,0 +1,29 @@
+Title: Там, где еда начинается с прогулки
+
+----
+
+Intro: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.
+
+----
+
+Date: 2026-02-19
+
+----
+
+Location: Пятигорск
+
+----
+
+Showcase-kitchen: - page://kovvbqmmg3tuvmel
+
+----
+
+Cover: - file://zaypbzfjbstotjtz
+
+----
+
+Blocks: [{"content":{"location":"kirby","image":["file://m9dbvpygrw9xqbzi"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"7a21f25e-fbfd-4ac2-8a98-1b23302d03c3","isHidden":false,"type":"image"},{"content":{"level":"h2","text":"<strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </strong>"},"id":"d96feea2-3de4-446b-8e17-7e1ec3b9bfa1","isHidden":false,"type":"heading"},{"content":{"images":["file://596gm8pf4h8f9iww","file://zaypbzfjbstotjtz"],"caption":"","ratio":"","crop":"false"},"id":"0f4caba0-4db9-443f-a60b-fb1627df4822","isHidden":false,"type":"gallery"},{"content":{"location":"kirby","image":["file://imcac9qevzlnsteg"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"a2b1aac5-5759-49cc-bc9d-d5b46695bf0f","isHidden":false,"type":"image"},{"content":{"text":"<p><strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </strong></p><p><strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum. </strong></p>"},"id":"65f60ded-26b9-4950-a342-d6703036c4a5","isHidden":false,"type":"text"},{"content":{"location":"kirby","image":["file://vgcgqgsgeoewyswy"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":"false"},"id":"2c9874e5-65ef-4f7a-941f-d38bc7cfe38f","isHidden":false,"type":"image"},{"content":{"images":["file://vgcgqgsgeoewyswy","file://imcac9qevzlnsteg","file://596gm8pf4h8f9iww","file://zaypbzfjbstotjtz","file://m9dbvpygrw9xqbzi"],"caption":"","ratio":"","crop":"false"},"id":"fad76636-87f6-4159-bdfe-63cf94f75236","isHidden":false,"type":"gallery"}]
+
+----
+
+Uuid: er8d4fyl3zfih60i

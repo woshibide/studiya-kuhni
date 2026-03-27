@@ -1,12 +1,24 @@
 #brands.brands {
-	background: var(--jet-black);
-	color: var(--the-white);
-    /* min-height: 105vh; */
+	/* margin-top: var(--space-xl); */
+	
+	#brands-intro{
+		background-color: var(--jet-black);
+		width: calc(var(--grid-col) * 3 );
+		padding-right: var(--space-md);
+		color: var(--the-white);
+		padding: var(--space-sm);
+		margin: 0;
+		margin-left: calc((100vw - var(--the-width)) / 2);
 
+		/* font-size: var(--fs-lg); */
+	}
+	
 	.section-wrapper {
+		background: var(--jet-black);
+		color: var(--the-white);
 		display: grid;
 		/* gap: var(--fs-sm); */
-		margin-block: var(--space-xl);
+		margin-bottom: var(--space-xl);
 	}
 
 	h2 {

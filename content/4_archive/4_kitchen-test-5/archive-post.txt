@@ -1,0 +1,31 @@
+Title:
+
+Высокая кухня, скрытая от глаз
+
+----
+
+Intro: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.
+
+----
+
+Date: 2026-02-19
+
+----
+
+Location: КМВ
+
+----
+
+Showcase-kitchen: - page://exupvb7udhxgdwqj
+
+----
+
+Cover: - file://0hzbwyj6kmyna42i
+
+----
+
+Blocks: [{"content":{"images":["file://0hzbwyj6kmyna42i","file://xevdomyohtk1hust","file://acln7cwzegmbcr1o","file://ib7o5ygmfixyamtv","file://iesnecz5grsbq4qz","file://u6prrofo3fzjrq52"],"caption":"","ratio":"","crop":"false"},"id":"cf0e22cf-a34f-4d33-a1da-ee692942b075","isHidden":false,"type":"gallery"}]
+
+----
+
+Uuid: dtakyoby16kvfqsm

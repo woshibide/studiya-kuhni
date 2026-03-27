@@ -1,16 +1,22 @@
 <?php
-$galleryDebug = kirby()->option('debug') === true;
-
-$galleryHeading = 'Галерея';
-$galleryAutoplay = false;
+$galleryHeading = 'Привезти вам эту красотку?';
 $galleryImages = [];
+$isKitchenPage = $page->intendedTemplate()->name() === 'kuhnya';
 
-// prefer grouped gallery field if present, but keep legacy fallback for existing content
-if ($page->gallery()->isNotEmpty()) {
+if ($isKitchenPage) {
+    $galleryImages = $page->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+
+    if ($galleryImages->isEmpty()) {
+        $galleryImages = $page->images()
+            ->filterBy('type', 'image')
+            ->filter(function ($image) {
+                return strtolower($image->extension()) !== 'svg';
+            });
+    }
+} elseif ($page->gallery()->isNotEmpty()) {
     $galleryData = $page->gallery()->yaml();
     if (is_array($galleryData)) {
         $galleryHeading = $galleryData['gallery_heading'] ?? $galleryHeading;
-        $galleryAutoplay = filter_var(($galleryData['gallery_autoplay'] ?? false), FILTER_VALIDATE_BOOL);
 
         $imageIds = $galleryData['gallery_images'] ?? [];
         if (is_string($imageIds)) {
@@ -23,6 +29,7 @@ if ($page->gallery()->isNotEmpty()) {
                 if ($id === '') {
                     continue;
                 }
+
                 if ($file = $page->file($id)) {
                     $galleryImages[] = $file;
                 }
@@ -31,50 +38,93 @@ if ($page->gallery()->isNotEmpty()) {
     }
 } else {
     $galleryHeading = $page->gallery_heading()->or($galleryHeading)->value();
-    $galleryAutoplay = $page->gallery_autoplay()->toBool();
-    $galleryImages = $page->gallery_images()->toFiles()->limit(6)->values();
+    $galleryImages = $page->gallery_images()->toFiles()->values();
 }
 
-// ensure max 6 and numeric keys for consistent js indexing
-$galleryImages = array_values(array_slice($galleryImages, 0, 6));
+$galleryImages = array_values(iterator_to_array($galleryImages));
 
-$fallbackUrl = '/assets/placeholder.svg';
-$firstImage = $galleryImages[0] ?? null;
-$mainUrl = $firstImage ? $firstImage->url() : $fallbackUrl;
-$mainAlt = $firstImage ? $firstImage->alt()->or('')->value() : '';
+if (empty($galleryImages)) {
+    return;
+}
+
+$kuhnyaTitle = trim((string)$page->title()->value());
+$fabricPage = $page->parent();
+$fabricsIndex = site()->find('fabrics');
+$kuhnyaBrand = $fabricPage ? $fabricPage->title()->value() : 'Название фабрики';
+$kuhnyaBrandUrl = $fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#');
+$kuhnyaCountry = trim((string)$page->country_of_origin()->value());
+$kuhnyaPrice = trim((string)$page->price()->value());
 ?>
 
 <div class="section-wrapper" id="gallery">
     <h2><?= esc($galleryHeading) ?></h2>
+    <p style="max-width: 75ch; margin-bottom: var(--space-sm);">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.</p>
 
-    <div
-        class="gallery"
-        data-gallery
-        data-gallery-autoplay="<?= $galleryAutoplay ? 'true' : 'false' ?>"
-        data-gallery-debug="<?= $galleryDebug ? 'true' : 'false' ?>"
-        data-gallery-count="<?= (int)count($galleryImages) ?>"
-    >
-        <div class="gallery__main" data-gallery-main>
-            <img src="<?= esc($mainUrl) ?>" alt="<?= esc($mainAlt) ?>" data-gallery-main-img>
-        </div>
+    <div class="gallery" data-gallery data-gallery-count="<?= (int)count($galleryImages) ?>">
+        <figure class="gallery-inline">
+            <ul class="gallery-inline__list" data-gallery-list>
+                <?php foreach ($galleryImages as $index => $image): ?>
+                    <li class="gallery-inline__item">
+                        <button
+                            type="button"
+                            class="gallery-inline__trigger"
+                            data-gallery-open
+                            data-index="<?= (int)$index ?>"
+                            aria-label="Открыть изображение <?= (int)$index + 1 ?>"
+                        >
+                            <img src="<?= esc($image->url(), 'attr') ?>" alt="<?= esc($image->alt()->or($kuhnyaTitle)->value(), 'attr') ?>">
+                        </button>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </figure>
 
-        <?php if (count($galleryImages) > 1): ?>
-            <div class="gallery__thumbs embla" data-gallery-embla>
-                <div class="embla__viewport" data-gallery-embla-viewport>
-                    <div class="embla__container">
-                        <?php foreach ($galleryImages as $index => $image): ?>
-                            <button
-                                type="button"
-                                class="embla__slide gallery__thumb"
-                                data-gallery-thumb
-                                data-index="<?= (int)$index ?>"
-                            >
-                                <img src="<?= esc($image->url()) ?>" alt="<?= esc($image->alt()->or('')->value()) ?>">
-                            </button>
-                        <?php endforeach ?>
+        <div class="gallery-overlay" data-gallery-overlay aria-hidden="true" hidden>
+            <div class="gallery-overlay__backdrop" data-gallery-close></div>
+            <div class="gallery-overlay__layout">
+                <button class="gallery-overlay__nav gallery-overlay__nav--prev" type="button" data-gallery-prev aria-label="Предыдущее изображение">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.41 12l5.3 5.3a1 1 0 1 1-1.42 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0Z" fill="currentColor" />
+                    </svg>
+                </button>
+
+                <div class="gallery-overlay__main embla" data-gallery-overlay-embla>
+                    <div class="gallery-overlay__viewport" data-gallery-overlay-viewport>
+                        <div class="gallery-overlay__container">
+                            <?php foreach ($galleryImages as $image): ?>
+                                <div class="gallery-overlay__slide">
+                                    <div class="gallery-overlay__image-frame">
+                                        <img src="<?= esc($image->url(), 'attr') ?>" alt="<?= esc($image->alt()->or($kuhnyaTitle)->value(), 'attr') ?>">
+                                        <button class="gallery-overlay__close" type="button" data-gallery-close aria-label="Закрыть галерею">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                                <path d="M6.7 5.3a1 1 0 0 1 1.4 0L12 9.17l3.9-3.87a1 1 0 0 1 1.4 1.4L13.42 10.6l3.88 3.9a1 1 0 1 1-1.4 1.4L12 12.02l-3.9 3.88a1 1 0 0 1-1.4-1.4l3.88-3.9L6.7 6.7a1 1 0 0 1 0-1.4Z" fill="currentColor" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
+                        </div>
                     </div>
+
+                    <?php if ($isKitchenPage): ?>
+                        <div class="gallery-overlay__meta">
+                            <p class="gallery-overlay__titleline">
+                                <?= esc($kuhnyaBrand) ?> / <?= esc($kuhnyaTitle) ?>
+                            </p>
+                            <button class="gallery-overlay__cta hover-underline" type="button" data-open-nav-contact>
+                                узнать подробности
+                            </button>
+                        </div>
+                    <?php endif ?>
                 </div>
+
+                <button class="gallery-overlay__nav gallery-overlay__nav--next" type="button" data-gallery-next aria-label="Следующее изображение">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M9.3 18.7a1 1 0 0 1 0-1.4l5.29-5.3-5.3-5.3a1 1 0 0 1 1.42-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0Z" fill="currentColor" />
+                    </svg>
+                </button>
+
             </div>
-        <?php endif ?>
+        </div>
     </div>
 </div>

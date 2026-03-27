@@ -82,7 +82,7 @@ tabs:
               callback_email_placeholder:
                 label: placeholder поля email
                 type: text
-                default: Электронная почта?
+                default: Электронная почта? (Опционально)
               consent_text:
                 label: текст согласия
                 type: textarea

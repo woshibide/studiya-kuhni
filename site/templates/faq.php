@@ -3,7 +3,7 @@
 <main id="swup" class="transition-fade">
   
   <section>
-
+    <?php snippet('simple-hero') ?>
   </section>
 
   <?php if ($page->text()->isNotEmpty()): ?>
@@ -16,10 +16,7 @@
     <?php snippet('faq-section') ?>
   </section>
 
-  <section>
-    <?php snippet('cta') ?>
-  </section>
-
+  <?php snippet('cta') ?>
 
 </main>
 

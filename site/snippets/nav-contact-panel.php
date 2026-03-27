@@ -2,10 +2,6 @@
 $contactsPage = page('contacts');
 
 $panelTitle = $contactsPage ? $contactsPage->panel_title()->value() : '';
-$panelCloseText = $contactsPage ? $contactsPage->panel_close_text()->value() : '';
-$panelCloseAriaLabel = $contactsPage ? $contactsPage->panel_close_aria_label()->value() : '';
-
-$helpTitle = $contactsPage ? $contactsPage->help_title()->value() : '';
 $phone = $contactsPage ? trim((string)$contactsPage->phone()->value()) : '';
 $phoneDigits = preg_replace('/\D+/', '', $phone ?? '');
 $phoneHref = $phoneDigits !== '' ? '+' . $phoneDigits : '';
@@ -64,37 +60,64 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
 ?>
 
 <aside class="nav-contact-panel" id="nav-contact-panel" aria-hidden="true" hidden>
-    <div class="nav-contact-panel__header">
-        <h2><?= esc($panelTitle) ?></h2>
-        <button class="nav-contact-panel__close hover-underline" type="button" aria-label="<?= esc($panelCloseAriaLabel, 'attr') ?>">
-            <?= esc($panelCloseText) ?>
-        </button>
-    </div>
-
     <div class="nav-contact-panel__content">
-        <section class="nav-contact-section nav-contact-help" aria-label="Основные контакты">
-            <p class="nav-contact-title"><?= esc($helpTitle) ?></p>
-            <?php if ($phone !== '' && $phoneHref !== ''): ?>
-                <a href="tel:<?= esc($phoneHref) ?>" class="nav-contact-phone"><?= esc($phone) ?></a>
-            <?php endif ?>
+        <section class="nav-contact-section nav-contact-overview" aria-label="Контакты студии">
+            <div class="nav-contact-overview__main">
+                <h2><?= esc($studioName !== '' ? $studioName : $panelTitle) ?></h2>
+                <?php if ($studioEmail !== ''): ?>
+                    <a href="mailto:<?= esc($studioEmail) ?>"><?= esc($studioEmail) ?></a>
+                <?php endif ?>
+                <?php if ($phone !== '' && $phoneHref !== ''): ?>
+                    <a href="tel:<?= esc($phoneHref) ?>" class="nav-contact-phone"><?= esc($phone) ?></a>
+                <?php endif ?>
 
-            <?php if (!empty($messengers)): ?>
-                <div class="nav-contact-messengers">
-                    <?php foreach ($messengers as $messenger): ?>
-                        <?php
-                        $messengerTitle = (string)$messenger->title();
-                        $messengerUrl = (string)$messenger->url();
-                        $messengerIcon = $resolveContactIcon($messengerTitle, $messengerUrl);
-                        ?>
-                        <a class="nav-contact-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
-                            <?php if ($messengerIcon): ?>
-                                <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
-                            <?php endif ?>
-                            <span><?= esc($messengerTitle) ?></span>
-                        </a>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif ?>
+                <?php if (!empty($messengers)): ?>
+                    <div class="nav-contact-messengers">
+                        <?php foreach ($messengers as $messenger): ?>
+                            <?php
+                            $messengerTitle = (string)$messenger->title();
+                            $messengerUrl = (string)$messenger->url();
+                            $messengerIcon = $resolveContactIcon($messengerTitle, $messengerUrl);
+                            ?>
+                            <a class="nav-contact-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
+                                <?php if ($messengerIcon): ?>
+                                    <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                                <?php endif ?>
+                                <span><?= esc($messengerTitle) ?></span>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif ?>
+            </div>
+            <div>
+
+
+                <?php if (trim((string)$address) !== ''): ?>
+                    <address><?= esc($address) ?></address>
+                    <?php if (trim((string)$hours) !== ''): ?>
+                        <p class="nav-contact-hours"><?= esc($hours) ?></p>
+                    <?php endif ?>
+                <?php endif ?>
+
+                <?php if (!empty($mapLinks)): ?>
+                    <div class="nav-contact-maps">
+                        <?php foreach ($mapLinks as $mapLink): ?>
+                            <?php
+                            $mapTitle = (string)$mapLink->title();
+                            $mapUrl = (string)$mapLink->url();
+                            $mapIcon = $resolveContactIcon($mapTitle, $mapUrl);
+                            ?>
+                            <a class="nav-contact-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
+                                <?php if ($mapIcon): ?>
+                                    <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                                <?php endif ?>
+                                <span><?= esc($mapTitle) ?></span>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif ?>
+            </div>
+
         </section>
 
         <section class="nav-contact-section nav-contact-callback" aria-label="Форма обратной связи">
@@ -109,40 +132,6 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                 </label>
                 <button class="primary-btn" type="submit"><?= esc($callbackButton) ?></button>
             </form>
-        </section>
-
-        <section class="nav-contact-section nav-contact-primary" aria-label="Шоурум и график">
-            <div class="nav-contact-primary__header">
-                <h3><?= esc($studioName) ?></h3>
-                <?php if ($studioEmail !== ''): ?>
-                    <a href="mailto:<?= esc($studioEmail) ?>"><?= esc($studioEmail) ?></a>
-                <?php endif ?>
-            </div>
-            <?php if (trim((string)$address) !== ''): ?>
-                <address><?= esc($address) ?></address>
-            <?php endif ?>
-
-            <?php if (!empty($mapLinks)): ?>
-                <div class="nav-contact-maps">
-                    <?php foreach ($mapLinks as $mapLink): ?>
-                        <?php
-                        $mapTitle = (string)$mapLink->title();
-                        $mapUrl = (string)$mapLink->url();
-                        $mapIcon = $resolveContactIcon($mapTitle, $mapUrl);
-                        ?>
-                        <a class="nav-contact-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
-                            <?php if ($mapIcon): ?>
-                                <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
-                            <?php endif ?>
-                            <span><?= esc($mapTitle) ?></span>
-                        </a>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif ?>
-
-            <?php if (trim((string)$hours) !== ''): ?>
-                <p class="nav-contact-hours"><?= esc($hours) ?></p>
-            <?php endif ?>
         </section>
     </div>
 </aside>

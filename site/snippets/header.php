@@ -19,6 +19,7 @@ if ($isFirstVisit) {
     <link rel="icon" href="/assets/icons/favicons/favicon16px.png" sizes="16x16" type="image/png">
     <link rel="apple-touch-icon" href="/assets/icons/favicons/favicon180px.png" sizes="180x180">
     <link rel="shortcut icon" href="/assets/icons/favicons/favicon32px.png" type="image/png">
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
     <title>
@@ -38,8 +39,7 @@ if ($isFirstVisit) {
         'assets/css/components/cta-warmup.css',
         'assets/css/components/simple-hero.css',
         'assets/css/components/faq-section.css',
-        'assets/css/components/portfolio-posts.css',
-        'assets/css/components/portfolio-layout.css',
+        'assets/css/components/archive-posts.css',
         'assets/css/components/other-kitchens.css',
         'assets/css/components/brands.css',
         'assets/css/components/other-fabrics.css',

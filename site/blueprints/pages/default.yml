@@ -29,7 +29,7 @@ tabs:
           cta_heading:
             label: заголовок cta
             type: text
-            default: Call to Action
+            default: Отпразднуем вашу новую кухню?
           cta_text:
             label: текст cta
             type: textarea

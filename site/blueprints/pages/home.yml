@@ -44,16 +44,22 @@ tabs:
 
   benefits:
     label: Преимущества
-    sections:
-      benefits_fields:
-        type: fields
-        fields:
-          benefits_heading:
-            label: заголовок преимуществ
-            type: text
-            default: Преимущества
-          benefits_items:
-            extends: fields/benefits
+    columns:
+      - width: 2/3
+        sections:
+          benefits_fields:
+            type: fields
+            fields:
+              benefits_heading:
+                label: заголовок преимуществ
+                type: text
+                default: Преимущества
+              benefits_items:
+                extends: fields/benefits
+      - width: 1/3
+        sections:
+          files:
+            type: files
 
   cta_warmup:
     label: CTA Warmup
@@ -81,7 +87,7 @@ tabs:
           cta_heading:
             label: заголовок cta
             type: text
-            default: Call to Action
+            default: Отпразднуем вашу новую кухню?
           cta_text:
             label: текст cta
             type: textarea

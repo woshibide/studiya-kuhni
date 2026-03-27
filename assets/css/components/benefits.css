@@ -21,7 +21,7 @@
 }
 
 .benefits-container img {
-    width: 100%;
+    width: clamp(80px, 8vw, 240px);
     height: auto;
     object-fit: contain;
 }

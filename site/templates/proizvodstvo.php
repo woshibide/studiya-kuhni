@@ -6,18 +6,14 @@
         <?php snippet('simple-hero') ?>
     </section>
 
-    
     <section>
         <?php snippet ('benefits') ?>
     </section>
     
     <section>
-        <?php snippet('gallery') ?>
+        <?php snippet ('faq-section') ?>
     </section>
-    
-    <section>
-        <?php snippet('cta') ?>
-    </section>
+
 </main>
 
 <?php snippet('footer') ?>

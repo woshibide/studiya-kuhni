@@ -1,84 +1,103 @@
 function initGallery(root) {
-	const mainImg = root.querySelector('[data-gallery-main-img]')
-	const thumbs = Array.from(root.querySelectorAll('[data-gallery-thumb]'))
-	const emblaRoot = root.querySelector('[data-gallery-embla]')
-	const emblaViewport = root.querySelector('[data-gallery-embla-viewport]')
-	const shouldAutoplay = root.dataset.galleryAutoplay === 'true'
-	const debug = root.dataset.galleryDebug === 'false'
+	if (root.dataset.galleryBound === 'true') {
+		return
+	}
 
-	if (debug) {
-		console.log('[gallery] init', {
-			autoplay: shouldAutoplay,
-			count: Number(root.dataset.galleryCount || thumbs.length),
-			hasEmbla: typeof EmblaCarousel,
-			hasAutoplayPlugin: typeof EmblaCarouselAutoplay,
-			hasEmblaRoot: Boolean(emblaRoot),
-			hasEmblaViewport: Boolean(emblaViewport),
+	const openButtons = Array.from(root.querySelectorAll('[data-gallery-open]'))
+	const overlay = root.querySelector('[data-gallery-overlay]')
+	const viewport = root.querySelector('[data-gallery-overlay-viewport]')
+	const closeTargets = Array.from(root.querySelectorAll('[data-gallery-close]'))
+	const prevButton = root.querySelector('[data-gallery-prev]')
+	const nextButton = root.querySelector('[data-gallery-next]')
+	const OVERLAY_FADE_MS = 320
+
+	if (!openButtons.length || !overlay || !viewport || typeof EmblaCarousel !== 'function') {
+		return
+	}
+
+	const emblaApi = EmblaCarousel(viewport, {
+		align: 'start',
+		loop: openButtons.length > 1,
+		dragFree: false,
+		containScroll: false,
+		duration: 36,
+	})
+
+	const syncActiveThumb = () => {
+		const index = emblaApi.selectedScrollSnap()
+		openButtons.forEach((button) => {
+			const isActive = Number(button.dataset.index) === index
+			button.setAttribute('aria-current', isActive ? 'true' : 'false')
 		})
 	}
 
-	if (!mainImg || thumbs.length === 0) return
-
-	const setActive = (index) => {
-		thumbs.forEach((btn) => {
-			const isActive = Number(btn.dataset.index) === index
-			if (isActive) btn.setAttribute('aria-current', 'true')
-			else btn.removeAttribute('aria-current')
-		})
-
-		const activeButton = thumbs.find((btn) => Number(btn.dataset.index) === index)
-		const activeImg = activeButton ? activeButton.querySelector('img') : null
-		if (!activeImg) return
-
-		mainImg.src = activeImg.src
-		mainImg.alt = activeImg.alt || ''
+	const openOverlay = (index) => {
+		overlay.hidden = false
+		overlay.classList.add('is-open')
+		overlay.setAttribute('aria-hidden', 'false')
+		document.documentElement.classList.add('is-gallery-overlay-open')
+		emblaApi.scrollTo(index, true)
+		syncActiveThumb()
 	}
 
-	thumbs.forEach((btn) => {
-		btn.addEventListener('click', () => {
-			const index = Number(btn.dataset.index)
-			if (debug) console.log('[gallery] thumb click', { index })
-			setActive(index)
-			if (emblaApi) emblaApi.scrollTo(index)
+	const closeOverlay = () => {
+		overlay.classList.remove('is-open')
+		overlay.setAttribute('aria-hidden', 'true')
+		document.documentElement.classList.remove('is-gallery-overlay-open')
+		window.setTimeout(() => {
+			if (!overlay.classList.contains('is-open')) {
+				overlay.hidden = true
+			}
+		}, OVERLAY_FADE_MS)
+	}
+
+	openButtons.forEach((button) => {
+		button.addEventListener('click', () => {
+			openOverlay(Number(button.dataset.index) || 0)
 		})
 	})
 
-	setActive(0)
+	closeTargets.forEach((target) => {
+		target.addEventListener('click', closeOverlay)
+	})
 
-	let emblaApi = null
-	if (emblaViewport && typeof EmblaCarousel === 'function') {
-		try {
-			const plugins = []
-			if (shouldAutoplay && typeof EmblaCarouselAutoplay === 'function') {
-				plugins.push(EmblaCarouselAutoplay({
-					delay: 6000,
-					stopOnInteraction: false,
-					stopOnMouseEnter: false,
-				}))
-			}
-
-			const options = {
-				align: 'center',
-				loop: shouldAutoplay,
-				dragFree: !shouldAutoplay,
-				containScroll: shouldAutoplay ? false : 'trimSnaps',
-				duration: shouldAutoplay ? 80 : 25,
-			}
-
-			emblaApi = EmblaCarousel(emblaViewport, options, plugins)
-			if (debug) console.log('[gallery] snaps', { count: emblaApi.scrollSnapList().length })
-
-			emblaApi.on('select', () => setActive(emblaApi.selectedScrollSnap()))
-			if (debug) console.log('[gallery] embla ready', { autoplay: shouldAutoplay })
-		} catch (error) {
-			if (debug) console.error('[gallery] embla init failed', error)
-		}
-	} else {
-		if (debug) console.warn('[gallery] embla not initialized')
+	if (prevButton) {
+		prevButton.addEventListener('click', () => emblaApi.scrollPrev())
 	}
+
+	if (nextButton) {
+		nextButton.addEventListener('click', () => emblaApi.scrollNext())
+	}
+
+	overlay.addEventListener('click', (event) => {
+		if (event.target === overlay) {
+			closeOverlay()
+		}
+	})
+
+	const onKeyDown = (event) => {
+		if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+			closeOverlay()
+		}
+	}
+
+	document.addEventListener('keydown', onKeyDown)
+	emblaApi.on('select', syncActiveThumb)
+	syncActiveThumb()
+
+	root.dataset.galleryBound = 'true'
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+const initGalleries = () => {
 	document.querySelectorAll('[data-gallery]').forEach((root) => initGallery(root))
-})
+}
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', initGalleries)
+} else {
+	initGalleries()
+}
+
+document.addEventListener('swup:content:replace', initGalleries)
+document.addEventListener('swup:page:view', initGalleries)
 

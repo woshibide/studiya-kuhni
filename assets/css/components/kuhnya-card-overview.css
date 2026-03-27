@@ -73,7 +73,7 @@
             height: 100%;
             display: block;
             object-fit: cover;
-            transition: transform 240ms var(--out);
+            transition: transform 3000ms var(--out);
         }
 
         &:hover img,

@@ -59,10 +59,31 @@
             .fabric-card__media {
                 position: absolute;
                 inset: 0;
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                transition: all 280ms var(--out);
+                overflow: hidden;
+
+                .fabric-card__media-viewport {
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                }
+
+                .fabric-card__media-container {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    height: 100%;
+                    touch-action: pan-x pinch-zoom;
+                }
+
+                .fabric-card__media-slide {
+                    position: relative;
+                    flex: 0 0 100%;
+                    min-height: 0;
+                    width: 100%;
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
             }
 
             ul {

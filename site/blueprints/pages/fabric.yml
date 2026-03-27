@@ -12,6 +12,19 @@ tabs:
               title:
                 label: название фабрики
                 type: text
+              simple_hero_heading:
+                label: заголовок simple hero
+                type: text
+                help: если пусто, используется название страницы
+              simple_hero_description:
+                label: описание simple hero
+                type: textarea
+                size: small
+                buttons: false
+              simple_hero_button_label:
+                label: текст кнопки simple hero
+                type: text
+                placeholder: давайте)
               fabric_info_title:
                 label: заголовок блока о фабрике
                 type: text
@@ -73,7 +86,7 @@ tabs:
           cta_heading:
             label: заголовок cta
             type: text
-            default: Call to Action
+            default: Отпразднуем вашу новую кухню?
           cta_text:
             label: текст cta
             type: textarea

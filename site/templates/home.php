@@ -15,7 +15,7 @@ foreach ($page->hero_words()->toStructure() as $item) {
 }
 
 if (empty($heroWords)) {
-    $heroWords = ['для вас', 'на КМВ', 'для влюбленных 💕', 'для новоселья', 'для жизни', 'для большооооого счастья', 'чечня купить онлайн'];
+    $heroWords = ['для вас ', 'на КМВ ', 'для влюбленных 💕 ', 'для счастья ', 'для жизни '];
 }
 
 $heroSeoText = $heroHeading . ' ' . implode(', ', $heroWords);
@@ -37,7 +37,6 @@ if ($heroWordsJson === false) {
                     class="home-hero-typed"
                     data-words="<?= esc($heroWordsJson, 'attr') ?>"
                 ><?= esc($heroWords[0]) ?></span>
-                <span id="home-hero-caret" class="home-hero-caret" aria-hidden="true">|</span>
             </h1>
             <h1 class="home-hero-seo-copy"><?= esc($heroSeoText) ?></h1>
             <div class="hero-description">
@@ -54,6 +53,18 @@ if ($heroWordsJson === false) {
     <section id="fabrics-intro">
         <?php
         $fabricsPage = page('fabrics');
+        $resolveKitchenGalleryImages = static function ($kitchen) {
+            $selected = $kitchen->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+            if ($selected->isNotEmpty()) {
+                return $selected;
+            }
+
+            return $kitchen->images()
+                ->filterBy('type', 'image')
+                ->filter(function ($image) {
+                    return strtolower($image->extension()) !== 'svg';
+                });
+        };
         $homeFabricRows = [
             [
                 [
@@ -78,7 +89,7 @@ if ($heroWordsJson === false) {
                 ],
                 [
                     'slug' => 'aster-cucine',
-                    'style' => '--col-start: 4; --col-span: 4; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-xxl);',
+                    'style' => '--col-start: 4; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-xxl);',
                 ],
             ],
         ];
@@ -95,9 +106,55 @@ if ($heroWordsJson === false) {
                         }
 
                         $kitchens = $fabric->childrenAndDrafts();
-                        $firstKitchen = $kitchens->first();
-                        $firstKitchenImage = $firstKitchen ? $firstKitchen->images()->first() : null;
-                        $defaultImageUrl = $firstKitchenImage ? $firstKitchenImage->url() : '/assets/placeholder.svg';
+                        $kitchenLinks = [];
+                        $kitchenSlides = [];
+
+                        if ($kitchens->count() === 1) {
+                            $kitchen = $kitchens->first();
+                            if ($kitchen) {
+                                $kitchenImages = $resolveKitchenGalleryImages($kitchen);
+                                $primaryImage = $kitchenImages->first();
+                                $kitchenLinks[] = [
+                                    'title' => (string)$kitchen->title(),
+                                    'url' => $kitchen->url(),
+                                    'image' => $primaryImage ? $primaryImage->url() : '/assets/placeholder.svg',
+                                    'slideIndex' => 0,
+                                ];
+
+                                $galleryImages = $kitchenImages->limit(3);
+                                if ($galleryImages->isNotEmpty()) {
+                                    foreach ($galleryImages as $image) {
+                                        $kitchenSlides[] = [
+                                            'image' => $image->url(),
+                                        ];
+                                    }
+                                }
+                            }
+                        } else {
+                            foreach ($kitchens as $index => $kitchen) {
+                                $kitchenImage = $resolveKitchenGalleryImages($kitchen)->first();
+                                $kitchenImageUrl = $kitchenImage ? $kitchenImage->url() : '/assets/placeholder.svg';
+
+                                $kitchenLinks[] = [
+                                    'title' => (string)$kitchen->title(),
+                                    'url' => $kitchen->url(),
+                                    'image' => $kitchenImageUrl,
+                                    'slideIndex' => $index,
+                                ];
+
+                                $kitchenSlides[] = [
+                                    'image' => $kitchenImageUrl,
+                                ];
+                            }
+                        }
+
+                        if (empty($kitchenSlides)) {
+                            $kitchenSlides[] = [
+                                'image' => '/assets/placeholder.svg',
+                            ];
+                        }
+
+                        $defaultImageUrl = $kitchenSlides[0]['image'];
                         ?>
 
                         <figure
@@ -106,11 +163,27 @@ if ($heroWordsJson === false) {
                             data-home-fabric-card
                             data-default-image="<?= esc($defaultImageUrl, 'attr') ?>"
                         >
-                            <div
-                                class="home-fabric-media"
-                                style="background-image: url('<?= esc($defaultImageUrl, 'attr') ?>');"
-                                aria-hidden="true"
-                            ></div>
+                            <div class="home-fabric-media" data-home-embla>
+                                <div class="home-fabric-media__viewport" data-home-embla-viewport>
+                                    <div class="home-fabric-media__container">
+                                        <?php if (!empty($kitchenSlides)): ?>
+                                            <?php foreach ($kitchenSlides as $slide): ?>
+                                                <div
+                                                    class="home-fabric-media__slide"
+                                                    style="background-image: url('<?= esc($slide['image'], 'attr') ?>');"
+                                                    aria-hidden="true"
+                                                ></div>
+                                            <?php endforeach ?>
+                                        <?php else: ?>
+                                            <div
+                                                class="home-fabric-media__slide"
+                                                style="background-image: url('<?= esc($defaultImageUrl, 'attr') ?>');"
+                                                aria-hidden="true"
+                                            ></div>
+                                        <?php endif ?>
+                                    </div>
+                                </div>
+                            </div>
 
                             <button
                                 class="home-fabric-toggle"
@@ -122,22 +195,19 @@ if ($heroWordsJson === false) {
                                 <span aria-hidden="true">+</span>
                             </button>
 
-                            <?php if ($kitchens->isNotEmpty()): ?>
-                                <?php $kitchenCount = $kitchens->count(); ?>
+                            <?php if (!empty($kitchenLinks)): ?>
+                                <?php $kitchenCount = count($kitchenLinks); ?>
                                 <?php $kitchenIndex = 1; ?>
                                 <ul class="home-fabric-kitchens">
-                                    <?php foreach ($kitchens as $kitchen): ?>
-                                        <?php
-                                        $kitchenImage = $kitchen->images()->first();
-                                        $kitchenImageUrl = $kitchenImage ? $kitchenImage->url() : '/assets/placeholder.svg';
-                                        ?>
+                                    <?php foreach ($kitchenLinks as $link): ?>
                                         <li style="--kitchen-index: <?= $kitchenIndex ?>; --kitchen-count: <?= $kitchenCount ?>;">
                                             <a
                                                 class="internal-link"
-                                                href="<?= $kitchen->url() ?>"
-                                                data-fabric-image="<?= esc($kitchenImageUrl, 'attr') ?>"
+                                                href="<?= esc($link['url']) ?>"
+                                                data-fabric-image="<?= esc($link['image'], 'attr') ?>"
+                                                data-home-slide-index="<?= $link['slideIndex'] ?>"
                                             >
-                                                <?= esc($kitchen->title()) ?>
+                                                <?= esc($link['title']) ?>
                                             </a>
                                         </li>
                                         <?php $kitchenIndex++; ?>
@@ -173,16 +243,14 @@ if ($heroWordsJson === false) {
         <?php snippet('benefits')?>
     </section>
 
+    <?php snippet('cta') ?>
+
     <section>
-        <?php snippet('cta') ?>
+        <?php snippet('archive-posts') ?>
     </section>
 
     <section>
         <?php snippet('faq-section') ?>
-    </section>
-
-    <section>
-        <?php snippet('portfolio-posts') ?>
     </section>
 
     

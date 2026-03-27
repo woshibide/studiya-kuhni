@@ -1,0 +1,71 @@
+Title: Фабрики
+
+----
+
+Big-message:
+
+Кухни. Созданные для вашей жизни
+
+----
+
+Benefits-heading: 
+
+----
+
+Benefits-items:
+
+- 
+  image:
+    - file://f0ethpdweo3ybuiv
+  alt: ""
+  title: >
+    Работаем со всем
+    миром
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus leo eu aenean
+- 
+  image:
+    - file://vlyjo83wvrvqqrak
+  alt: ""
+  title: >
+    Можно расплатиться
+    валютой
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus leo eu aenean
+- 
+  image:
+    - file://ngjwq8irfjlo9xaf
+  alt: ""
+  title: >
+    Выбор за вами —
+    дизайн за нами
+  text: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus duis
+    convallis tempus leo eu aenean
+
+----
+
+Cta-heading: 
+
+----
+
+Cta-text: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo non fugiat inventore eligendi magni aliquid similique aut minima aliquam? Necessitatibus similique magnam eius voluptas perferendis odio saepe, accusamus dolorem explicabo!
+
+----
+
+Cta-button: Свяжитесь со мной
+
+----
+
+Uuid: 044anx6sf0g3adu4

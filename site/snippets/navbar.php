@@ -6,7 +6,7 @@
                 ['title' => 'фабрики', 'url' => page('fabrics') ? page('fabrics')->url() : '/fabrics'],
                 ['title' => 'дизайнерам', 'url' => page('designers') ? page('designers')->url() : '/designers'],
                 ['title' => 'производство', 'url' => page('proizvodstvo') ? page('proizvodstvo')->url() : '/proizvodstvo'],
-                ['title' => 'портфолио', 'url' => page('portfolio') ? page('portfolio')->url() : '/portfolio'],
+                ['title' => 'архив', 'url' => page('archive') ? page('archive')->url() : '/archive'],
             ];
 
             foreach ($navItems as $item): ?>
@@ -20,14 +20,16 @@
         <a href="/">Студия Кухни</a>
     </div>
     <div class="nav-right" data-nav-contact>
-        <button
-            class="nav-contact-toggle hover-underline"
-            type="button"
-            aria-expanded="false"
-            aria-controls="nav-contact-panel"
-        >
-            контакты
-        </button>
+        <div class="nav-contact-toggle-shell">
+            <button
+                class="nav-contact-toggle hover-underline"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-contact-panel"
+            >
+                контакты
+            </button>
+        </div>
         <?php snippet('nav-contact-panel') ?>
     </div>
 </nav>

@@ -20,23 +20,37 @@ if ($ctaText === '') {
 if ($ctaButton === '') {
     $ctaButton = $getDefault('cta_button');
 }
+
+$customImage = $page->cta_image()->toFile();
+$fallbackImages = [
+    'assets/cta/supper1.png',
+    'assets/cta/supper2.png',
+    'assets/cta/supper3.png'
+];
+$randomImage = $fallbackImages[array_rand($fallbackImages)];
 ?>
 
-<div class="section-wrapper" id="cta">
-    <div class="section-sticky">
-        <?php if ($ctaHeading !== ''): ?>
-            <h2><?= esc($ctaHeading) ?></h2>
-        <?php endif ?>
-        <?php if ($ctaText !== ''): ?>
-            <p><?= esc($ctaText) ?></p>
-        <?php endif ?>
-        <?php if ($ctaButton !== ''): ?>
-            <button type="button" class="primary-btn">
-                <?= esc($ctaButton) ?>
-            </button>
-        <?php endif ?>
+<section class="section-full">
+    <div class="section-wrapper" id="cta">
+        <div class="section-sticky">
+            <?php if ($ctaHeading !== ''): ?>
+                <h2><?= esc($ctaHeading) ?></h2>
+            <?php endif ?>
+            <?php if ($ctaText !== ''): ?>
+                <p><?= esc($ctaText) ?></p>
+            <?php endif ?>
+            <?php if ($ctaButton !== ''): ?>
+                <button type="button" class="primary-btn">
+                    <?= esc($ctaButton) ?>
+                </button>
+            <?php endif ?>
+        </div>
+        <div class="cta-media">
+            <?php if ($customImage): ?>
+                <img src="<?= $customImage->url() ?>" alt="<?= esc($customImage->alt()) ?>">
+            <?php else: ?>
+                <img src="/<?= $randomImage ?>" alt="Call to Action">
+            <?php endif; ?>
+        </div>
     </div>
-    <div class="cta-media">
-        <img src="/assets/placeholder.svg" alt="">
-    </div>
-</div>
+</section>

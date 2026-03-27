@@ -1,0 +1,60 @@
+title: Архив — пост
+
+tabs:
+  content:
+    label: Контент
+    columns:
+      - width: 2/3
+        sections:
+          meta:
+            type: fields
+            fields:
+              title:
+                type: text
+              intro:
+                label: интро
+                type: textarea
+                maxlength: 220
+                counter: true
+                buttons: false
+                size: small
+              date:
+                label: дата
+                type: date
+                default: today
+              location:
+                label: локация
+                type: text
+                placeholder: Москва
+                help: укажите город или район, где находится кухня
+              showcase_kitchen:
+                label: кухня в посте
+                type: pages
+                max: 1
+                query: site.index.filterBy("intendedTemplate", "kuhnya")
+                text: "{{ page.parent.title }} - {{ page.title }}"
+                help: выберите кухню, о которой рассказывает пост
+                required: true
+      - width: 1/3
+        sections:
+          media:
+            type: fields
+            fields:
+              cover:
+                label: обложка
+                type: files
+                max: 1
+                layout: cards
+                query: page.images
+          files:
+            type: files
+
+  blocks:
+    label: Блоки
+    sections:
+      blocks_section:
+        type: fields
+        fields:
+          blocks:
+            label: блоки
+            type: blocks

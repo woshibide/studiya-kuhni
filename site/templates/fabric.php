@@ -10,6 +10,11 @@
         <?php snippet('fabric-info') ?>
     </section>
 
+    <section>
+        <?php snippet('big-message') ?>
+    </section>
+
+
     <section class="kitchens-grid">
         <?php foreach ($page->childrenAndDrafts() as $kitchen): ?>
             <?php snippet('kuhnya-card-overview', ['kuhnya' => $kitchen, 'showLink' => true]) ?>
@@ -17,7 +22,7 @@
     </section>
 
     <section>
-        <?php snippet('portfolio-posts') ?>
+        <?php snippet('archive-posts') ?>
     </section>
 
     <section>

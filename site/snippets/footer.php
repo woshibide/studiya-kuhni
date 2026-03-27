@@ -1,10 +1,16 @@
 <footer>
+    
+    <h3 id="footer-typed-line">
+        <span class="footer-typed-prefix">Кухни</span>
+        <span id="footer-typed-word">на заказ</span>
+    </h3>
+
     <div id="footer-details">
         <div class="info">
             <p><a href="/">Студия Кухни</a>, 2008 — 2026</p>
             <p>Часть альянса <a class="external-link" target="_blank" href="https://mebelkmv.ru">Петру Групп</a></p>
             <address>
-                 Пятигорск, Ермолова 14, 357500
+                 Пятигорск, Ермолова 14, ТЦ «Palazzo», 357500
             </address>
             <p>
                 Использование фотографий и материалов размещенных на сайте допускается исключительно с нашего письменного согласия.
@@ -19,7 +25,7 @@
                     <a href="/faq">FAQ</a>
                 </li>
                 <li>
-                    <a href="/portfolio">Портфолио</a>
+                    <a href="/archive">Архив</a>
                 </li>
             </ul>
             <ul>
@@ -78,6 +84,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="/assets/js/fabric-info-map.js" defer></script>
 <script src="/assets/js/other-fabrics.js" defer></script>
+<script src="/assets/js/footer-typing.js" defer></script>
 
 <?php
 $template = $page->intendedTemplate()->name();

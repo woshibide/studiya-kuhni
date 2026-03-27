@@ -1,4 +1,7 @@
 <section id="brands" class="brands section-full">
+
+    <h2 id="brands-intro">Мы привозим на КМВ</h2>
+
     <div class="section-wrapper">
         <?php
         $brandsJson = '[
@@ -50,6 +53,7 @@
             return ucwords($name);
         };
         ?>
+
         <div class="marquee-wrapper">
             <?php foreach ($rows as $rowIndex => $rowBrands): ?>
                 <?php if (empty($rowBrands)) { continue; } ?>
