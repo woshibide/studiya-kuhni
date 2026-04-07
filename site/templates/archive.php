@@ -4,7 +4,7 @@
 $posts = $page->children()->listed()->sortBy('date', 'desc');
 ?>
 
-<main id="swup" class="transition-fade">
+<main>
     <section class="archive-layout-sticky-index">
         <div class="section-wrapper">
             <div class="archive-layout-sticky-inner">

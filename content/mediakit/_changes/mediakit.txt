@@ -1,0 +1,21 @@
+Title: Медиа Кит
+
+----
+
+Simple-hero-heading: 
+
+----
+
+Simple-hero-description: 
+
+----
+
+Simple-hero-button-label: 
+
+----
+
+Uuid: gdrkddtvgneuxdaa
+
+----
+
+Lock: UElTgRHr

@@ -1,5 +1,5 @@
 <?php
-$ctaWarmupHeading = $page->cta_warmup_heading()->or('Нет дизайн плана?');
+$ctaWarmupHeading = $page->cta_warmup_heading()->or('Нужен дизайн план?');
 $ctaWarmupText = $page->cta_warmup_text()->or('Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.');
 $ctaWarmupButtonText = $page->cta_warmup_button_text()->or('Получить бесплатную дизайн консультацию');
 

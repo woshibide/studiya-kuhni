@@ -98,6 +98,3 @@ if (document.readyState === 'loading') {
 	initGalleries()
 }
 
-document.addEventListener('swup:content:replace', initGalleries)
-document.addEventListener('swup:page:view', initGalleries)
-

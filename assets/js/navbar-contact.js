@@ -79,6 +79,3 @@ if (document.readyState === 'loading') {
     initNavbarContact();
     initGlobalNavbarContactTriggers();
 }
-
-document.addEventListener('swup:content:replace', initNavbarContact);
-document.addEventListener('swup:page:view', initNavbarContact);

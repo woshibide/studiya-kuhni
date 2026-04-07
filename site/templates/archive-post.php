@@ -10,7 +10,7 @@ $publishedDate = $page->date()->isNotEmpty() ? $page->date()->toDate('d.m.Y') : 
 $location = $page->location()->or('локация не указана');
 ?>
 
-<main id="swup" class="transition-fade">
+<main>
 
     <section class="section-full archive-post-cover" data-archive-post-cover>
         <img src="<?= esc($coverUrl) ?>" alt="<?= esc($coverAlt, 'attr') ?>" data-archive-post-cover-image>

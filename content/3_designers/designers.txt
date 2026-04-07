@@ -10,7 +10,7 @@ Simple-hero-description:
 
 ----
 
-Simple-hero-button-label: давайте)
+Simple-hero-button-label: 
 
 ----
 
@@ -68,6 +68,51 @@ Benefits-items:
     sapien vitae pellentesque sem placerat
     in id cursus mi pretium tellus duis
     convallis tempus.
+
+----
+
+Designers-proof-heading: 
+
+----
+
+Designers-cards:
+
+- 
+  name: Ателье Рыбкиных
+  image:
+    - file://lw1phakt15tfqssv
+  years: 8
+  portfolio_url: https://google.cm
+  projects: 42
+  description: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus.
+- 
+  name: Студия Жмуркиных
+  image:
+    - file://tctilau9xpxhf3ep
+  years: 13
+  portfolio_url: https://google.cm
+  projects: 123
+  description: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus.
+- 
+  name: Бюро Кошкины
+  image:
+    - file://hff2matx6tfybuls
+  years: 20
+  portfolio_url: https://google.cm
+  projects: 321
+  description: >
+    Lorem ipsum dolor sit amet consectetur
+    adipiscing elit quisque faucibus ex
+    sapien vitae pellentesque sem placerat
+    in id cursus mi pretium tellus.
 
 ----
 

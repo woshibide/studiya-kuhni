@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<main id="swup" class="transition-fade">
+<main>
 
     <?php
     $resolveKitchenGalleryImages = static function ($kitchen) {
@@ -84,8 +84,8 @@
                     data-fabric-card
                     data-default-image="<?= esc($cardImageUrl, 'attr') ?>"
                 >
-                    <div class="fabric-card__media" data-fabric-embla>
-                        <div class="fabric-card__media-viewport" data-fabric-embla-viewport>
+                    <div class="fabric-card__media">
+                        <div class="fabric-card__media-viewport">
                             <div class="fabric-card__media-container">
                                 <?php if (!empty($kitchenSlides)): ?>
                                     <?php foreach ($kitchenSlides as $slide): ?>
@@ -124,13 +124,12 @@
         <?php endforeach ?>
     </section>
 
-    
     <section>
-        <?php snippet('big-message') ?>
+        <?php snippet('benefits') ?>
     </section>
 
     <section>
-        <?php snippet('benefits') ?>
+        <?php snippet('big-message') ?>
     </section>
 
     <section>
@@ -138,11 +137,11 @@
     </section>
 
     <section>
-        <?php snippet('faq-section') ?>
+        <?php snippet('cta-warmup') ?>
     </section>
 
     <section>
-        <?php snippet('cta-warmup') ?>
+        <?php snippet('faq-section') ?>
     </section>
 
     <section>

@@ -61,11 +61,11 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
 };
 ?>
 
-<main id="swup" class="transition-fade contacts-page">
+<main class="contacts-page">
 
     <section>
         <h1>
-            INFO
+            Контакты
         </h1>
     </section>
 

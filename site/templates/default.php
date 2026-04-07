@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<main id="swup" class="transition-fade">
+<main>
 	<h1><?= $page->title() ?></h1>
 </main>
 

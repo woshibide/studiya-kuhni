@@ -13,7 +13,7 @@
         flex-direction: column;
         flex: 2 1 0;
         min-width: 0;
-        transition: flex-grow 800ms var(--out);
+        transition: flex-grow 1000ms var(--out);
 
         .fabric-card__header {
             display: flex;
@@ -22,7 +22,7 @@
             padding: var(--space-sm);
             text-align: left;
             /* background: var(--the-white); */
-            transition: all 300ms var(--out);
+            transition: font-size 300ms var(--out);
 
             h2 {
                 display: block;
@@ -34,7 +34,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 color: var(--jet-black);
-                transition: all 300ms var(--out);
+                transition: font-size 300ms var(--out);
                 .internal-link::after {
                     content: " →";
                 }
@@ -68,21 +68,26 @@
                 }
 
                 .fabric-card__media-container {
-                    display: flex;
-                    flex-direction: column;
+                    position: relative;
                     width: 100%;
                     height: 100%;
-                    touch-action: pan-x pinch-zoom;
+                    touch-action: pan-y pinch-zoom;
                 }
 
                 .fabric-card__media-slide {
-                    position: relative;
-                    flex: 0 0 100%;
-                    min-height: 0;
+                    position: absolute;
+                    inset: 0;
                     width: 100%;
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
+                    opacity: 0;
+                    transition: opacity 420ms var(--out);
+                    will-change: opacity;
+                }
+
+                .fabric-card__media-slide.is-active {
+                    opacity: 1;
                 }
             }
 
@@ -121,6 +126,11 @@
                     transition: all 300ms var(--out);
                     pointer-events: none;
                 }
+
+                a.is-active {
+                    background-color: var(--the-white);
+                    opacity: 1;
+                }
             }
 
             &.is-expanded {
@@ -150,7 +160,8 @@
                         pointer-events: auto;
                     }
 
-                    a:hover {
+                    a:hover,
+                    a.is-active {
                         color: var(--jet-black);
                         background-color: var(--the-white);
                     }

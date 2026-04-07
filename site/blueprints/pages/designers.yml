@@ -34,6 +34,55 @@ tabs:
                 default: Преимущества
               benefits_items:
                 extends: fields/benefits
+              designers_proof_heading:
+                label: заголовок блока дизайнеров
+                type: text
+                default: С нами работают
+              designers_cards:
+                label: карточки дизайнеров
+                type: structure
+                columns:
+                  name:
+                    label: имя
+                    width: 1/3
+                  years:
+                    label: лет сотрудничества
+                    width: 1/4
+                  projects:
+                    label: проектов
+                    width: 1/4
+                fields:
+                  name:
+                    label: имя
+                    type: text
+                    required: true
+                  image:
+                    label: фото
+                    type: files
+                    max: 1
+                    layout: cards
+                    query: page.images
+                  years:
+                    label: сотрудничаем лет
+                    type: number
+                    min: 0
+                    step: 1
+                    required: true
+                  portfolio_url:
+                    label: ссылка на портфолио
+                    type: url
+                  projects:
+                    label: сделали проектов
+                    type: number
+                    min: 0
+                    step: 1
+                    required: true
+                  description:
+                    label: текст справа снизу
+                    type: textarea
+                    size: small
+                    buttons: false
+                    default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus.
       - width: 1/3
         sections:
           files:

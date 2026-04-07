@@ -15,7 +15,7 @@ foreach ($page->hero_words()->toStructure() as $item) {
 }
 
 if (empty($heroWords)) {
-    $heroWords = ['для вас ', 'на КМВ ', 'для влюбленных 💕 ', 'для счастья ', 'для жизни '];
+    $heroWords = ['для вас ', 'на КМВ ', 'для новоселья', 'для влюбленных 💕 ', 'для жизни'];
 }
 
 $heroSeoText = $heroHeading . ' ' . implode(', ', $heroWords);
@@ -26,7 +26,7 @@ if ($heroWordsJson === false) {
 }
 ?>
 
-<main id="swup" class="transition-fade">
+<main>
 
     <section>
         <div class="section-wrapper" id="home-hero">
@@ -77,9 +77,11 @@ if ($heroWordsJson === false) {
                     'slug' => 'mossman',
                     'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
                 ],
+            ], 
+            [
                 [
                     'slug' => 'scavolini',
-                    'style' => '--col-start: 7; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-xxl);',
+                    'style' => '--col-start: 7; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-lg);',
                 ],
             ],
             [
@@ -87,9 +89,11 @@ if ($heroWordsJson === false) {
                     'slug' => 'home-cucine',
                     'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
                 ],
+            ],
+            [
                 [
                     'slug' => 'aster-cucine',
-                    'style' => '--col-start: 4; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-xxl);',
+                    'style' => '--col-start: 5; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-md);',
                 ],
             ],
         ];

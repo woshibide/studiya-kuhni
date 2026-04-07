@@ -2,7 +2,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 1rem;
+    gap: var(--space-base);
     align-items: stretch;
 
     & .kuhnya-card-overview__content {

@@ -79,7 +79,7 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
 }
 ?>
 
-<main id="swup" class="transition-fade">
+<main>
 
     <section id="kuhnya-intro">
         <h1><?= $page->title() ?></h1>

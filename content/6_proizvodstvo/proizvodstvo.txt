@@ -2,6 +2,30 @@ Title: Производство
 
 ----
 
+Simple-hero-heading: 
+
+----
+
+Simple-hero-description: 
+
+----
+
+Simple-hero-button-label: 
+
+----
+
+Single-image: - file://pnz5hqinrwfzhw6r
+
+----
+
+Single-image-alt: 
+
+----
+
+Big-message: 
+
+----
+
 Benefits-heading: 
 
 ----
@@ -56,6 +80,22 @@ Benefits-items:
     sapien vitae pellentesque sem placerat
     in id cursus mi pretium tellus duis
     convallis tempus leo eu aenean
+
+----
+
+Cta-warmup-heading: 
+
+----
+
+Cta-warmup-text: 
+
+----
+
+Cta-warmup-button-text: 
+
+----
+
+Cta-warmup-image: 
 
 ----
 

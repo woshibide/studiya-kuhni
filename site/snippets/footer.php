@@ -47,6 +47,9 @@
             </ul>
             <ul>
                 <li>
+                    <a href="/mediakit">Media Kit</a>
+                </li>
+                <li>
                     <a href="/designers">Дизайнерам</a>
                 </li>
                 <li>
@@ -62,22 +65,17 @@
 
 <!-- debug grid overlay -->
 <script src="/assets/js/debug.js" defer></script>
-<script src="/assets/js/smooth-scroll.js" defer></script>
+<!-- <script src="/assets/js/smooth-scroll.js" defer></script> -->
 <div id="debug-grid">
     <?php for($i = 0; $i < 24; $i++): ?>
         <div></div>
     <?php endfor; ?>
 </div>
 
-<!-- page transitions -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/swup@4.8.2/dist/Swup.umd.js" defer></script>
-<script src="/assets/js/swup.js" defer></script> -->
-
 <!-- embla carousel -->
 <script src="/assets/js/node_modules/embla-carousel/embla-carousel.umd.js" defer></script>
 <script src="/assets/js/node_modules/embla-carousel-autoplay/embla-carousel-autoplay.umd.js" defer></script>
 
-<!-- gallery section -->
 <script src="/assets/js/gallery.js" defer></script>
 <script src="/assets/js/navbar-contact.js" defer></script>
 <script src="/assets/js/faq.js" defer></script>

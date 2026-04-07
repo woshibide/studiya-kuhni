@@ -82,10 +82,17 @@ const HOME_FABRIC_EMBLA_SLIDE_SELECTOR = '.home-fabric-media__slide'
 const HOME_EXPANDED_COL_START = '1'
 const HOME_EXPANDED_COL_SPAN = '12'
 const HOME_AUTOPLAY_INTERVAL_MS = 3000
+const HOME_LAYOUT_FLIP_DURATION_MS = 300
+const HOME_LAYOUT_FLIP_EASING = 'ease-in-out'
+const HOME_LAYOUT_FLIP_ANIMATION_ID = 'home-layout-flip'
+const HOME_VIEWPORT_BOTTOM_GAP_CSS_VAR = '--space-md'
+const HOME_VIEWPORT_BOTTOM_GAP_FALLBACK_PX = 24
+const HOME_VIEWPORT_ALIGNMENT_THRESHOLD_PX = 1
 const HOME_EMBLA_DEBUG = window.location.search.includes('emblaDebug=1') || window.localStorage.getItem('emblaDebug') === '1'
 const homeReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const homeCardState = new WeakMap()
 let homeFabricsEmblaCleanup = null
+let homeViewportScrollRafId = null
 
 const getHomeCardState = (card) => {
 	if (homeCardState.has(card)) {
@@ -212,6 +219,7 @@ const initHomeCardEmbla = (card) => {
 		align: 'start',
 		containScroll: false,
 		dragFree: false,
+		watchDrag: false,
 		duration: homeReducedMotion ? 20 : 32,
 	})
 
@@ -296,6 +304,168 @@ const setStyleProperty = (element, property, value) => {
 	element.style.removeProperty(property)
 }
 
+const getHomeCssLengthInPx = (cssLength, fallbackPx = 0) => {
+	if (!cssLength || !document.body) {
+		return fallbackPx
+	}
+
+	const probe = document.createElement('div')
+	probe.style.position = 'absolute'
+	probe.style.visibility = 'hidden'
+	probe.style.pointerEvents = 'none'
+	probe.style.width = '0'
+	probe.style.height = cssLength
+	document.body.appendChild(probe)
+
+	const measured = probe.getBoundingClientRect().height
+	probe.remove()
+
+	if (!Number.isFinite(measured) || measured <= 0) {
+		return fallbackPx
+	}
+
+	return measured
+}
+
+const getHomeViewportBottomGapPx = () => (
+	getHomeCssLengthInPx(`var(${HOME_VIEWPORT_BOTTOM_GAP_CSS_VAR})`, HOME_VIEWPORT_BOTTOM_GAP_FALLBACK_PX)
+)
+
+const clampHomeScrollTop = (scrollTop) => {
+	const maxScrollTop = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+	return Math.min(maxScrollTop, Math.max(0, scrollTop))
+}
+
+const getHomeViewportTargetScrollTopFromRect = (cardRect) => {
+	const bottomGap = getHomeViewportBottomGapPx()
+	const desiredBottom = window.innerHeight - bottomGap
+	const delta = cardRect.bottom - desiredBottom
+
+	if (Math.abs(delta) < HOME_VIEWPORT_ALIGNMENT_THRESHOLD_PX) {
+		return window.scrollY
+	}
+
+	return clampHomeScrollTop(window.scrollY + delta)
+}
+
+const stopHomeViewportScrollAnimation = () => {
+	if (homeViewportScrollRafId === null) {
+		return
+	}
+
+	window.cancelAnimationFrame(homeViewportScrollRafId)
+	homeViewportScrollRafId = null
+}
+
+const easeInOutQuad = (progress) => (
+	progress < 0.5
+		? 2 * progress * progress
+		: 1 - (Math.pow(-2 * progress + 2, 2) / 2)
+)
+
+const smoothScrollHomeViewportTo = (targetScrollTop) => {
+	const clampedTarget = clampHomeScrollTop(targetScrollTop)
+	const startScrollTop = window.scrollY
+	const delta = clampedTarget - startScrollTop
+
+	if (Math.abs(delta) < HOME_VIEWPORT_ALIGNMENT_THRESHOLD_PX) {
+		return
+	}
+
+	stopHomeViewportScrollAnimation()
+
+	if (homeReducedMotion) {
+		window.scrollTo(0, clampedTarget)
+		return
+	}
+
+	const startedAt = performance.now()
+	const duration = HOME_LAYOUT_FLIP_DURATION_MS
+	
+	// TODO: orchestrated card expansion, first the width, then the height
+
+	const tick = (now) => {
+		const elapsed = now - startedAt
+		const progress = Math.min(1, elapsed / duration)
+		const eased = easeInOutQuad(progress)
+		window.scrollTo(0, startScrollTop + (delta * eased))
+
+		if (progress < 1) {
+			homeViewportScrollRafId = window.requestAnimationFrame(tick)
+			return
+		}
+
+		homeViewportScrollRafId = null
+	}
+
+	homeViewportScrollRafId = window.requestAnimationFrame(tick)
+}
+
+const applyHomeExpandedRowState = (row, rowCards, nextExpandedCard, options = {}) => {
+
+	// TODO: transform change added 
+
+	const { updateToggle = true } = options
+
+	row.classList.toggle('has-expanded', Boolean(nextExpandedCard))
+
+	rowCards.forEach((card) => {
+		const isExpanded = card === nextExpandedCard
+		card.classList.toggle('is-expanded', isExpanded)
+		card.classList.toggle('is-collapsed', Boolean(nextExpandedCard) && !isExpanded)
+
+		if (updateToggle) {
+			setHomeCardToggleState(card, isExpanded)
+		}
+
+		if (nextExpandedCard) {
+			applyHomeCardLayout(card, isExpanded ? 'expanded' : 'default')
+		} else {
+			applyHomeCardLayout(card, 'default')
+		}
+	})
+}
+
+const captureHomeRowState = (row, rowCards) => ({
+	rowHasExpanded: row.classList.contains('has-expanded'),
+	cards: rowCards.map((card) => ({
+		card,
+		isExpanded: card.classList.contains('is-expanded'),
+		isCollapsed: card.classList.contains('is-collapsed'),
+		colStart: card.style.getPropertyValue('--col-start'),
+		colSpan: card.style.getPropertyValue('--col-span'),
+		marginTop: card.style.getPropertyValue('margin-top'),
+	})),
+})
+
+const restoreHomeRowState = (row, snapshot) => {
+	row.classList.toggle('has-expanded', snapshot.rowHasExpanded)
+
+	snapshot.cards.forEach((item) => {
+		const { card, isExpanded, isCollapsed, colStart, colSpan, marginTop } = item
+		card.classList.toggle('is-expanded', isExpanded)
+		card.classList.toggle('is-collapsed', isCollapsed)
+		setStyleProperty(card, '--col-start', colStart)
+		setStyleProperty(card, '--col-span', colSpan)
+		setStyleProperty(card, 'margin-top', marginTop)
+		setHomeCardToggleState(card, isExpanded)
+	})
+}
+
+const getExpandedHomeCardTargetScrollTop = (row, rowCards, expandedCard) => {
+	if (!expandedCard || !expandedCard.isConnected) {
+		return null
+	}
+
+	const snapshot = captureHomeRowState(row, rowCards)
+	applyHomeExpandedRowState(row, rowCards, expandedCard, { updateToggle: false })
+
+	const targetScrollTop = getHomeViewportTargetScrollTopFromRect(expandedCard.getBoundingClientRect())
+
+	restoreHomeRowState(row, snapshot)
+	return targetScrollTop
+}
+
 const ensureHomeCardOriginalLayout = (card) => {
 	if (card.dataset.originalColStart === undefined) {
 		card.dataset.originalColStart = card.style.getPropertyValue('--col-start').trim()
@@ -356,7 +526,11 @@ const animateHomeRowLayout = (row, mutateLayout) => {
 
 	window.requestAnimationFrame(() => {
 		rowCards.forEach((card) => {
-			card.getAnimations().forEach((animation) => animation.cancel())
+			card.getAnimations().forEach((animation) => {
+				if (animation.id === HOME_LAYOUT_FLIP_ANIMATION_ID) {
+					animation.cancel()
+				}
+			})
 
 			const firstRect = firstRects.get(card)
 			const lastRect = card.getBoundingClientRect()
@@ -367,67 +541,65 @@ const animateHomeRowLayout = (row, mutateLayout) => {
 
 			const deltaX = firstRect.left - lastRect.left
 			const deltaY = firstRect.top - lastRect.top
-			const scaleX = lastRect.width > 0 ? firstRect.width / lastRect.width : 1
-			const scaleY = lastRect.height > 0 ? firstRect.height / lastRect.height : 1
+			const widthDelta = Math.abs(firstRect.width - lastRect.width)
+			const heightDelta = Math.abs(firstRect.height - lastRect.height)
 
 			if (
 				Math.abs(deltaX) < 0.5 &&
 				Math.abs(deltaY) < 0.5 &&
-				Math.abs(scaleX - 1) < 0.01 &&
-				Math.abs(scaleY - 1) < 0.01
+				widthDelta < 0.5 &&
+				heightDelta < 0.5
 			) {
 				return
 			}
 
-			card.animate(
+			const cardAnimation = card.animate(
 				[
 					{
 						transformOrigin: 'top left',
-						transform: `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`,
+						transform: `translate(${deltaX}px, ${deltaY}px)`,
+						width: `${firstRect.width}px`,
+						height: `${firstRect.height}px`,
 					},
 					{
 						transformOrigin: 'top left',
-						transform: 'translate(0, 0) scale(1, 1)',
+						transform: 'translate(0, 0)',
+						width: `${lastRect.width}px`,
+						height: `${lastRect.height}px`,
 					},
 				],
 				{
-					duration: 800,
-					easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-					fill: 'both',
+					duration: HOME_LAYOUT_FLIP_DURATION_MS,
+					easing: HOME_LAYOUT_FLIP_EASING,
+					fill: 'none',
 				}
 			)
+
+			cardAnimation.id = HOME_LAYOUT_FLIP_ANIMATION_ID
 		})
 	})
 }
 
 const setExpandedHomeCard = (row, targetCard) => {
 	const rowCards = Array.from(row.querySelectorAll(HOME_FABRIC_CARD_SELECTOR))
-	const activeExpandedCard = rowCards.find((card) => card.classList.contains('is-expanded')) || null
-
-	if (activeExpandedCard && activeExpandedCard !== targetCard) {
-		return
-	}
 
 	const nextExpandedCard = targetCard && targetCard.classList.contains('is-expanded')
 		? null
 		: targetCard
 
+	const nextExpandedCardTargetScrollTop = nextExpandedCard
+		? getExpandedHomeCardTargetScrollTop(row, rowCards, nextExpandedCard)
+		: null
+
 	animateHomeRowLayout(row, () => {
-		row.classList.toggle('has-expanded', Boolean(nextExpandedCard))
-
-		rowCards.forEach((card) => {
-			const isExpanded = card === nextExpandedCard
-			card.classList.toggle('is-expanded', isExpanded)
-			card.classList.toggle('is-collapsed', Boolean(nextExpandedCard) && !isExpanded)
-			setHomeCardToggleState(card, isExpanded)
-
-			if (nextExpandedCard) {
-				applyHomeCardLayout(card, isExpanded ? 'expanded' : 'default')
-			} else {
-				applyHomeCardLayout(card, 'default')
-			}
-		})
+		applyHomeExpandedRowState(row, rowCards, nextExpandedCard)
 	})
+
+	if (nextExpandedCard && nextExpandedCardTargetScrollTop !== null) {
+		smoothScrollHomeViewportTo(nextExpandedCardTargetScrollTop)
+	} else {
+		stopHomeViewportScrollAnimation()
+	}
 }
 
 const initHomeFabrics = () => {
@@ -618,6 +790,3 @@ if (document.readyState === 'loading') {
 } else {
 	initHomeFabrics()
 }
-
-document.addEventListener('swup:content:replace', initHomeFabrics)
-document.addEventListener('swup:page:view', initHomeFabrics)

@@ -134,6 +134,7 @@ const initOtherFabricEmbla = (card) => {
         align: 'start',
         containScroll: false,
         dragFree: false,
+        watchDrag: false,
         duration: otherFabricsReducedMotion ? 20 : 32,
     });
 
@@ -370,7 +371,4 @@ if (document.readyState === 'loading') {
 } else {
     initOtherFabrics();
 }
-
-document.addEventListener('swup:content:replace', initOtherFabrics);
-document.addEventListener('swup:page:view', initOtherFabrics);
 })();

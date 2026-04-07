@@ -3,10 +3,10 @@
 	
 	#brands-intro{
 		background-color: var(--jet-black);
-		width: calc(var(--grid-col) * 3 );
-		padding-right: var(--space-md);
+		width: fit-content;
 		color: var(--the-white);
 		padding: var(--space-sm);
+		padding-right: var(--space-md);
 		margin: 0;
 		margin-left: calc((100vw - var(--the-width)) / 2);
 

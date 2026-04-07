@@ -43,7 +43,13 @@ nav ul {
 
 nav ul li a{
     width: auto;
-    color: black;
+    color: var(--jet-black);
     text-decoration: none;
+
+    &:hover {
+        padding-inline: var(--space-sm);
+        background-color: var(--jet-black);
+        color: var(--super-white);
+    }
 }
 

@@ -1,7 +1,7 @@
 
 <?php snippet('header') ?>
 
-<main id="swup" class="transition-fade">
+<main>
 
     <section>
         <?php snippet('simple-hero') ?>

@@ -11,7 +11,7 @@
 
             foreach ($navItems as $item): ?>
                 <li>
-                    <a href="<?= $item['url'] ?>"><?= $item['title'] ?></a>
+                    <a class="internal-link__hidden" href="<?= $item['url'] ?>"><?= $item['title'] ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

@@ -57,7 +57,7 @@ SuisseIntl-SemiBold.woff */
     --super-white: rgb(255,255,255);
     --the-white: rgba(243, 243, 241, 0.9);
     --opaque-white: oklab(100% 0 -0.00011 / 0.3);
-    --silver: #f5f5f5;
+    --silver: rgb(210, 210, 210);
     --soft-grey: rgba(0, 0, 0, 0.30);
     --grey: rgba(0, 0, 0, 0.75);
     --jet-black: rgb(0, 0, 0);
@@ -357,16 +357,6 @@ input[type="checkbox"]:focus-visible {
         animation: page-in 480ms var(--out);
     }
 
-    html.is-changing .transition-fade {
-        transition: all 0.45s var(--out);
-        opacity: 1;
-        /* filter: blur(0); */
-    }
-
-    html.is-animating .transition-fade {
-        opacity: 0;
-        /* filter: blur(2rem); */
-    }
 }
 
 @keyframes page-in {
