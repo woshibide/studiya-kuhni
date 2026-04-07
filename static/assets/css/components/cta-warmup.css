@@ -1,0 +1,39 @@
+#cta-warmup {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
+    align-items: start;
+
+    .section-sticky {
+        grid-column: 1 / span 4;
+        justify-self: end;
+    }
+
+    .section-sticky-content {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: var(--space-sm);
+    }
+
+    .cta-warmup-media {
+        grid-column: 5 / -1;
+    }
+
+    h2 {
+        /* align-self: end; */
+    }
+
+    img {
+        display: block;
+        width: 100%;
+    }
+
+    @media (max-width: 48rem) {
+        .section-sticky,
+        .cta-warmup-media {
+            grid-column: 1 / -1;
+        }
+    }
+
+}

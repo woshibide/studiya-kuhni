@@ -10,7 +10,12 @@ $ratio   = $block->ratio()->or('auto');
   <ul class="archive-post-block-gallery__list">
     <?php foreach ($block->images()->toFiles() as $image): ?>
     <li class="archive-post-block-gallery__item">
-      <?= $image ?>
+      <?php snippet('turbo-image', [
+          'image' => $image,
+          'alt' => $image->alt()->or('')->value(),
+          'width' => 1600,
+          'loading' => 'lazy',
+      ]) ?>
     </li>
     <?php endforeach ?>
   </ul>

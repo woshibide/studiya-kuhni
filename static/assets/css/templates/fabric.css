@@ -1,0 +1,7 @@
+.kitchens-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxl);
+}
+
+

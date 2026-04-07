@@ -8,7 +8,6 @@ if ($page->intendedTemplate()->name() === 'kuhnya' && $page->parent()) {
 $fabricInfoTitle = (string)$sourcePage->fabric_info_title()->or('О фабрике')->value();
 $fabricInfoText = trim((string)$sourcePage->fabric_info_text()->value());
 $fabricLogoFile = $sourcePage->fabric_logo()->toFile();
-$fabricLogoUrl = $fabricLogoFile ? $fabricLogoFile->permalink() : null;
 $fabricLogoAlt = 'Логотип фабрики ' . (string)$sourcePage->title()->value();
 
 $mapLat = $sourcePage->fabric_map_lat()->isNotEmpty() ? (float)$sourcePage->fabric_map_lat()->value() : 55.709744;
@@ -37,10 +36,15 @@ if ($fabricInfoText === '') {
         </div>
 
         <div class="fabric-info__inner">
-            <?php if ($fabricLogoUrl): ?>
+            <?php if ($fabricLogoFile): ?>
                 <figure class="fabric-info__brand">
                     <div class="fabric-info__logo">
-                        <img src="<?= esc($fabricLogoUrl, 'attr') ?>" alt="<?= esc($fabricLogoAlt, 'attr') ?>">
+                        <?php snippet('turbo-image', [
+                            'image' => $fabricLogoFile,
+                            'alt' => $fabricLogoAlt,
+                            'width' => 420,
+                            'loading' => 'lazy',
+                        ]) ?>
                     </div>
                     <figcaption class="fabric-info__eyebrow"><?= esc($sourcePage->title()) ?></figcaption>
                 </figure>

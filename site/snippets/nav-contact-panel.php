@@ -81,7 +81,12 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                             ?>
                             <a class="nav-contact-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
                                 <?php if ($messengerIcon): ?>
-                                    <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                                    <?php snippet('turbo-image', [
+                                        'image' => asset(ltrim($messengerIcon, '/')),
+                                        'alt' => '',
+                                        'loading' => 'lazy',
+                                        'attrs' => ['aria-hidden' => 'true'],
+                                    ]) ?>
                                 <?php endif ?>
                                 <span><?= esc($messengerTitle) ?></span>
                             </a>
@@ -109,7 +114,12 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                             ?>
                             <a class="nav-contact-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
                                 <?php if ($mapIcon): ?>
-                                    <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy">
+                                    <?php snippet('turbo-image', [
+                                        'image' => asset(ltrim($mapIcon, '/')),
+                                        'alt' => '',
+                                        'loading' => 'lazy',
+                                        'attrs' => ['aria-hidden' => 'true'],
+                                    ]) ?>
                                 <?php endif ?>
                                 <span><?= esc($mapTitle) ?></span>
                             </a>

@@ -16,7 +16,7 @@ if ($cardGalleryImages->isEmpty()) {
 }
 
 $cardImage = $cardGalleryImages->first();
-$cardImageUrl = $cardImage ? $cardImage->url() : '/assets/placeholder.svg';
+$cardImageAsset = $cardImage ?? asset('assets/placeholder.svg');
 $cardIntro = $kuhnya->intro()->or('Сдержанная кухня с продуманной эргономикой, аккуратными линиями и практичными материалами для комфортной жизни.')->value();
 $cardCountry = $kuhnya->country_of_origin()->or('Италия')->value();
 $cardPrice = $kuhnya->price()->or('от 0,000,000 рублей')->value();
@@ -67,7 +67,11 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
 
     <?php if ($layout !== 'content-only'): ?>
         <a class="kuhnya-card-overview__media" href="<?= $kuhnya->url() ?>" aria-label="<?= esc($cardTitle, 'attr') ?>">
-            <img src="<?= esc($cardImageUrl, 'attr') ?>" alt="<?= esc($cardTitle, 'attr') ?>">
+            <?php snippet('turbo-image', [
+                'image' => $cardImageAsset,
+                'alt' => $cardTitle,
+                'width' => 960,
+            ]) ?>
         </a>
     <?php endif ?>
 </article>

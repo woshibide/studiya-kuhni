@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ceeaea1f5789c124c085d091163c5748",
+    "content-hash": "84e66361374ea09d08bfe7695f6cdad0",
     "packages": [
         {
             "name": "christian-riesen/base32",
@@ -412,6 +412,43 @@
                 }
             ],
             "time": "2020-12-28T12:54:39+00:00"
+        },
+        {
+            "name": "jreisdorf/kirby-static-site-generator",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jonathan-reisdorf/kirby-static-site-generator.git",
+                "reference": "1ee2a89b1b9786ccddf298e525981d34d988d99a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jonathan-reisdorf/kirby-static-site-generator/zipball/1ee2a89b1b9786ccddf298e525981d34d988d99a",
+                "reference": "1ee2a89b1b9786ccddf298e525981d34d988d99a",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.1"
+            },
+            "type": "kirby-plugin",
+            "extra": {
+                "installer-name": "static-site-generator"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reisdorf"
+                }
+            ],
+            "description": "Static site generator plugin for Kirby 3, 4 and 5",
+            "support": {
+                "issues": "https://github.com/jonathan-reisdorf/kirby-static-site-generator/issues",
+                "source": "https://github.com/jonathan-reisdorf/kirby-static-site-generator/tree/2.4.0"
+            },
+            "time": "2026-04-06T07:24:54+00:00"
         },
         {
             "name": "laminas/laminas-escaper",

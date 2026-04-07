@@ -63,7 +63,12 @@
                             <?php foreach ($rowBrands as $brand): ?>
                                 <div class="brand-item">
                                     <figure>
-                                        <img src="/assets/brands/fabrics/png-white/<?= $brand['file'] ?>" alt="<?= $formatName($brand['name']) ?>" loading="lazy">
+                                        <?php snippet('turbo-image', [
+                                            'image' => asset('assets/brands/fabrics/png-white/' . $brand['file']),
+                                            'alt' => $formatName($brand['name']),
+                                            'width' => 360,
+                                            'loading' => 'lazy',
+                                        ]) ?>
                                         <figcaption class="brand-label">
                                             <?= $formatName($brand['name']) ?>
                                         </figcaption>
@@ -75,7 +80,12 @@
                             <?php foreach ($rowBrands as $brand): ?>
                                 <div class="brand-item">
                                     <figure>
-                                        <img src="/assets/brands/fabrics/png-white/<?= $brand['file'] ?>" alt="<?= $formatName($brand['name']) ?>" loading="lazy">
+                                        <?php snippet('turbo-image', [
+                                            'image' => asset('assets/brands/fabrics/png-white/' . $brand['file']),
+                                            'alt' => $formatName($brand['name']),
+                                            'width' => 360,
+                                            'loading' => 'lazy',
+                                        ]) ?>
                                         <figcaption class="brand-label">
                                             <?= $formatName($brand['name']) ?>
                                         </figcaption>

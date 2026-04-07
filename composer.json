@@ -23,7 +23,8 @@
   "require": {
     "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
     "getkirby/cms": "^5.2",
-    "pixelopen/kirby-asset-version": "^1.1"
+    "pixelopen/kirby-asset-version": "^1.1",
+    "jreisdorf/kirby-static-site-generator": "^2.4"
   },
   "config": {
     "allow-plugins": {

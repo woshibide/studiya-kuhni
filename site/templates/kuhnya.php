@@ -11,7 +11,7 @@ if ($heroGalleryImages->isEmpty()) {
 }
 
 $heroImage = $heroGalleryImages->first();
-$heroImageUrl = $heroImage ? $heroImage->url() : '/assets/placeholder.svg';
+$heroImageAsset = $heroImage ?? asset('assets/placeholder.svg');
 $heroImageAlt = $heroImage ? $heroImage->alt()->or($page->title())->value() : $page->title()->value();
 $kuhnyaLayoutImages = $heroGalleryImages->limit(6);
 $kuhnyaImageSlots = [
@@ -129,7 +129,13 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
 
         <section id="kunya-hero" class="section-full" data-kunya-hero>
             <div class="kunya-hero__media" data-kunya-media>
-                <img src="<?= esc($heroImageUrl, 'attr') ?>" alt="<?= esc($heroImageAlt, 'attr') ?>" data-kunya-media-image>
+                <?php snippet('turbo-image', [
+                    'image' => $heroImageAsset,
+                    'alt' => $heroImageAlt,
+                    'width' => 2200,
+                    'loading' => 'eager',
+                    'attrs' => ['data-kunya-media-image' => true],
+                ]) ?>
             </div>
         </section>
 
@@ -146,11 +152,13 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
                         ?>
                         <li class="kuhnya-features-list__item">
                             <?php if ($featureImage): ?>
-                                <img
-                                    class="kuhnya-features-list__image"
-                                    src="<?= esc($featureImage->url(), 'attr') ?>"
-                                    alt="<?= esc($featureImage->alt()->or($featureText)->or($kuhnyaTitle)->value(), 'attr') ?>"
-                                >
+                                <?php snippet('turbo-image', [
+                                    'image' => $featureImage,
+                                    'class' => 'kuhnya-features-list__image',
+                                    'alt' => $featureImage->alt()->or($featureText)->or($kuhnyaTitle)->value(),
+                                    'width' => 960,
+                                    'loading' => 'lazy',
+                                ]) ?>
                             <?php endif ?>
                             <?php if ($featureText !== ''): ?>
                                 <p class="kuhnya-features-list__text"><?= esc($featureText) ?></p>
@@ -183,11 +191,12 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
                             data-kuhnya-layout-card
                         >
                             <div class="kuhnya-layout-media">
-                                <img
-                                    src="<?= esc($layoutImage->url(), 'attr') ?>"
-                                    alt="<?= esc($layoutAlt, 'attr') ?>"
-                                    loading="lazy"
-                                >
+                                <?php snippet('turbo-image', [
+                                    'image' => $layoutImage,
+                                    'alt' => $layoutAlt,
+                                    'width' => 1600,
+                                    'loading' => 'lazy',
+                                ]) ?>
                             </div>
 
                             <button

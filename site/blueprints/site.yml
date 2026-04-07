@@ -3,3 +3,14 @@ title: Site
 sections:
   pages:
     type: pages
+
+  static_site_generator:
+    type: fields
+    fields:
+      staticSiteGenerator:
+        type: staticSiteGenerator
+        label: Сгенерировать статическую версию сайта
+        help: Запускает генерацию статической версии сайта.
+        progress: Идёт генерация статической версии...
+        success: Статическая версия готова.
+        error: Не удалось сгенерировать статическую версию.

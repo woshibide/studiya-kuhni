@@ -4,7 +4,7 @@
 $kitchen = $page->showcase_kitchen()->toPage();
 $fabric = $kitchen?->parent();
 $cover = $page->cover()->toFile();
-$coverUrl = $cover ? $cover->url() : '/assets/placeholder.svg';
+$coverAsset = $cover ?? asset('assets/placeholder.svg');
 $coverAlt = $cover ? $cover->alt()->or($page->title())->value() : $page->title()->value();
 $publishedDate = $page->date()->isNotEmpty() ? $page->date()->toDate('d.m.Y') : null;
 $location = $page->location()->or('локация не указана');
@@ -13,7 +13,13 @@ $location = $page->location()->or('локация не указана');
 <main>
 
     <section class="section-full archive-post-cover" data-archive-post-cover>
-        <img src="<?= esc($coverUrl) ?>" alt="<?= esc($coverAlt, 'attr') ?>" data-archive-post-cover-image>
+        <?php snippet('turbo-image', [
+            'image' => $coverAsset,
+            'alt' => $coverAlt,
+            'width' => 2200,
+            'loading' => 'eager',
+            'attrs' => ['data-archive-post-cover-image' => true],
+        ]) ?>
     </section>
 
     <section class="archive-post-intro">

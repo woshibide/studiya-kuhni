@@ -16,6 +16,13 @@ return [
     // version control for css and js
     'pixelopen.asset-version.active' => true,
 
+    'jr.static_site_generator' => [
+        'endpoint' => 'generate-static-site',
+        'output_folder' => './static',
+        'base_url' => '/',
+        'skip_media' => false,
+    ],
+
 
     'cache' => [
         'pages' => [
@@ -28,16 +35,26 @@ return [
         ]
     ],
 
-    // 'thumbs' => [
-    //     'driver' => 'imagick',
-    //     'memory'  => '128M',   
-    // ],
-
-    // 'tobimori.thumbhash' => [
-    //     'engine' => 'imagick',
-    //     'sampleMaxSize' => 80,
-    //     'blurRadius' => 1,
-    // ],
+    'thumbs' => [
+        'driver' => extension_loaded('imagick') ? 'imagick' : 'gd',
+        'quality' => 82,
+        'interlace' => true,
+        'threads' => 1,
+        'presets' => [
+            'card' => [
+                'width' => 960,
+                'quality' => 82,
+            ],
+            'slide' => [
+                'width' => 1600,
+                'quality' => 82,
+            ],
+            'hero' => [
+                'width' => 2200,
+                'quality' => 84,
+            ],
+        ],
+    ],
 
     // 'johannschopplich.locked-pages' => [
     //     'slug' => 'HZIYKIcigTmbDQ6',

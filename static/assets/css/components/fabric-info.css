@@ -1,0 +1,109 @@
+#fabric-info {
+    margin-top: 0;
+}
+
+.fabric-info__layout {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
+    align-items: start;
+}
+
+.fabric-info__map-wrap {
+    grid-column: span 8;
+    height: 100%;
+}
+
+.fabric-info__map {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 280px;
+    border: 1px solid var(--jet-black);
+    overflow: hidden;
+}
+
+.fabric-info__map .leaflet-control-container {
+    font-family: var(--swiss);
+}
+
+.fabric-info__map .leaflet-control-attribution {
+    display: none;
+}
+
+.fabric-info__map .leaflet-control-attribution a {
+    display: none;
+}
+
+.fabric-info__inner {
+    grid-column: span 4;
+    align-self: end;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+
+    h2 {
+        margin: 0;
+    }
+}
+
+.fabric-info__brand {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.fabric-info__logo {
+    width: min(100%, calc(var(--grid-col) * 4));
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+
+.fabric-info__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.fabric-info__eyebrow {
+    font-size: var(--fs-xs);
+    color: var(--soft-grey);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.fabric-info__text {
+    color: var(--grey);
+    max-width: 70ch;
+}
+
+.fabric-info__link {
+    margin-top: var(--space-xs);
+    width: fit-content;
+}
+
+@media (max-width: 768px) {
+    .fabric-info__layout {
+        grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    }
+
+    .fabric-info__map-wrap {
+        grid-column: span var(--grid-columns);
+        position: static;
+    }
+
+    .fabric-info__inner {
+        grid-column: span var(--grid-columns);
+        align-self: start;
+        width: 100%;
+    }
+
+    .fabric-info__logo {
+        width: min(100%, 180px);
+    }
+}

@@ -1,0 +1,98 @@
+.kuhnya-card-overview {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-base);
+    align-items: stretch;
+
+    & .kuhnya-card-overview__content {
+        grid-column: span 4;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    & .kuhnya-card-overview__eyebrow {
+        color: var(--soft-grey);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: var(--fs-xs);
+    }
+
+    & .kuhnya-card-overview__title {
+        margin: 0;
+        font-size: var(--fs-lg);
+    }
+
+    & .kuhnya-card-overview__intro {
+        margin: 0;
+        color: var(--grey);
+        font-size: var(--fs-base);
+    }
+
+    & .kuhnya-card-overview__facts {
+        margin: 0;
+        padding: 0;
+        list-style: none !important;
+        list-style-type: none !important;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    & .kuhnya-card-overview__fact-item {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-xs);
+        font-size: var(--fs-base);
+        list-style: none;
+
+        &::marker {
+            content: "";
+        }
+    }
+
+    & .kuhnya-card-overview__fact-label {
+        color: var(--soft-grey);
+        text-transform: lowercase;
+    }
+
+    & .kuhnya-card-overview__fact-value {
+        color: var(--grey);
+    }
+
+    & .kuhnya-card-overview__media {
+        grid-column: span 8;
+        aspect-ratio: 16 / 9;
+        display: block;
+        overflow: hidden;
+        background: var(--silver);
+
+        & img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 3000ms var(--out);
+        }
+
+        &:hover img,
+        &:focus-visible img {
+            transform: scale(1.02);
+        }
+    }
+}
+
+@media (max-width: 980px) {
+    .kuhnya-card-overview {
+        & .kuhnya-card-overview__content {
+            grid-column: span 12;
+            order: 2;
+        }
+
+        & .kuhnya-card-overview__media {
+            grid-column: span 12;
+            order: 1;
+        }
+    }
+}

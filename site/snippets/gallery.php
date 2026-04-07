@@ -72,7 +72,12 @@ $kuhnyaPrice = trim((string)$page->price()->value());
                             data-index="<?= (int)$index ?>"
                             aria-label="Открыть изображение <?= (int)$index + 1 ?>"
                         >
-                            <img src="<?= esc($image->url(), 'attr') ?>" alt="<?= esc($image->alt()->or($kuhnyaTitle)->value(), 'attr') ?>">
+                            <?php snippet('turbo-image', [
+                                'image' => $image,
+                                'alt' => $image->alt()->or($kuhnyaTitle)->value(),
+                                'width' => 960,
+                                'loading' => 'lazy',
+                            ]) ?>
                         </button>
                     </li>
                 <?php endforeach ?>
@@ -94,7 +99,12 @@ $kuhnyaPrice = trim((string)$page->price()->value());
                             <?php foreach ($galleryImages as $image): ?>
                                 <div class="gallery-overlay__slide">
                                     <div class="gallery-overlay__image-frame">
-                                        <img src="<?= esc($image->url(), 'attr') ?>" alt="<?= esc($image->alt()->or($kuhnyaTitle)->value(), 'attr') ?>">
+                                        <?php snippet('turbo-image', [
+                                            'image' => $image,
+                                            'alt' => $image->alt()->or($kuhnyaTitle)->value(),
+                                            'width' => 1800,
+                                            'loading' => 'lazy',
+                                        ]) ?>
                                         <button class="gallery-overlay__close" type="button" data-gallery-close aria-label="Закрыть галерею">
                                             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                                 <path d="M6.7 5.3a1 1 0 0 1 1.4 0L12 9.17l3.9-3.87a1 1 0 0 1 1.4 1.4L13.42 10.6l3.88 3.9a1 1 0 1 1-1.4 1.4L12 12.02l-3.9 3.88a1 1 0 0 1-1.4-1.4l3.88-3.9L6.7 6.7a1 1 0 0 1 0-1.4Z" fill="currentColor" />

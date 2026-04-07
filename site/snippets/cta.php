@@ -47,9 +47,19 @@ $randomImage = $fallbackImages[array_rand($fallbackImages)];
         </div>
         <div class="cta-media">
             <?php if ($customImage): ?>
-                <img src="<?= $customImage->url() ?>" alt="<?= esc($customImage->alt()) ?>">
+                <?php snippet('turbo-image', [
+                    'image' => $customImage,
+                    'alt' => $customImage->alt()->or('')->value(),
+                    'width' => 1200,
+                    'loading' => 'lazy',
+                ]) ?>
             <?php else: ?>
-                <img src="/<?= $randomImage ?>" alt="Call to Action">
+                <?php snippet('turbo-image', [
+                    'image' => asset($randomImage),
+                    'alt' => 'Call to Action',
+                    'width' => 1200,
+                    'loading' => 'lazy',
+                ]) ?>
             <?php endif; ?>
         </div>
     </div>

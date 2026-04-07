@@ -2,6 +2,7 @@
 
 <?php
 $singleImage = $page->single_image()->toFile();
+$singleImageAsset = $singleImage ?? asset('assets/placeholder.svg');
 $singleImageAlt = $page->single_image_alt();
 ?>
 
@@ -12,11 +13,13 @@ $singleImageAlt = $page->single_image_alt();
     </section>
 
     <section>
-        <img
-            style="width: 100%;"
-            src="<?= $singleImage ? $singleImage->url() : '/assets/placeholder.svg' ?>"
-            alt="<?= esc($singleImage ? $singleImageAlt->or($singleImage->alt()) : '') ?>"
-        >
+        <?php snippet('turbo-image', [
+            'image' => $singleImageAsset,
+            'alt' => $singleImage ? $singleImageAlt->or($singleImage->alt())->value() : '',
+            'width' => 2200,
+            'loading' => 'eager',
+            'attrs' => ['style' => 'width: 100%;'],
+        ]) ?>
     </section>    
 
     <section>

@@ -41,7 +41,7 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
             <?php foreach ($posts as $post): ?>
                 <?php
                 $cover = $post->cover()->toFile();
-                $imgUrl = $cover ? $cover->url() : '/assets/placeholder.svg';
+                $imgAsset = $cover ?? asset('assets/placeholder.svg');
                 $imgAlt = $cover ? $cover->alt()->or('')->value() : '';
                 $kitchen = $post->showcase_kitchen()->toPage();
                 $fabric = $kitchen?->parent();
@@ -54,7 +54,12 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
                     </h2>
 
                     <a class="archive-layout-media" href="<?= esc($post->url()) ?>">
-                        <img src="<?= esc($imgUrl) ?>" alt="<?= esc($imgAlt) ?>">
+                        <?php snippet('turbo-image', [
+                            'image' => $imgAsset,
+                            'alt' => $imgAlt,
+                            'width' => 1280,
+                            'loading' => 'lazy',
+                        ]) ?>
                     </a>
 
                     <div class="archive-layout-copy">

@@ -1,0 +1,321 @@
+
+
+#kuhnya-intro {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    height: clamp(4rem, 10vh, 20vh);
+    padding-top: var(--space-xl);
+
+    & h1{
+        margin-block: 0.5em;
+        width: 100%;
+        height: 100%;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        font-size: var(--fs-display);
+    }
+
+    .kuhnya-intro__meta {
+        display: flex;
+        flex-direction: row;
+        gap: var(--fs-base);
+    }
+}
+
+
+.kuhnya-hero {
+    margin-top: var(--space-sm);
+}
+
+.kunya-sticky-scope {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    position: relative;
+    width: 100%;
+    isolation: isolate;
+}
+
+.kunya-sticky-scope > section:not(.section-full) {
+    width: var(--the-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.kunya-sticky-overview {
+    position: sticky;
+    top: calc(100vh - 30vh);
+    z-index: 6;
+    height: 30vh;
+    display: grid;
+    align-items: end;
+    pointer-events: none;
+}
+
+.kunya-sticky-overview__inner {
+    width: var(--the-width);
+    padding-bottom: clamp(1rem, 2.5vw, 2.5rem);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-base);
+}
+
+.kunya-sticky-overview__content {
+    grid-column: 9 / span 4;
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: clamp(1rem, 2vw, 2rem);
+    background: color-mix(in srgb, var(--the-white) 90%, transparent);
+    backdrop-filter: blur(6px);
+    pointer-events: auto;
+}
+
+.kunya-sticky-overview__eyebrow {
+    color: var(--soft-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--fs-xs);
+}
+
+.kunya-sticky-overview__title {
+    margin: 0;
+    font-size: var(--fs-lg);
+}
+
+.kunya-sticky-overview__intro {
+    margin: 0;
+    color: var(--grey);
+    font-size: var(--fs-base);
+}
+
+.kunya-sticky-overview__facts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.kunya-sticky-overview__fact-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    list-style: none;
+}
+
+.kunya-sticky-overview__fact-item--price {
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+}
+
+.kunya-sticky-overview__fact-label {
+    color: var(--soft-grey);
+    text-transform: lowercase;
+}
+
+.kunya-sticky-overview__fact-value {
+    color: var(--grey);
+}
+
+.kunya-sticky-overview__cta {
+    flex-shrink: 0;
+    font-size: var(--fs-sm);
+    line-height: 1;
+    text-transform: lowercase;
+}
+
+#kunya-hero {
+    width: 100vw;
+    min-height: 100vh;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    isolation: isolate;
+    background: var(--silver);
+}
+
+.kunya-hero__media {
+    position: relative;
+    z-index: 1;
+    height: 120vh;
+    overflow: hidden;
+}
+
+.kunya-hero__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.kunya-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: translate3d(0, 0, 0) scale(1.02);
+    transform-origin: center;
+    will-change: transform;
+}
+
+@media (max-width: 980px) {
+    .kunya-sticky-overview {
+        top: calc(100vh - 36vh);
+        height: 36vh;
+    }
+
+    .kunya-sticky-overview__inner {
+        width: var(--the-width);
+        padding-bottom: clamp(1rem, 4vw, 2rem);
+    }
+
+    .kunya-sticky-overview__content {
+        grid-column: span 12;
+        background: color-mix(in srgb, var(--the-white) 88%, transparent);
+    }
+}
+
+/* target cta and set z index higher then sticky overview */
+#cta { position: relative; z-index: 100; }
+
+.kuhnya-features-list {
+    margin: 0;
+    margin-block: var(--space-lg);
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: var(--grid-col-gap);
+
+    .kuhnya-features-list__item {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+
+        .kuhnya-features-list__image{
+            aspect-ratio: 1 / 1;
+            width: clamp(40px, 8vw, 80px);
+            height: auto;
+        }
+    }
+}
+
+#benefits, #about-the-brand {
+    margin-block: var(--space-xl);
+}
+
+
+#details {
+    margin-block: var(--space-xl);
+}
+
+#details .kuhnya-layout-grid {
+    align-items: start;
+    row-gap: var(--space-lg);
+}
+
+#details .kuhnya-layout-card {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    min-height: clamp(20rem, 52vh, 36rem);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#details .kuhnya-layout-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+#details .kuhnya-layout-media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    --kuhnya-layout-parallax-y: 0px;
+    --kuhnya-layout-parallax-scale: 0;
+    --kuhnya-layout-hover-scale: 1;
+    transform: translate3d(0, var(--kuhnya-layout-parallax-y), 0)
+        scale(calc((1.02 + var(--kuhnya-layout-parallax-scale)) * var(--kuhnya-layout-hover-scale)));
+    transform-origin: center;
+    transition: transform 2s var(--out);
+    will-change: transform;
+}
+
+#details .kuhnya-layout-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#details .kuhnya-layout-toggle {
+    opacity: 1;
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    z-index: 2;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: grid;
+    place-items: center;
+    color: var(--super-white);
+    background-color: transparent;
+    font-size: var(--fs-base);
+}
+
+#details .kuhnya-layout-toggle span {
+    display: inline-block;
+    line-height: 1;
+}
+
+#details .kuhnya-layout-toggle:hover,
+#details .kuhnya-layout-toggle:focus-visible {
+    color: var(--the-white);
+    background-color: var(--jet-black);
+}
+
+#details .kuhnya-layout-card:hover .kuhnya-layout-media,
+#details .kuhnya-layout-card:focus-within .kuhnya-layout-media {
+    --kuhnya-layout-hover-scale: 1.01;
+}
+
+#details .kuhnya-layout-card.is-expanded {
+    margin-top: 0 !important;
+    min-height: 80vh;
+    z-index: 8;
+}
+
+#details .kuhnya-layout-card.is-expanded .kuhnya-layout-toggle span {
+    visibility: hidden;
+    position: relative;
+}
+
+#details .kuhnya-layout-card.is-expanded .kuhnya-layout-toggle span::after {
+    content: "\2013";
+    visibility: visible;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 48rem) {
+    #details .kuhnya-layout-card {
+        min-height: clamp(18rem, 44vh, 24rem);
+    }
+
+    #details .kuhnya-layout-card.is-expanded {
+        min-height: 58vh;
+    }
+}
+

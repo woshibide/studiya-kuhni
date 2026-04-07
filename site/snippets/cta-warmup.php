@@ -23,9 +23,19 @@ $randomImage = $fallbackImages[array_rand($fallbackImages)];
     </div>
     <div class="cta-warmup-media">
         <?php if ($customImage): ?>
-            <img src="<?= $customImage->url() ?>" alt="<?= esc($customImage->alt()) ?>">
+            <?php snippet('turbo-image', [
+                'image' => $customImage,
+                'alt' => $customImage->alt()->or('')->value(),
+                'width' => 1200,
+                'loading' => 'lazy',
+            ]) ?>
         <?php else: ?>
-            <img src="/<?= $randomImage ?>" alt="Design">
+            <?php snippet('turbo-image', [
+                'image' => asset($randomImage),
+                'alt' => 'Design',
+                'width' => 1200,
+                'loading' => 'lazy',
+            ]) ?>
         <?php endif; ?>
     </div>
 

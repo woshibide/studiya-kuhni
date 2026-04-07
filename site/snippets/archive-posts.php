@@ -19,7 +19,7 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
     <?php foreach ($posts as $post): ?>
         <?php
         $cover = $post->cover()->toFile();
-        $imgUrl = $cover ? $cover->url() : '/assets/placeholder.svg';
+        $imgAsset = $cover ?? asset('assets/placeholder.svg');
         $imgAlt = $cover ? $cover->alt()->or('')->value() : '';
         $title = $post->title()->or('60 symbols max');
         $intro = $post->intro()->or('220 symbols max');
@@ -33,7 +33,12 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
 
         <a class="archive-posts-card" href="<?= esc($post->url()) ?>">
             <figure>
-                <img src="<?= esc($imgUrl) ?>" alt="<?= esc($imgAlt) ?>">
+                <?php snippet('turbo-image', [
+                    'image' => $imgAsset,
+                    'alt' => $imgAlt,
+                    'width' => 960,
+                    'loading' => 'lazy',
+                ]) ?>
                 <figcaption>
                     <?php if ($fabric || $kitchen): ?>
                         <p class="archive-posts-meta">

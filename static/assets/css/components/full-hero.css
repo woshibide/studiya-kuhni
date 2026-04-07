@@ -1,0 +1,20 @@
+/* full hero is rendered inside a generic section, so we override
+   the default section styles to keep the old full-bleed behavior */
+
+section:has(> #full-hero.section-wrapper) {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+    border: 0;
+}
+
+#full-hero.section-wrapper {
+    /* background-color: aquamarine; */
+    width: 100vw;
+    min-height: 100vh;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    display: grid;
+    place-items: center;
+}

@@ -19,6 +19,7 @@ if (!$fabricsPage) {
 }
 
 $otherFabrics = $fabricsPage->childrenAndDrafts();
+$placeholderImageUrl = asset('assets/placeholder.svg')->url();
 
 $resolveKitchenGalleryImages = static function ($kitchen) {
     $selected = $kitchen->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
@@ -31,6 +32,28 @@ $resolveKitchenGalleryImages = static function ($kitchen) {
         ->filter(function ($image) {
             return strtolower($image->extension()) !== 'svg';
         });
+};
+
+$resolveOptimizedImageUrl = static function ($image, int $width = 1600) use ($placeholderImageUrl): string {
+    if (!$image || !is_object($image) || !method_exists($image, 'url')) {
+        return $placeholderImageUrl;
+    }
+
+    $extension = method_exists($image, 'extension') ? strtolower((string)$image->extension()) : '';
+    if ($extension === 'svg' || !method_exists($image, 'resize')) {
+        return $image->url();
+    }
+
+    $sourceWidth = method_exists($image, 'width') ? (int)$image->width() : 0;
+    if ($sourceWidth > 0 && $sourceWidth <= $width) {
+        return $image->url();
+    }
+
+    try {
+        return $image->resize($width)->url();
+    } catch (Throwable $e) {
+        return $image->url();
+    }
 };
 
 if ($currentFabric) {
@@ -59,7 +82,7 @@ if ($otherFabrics->isEmpty()) {
                     $kitchenLinks[] = [
                         'title' => (string)$kuhnya->title(),
                         'url' => $kuhnya->url(),
-                        'image' => $primaryImage ? $primaryImage->url() : '/assets/placeholder.svg',
+                        'image' => $resolveOptimizedImageUrl($primaryImage, 1200),
                         'slideIndex' => 0,
                     ];
 
@@ -67,7 +90,7 @@ if ($otherFabrics->isEmpty()) {
                     if ($galleryImages->isNotEmpty()) {
                         foreach ($galleryImages as $image) {
                             $kitchenSlides[] = [
-                                'image' => $image->url(),
+                                'image' => $resolveOptimizedImageUrl($image, 1600),
                             ];
                         }
                     }
@@ -75,7 +98,7 @@ if ($otherFabrics->isEmpty()) {
             } else {
                 foreach ($kitchens as $index => $kuhnya) {
                     $kitchenImage = $resolveKitchenGalleryImages($kuhnya)->first();
-                    $kitchenImageUrl = $kitchenImage ? $kitchenImage->url() : '/assets/placeholder.svg';
+                    $kitchenImageUrl = $resolveOptimizedImageUrl($kitchenImage, 1200);
 
                     $kitchenLinks[] = [
                         'title' => (string)$kuhnya->title(),
@@ -92,7 +115,7 @@ if ($otherFabrics->isEmpty()) {
 
             if (empty($kitchenSlides)) {
                 $kitchenSlides[] = [
-                    'image' => '/assets/placeholder.svg',
+                    'image' => $placeholderImageUrl,
                 ];
             }
 

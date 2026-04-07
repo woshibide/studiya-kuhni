@@ -426,6 +426,46 @@
             "install-path": "../getkirby/composer-installer"
         },
         {
+            "name": "jreisdorf/kirby-static-site-generator",
+            "version": "2.4.0",
+            "version_normalized": "2.4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jonathan-reisdorf/kirby-static-site-generator.git",
+                "reference": "1ee2a89b1b9786ccddf298e525981d34d988d99a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jonathan-reisdorf/kirby-static-site-generator/zipball/1ee2a89b1b9786ccddf298e525981d34d988d99a",
+                "reference": "1ee2a89b1b9786ccddf298e525981d34d988d99a",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.1"
+            },
+            "time": "2026-04-06T07:24:54+00:00",
+            "type": "kirby-plugin",
+            "extra": {
+                "installer-name": "static-site-generator"
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reisdorf"
+                }
+            ],
+            "description": "Static site generator plugin for Kirby 3, 4 and 5",
+            "support": {
+                "issues": "https://github.com/jonathan-reisdorf/kirby-static-site-generator/issues",
+                "source": "https://github.com/jonathan-reisdorf/kirby-static-site-generator/tree/2.4.0"
+            },
+            "install-path": "../../site/plugins/static-site-generator"
+        },
+        {
             "name": "laminas/laminas-escaper",
             "version": "2.18.0",
             "version_normalized": "2.18.0.0",
