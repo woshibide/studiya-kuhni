@@ -3,10 +3,10 @@
         <ul>
             <?php
             $navItems = [
-                ['title' => 'фабрики', 'url' => page('fabrics') ? page('fabrics')->url() : '/fabrics'],
-                ['title' => 'дизайнерам', 'url' => page('designers') ? page('designers')->url() : '/designers'],
-                ['title' => 'производство', 'url' => page('proizvodstvo') ? page('proizvodstvo')->url() : '/proizvodstvo'],
-                ['title' => 'архив', 'url' => page('archive') ? page('archive')->url() : '/archive'],
+                ['title' => 'фабрики', 'url' => relative_url(page('fabrics') ? page('fabrics')->url() : '/fabrics')],
+                ['title' => 'дизайнерам', 'url' => relative_url(page('designers') ? page('designers')->url() : '/designers')],
+                ['title' => 'производство', 'url' => relative_url(page('proizvodstvo') ? page('proizvodstvo')->url() : '/proizvodstvo')],
+                ['title' => 'архив', 'url' => relative_url(page('archive') ? page('archive')->url() : '/archive')],
             ];
 
             foreach ($navItems as $item): ?>
@@ -17,7 +17,7 @@
         </ul>
     </div>
     <div class="nav-center">
-        <a href="/">Студия Кухни</a>
+        <a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>
     </div>
     <div class="nav-right" data-nav-contact>
         <div class="nav-contact-toggle-shell">

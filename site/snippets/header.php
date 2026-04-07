@@ -2,6 +2,35 @@
 $session = $kirby->session();
 $isFirstVisit = !$session->get('visited', false);
 
+if (!function_exists('relative_url')) {
+    function relative_url(string $path): string
+    {
+        if ($path === '') {
+            return '';
+        }
+
+        $siteUrl = kirby()->url();
+
+        if ($siteUrl !== '' && str_starts_with($path, $siteUrl)) {
+            $path = substr($path, strlen($siteUrl));
+        }
+
+        if (preg_match('~^(?:https?:)?//~i', $path)) {
+            return $path;
+        }
+
+        $currentPage = page();
+        $depth = $currentPage ? max($currentPage->depth() - 1, 0) : 0;
+        $relativePath = ltrim($path, '/');
+
+        if ($relativePath === '') {
+            return $depth > 0 ? str_repeat('../', $depth) : './';
+        }
+
+        return str_repeat('../', $depth) . $relativePath;
+    }
+}
+
 if ($isFirstVisit) {
     $session->set('visited', true);
 }
@@ -14,43 +43,47 @@ if ($isFirstVisit) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href="/assets/icons/favicons/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="/assets/icons/favicons/favicon32px.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="/assets/icons/favicons/favicon16px.png" sizes="16x16" type="image/png">
-    <link rel="apple-touch-icon" href="/assets/icons/favicons/favicon180px.png" sizes="180x180">
-    <link rel="shortcut icon" href="/assets/icons/favicons/favicon32px.png" type="image/png">
+    <link rel="icon" href="<?= esc(relative_url('assets/icons/favicons/favicon.svg'), 'attr') ?>" type="image/svg+xml">
+    <link rel="icon" href="<?= esc(relative_url('assets/icons/favicons/favicon32px.png'), 'attr') ?>" sizes="32x32" type="image/png">
+    <link rel="icon" href="<?= esc(relative_url('assets/icons/favicons/favicon16px.png'), 'attr') ?>" sizes="16x16" type="image/png">
+    <link rel="apple-touch-icon" href="<?= esc(relative_url('assets/icons/favicons/favicon180px.png'), 'attr') ?>" sizes="180x180">
+    <link rel="shortcut icon" href="<?= esc(relative_url('assets/icons/favicons/favicon32px.png'), 'attr') ?>" type="image/png">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
     <title>
         Кухни КМВ | <?= $page->title() ?>
     </title>
-        
-    <?= css([
-        'assets/css/normalize.css',
-        'assets/css/main.css',
-        'assets/css/footer.css',
-        'assets/css/navbar.css',
 
-        'assets/css/components/cta.css',
-        'assets/css/components/gallery.css',
-        'assets/css/components/benefits.css',
-        'assets/css/components/full-hero.css',
-        'assets/css/components/cta-warmup.css',
-        'assets/css/components/simple-hero.css',
-        'assets/css/components/faq-section.css',
-        'assets/css/components/archive-posts.css',
-        'assets/css/components/other-kitchens.css',
-        'assets/css/components/brands.css',
-        'assets/css/components/other-fabrics.css',
-        'assets/css/components/big-message.css',
-        'assets/css/components/kuhnya-card-overview.css',
-        'assets/css/components/fabric-info.css',
-        'assets/css/components/cookie-consent.css',
-        'assets/css/components/nav-contact-panel.css',
-    ]) ?>
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/normalize.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/main.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/footer.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/navbar.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/cta.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/gallery.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/benefits.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/full-hero.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/cta-warmup.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/simple-hero.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/faq-section.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/archive-posts.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/other-kitchens.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/brands.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/other-fabrics.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/big-message.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/kuhnya-card-overview.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/fabric-info.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/cookie-consent.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/nav-contact-panel.css'), 'attr') ?>">
 
-    <?= css('@auto') ?>
+    <?php
+    $template = $page->intendedTemplate()->name();
+    $cssFile = "assets/css/templates/{$template}.css";
+    $cssPath = kirby()->root('index') . '/' . $cssFile;
+
+    if (file_exists($cssPath)): ?>
+        <link rel="stylesheet" href="<?= esc(relative_url($cssFile), 'attr') ?>">
+    <?php endif ?>
 
     <!-- Yandex.Metrika counter -->
     <!-- Top.Mail.Ru counter -->

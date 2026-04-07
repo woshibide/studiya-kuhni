@@ -19,7 +19,7 @@ if (!$fabricsPage) {
 }
 
 $otherFabrics = $fabricsPage->childrenAndDrafts();
-$placeholderImageUrl = asset('assets/placeholder.svg')->url();
+$placeholderImageUrl = relative_url('assets/placeholder.svg');
 
 $resolveKitchenGalleryImages = static function ($kitchen) {
     $selected = $kitchen->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
@@ -81,7 +81,7 @@ if ($otherFabrics->isEmpty()) {
                     $primaryImage = $kitchenImages->first();
                     $kitchenLinks[] = [
                         'title' => (string)$kuhnya->title(),
-                        'url' => $kuhnya->url(),
+                        'url' => relative_url($kuhnya->url()),
                         'image' => $resolveOptimizedImageUrl($primaryImage, 1200),
                         'slideIndex' => 0,
                     ];
@@ -102,7 +102,7 @@ if ($otherFabrics->isEmpty()) {
 
                     $kitchenLinks[] = [
                         'title' => (string)$kuhnya->title(),
-                        'url' => $kuhnya->url(),
+                        'url' => relative_url($kuhnya->url()),
                         'image' => $kitchenImageUrl,
                         'slideIndex' => $index,
                     ];
@@ -169,7 +169,7 @@ if ($otherFabrics->isEmpty()) {
                 <?php endif ?>
 
                 <figcaption class="fabric-card__caption">
-                    <a href="<?= $fabric->url() ?>"><?= esc($fabric->title()) ?></a>
+                    <a href="<?= esc(relative_url($fabric->url()), 'attr') ?>"><?= esc($fabric->title()) ?></a>
                 </figcaption>
             </figure>
         <?php endforeach ?>

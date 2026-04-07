@@ -22,7 +22,7 @@ if ($otherKitchens->isEmpty()) {
 <section class="other-kitchens-section">
     <h2>
         Другие кухни от
-        <a href="<?= $currentFabric->url() ?>" class="other-kitchens-section__fabric-link"><?= esc($currentFabric->title()) ?></a>
+        <a href="<?= esc(relative_url($currentFabric->url()), 'attr') ?>" class="other-kitchens-section__fabric-link"><?= esc($currentFabric->title()) ?></a>
     </h2>
     <div class="kitchens-grid">
         <?php foreach ($otherKitchens as $kitchen): ?>

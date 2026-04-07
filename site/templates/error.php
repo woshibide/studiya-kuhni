@@ -4,7 +4,7 @@
     <section>
         <?php snippet('simple-hero') ?>
     </section>
-    <a href="/">вернуться на главную</a>
+    <a href="<?= esc(relative_url('/'), 'attr') ?>">вернуться на главную</a>
 </main>
 
 <?php snippet('footer') ?>

@@ -53,7 +53,7 @@ if ($heroWordsJson === false) {
     <section id="fabrics-intro">
         <?php
         $fabricsPage = page('fabrics');
-        $placeholderImageUrl = asset('assets/placeholder.svg')->url();
+        $placeholderImageUrl = relative_url('assets/placeholder.svg');
         $resolveKitchenGalleryImages = static function ($kitchen) {
             $selected = $kitchen->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
             if ($selected->isNotEmpty()) {
@@ -142,7 +142,7 @@ if ($heroWordsJson === false) {
                                 $primaryImage = $kitchenImages->first();
                                 $kitchenLinks[] = [
                                     'title' => (string)$kitchen->title(),
-                                    'url' => $kitchen->url(),
+                                    'url' => relative_url($kitchen->url()),
                                     'image' => $resolveOptimizedImageUrl($primaryImage, 1200),
                                     'slideIndex' => 0,
                                 ];
@@ -163,7 +163,7 @@ if ($heroWordsJson === false) {
 
                                 $kitchenLinks[] = [
                                     'title' => (string)$kitchen->title(),
-                                    'url' => $kitchen->url(),
+                                    'url' => relative_url($kitchen->url()),
                                     'image' => $kitchenImageUrl,
                                     'slideIndex' => $index,
                                 ];
@@ -242,7 +242,7 @@ if ($heroWordsJson === false) {
                             <?php endif ?>
 
                             <figcaption>
-                                <a href="<?= $fabric->url() ?>">
+                                <a href="<?= esc(relative_url($fabric->url()), 'attr') ?>">
                                     <?= esc($fabric->title()) ?>
                                 </a>
                             </figcaption>

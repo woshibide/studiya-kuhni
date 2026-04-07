@@ -31,7 +31,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
         str_contains($label, 't.me') ||
         str_contains($label, 'телеграм')
     ) {
-        return '/assets/icons/tlg.svg';
+        return relative_url('assets/icons/tlg.svg');
     }
 
     if (
@@ -39,7 +39,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
         str_contains($label, 'wa.me') ||
         str_contains($label, 'ватсап')
     ) {
-        return '/assets/icons/wa.svg';
+        return relative_url('assets/icons/wa.svg');
     }
 
     if (
@@ -47,14 +47,14 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
         str_contains($label, 'яндекс') ||
         str_contains($label, 'ya.ru')
     ) {
-        return '/assets/icons/ya.svg';
+        return relative_url('assets/icons/ya.svg');
     }
 
     if (
         str_contains($label, '2gis') ||
         str_contains($label, '2гис')
     ) {
-        return '/assets/icons/2gis.svg';
+        return relative_url('assets/icons/2gis.svg');
     }
 
     return null;
@@ -112,12 +112,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                                 ?>
                                 <a class="contacts-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
                                     <?php if ($mapIcon): ?>
-                                        <?php snippet('turbo-image', [
-                                            'image' => asset(ltrim($mapIcon, '/')),
-                                            'alt' => '',
-                                            'loading' => 'lazy',
-                                            'attrs' => ['aria-hidden' => 'true'],
-                                        ]) ?>
+                                        <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                     <?php endif ?>
                                     <span><?= esc($mapTitle) ?></span>
                                 </a>
@@ -150,12 +145,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                                 ?>
                                 <a class="contacts-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
                                     <?php if ($messengerIcon): ?>
-                                        <?php snippet('turbo-image', [
-                                            'image' => asset(ltrim($messengerIcon, '/')),
-                                            'alt' => '',
-                                            'loading' => 'lazy',
-                                            'attrs' => ['aria-hidden' => 'true'],
-                                        ]) ?>
+                                        <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                     <?php endif ?>
                                     <span><?= esc($messengerTitle) ?></span>
                                 </a>

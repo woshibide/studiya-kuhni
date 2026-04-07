@@ -7,7 +7,7 @@
 
     <div id="footer-details">
         <div class="info">
-            <p><a href="/">Студия Кухни</a>, 2008 — 2026</p>
+            <p><a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>, 2008 — 2026</p>
             <p>Часть альянса <a class="external-link" target="_blank" href="https://mebelkmv.ru">Петру Групп</a></p>
             <address>
                  Пятигорск, Ермолова 14, ТЦ «Palazzo», 357500
@@ -19,41 +19,41 @@
         <div class="links">
             <ul>
                 <li>
-                    <a href="/contacts">Связь</a>
+                    <a href="<?= esc(relative_url('/contacts'), 'attr') ?>">Связь</a>
                 </li>
                 <li>
-                    <a href="/faq">FAQ</a>
+                    <a href="<?= esc(relative_url('/faq'), 'attr') ?>">FAQ</a>
                 </li>
                 <li>
-                    <a href="/archive">Архив</a>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a href="/fabrics/aran-cucine">Aran Cucine</a>
-                </li>
-                <li>
-                    <a href="/fabrics/aster-cucine">Aster Cucine</a>
-                </li>
-                <li>
-                    <a href="/fabrics/home-cucine">Home Cucine</a>
-                </li>
-                <li>
-                    <a href="/fabrics/mossman">Mossman</a>
-                </li>
-                <li>
-                    <a href="/fabrics/scavolini">Scavolini</a>
+                    <a href="<?= esc(relative_url('/archive'), 'attr') ?>">Архив</a>
                 </li>
             </ul>
             <ul>
                 <li>
-                    <a href="/mediakit">Media Kit</a>
+                    <a href="<?= esc(relative_url('/fabrics/aran-cucine'), 'attr') ?>">Aran Cucine</a>
                 </li>
                 <li>
-                    <a href="/designers">Дизайнерам</a>
+                    <a href="<?= esc(relative_url('/fabrics/aster-cucine'), 'attr') ?>">Aster Cucine</a>
                 </li>
                 <li>
-                    <a href="/privacy">Политика Конфиденциальности</a>
+                    <a href="<?= esc(relative_url('/fabrics/home-cucine'), 'attr') ?>">Home Cucine</a>
+                </li>
+                <li>
+                    <a href="<?= esc(relative_url('/fabrics/mossman'), 'attr') ?>">Mossman</a>
+                </li>
+                <li>
+                    <a href="<?= esc(relative_url('/fabrics/scavolini'), 'attr') ?>">Scavolini</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="<?= esc(relative_url('/mediakit'), 'attr') ?>">Media Kit</a>
+                </li>
+                <li>
+                    <a href="<?= esc(relative_url('/designers'), 'attr') ?>">Дизайнерам</a>
+                </li>
+                <li>
+                    <a href="<?= esc(relative_url('/privacy'), 'attr') ?>">Политика Конфиденциальности</a>
                 </li>
             </ul>
         </div>
@@ -64,8 +64,8 @@
 </footer>
 
 <!-- debug grid overlay -->
-<script src="/assets/js/debug.js" defer></script>
-<!-- <script src="/assets/js/smooth-scroll.js" defer></script> -->
+<script src="<?= esc(relative_url('assets/js/debug.js'), 'attr') ?>" defer></script>
+<!-- <script src="<?= esc(relative_url('assets/js/smooth-scroll.js'), 'attr') ?>" defer></script> -->
 <div id="debug-grid">
     <?php for($i = 0; $i < 24; $i++): ?>
         <div></div>
@@ -73,16 +73,16 @@
 </div>
 
 <!-- embla carousel -->
-<script src="/assets/js/node_modules/embla-carousel/embla-carousel.umd.js" defer></script>
-<script src="/assets/js/node_modules/embla-carousel-autoplay/embla-carousel-autoplay.umd.js" defer></script>
+<script src="<?= esc(relative_url('assets/js/node_modules/embla-carousel/embla-carousel.umd.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/node_modules/embla-carousel-autoplay/embla-carousel-autoplay.umd.js'), 'attr') ?>" defer></script>
 
-<script src="/assets/js/gallery.js" defer></script>
-<script src="/assets/js/navbar-contact.js" defer></script>
-<script src="/assets/js/faq.js" defer></script>
+<script src="<?= esc(relative_url('assets/js/gallery.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/navbar-contact.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/faq.js'), 'attr') ?>" defer></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
-<script src="/assets/js/fabric-info-map.js" defer></script>
-<script src="/assets/js/other-fabrics.js" defer></script>
-<script src="/assets/js/footer-typing.js" defer></script>
+<script src="<?= esc(relative_url('assets/js/fabric-info-map.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/other-fabrics.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/footer-typing.js'), 'attr') ?>" defer></script>
 
 <?php
 $template = $page->intendedTemplate()->name();
@@ -90,7 +90,7 @@ $jsFile = "assets/js/templates/{$template}.js";
 $jsPath = kirby()->root('index') . '/' . $jsFile;
 
 if (file_exists($jsPath)): ?>
-    <script src="<?= url($jsFile) ?>" defer></script>
+    <script src="<?= esc(relative_url($jsFile), 'attr') ?>" defer></script>
 <?php endif ?>
 
 

@@ -3,7 +3,7 @@
 <main>
 
     <?php
-    $placeholderImageUrl = asset('assets/placeholder.svg')->url();
+    $placeholderImageUrl = relative_url('assets/placeholder.svg');
     $resolveKitchenGalleryImages = static function ($kitchen) {
         $selected = $kitchen->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
         if ($selected->isNotEmpty()) {
@@ -57,7 +57,7 @@
                     $primaryImage = $kitchenImages->first();
                     $kitchenLinks[] = [
                         'title' => (string)$kuhnya->title(),
-                        'url' => $kuhnya->url(),
+                        'url' => relative_url($kuhnya->url()),
                         'image' => $resolveOptimizedImageUrl($primaryImage, 1200),
                         'slideIndex' => 0,
                     ];
@@ -78,7 +78,7 @@
 
                     $kitchenLinks[] = [
                         'title' => (string)$kuhnya->title(),
-                        'url' => $kuhnya->url(),
+                        'url' => relative_url($kuhnya->url()),
                         'image' => $kitchenImageUrl,
                         'slideIndex' => $index,
                     ];
@@ -98,7 +98,7 @@
             $cardImageUrl = $kitchenSlides[0]['image'];
             ?>
             <div class="fabric-grid__item" data-fabric-item>
-                <a class="fabric-card__header" href="<?= $fabric->url() ?>">
+                <a class="fabric-card__header" href="<?= esc(relative_url($fabric->url()), 'attr') ?>">
                     <h2 class="internal-link__hidden hover-underline"><?= $fabric->title() ?></h2>
                 </a>
                 <article

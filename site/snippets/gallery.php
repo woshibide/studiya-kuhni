@@ -51,7 +51,7 @@ $kuhnyaTitle = trim((string)$page->title()->value());
 $fabricPage = $page->parent();
 $fabricsIndex = site()->find('fabrics');
 $kuhnyaBrand = $fabricPage ? $fabricPage->title()->value() : 'Название фабрики';
-$kuhnyaBrandUrl = $fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#');
+$kuhnyaBrandUrl = relative_url($fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#'));
 $kuhnyaCountry = trim((string)$page->country_of_origin()->value());
 $kuhnyaPrice = trim((string)$page->price()->value());
 ?>

@@ -2,7 +2,7 @@
 <div id="cookie-banner">
     Мы используем файлы Cookie для улучшения работы сайта. 
     <div>
-        <a href="/privacy" class="cookie-banner-link">Подробнее</a>
+        <a href="<?= esc(relative_url('/privacy'), 'attr') ?>" class="cookie-banner-link">Подробнее</a>
         <button onclick="acceptCookies()" class="cookie-accept-btn">Принять</button>
     </div>
 </div>

@@ -50,10 +50,10 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
 
                 <article id="<?= esc($post->slug()) ?>" class="archive-layout-item">
                     <h2 class="archive-layout-title">
-                        <a class="internal-link__hidden" href="<?= esc($post->url()) ?>"><?= esc($post->title()) ?></a>
+                        <a class="internal-link__hidden" href="<?= esc(relative_url($post->url()), 'attr') ?>"><?= esc($post->title()) ?></a>
                     </h2>
 
-                    <a class="archive-layout-media" href="<?= esc($post->url()) ?>">
+                    <a class="archive-layout-media" href="<?= esc(relative_url($post->url()), 'attr') ?>">
                         <?php snippet('turbo-image', [
                             'image' => $imgAsset,
                             'alt' => $imgAlt,

@@ -5,7 +5,7 @@ $cardTitle = $kuhnya->title()->or('Название кухни')->value();
 $fabricPage = $kuhnya->parent();
 $fabricsIndex = site()->find('fabrics');
 $cardBrand = $fabricPage ? $fabricPage->title()->value() : 'Название фабрики';
-$cardBrandUrl = $fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#');
+$cardBrandUrl = relative_url($fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#'));
 $cardGalleryImages = $kuhnya->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
 if ($cardGalleryImages->isEmpty()) {
     $cardGalleryImages = $kuhnya->images()
@@ -61,12 +61,12 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
             </ul>
 
             <?php if (($showLink ?? false) === true): ?>
-                <a class="internal-link" href="<?= $kuhnya->url() ?>">подробности</a>
+                <a class="internal-link" href="<?= esc(relative_url($kuhnya->url()), 'attr') ?>">подробности</a>
             <?php endif ?>
     </div>
 
     <?php if ($layout !== 'content-only'): ?>
-        <a class="kuhnya-card-overview__media" href="<?= $kuhnya->url() ?>" aria-label="<?= esc($cardTitle, 'attr') ?>">
+        <a class="kuhnya-card-overview__media" href="<?= esc(relative_url($kuhnya->url()), 'attr') ?>" aria-label="<?= esc($cardTitle, 'attr') ?>">
             <?php snippet('turbo-image', [
                 'image' => $cardImageAsset,
                 'alt' => $cardTitle,

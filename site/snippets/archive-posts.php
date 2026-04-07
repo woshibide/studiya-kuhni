@@ -31,7 +31,7 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
         }
         ?>
 
-        <a class="archive-posts-card" href="<?= esc($post->url()) ?>">
+        <a class="archive-posts-card" href="<?= esc(relative_url($post->url()), 'attr') ?>">
             <figure>
                 <?php snippet('turbo-image', [
                     'image' => $imgAsset,

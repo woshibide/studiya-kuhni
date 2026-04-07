@@ -60,7 +60,7 @@ if ($src === null) {
         }
     }
 
-    $src = $rendered->url();
+    $src = relative_url($rendered->url());
     $renderWidth = method_exists($rendered, 'width') ? $rendered->width() : null;
     $renderHeight = method_exists($rendered, 'height') ? $rendered->height() : null;
 }
