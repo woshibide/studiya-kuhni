@@ -19,7 +19,7 @@ return [
     'jr.static_site_generator' => [
         'endpoint' => 'generate-static-site',
         'output_folder' => './static',
-        'base_url' => '/',
+        'base_url' => '/studiya-kuhni/',
         'skip_media' => false,
     ],
 
