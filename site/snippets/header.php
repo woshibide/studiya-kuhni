@@ -10,24 +10,41 @@ if (!function_exists('relative_url')) {
         }
 
         $siteUrl = kirby()->url();
+        $siteHost = parse_url($siteUrl, PHP_URL_HOST) ?: '';
+        $basePath = kirby()->option('jr.static_site_generator.base_url', '/');
+        $basePath = '/' . trim((string)$basePath, '/') . '/';
+        if ($basePath === '//') {
+            $basePath = '/';
+        }
 
         if ($siteUrl !== '' && str_starts_with($path, $siteUrl)) {
             $path = substr($path, strlen($siteUrl));
         }
 
         if (preg_match('~^(?:https?:)?//~i', $path)) {
-            return $path;
+            $pathHost = parse_url($path, PHP_URL_HOST) ?: '';
+            if ($siteHost !== '' && $pathHost === $siteHost) {
+                $path = parse_url($path, PHP_URL_PATH) ?: '/';
+            } else {
+                return $path;
+            }
         }
 
-        $currentPage = page();
-        $depth = $currentPage ? max($currentPage->depth() - 1, 0) : 0;
-        $relativePath = ltrim($path, '/');
+        $normalizedPath = '/' . ltrim($path, '/');
+        if ($basePath !== '/' && str_starts_with($normalizedPath, $basePath)) {
+            $normalizedPath = substr($normalizedPath, strlen(rtrim($basePath, '/')));
+            if ($normalizedPath === '' || $normalizedPath === false) {
+                $normalizedPath = '/';
+            }
+        }
+
+        $relativePath = ltrim($normalizedPath, '/');
 
         if ($relativePath === '') {
-            return $depth > 0 ? str_repeat('../', $depth) : './';
+            return $basePath;
         }
 
-        return str_repeat('../', $depth) . $relativePath;
+        return $basePath . $relativePath;
     }
 }
 

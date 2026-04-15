@@ -19,48 +19,48 @@
         <div class="links">
             <ul>
                 <li>
-                    <a href="<?= esc(relative_url('/contacts'), 'attr') ?>">Связь</a>
+                    <a class="hover-bg" href="<?= esc(relative_url('/contacts'), 'attr') ?>">Связь</a>
                 </li>
                 <li>
-                    <a href="<?= esc(relative_url('/faq'), 'attr') ?>">FAQ</a>
+                    <a class="hover-bg" href="<?= esc(relative_url('/faq'), 'attr') ?>">FAQ</a>
                 </li>
                 <li>
-                    <a href="<?= esc(relative_url('/archive'), 'attr') ?>">Архив</a>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a href="<?= esc(relative_url('/fabrics/aran-cucine'), 'attr') ?>">Aran Cucine</a>
-                </li>
-                <li>
-                    <a href="<?= esc(relative_url('/fabrics/aster-cucine'), 'attr') ?>">Aster Cucine</a>
-                </li>
-                <li>
-                    <a href="<?= esc(relative_url('/fabrics/home-cucine'), 'attr') ?>">Home Cucine</a>
-                </li>
-                <li>
-                    <a href="<?= esc(relative_url('/fabrics/mossman'), 'attr') ?>">Mossman</a>
-                </li>
-                <li>
-                    <a href="<?= esc(relative_url('/fabrics/scavolini'), 'attr') ?>">Scavolini</a>
+                    <a class="hover-bg" href="<?= esc(relative_url('/archive'), 'attr') ?>">Воспоминания</a>
                 </li>
             </ul>
             <ul>
                 <li>
-                    <a href="<?= esc(relative_url('/mediakit'), 'attr') ?>">Media Kit</a>
+                    <a class="hover-bg" href="<?= esc(relative_url('/fabrics/aran-cucine'), 'attr') ?>">Aran Cucine</a>
                 </li>
                 <li>
-                    <a href="<?= esc(relative_url('/designers'), 'attr') ?>">Дизайнерам</a>
+                    <a class="hover-bg" href="<?= esc(relative_url('/fabrics/aster-cucine'), 'attr') ?>">Aster Cucine</a>
                 </li>
                 <li>
-                    <a href="<?= esc(relative_url('/privacy'), 'attr') ?>">Политика Конфиденциальности</a>
+                    <a class="hover-bg" href="<?= esc(relative_url('/fabrics/home-cucine'), 'attr') ?>">Home Cucine</a>
+                </li>
+                <li>
+                    <a class="hover-bg" href="<?= esc(relative_url('/fabrics/mossman'), 'attr') ?>">Mossman</a>
+                </li>
+                <li>
+                    <a class="hover-bg" href="<?= esc(relative_url('/fabrics/scavolini'), 'attr') ?>">Scavolini</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a class="hover-bg" href="<?= esc(relative_url('/mediakit'), 'attr') ?>">Медиа Кит</a>
+                </li>
+                <li>
+                    <a class="hover-bg" href="<?= esc(relative_url('/designers'), 'attr') ?>">Дизайнерам</a>
+                </li>
+                <li>
+                    <a class="hover-bg" href="<?= esc(relative_url('/privacy'), 'attr') ?>">Политика Конфиденциальности</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div id="big-footer-text">
+    <a href="/" id="big-footer-text">
         Студия Кухни
-    </div>
+    </a>
 </footer>
 
 <!-- debug grid overlay -->

@@ -40,7 +40,7 @@ $randomImage = $fallbackImages[array_rand($fallbackImages)];
                 <p><?= esc($ctaText) ?></p>
             <?php endif ?>
             <?php if ($ctaButton !== ''): ?>
-                <button type="button" class="primary-btn">
+                <button type="button" data-open-nav-contact class="primary-btn">
                     <?= esc($ctaButton) ?>
                 </button>
             <?php endif ?>

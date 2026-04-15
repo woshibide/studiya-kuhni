@@ -11,15 +11,14 @@
     }
 
     .nav-contact-panel {
-        --panel-width: calc((var(--grid-col) * 4 - 1rem));
-
         text-transform: none !important;
-
+        border-radius: 0 0 var(--space-sm) var(--space-sm);
         position: absolute;
         top: 100%;
         right: 0;
-        width: var(--panel-width);
-        max-width: min(92vw, var(--panel-width));
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
         background: var(--jet-black);
         color: var(--the-white);
         padding: var(--space-md);

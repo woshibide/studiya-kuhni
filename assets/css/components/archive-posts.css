@@ -1,5 +1,6 @@
 #archive-posts__heading {
 		font-size: var(--fs-lg);
+		letter-spacing: -0.03em;
 	}
 
 #archive-posts {

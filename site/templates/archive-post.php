@@ -20,11 +20,14 @@ $location = $page->location()->or('локация не указана');
             'loading' => 'eager',
             'attrs' => ['data-archive-post-cover-image' => true],
         ]) ?>
+        <div class="archive-post-cover__inner">
+            <h1><?= esc($page->title()) ?></h1>
+        </div>
     </section>
 
     <section class="archive-post-intro">
         <div class="archive-post-intro__header">
-            <h1><?= esc($page->title()) ?></h1>
+            
 
             <p class="archive-post-intro__meta">
                 <?php if ($publishedDate): ?>

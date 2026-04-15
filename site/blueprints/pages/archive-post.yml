@@ -27,6 +27,14 @@ tabs:
                 type: text
                 placeholder: Москва
                 help: укажите город или район, где находится кухня
+              collaborator:
+                label: коллаборатор
+                type: text
+                default: '@valeriya_dimova'
+              collaborator_link:
+                label: ссылка на коллаборатора
+                type: url
+                default: https://instagram.com/valeriya_dimova
               showcase_kitchen:
                 label: кухня в посте
                 type: pages

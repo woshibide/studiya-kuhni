@@ -41,7 +41,7 @@ if ($heroWordsJson === false) {
             <h1 class="home-hero-seo-copy"><?= esc($heroSeoText) ?></h1>
             <div class="hero-description">
                 <p>
-                    Уже более 00 лет мы привозим и реализуем кухни под ключ на Северном Кавказе, продумывая каждую деталь — от проекта до установки, чтобы вы получили максимально удобную и долговечную кухню для жизни.
+                    Уже более 00 лет мы привозим и реализуем кухни под ключ на Северном Кавказе, продумывая каждую деталь — от проекта до установки, чтобы вы получили самую удобную и долговечную кухню для жизни.
                 </p>
             </div>
             <div class="hero__cta-wrapper">
@@ -73,18 +73,18 @@ if ($heroWordsJson === false) {
 
             $extension = method_exists($image, 'extension') ? strtolower((string)$image->extension()) : '';
             if ($extension === 'svg' || !method_exists($image, 'resize')) {
-                return $image->url();
+                return relative_url($image->url());
             }
 
             $sourceWidth = method_exists($image, 'width') ? (int)$image->width() : 0;
             if ($sourceWidth > 0 && $sourceWidth <= $width) {
-                return $image->url();
+                return relative_url($image->url());
             }
 
             try {
-                return $image->resize($width)->url();
+                return relative_url($image->resize($width)->url());
             } catch (Throwable $e) {
-                return $image->url();
+                return relative_url($image->url());
             }
         };
         $homeFabricRows = [

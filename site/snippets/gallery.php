@@ -1,5 +1,5 @@
 <?php
-$galleryHeading = 'Привезти вам эту красотку?';
+$galleryHeading = 'Она станет вашей новой кухней?';
 $galleryImages = [];
 $isKitchenPage = $page->intendedTemplate()->name() === 'kuhnya';
 

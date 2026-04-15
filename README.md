@@ -1,5 +1,10 @@
 # TODO: 
 
+home:
+[] gallery pages orchestrated openning of images
+    [] same for single kitchen page
+
+
 designers: 
 https://mebelkmv.ru/services/besplatnaya-konsultatsiya-dizaynera-interera/
 https://mebelkmv.ru/partnery/

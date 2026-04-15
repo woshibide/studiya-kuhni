@@ -43,6 +43,14 @@ footer {
         font-size: var(--fs-display);
         line-height: 0.9;
         text-align: center;
+        text-decoration: none;
+        background-image: none;
+
+        &:hover,
+        &:focus-visible {
+            background-image: none;
+            text-decoration: none;
+        }
     }
 
     #footer-details {

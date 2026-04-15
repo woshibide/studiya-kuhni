@@ -102,7 +102,7 @@ Designers-cards:
     sapien vitae pellentesque sem placerat
     in id cursus mi pretium tellus.
 - 
-  name: Бюро Кошкины
+  name: Бюро Кошкиных
   image:
     - file://hff2matx6tfybuls
   years: 20

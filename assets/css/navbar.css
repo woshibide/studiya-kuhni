@@ -8,26 +8,31 @@ nav {
     padding-top: var(--space-md);
     width: var(--the-width);
     margin-inline: auto;
-    padding-inline: 0.25rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
     align-items: baseline;
     font-size: var(--fs-sm);
 }
 
 .nav-left, .nav-right {
-    flex: 1;
     text-transform: lowercase;
+    min-width: 0;
+}
+
+.nav-left {
+    grid-column: 1 / span 4;
 }
 
 .nav-center {
-    flex: 0 0 auto;
+    grid-column: 5 / span 4;
     text-align: center;
+    justify-self: center;
     font-size: 1.25rem;
 }
 
 .nav-right {
+    grid-column: 9 / span 4;
     display: flex;
     justify-content: flex-end;
 }
@@ -39,17 +44,5 @@ nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-nav ul li a{
-    width: auto;
-    color: var(--jet-black);
-    text-decoration: none;
-
-    &:hover {
-        padding-inline: var(--space-sm);
-        background-color: var(--jet-black);
-        color: var(--super-white);
-    }
 }
 

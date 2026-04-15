@@ -10,7 +10,11 @@ SuisseIntl-SemiBold.woff */
 }
 
 :root {
-    --the-width: clamp(90vw, 80% ,calc(100% - var(--space-base)));
+    --the-width: clamp(
+                       calc(100% - var(--space-xxl)), 
+                       calc(100% - var(--space-xl)), 
+                       calc(100% - var(--space-base))
+                       );
 
     /* easing */
     --out: cubic-bezier(0.19, 1, 0.22, 1); /* nice ease out 2**10 */
@@ -45,14 +49,12 @@ SuisseIntl-SemiBold.woff */
     --grid-color: rgba(0, 0, 200, 0.05);
 
     /* grid helpers */
-    --grid-col: calc(
-        (var(--the-width) - (var(--grid-gap) * (var(--grid-columns) - 1)))
-        / var(--grid-columns)
-    );
+    --grid-col: calc((var(--the-width) - (var(--grid-gap) * (var(--grid-columns) - 1))) / var(--grid-columns));
     --grid-col-gap: calc(var(--grid-col) + var(--grid-gap));
 
     --shadow-s: 0px 0px 4px #00000012, 4px 0px 16px 2px #00000006;
     --shadow-m: 0px 0px 8px #00000012, 4px 0px 24px 8px #00000012;
+    --shadow-l: 0 0 3px rgba(0, 0, 0, 1)2, 4px 0px 16px 2px rgba(0, 0, 0, 0.06);
 
     --super-white: rgb(255,255,255);
     --the-white: rgba(243, 243, 241, 0.9);
@@ -101,6 +103,10 @@ body {
     background-color: var(--the-white, #fff);
 }
 
+img {
+    border-radius: var(--space-xs); 
+}
+
 * {
     font-family: var(--swiss);
 
@@ -109,6 +115,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-smooth: antialiased;
+
+    scrollbar-width: thin;
 }
 
 p {
@@ -160,6 +168,21 @@ a:focus-visible,
     opacity: 1;
 }
 
+.hover-bg {
+    width: auto;
+    /* border-radius: var(--space-xs); */
+    transition: all 300ms var(--out);
+    color: inherit;
+    text-decoration: none;
+}
+
+.hover-bg:hover,
+.hover-bg:focus-visible {
+    padding-inline: var(--space-sm);
+    background-color: var(--jet-black);
+    color: var(--super-white);
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -173,6 +196,7 @@ section {
     min-height: 15vh;
 
     & div.section-wrapper .section-sticky {
+        border-radius: var(--space-sm); /* to accomodate for button */
         position: sticky;
         top: 50vh;
         z-index: 5;
@@ -182,7 +206,7 @@ section {
         padding: 1rem;
         background: var(--jet-black);
         color: var(--the-white);
-        width: calc(var(--grid-col) * 4 + 1rem);
+        grid-column: span 4;
     }
 
     & div.section-wrapper .section-sticky h2 {
@@ -245,7 +269,7 @@ button {
     text-align: inherit;
     line-height: inherit;
     letter-spacing: inherit;
-    border-radius: 0;
+    border-radius: var(--space-xs);
     box-shadow: none;
     cursor: pointer;
 }
@@ -305,7 +329,7 @@ input[type="checkbox"]:focus-visible {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-xs);
     width: 100%;
     padding: var(--space-sm) var(--space-md);
     border: 1px solid currentColor;

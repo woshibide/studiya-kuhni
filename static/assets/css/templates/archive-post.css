@@ -1,12 +1,18 @@
 .archive-post-cover {
-    min-height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
     overflow: hidden;
 }
 
 .archive-post-cover img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 50vh;
-    min-height: 320px;
+    height: 100%;
+    min-height: 100%;
     object-fit: cover;
     display: block;
     transform: translate3d(0, 0, 0) scale(1.02);
@@ -14,9 +20,33 @@
     will-change: transform;
 }
 
+.archive-post-cover__inner {
+    width: var(--the-width);
+    margin: 0 auto var(--space-lg);
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
+    position: relative;
+    z-index: 1;
+}
+
+.archive-post-cover h1 {
+    grid-column: 2 / -1;
+    margin: 0;
+    color: var(--the-white);
+    text-shadow: 0 0.15rem 0.9rem rgba(0, 0, 0, 0.5);
+    font-size: var(--fs-xxl);
+}
+
 .archive-post-intro {
     display: grid;
-    gap: var(--space-sm);
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--space-sm) var(--grid-gap);
+    margin-top: calc(var(--space-xxl) * -1);
+}
+
+.archive-post-intro > * {
+    grid-column: 2 / span 8;
 }
 
 .archive-post-intro__header {
@@ -29,13 +59,13 @@
 }
 
 .archive-post-intro__meta {
-    margin: 0;
+    margin: var(--space-lg) 0 0;
     color: var(--grey);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.45rem;
+    gap: var(--fs-xs);
 }
 
 .archive-post-intro__lead {
@@ -104,7 +134,7 @@
 .archive-post-blocks .archive-post-block-gallery {
     grid-column: 1 / -1;
     margin: 0;
-    padding-block: var(--space-xxl);
+    padding-top: var(--space-xxl);
 }
 
 .archive-post-blocks .archive-post-block-gallery__list {
@@ -135,9 +165,17 @@
 }
 
 @media (max-width: 48rem) {
+    .archive-post-intro > * {
+        grid-column: 1 / -1;
+    }
+
     .archive-post-cover img {
-        height: 50vh;
-        min-height: 240px;
+        height: 100%;
+        min-height: 100%;
+    }
+
+    .archive-post-cover h1 {
+        grid-column: 1 / -1;
     }
 
     .archive-post-blocks > :where(p, ul, ol, blockquote, pre, table, h1, h2, h3, h4, h5, h6),

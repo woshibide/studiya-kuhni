@@ -73,6 +73,7 @@
     background: color-mix(in srgb, var(--the-white) 90%, transparent);
     backdrop-filter: blur(6px);
     pointer-events: auto;
+    border-radius: var(--space-xs);
 }
 
 .kunya-sticky-overview__eyebrow {

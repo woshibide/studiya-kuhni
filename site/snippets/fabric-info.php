@@ -8,13 +8,15 @@ if ($page->intendedTemplate()->name() === 'kuhnya' && $page->parent()) {
 $fabricInfoTitle = (string)$sourcePage->fabric_info_title()->or('О фабрике')->value();
 $fabricInfoText = trim((string)$sourcePage->fabric_info_text()->value());
 $fabricLogoFile = $sourcePage->fabric_logo()->toFile();
-$fabricLogoAlt = 'Логотип фабрики ' . (string)$sourcePage->title()->value();
+$fabricLogoAlt = 'Логотип мебельной фабрики ' . (string)$sourcePage->title()->value();
 
 $mapLat = $sourcePage->fabric_map_lat()->isNotEmpty() ? (float)$sourcePage->fabric_map_lat()->value() : 55.709744;
 $mapLng = $sourcePage->fabric_map_lng()->isNotEmpty() ? (float)$sourcePage->fabric_map_lng()->value() : 37.592538;
 $mapZoom = $sourcePage->fabric_map_zoom()->isNotEmpty() ? (int)$sourcePage->fabric_map_zoom()->value() : 13;
 $mapLabel = trim((string)$sourcePage->fabric_map_label()->or($sourcePage->title())->value());
 $mapId = 'fabric-map-' . preg_replace('/[^a-z0-9]+/i', '-', (string)$sourcePage->id());
+$mapFallbackImage = relative_url('assets/map.png');
+$mapForceImage = true;
 
 if ($fabricInfoText === '') {
     return;
@@ -24,15 +26,19 @@ if ($fabricInfoText === '') {
 <div class="section-wrapper" id="fabric-info">
     <div class="fabric-info__layout">
         <div class="fabric-info__map-wrap">
-            <div
-                class="fabric-info__map"
-                id="<?= esc($mapId, 'attr') ?>"
-                data-fabric-map
-                data-lat="<?= esc($mapLat, 'attr') ?>"
-                data-lng="<?= esc($mapLng, 'attr') ?>"
-                data-zoom="<?= esc($mapZoom, 'attr') ?>"
-                data-label="<?= esc($mapLabel, 'attr') ?>"
-            ></div>
+            <?php if ($mapForceImage): ?>
+                <img src="<?= esc($mapFallbackImage, 'attr') ?>" alt="Map Fallback" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <?php else: ?>
+                <div
+                    class="fabric-info__map"
+                    id="<?= esc($mapId, 'attr') ?>"
+                    data-fabric-map
+                    data-lat="<?= esc($mapLat, 'attr') ?>"
+                    data-lng="<?= esc($mapLng, 'attr') ?>"
+                    data-zoom="<?= esc($mapZoom, 'attr') ?>"
+                    data-label="<?= esc($mapLabel, 'attr') ?>"
+                ></div>
+            <?php endif; ?>
         </div>
 
         <div class="fabric-info__inner">

@@ -41,18 +41,18 @@ $resolveOptimizedImageUrl = static function ($image, int $width = 1600) use ($pl
 
     $extension = method_exists($image, 'extension') ? strtolower((string)$image->extension()) : '';
     if ($extension === 'svg' || !method_exists($image, 'resize')) {
-        return $image->url();
+        return relative_url($image->url());
     }
 
     $sourceWidth = method_exists($image, 'width') ? (int)$image->width() : 0;
     if ($sourceWidth > 0 && $sourceWidth <= $width) {
-        return $image->url();
+        return relative_url($image->url());
     }
 
     try {
-        return $image->resize($width)->url();
+        return relative_url($image->resize($width)->url());
     } catch (Throwable $e) {
-        return $image->url();
+        return relative_url($image->url());
     }
 };
 

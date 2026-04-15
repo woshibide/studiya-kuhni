@@ -17,7 +17,7 @@
 
             const lat = Number.parseFloat(element.dataset.lat || '0');
             const lng = Number.parseFloat(element.dataset.lng || '0');
-            const zoom = Number.parseInt(element.dataset.zoom || '13', 5);
+            const zoom = Number.parseInt(element.dataset.zoom || '13', 10);
             const label = (element.dataset.label || '').trim();
 
             if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
@@ -30,13 +30,15 @@
                 attributionControl: true,
             }).setView([lat, lng], Number.isFinite(zoom) ? zoom : 13);
 
-            L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
+            const tileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
                 minZoom: 0,
                 maxZoom: 20,
                 attribution:
                     '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 ext: 'png',
-            }).addTo(map);
+            });
+
+            tileLayer.addTo(map);
 
             const marker = L.marker([lat, lng]).addTo(map);
             if (label !== '') {
@@ -44,7 +46,10 @@
             }
 
             element.dataset.mapReady = 'true';
-            setTimeout(() => map.invalidateSize(), 120);
+            
+            tileLayer.once('load', () => {
+                window.setTimeout(() => map.invalidateSize(), 120);
+            });
         });
 
         return true;

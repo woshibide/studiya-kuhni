@@ -15,6 +15,7 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
 ?>
 
 <h2 id="archive-posts__heading">Истории из кухонь, в которых хочется жить</h2>
+
 <div class="<?= esc($wrapperClass) ?>" id="archive-posts">
     <?php foreach ($posts as $post): ?>
         <?php

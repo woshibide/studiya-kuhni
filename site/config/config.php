@@ -19,7 +19,7 @@ return [
     'jr.static_site_generator' => [
         'endpoint' => 'generate-static-site',
         'output_folder' => './static',
-        'base_url' => '/studiya-kuhni',
+        'base_url' => '/',
         'skip_media' => false,
     ],
 
@@ -27,11 +27,7 @@ return [
     'cache' => [
         'pages' => [
             'active' => false,
-            'type'   => 'apcu',
-            'ignore' => function ($page) {
-                // requests page is not to be cached, but here it doesnt exist yet
-                return $page->isHomePage() || $page->uid() === 'requests';
-            }
+            'type'   => 'apcu'
         ]
     ],
 

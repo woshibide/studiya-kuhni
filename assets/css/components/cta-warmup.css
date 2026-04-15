@@ -5,8 +5,7 @@
     align-items: start;
 
     .section-sticky {
-        grid-column: 1 / span 4;
-        justify-self: end;
+        grid-column: span 4;
     }
 
     .section-sticky-content {
