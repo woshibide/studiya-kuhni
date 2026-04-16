@@ -10,7 +10,30 @@ home:
     [] other-fabrics-section doesnt actually take up full width of the screen
     [] for super duper ultra wide --the-width is to be constrained
 [] contacts panel lower border radius
-[] faq no border radius / tinier border radius
+[x] faq no border radius / tinier border radius
+
+phone:
+[] section sticky in cta to be at the bottom
+[] benefits section needs padding
+    [] one benefit per row?
+[] blog posts padding
+[] faq section padding
+[] hero section padding
+[] buttons text centered
+[] nav remake, nothing is on grid
+[] nav contact panel too thin
+[] text in designers who work with us needs padding
+[] footer kitchens to be right alligned
+[] archive posts to be 110vh
+[] kunya-sticky-overview is beyond grid, must constrain
+[] kuhnya page title also off grid
+[] fabric info can be 1 / -1
+[] big-message__text appears off screen
+[] other kitchens also appear to be off grid a little
+[] other fabrics text needs padding, images are not to have padding
+
+ultra wide:
+[] contacts text to be even bigger
 
 
 designers: 

@@ -14,6 +14,10 @@
         grid-column: 5 / span 7;
         min-width: 0;
         margin-top: var(--space-xxl);
+
+        @media (max-width: 64rem) {
+            margin-top: var(--space-xl);
+        }
     }
 
     .faq-tabs {
@@ -46,7 +50,6 @@
 
     .faq-tab[aria-selected="true"] {
         background: var(--jet-black, #000);
-        border-radius: var(--space-xs);
         color: var(--the-white, #fff);
     }
 
@@ -161,19 +164,22 @@
 @media (max-width: 64rem) {
     #faq.section-wrapper {
         .faq-content {
-            grid-column: 4 / span 7;
+            grid-column: 2 / span 7;
         }
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 48rem) {
     #faq.section-wrapper {
         h2 {
             grid-column: 1 / -1;
+            padding-inline: var(--space-xs);
         }
 
         .faq-content {
             grid-column: 1 / -1;
+            padding-inline: var(--space-xs);
+            margin-top: 0;
         }
 
         .faq-tabs {
@@ -187,7 +193,7 @@
 
         .faq-question {
             gap: 0.85rem;
-            padding: 1rem 0;
+            padding: var(--space-xs);
             font-size: var(--fs-sm);
         }
 

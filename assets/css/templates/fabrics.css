@@ -204,7 +204,7 @@
     .fabric-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: var(--space-xl);
+        gap: var(--space-xxl);
         width: 100%;
         padding: var(--space-md) 0;
         padding-inline: var(--space-sm);
@@ -272,18 +272,18 @@
 @media (max-width: 48rem) {
     .fabric-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-sm);
+        gap: var(--space-xl);
         width: 100%;
         padding-inline: var(--space-sm);
 
         .fabric-grid__item {
             .fabric-card,
             .fabric-card.is-expanded {
-                min-height: clamp(18rem, 52vh, 24rem);
+                min-height: clamp(50vh, 75vh, 110vh);
             }
 
             .fabric-card ul {
-                padding: var(--space-xs);
+                padding: 0;
             }
 
             .fabric-card ul a {

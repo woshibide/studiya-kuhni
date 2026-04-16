@@ -240,16 +240,26 @@
 }
 
 @media (max-width: 48rem) {
-    .other-fabrics-section .fabric-grid {
-        grid-template-columns: 1fr;
-    }
+    .other-fabrics-section {
+        > h2 {
+            margin-top: var(--space-xl);
+            padding-inline: var(--space-sm);
+        }
 
-    .other-fabrics-section .fabric-card {
-        min-height: clamp(18rem, 48vh, 23rem);
-    }
+        .fabric-grid {
+            grid-template-columns: 1fr;
+            width: calc(100% + (var(--space-sm) * 2));
+            margin-inline: calc(var(--space-sm) * -1);
+            gap: var(--space-md);
+        }
 
-    .other-fabrics-section .fabric-card__kitchens a {
-        max-width: 100%;
+        .fabric-card {
+            min-height: clamp(100vh, 110svh, 110vh);
+        }
+
+        .fabric-card__kitchens a {
+            max-width: 100%;
+        }
     }
 }
 

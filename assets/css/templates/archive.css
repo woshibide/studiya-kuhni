@@ -114,11 +114,11 @@
         border-radius: var(--space-sm);
         background-color: var(--jet-black, #000);
         color: var(--the-white, #fff);
-        padding: var(--space-sm);
+        padding: var(--space-xs);
         text-shadow: none;
         display: flex;
         flex-direction: column;
-        gap: var(--space-sm);
+        gap: var(--grid-gap);
         opacity: 1;
         cursor: auto;
         
@@ -142,23 +142,23 @@
 
         & .archive-post-infobox-bottom {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-sm);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: var(--grid-gap);
             align-items: end;
-            margin-top: var(--space-xs);
 
             & .archive-layout-date {
                 font-size: var(--fs-xs);
                 text-transform: uppercase;
+                grid-column: span 1;
                 margin: 0;
             }
 
             & .archive-post-btn {
                 font-size: var(--fs-xs);
                 text-transform: uppercase;
+                grid-column: span 3;
                 width: 100%;
                 margin: 0;
-                /* Optional override for button style size here if needed */
             }
         }
     }
@@ -166,7 +166,7 @@
 
 @media (max-width: 48rem) {
     .archive-post-entry {
-        min-height: 72vh;
+        min-height: 110vh;
         height: auto;
         scroll-snap-align: none;
         background-attachment: scroll;
@@ -175,7 +175,7 @@
 
     .archive-post-entry .archive-post-content {
         width: 100%;
-        padding-inline: var(--space-sm);
+        padding-inline: var(--space-xs);
     }
 
     .archive-post-entry .archive-post-collab {

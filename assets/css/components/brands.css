@@ -84,7 +84,7 @@
 		}
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 48rem) {
 		.brand-item {
 			width: clamp(150px, 60vw, 260px);
 		}

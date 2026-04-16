@@ -20,3 +20,19 @@
     flex-direction: column;
     gap: var(--space-xxl);
 }
+
+@media (max-width: 48rem) {
+    .other-kitchens-section {
+        gap: var(--space-md);
+
+        h2 {
+            padding-inline: var(--space-sm);
+        }
+
+        .kitchens-grid {
+            width: calc(100% + (var(--space-sm) * 2));
+            margin-inline: calc(var(--space-sm) * -1);
+            gap: var(--space-xl);
+        }
+    }
+}

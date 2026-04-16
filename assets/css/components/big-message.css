@@ -13,5 +13,11 @@ section .big-message {
         font-size: clamp(var(--fs-md), var(--fs-lg), var(--fs-xl));
         letter-spacing: -0.03em;
         white-space: nowrap;
+
+        @media (max-width: 48rem) {
+            padding-inline: var(--space-sm);
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
     }
 }

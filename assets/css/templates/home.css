@@ -54,7 +54,9 @@
 
     .hero__cta-wrapper {
         margin-top: var(--space-md);
-        width: calc(var(--grid-col) * 2 + 1rem);
+        min-width: calc(var(--grid-col) * 2 + var(--grid-gap));
+        width: fit-content;
+        max-width: 100%;
 
         .primary-btn:hover {
             background-color: var(--jet-black);
@@ -77,15 +79,23 @@
 
 @media (max-width: 48rem) {
     #home-hero {
-        padding-top: 12vh;
+        padding-top: 5vh;
+        padding-inline: var(--space-xs);
         min-height: 75vh;
 
+        h1 {
+            font-size: var(--fs-xl);
+        }
+
         .hero-description p {
+            font-size: var(--fs-lg);
             max-width: 48ch;
         }
 
         .hero__cta-wrapper {
-            width: 100%;
+            width: fit-content;
+            min-width: calc(var(--grid-col) * 2 + var(--grid-gap));
+            max-width: 100%;
         }
 
         .home-hero-seo-copy {
@@ -160,11 +170,8 @@
                 position: absolute;
                 inset: 0;
                 overflow: hidden;
-                --home-fabric-parallax-y: 0px;
-                --home-fabric-parallax-scale: 0;
                 --home-fabric-hover-scale: 1;
-                transform: translate3d(0, var(--home-fabric-parallax-y), 0)
-                    scale(calc((1 + var(--home-fabric-parallax-scale)) * var(--home-fabric-hover-scale)));
+                transform: scale(var(--home-fabric-hover-scale));
                 transition: transform 1000ms var(--out);
 
                 .home-fabric-media__viewport {
@@ -179,6 +186,10 @@
                     width: 100%;
                     height: 100%;
                     touch-action: pan-x pinch-zoom;
+
+                    @media (max-width: 48rem) {
+                        min-height: 100vh;
+                    }
                 }
 
                 .home-fabric-media__slide {
@@ -343,7 +354,7 @@
     #fabrics-intro {
         .fabrics-row {
             figure {
-                min-height: clamp(18rem, 44vh, 24rem);
+                min-height: 100vh;
 
                 .home-fabric-kitchens a {
                     max-width: 100%;
@@ -362,19 +373,5 @@
 
 /* BENEFITS
  */
-
-#benefits .benefits-container{
-
-    /* figure:first-child {
-    }
-    
-    figure:nth-child(2) {
-        margin-top: var(--space-xxl);
-    }
-    
-    figure:last-child {
-        margin-top: calc(var(--space-xxl) * 2);
-    } */
-}
 
 

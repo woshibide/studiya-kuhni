@@ -42,7 +42,7 @@ section #cta {
 
 @media (max-width: 64rem) {
     section #cta {
-        min-height: 80vh;
+        min-height: 100vh;
 
         & > div.section-sticky {
             grid-column: 5 / span 4;
@@ -57,7 +57,7 @@ section #cta {
         width: 100%;
         margin-left: 0;
         margin-right: 0;
-        min-height: auto;
+        min-height: 110vh;
 
         & > div.section-sticky,
         .cta-media {
@@ -68,9 +68,11 @@ section #cta {
             position: static;
             top: auto;
             align-self: start;
+            grid-row: 2;
         }
 
         .cta-media {
+            grid-row: 1;
             width: 100%;
             max-width: 100%;
             margin-left: 0;

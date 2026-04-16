@@ -95,8 +95,8 @@
 
 @media (max-width: 64rem) {
 	.designers-proof__intro {
-		grid-column: 1 / span 3;
-		top: var(--space-xl);
+		grid-column: 1 / span 4;
+		bottom: var(--space-xl);
 	}
 
 	.designers-proof-card__name,

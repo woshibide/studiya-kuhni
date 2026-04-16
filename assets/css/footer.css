@@ -136,7 +136,7 @@ footer {
     footer {
         min-height: auto;
         margin-top: 20vh;
-        padding-inline: var(--space-sm);
+        padding-inline: var(--space-xs);
 
         #footer-typed-line {
             font-size: var(--fs-lg);
@@ -150,6 +150,17 @@ footer {
             & .links {
                 flex-direction: column;
                 width: 100%;
+                
+                & ul {
+                    justify-items: start;
+                    text-align: left;
+                    
+                    &:nth-child(2) {
+                        margin-block: var(--space-md);
+                        justify-items: end;
+                        text-align: right;
+                    }
+                }
             }
         }
 

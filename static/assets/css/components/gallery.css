@@ -2,11 +2,20 @@
 
     h2 {
         margin-bottom: var(--space-sm);
+
+        @media (max-width: 48rem) {
+            padding-inline: var(--space-sm);
+        }
     }
 
     .gallery__intro {
         max-width: 75ch;
         margin-bottom: var(--space-sm);
+
+        @media (max-width: 48rem) {
+            padding-inline: var(--space-sm);
+            max-width: 100%;
+        }
     }
 
     .gallery {
@@ -172,6 +181,10 @@
         grid-template-columns: repeat(12, minmax(0, 1fr));
         gap: var(--space-base);
         align-items: center;
+
+        @media (max-width: 48rem) {
+            padding-inline: var(--space-sm);
+        }
     }
 
     .gallery-overlay__titleline {
@@ -181,6 +194,10 @@
         font-size: var(--fs-xl);
         line-height: 1;
         letter-spacing: -0.03em;
+
+        @media (max-width: 48rem) {
+            padding-inline: 0;
+        }
     }
 
     .gallery-overlay__cta {
@@ -196,6 +213,10 @@
         &:hover {
             background-color: var(--the-white);
             color: var(--jet-black);
+        }
+
+        @media (max-width: 48rem) {
+            width: max-content;
         }
     }
 
@@ -290,6 +311,7 @@ body:has(.gallery-overlay.is-open) {
         .gallery-overlay__meta {
             grid-template-columns: 1fr;
             gap: var(--space-xs);
+            padding-inline: var(--space-sm);
         }
 
         .gallery-overlay__titleline,

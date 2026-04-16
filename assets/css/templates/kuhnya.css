@@ -183,41 +183,6 @@
     }
 }
 
-@media (max-width: 48rem) {
-    .kunya-sticky-overview {
-        position: static;
-        top: auto;
-        height: auto;
-        pointer-events: auto;
-    }
-
-    .kunya-sticky-overview__inner {
-        width: 100%;
-        padding-inline: var(--space-sm);
-    }
-
-    .kunya-sticky-overview__content {
-        grid-column: 1 / -1;
-        backdrop-filter: none;
-    }
-
-    #kunya-hero {
-        min-height: 70vh;
-    }
-
-    .kunya-hero__media {
-        height: 78vh;
-    }
-
-    .kuhnya-features-list {
-        flex-wrap: wrap;
-        gap: var(--space-md);
-    }
-}
-
-/* target cta and set z index higher then sticky overview */
-#cta { position: relative; z-index: 100; }
-
 .kuhnya-features-list {
     margin: 0;
     margin-block: var(--space-lg);
@@ -240,8 +205,82 @@
     }
 }
 
+@media (max-width: 48rem) {
+    #kuhnya-intro {
+        width: var(--the-width);
+        margin-inline: auto;
+        padding-inline: var(--space-sm);
+        height: auto;
+
+        h1 {
+            margin-block: 0.35em;
+        }
+    }
+
+    .kunya-sticky-overview {
+        position: static;
+        top: auto;
+        height: auto;
+        pointer-events: auto;
+    }
+
+    .kunya-sticky-overview__inner {
+        width: var(--the-width);
+        margin-inline: auto;
+        padding-inline: 0;
+    }
+
+    .kunya-sticky-overview__content {
+        padding: 0;
+        grid-column: 1 / -1;
+        backdrop-filter: none;
+    }
+
+    #kunya-hero {
+        min-height: 70vh;
+    }
+
+    .kunya-hero__media {
+        height: 78vh;
+    }
+
+    .kuhnya-features-list {
+        flex-wrap: wrap;
+        gap: var(--space-md);
+
+        .kuhnya-features-list__item {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+            align-items: center;
+            column-gap: var(--space-sm);
+            row-gap: var(--space-xs);
+
+            .kuhnya-features-list__image {
+                grid-column: 1 / span 1;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .kuhnya-features-list__text {
+                grid-column: 2 / span 3;
+                margin: 0;
+            }
+        }
+    }
+}
+
+/* target cta and set z index higher then sticky overview */
+#cta { position: relative; z-index: 100; }
+
+
+
 #benefits, #about-the-brand {
     margin-block: var(--space-xl);
+
+    @media (max-width: 48rem) {
+        margin-block: 0;
+    }
 }
 
 

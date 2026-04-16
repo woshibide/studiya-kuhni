@@ -37,6 +37,8 @@ const initSmartNavbar = () => {
         const delta = currentY - lastY;
         const isContactOpen = Boolean(document.querySelector('[data-nav-contact].is-open'));
 
+        // keep home and contact controls always visible
+        // only hide nav-left list on scroll down
         if (currentY <= topRevealThreshold || isContactOpen) {
             nav.classList.remove('is-nav-hidden');
         } else if (delta > hideThreshold) {
@@ -63,18 +65,71 @@ const initSmartNavbar = () => {
 
 const initNavbarContact = () => {
     const shells = document.querySelectorAll('[data-nav-contact]');
+    const tabletBreakpoint = window.matchMedia(`(max-width: ${SMART_NAV_MAX_WIDTH / 16}rem)`);
+    const mobileBreakpoint = window.matchMedia('(max-width: 48rem)');
+
+    const getPxNumber = (value) => {
+        const parsed = Number.parseFloat(value || '0');
+        return Number.isFinite(parsed) ? parsed : 0;
+    };
 
     shells.forEach((shell) => {
+        const nav = document.querySelector('nav');
         const toggle = shell.querySelector('.nav-contact-toggle');
         const panel = shell.querySelector('.nav-contact-panel');
         const close = shell.querySelector('.nav-contact-panel__close');
 
-        if (!toggle || !panel) return;
+        if (!nav || !toggle || !panel) return;
 
         if (shell.dataset.contactReady === 'true') return;
         shell.dataset.contactReady = 'true';
 
+        const updatePanelGeometry = () => {
+            if (!tabletBreakpoint.matches) {
+                panel.style.removeProperty('left');
+                panel.style.removeProperty('top');
+                panel.style.removeProperty('width');
+                panel.style.removeProperty('max-width');
+                panel.style.removeProperty('right');
+                return;
+            }
+
+            const navRect = nav.getBoundingClientRect();
+            const shellRect = shell.getBoundingClientRect();
+            const toggleRect = toggle.getBoundingClientRect();
+
+            const navStyles = window.getComputedStyle(nav);
+            const gap = getPxNumber(navStyles.columnGap || navStyles.gap);
+
+            const rootStyles = window.getComputedStyle(document.documentElement);
+            const configuredColumns = Number.parseInt(rootStyles.getPropertyValue('--grid-columns'), 10);
+            const totalColumns = Number.isFinite(configuredColumns) && configuredColumns > 0
+                ? configuredColumns
+                : (mobileBreakpoint.matches ? 4 : 8);
+
+            const isMobileGrid = totalColumns <= 4;
+            const span = isMobileGrid ? 3 : 4;
+            const startColumn = isMobileGrid ? 2 : (totalColumns - span + 1);
+
+            const colWidth = (navRect.width - (gap * (totalColumns - 1))) / totalColumns;
+            const panelWidth = (colWidth * span) + (gap * (span - 1));
+            const panelLeftInNav = (startColumn - 1) * (colWidth + gap);
+            const shellLeftInNav = shellRect.left - navRect.left;
+            const panelLeftInShell = panelLeftInNav - shellLeftInNav;
+            const panelTopInShell = toggleRect.bottom - shellRect.top;
+
+            panel.style.left = `${Math.round(panelLeftInShell)}px`;
+            panel.style.top = `${Math.round(panelTopInShell)}px`;
+            panel.style.right = 'auto';
+            panel.style.width = `${Math.round(panelWidth)}px`;
+            panel.style.maxWidth = `${Math.round(panelWidth)}px`;
+        };
+
         const setOpen = (state) => {
+            if (state) {
+                updatePanelGeometry();
+            }
+
             shell.classList.toggle('is-open', state);
             toggle.setAttribute('aria-expanded', String(state));
             panel.setAttribute('aria-hidden', String(!state));
@@ -102,6 +157,14 @@ const initNavbarContact = () => {
             setOpen(false);
             toggle.focus();
         });
+
+        const onViewportChange = () => {
+            if (!shell.classList.contains('is-open')) return;
+            updatePanelGeometry();
+        };
+
+        window.addEventListener('resize', onViewportChange, { passive: true });
+        updatePanelGeometry();
     });
 };
 

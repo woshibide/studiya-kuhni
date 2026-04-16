@@ -91,31 +91,31 @@ if ($heroWordsJson === false) {
             [
                 [
                     'slug' => 'aran-cucine',
-                    'style' => '--col-start: 4; --col-span: 8; --col-start-mobile: 1; --col-span-mobile: 12;',
+                    'style' => '--col-start: 4; --col-span: 8;',
                 ],
             ],
             [
                 [
                     'slug' => 'mossman',
-                    'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
+                    'style' => '--col-start: 1; --col-span: 3;',
                 ],
-            ], 
+            ],
             [
                 [
                     'slug' => 'scavolini',
-                    'style' => '--col-start: 7; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-lg);',
+                    'style' => '--col-start: 7; --col-span: 6;',
                 ],
             ],
             [
                 [
                     'slug' => 'home-cucine',
-                    'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
+                    'style' => '--col-start: 1; --col-span: 3;',
                 ],
             ],
             [
                 [
                     'slug' => 'aster-cucine',
-                    'style' => '--col-start: 5; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-md);',
+                    'style' => '--col-start: 5; --col-span: 6;',
                 ],
             ],
         ];
