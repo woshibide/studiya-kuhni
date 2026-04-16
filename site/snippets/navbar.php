@@ -17,12 +17,12 @@
         </ul>
     </div>
     <div class="nav-center">
-        <a class="hover-bg" href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>
+        <a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>
     </div>
     <div class="nav-right" data-nav-contact>
         <div class="nav-contact-toggle-shell">
             <button
-                class="nav-contact-toggle hover-bg"
+                class="nav-contact-toggle"
                 type="button"
                 aria-expanded="false"
                 aria-controls="nav-contact-panel"
