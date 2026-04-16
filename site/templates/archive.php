@@ -23,7 +23,7 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
                 $publishedDate = $post->date()->isNotEmpty() ? $post->date()->toDate('d.m.Y') : null;
                 ?>
 
-                <article class="archive-post-entry" style="background-image: url('<?= esc($imgAsset->url(), 'attr') ?>');">
+                <article class="archive-post-entry" style="background-image: url('<?= esc(relative_url($imgAsset->url()), 'attr') ?>');">
                     <div class="archive-post-overlay"></div>
                     <div class="archive-post-content main-grid" onclick="window.location.href='<?= esc(relative_url($post->url()), 'js') ?>';">
                         <div class="archive-post-collab main-grid-item">

@@ -1,5 +1,6 @@
 const setupFaq = () => {
     const faqRoot = document.querySelector('#faq.section-wrapper');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!faqRoot) {
         return;
@@ -38,8 +39,14 @@ const setupFaq = () => {
         }
 
         answerWrap.hidden = false;
-        answerWrap.style.height = '0px';
         questionButton.setAttribute('aria-expanded', 'true');
+
+        if (prefersReducedMotion) {
+            answerWrap.style.height = 'auto';
+            return;
+        }
+
+        answerWrap.style.height = '0px';
 
         requestAnimationFrame(() => {
             answerWrap.style.height = `${answerWrap.scrollHeight}px`;
@@ -62,6 +69,13 @@ const setupFaq = () => {
         const answerWrap = answerWrapId ? faqRoot.querySelector(`#${answerWrapId}`) : null;
 
         if (!answerWrap) {
+            return;
+        }
+
+        if (prefersReducedMotion) {
+            answerWrap.style.height = '0px';
+            answerWrap.hidden = true;
+            questionButton.setAttribute('aria-expanded', 'false');
             return;
         }
 

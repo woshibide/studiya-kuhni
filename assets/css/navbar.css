@@ -15,6 +15,33 @@ nav {
     font-size: var(--fs-sm);
 }
 
+html.has-smart-nav nav {
+    transition: transform 280ms var(--out), opacity 280ms var(--out);
+    will-change: transform;
+}
+
+html.has-smart-nav nav.is-nav-hidden {
+    transform: translateY(calc(-100% - var(--space-sm)));
+    opacity: 0.98;
+}
+
+@media (max-width: 64rem) {
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin-inline: 0;
+        padding-top: var(--space-sm);
+        padding-inline: var(--space-sm);
+        align-items: center;
+        border-bottom: 1px solid var(--silver);
+        background-color: color-mix(in oklab, var(--the-white) 92%, transparent);
+        backdrop-filter: blur(8px);
+    }
+}
+
 .nav-left, .nav-right {
     text-transform: lowercase;
     min-width: 0;
@@ -37,6 +64,48 @@ nav {
     justify-content: flex-end;
 }
 
+@media (max-width: 64rem) {
+    .nav-left {
+        grid-column: 1 / span 2;
+    }
+
+    .nav-center {
+        grid-column: 3 / span 3;
+        font-size: 1.1rem;
+    }
+
+    .nav-right {
+        grid-column: 6 / span 3;
+    }
+}
+
+@media (max-width: 48rem) {
+    nav {
+        position: fixed;
+        width: 100%;
+        padding-top: var(--space-sm);
+        padding-inline: var(--space-sm);
+        border-bottom: 1px solid var(--silver);
+        background-color: var(--the-white);
+    }
+
+    .nav-left,
+    .nav-center,
+    .nav-right {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+
+    .nav-center {
+        text-align: left;
+        font-size: 1rem;
+    }
+
+    .nav-right {
+        justify-content: flex-start;
+    }
+}
+
 nav ul {
     display: flex;
     align-items: start;
@@ -44,5 +113,17 @@ nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+@media (max-width: 48rem) {
+    nav ul {
+        gap: 0.25rem;
+    }
+}
+
+@media (max-width: 64rem) {
+    body {
+        padding-top: var(--mobile-nav-height, 7.5rem);
+    }
 }
 

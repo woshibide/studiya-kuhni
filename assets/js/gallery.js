@@ -9,6 +9,7 @@ function initGallery(root) {
 	const closeTargets = Array.from(root.querySelectorAll('[data-gallery-close]'))
 	const prevButton = root.querySelector('[data-gallery-prev]')
 	const nextButton = root.querySelector('[data-gallery-next]')
+	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 	const OVERLAY_FADE_MS = 320
 
 	if (!openButtons.length || !overlay || !viewport || typeof EmblaCarousel !== 'function') {
@@ -20,8 +21,9 @@ function initGallery(root) {
 		loop: openButtons.length > 1,
 		dragFree: false,
 		containScroll: false,
-		duration: 36,
+		duration: prefersReducedMotion ? 20 : 36,
 	})
+	let opener = null
 
 	const syncActiveThumb = () => {
 		const index = emblaApi.selectedScrollSnap()
@@ -32,12 +34,18 @@ function initGallery(root) {
 	}
 
 	const openOverlay = (index) => {
+		opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
 		overlay.hidden = false
 		overlay.classList.add('is-open')
 		overlay.setAttribute('aria-hidden', 'false')
 		document.documentElement.classList.add('is-gallery-overlay-open')
 		emblaApi.scrollTo(index, true)
 		syncActiveThumb()
+
+		const closeButton = closeTargets.find((target) => target !== overlay)
+		if (closeButton instanceof HTMLElement) {
+			closeButton.focus({ preventScroll: true })
+		}
 	}
 
 	const closeOverlay = () => {
@@ -47,6 +55,9 @@ function initGallery(root) {
 		window.setTimeout(() => {
 			if (!overlay.classList.contains('is-open')) {
 				overlay.hidden = true
+				if (opener instanceof HTMLElement) {
+					opener.focus({ preventScroll: true })
+				}
 			}
 		}, OVERLAY_FADE_MS)
 	}
@@ -62,11 +73,11 @@ function initGallery(root) {
 	})
 
 	if (prevButton) {
-		prevButton.addEventListener('click', () => emblaApi.scrollPrev())
+		prevButton.addEventListener('click', () => emblaApi.scrollPrev(prefersReducedMotion))
 	}
 
 	if (nextButton) {
-		nextButton.addEventListener('click', () => emblaApi.scrollNext())
+		nextButton.addEventListener('click', () => emblaApi.scrollNext(prefersReducedMotion))
 	}
 
 	overlay.addEventListener('click', (event) => {
@@ -76,8 +87,22 @@ function initGallery(root) {
 	})
 
 	const onKeyDown = (event) => {
+		if (!overlay.classList.contains('is-open')) {
+			return
+		}
+
 		if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
 			closeOverlay()
+		}
+
+		if (event.key === 'ArrowLeft') {
+			event.preventDefault()
+			emblaApi.scrollPrev(prefersReducedMotion)
+		}
+
+		if (event.key === 'ArrowRight') {
+			event.preventDefault()
+			emblaApi.scrollNext(prefersReducedMotion)
 		}
 	}
 

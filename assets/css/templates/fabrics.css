@@ -148,9 +148,12 @@
                     a {
                         width: auto;
                         height: auto;
+                        min-height: var(--tap-target-size);
                         overflow: visible;
                         white-space: normal;
                         text-indent: 0;
+                        display: inline-flex;
+                        align-items: center;
                         color: var(--the-white);
                         background-color: var(--jet-black);
                         padding-inline: var(--space-sm);
@@ -197,9 +200,14 @@
     }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 64rem) {
     .fabric-grid {
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+        width: 100%;
+        padding: var(--space-md) 0;
+        padding-inline: var(--space-sm);
 
         .fabric-grid__item {
             flex: 0 0 auto;
@@ -207,9 +215,83 @@
 
             .fabric-card,
             .fabric-card.is-expanded {
-                flex: 0 0 auto;
-                width: 100%;
-                min-height: auto;
+                min-height: clamp(60vh, 75vh, 90vh);
+            }
+
+            .fabric-card ul {
+                padding: var(--space-xs);
+                gap: var(--space-xs);
+
+                li {
+                    flex: 0 0 auto;
+                    width: auto;
+                    height: auto;
+                }
+
+                a {
+                    width: auto;
+                    height: auto;
+                    min-height: var(--tap-target-size);
+                    max-width: 16rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    text-indent: 0;
+                    display: inline-flex;
+                    align-items: center;
+                    color: var(--the-white);
+                    background-color: var(--jet-black);
+                    padding-inline: var(--space-xs);
+                    opacity: 0.92;
+                    pointer-events: auto;
+                }
+
+                a:hover,
+                a:focus-visible,
+                a.is-active {
+                    color: var(--jet-black);
+                    background-color: var(--the-white);
+                    opacity: 1;
+                }
+            }
+        }
+
+        &.has-expanded {
+            .fabric-grid__item,
+            .fabric-grid__item.is-expanded {
+                flex-grow: 1;
+            }
+
+            .fabric-grid__item .fabric-card__header h2 {
+                font-size: var(--fs-md);
+            }
+        }
+    }
+}
+
+@media (max-width: 48rem) {
+    .fabric-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+        width: 100%;
+        padding-inline: var(--space-sm);
+
+        .fabric-grid__item {
+            .fabric-card,
+            .fabric-card.is-expanded {
+                min-height: clamp(18rem, 52vh, 24rem);
+            }
+
+            .fabric-card ul {
+                padding: var(--space-xs);
+            }
+
+            .fabric-card ul a {
+                max-width: 100%;
+            }
+
+            .fabric-card__header {
+                padding: var(--space-xs);
             }
         }
     }

@@ -164,7 +164,29 @@
     font-size: var(--fs-xs);
 }
 
+@media (max-width: 64rem) and (min-width: 48.01rem) {
+    .archive-post-blocks {
+        gap: var(--space-sm) var(--grid-gap);
+    }
+
+    .archive-post-blocks > :where(p, ul, ol, blockquote, pre, table) {
+        grid-column: 3 / -1;
+    }
+
+    .archive-post-blocks > :where(h1, h2, h3, h4, h5, h6) {
+        grid-column: 1 / -1;
+    }
+
+    .archive-post-blocks > figure:not(.archive-post-block-gallery) {
+        grid-column: 1 / -1;
+    }
+}
+
 @media (max-width: 48rem) {
+    .archive-post-cover {
+        min-height: 72vh;
+    }
+
     .archive-post-intro > * {
         grid-column: 1 / -1;
     }
@@ -184,6 +206,6 @@
     }
 
     .archive-post-blocks .archive-post-block-gallery__item {
-        flex-basis: 78vw;
+        flex-basis: 84vw;
     }
 }

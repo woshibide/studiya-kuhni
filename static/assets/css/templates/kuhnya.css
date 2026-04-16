@@ -59,7 +59,7 @@
     padding-bottom: clamp(1rem, 2.5vw, 2.5rem);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
     gap: var(--space-base);
 }
 
@@ -133,7 +133,7 @@
 }
 
 #kunya-hero {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     margin-top: 0;
     margin-bottom: 0;
@@ -166,10 +166,10 @@
     will-change: transform;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 64rem) {
     .kunya-sticky-overview {
-        top: calc(100vh - 36vh);
-        height: 36vh;
+        top: calc(100vh - 34vh);
+        height: 34vh;
     }
 
     .kunya-sticky-overview__inner {
@@ -178,8 +178,40 @@
     }
 
     .kunya-sticky-overview__content {
-        grid-column: span 12;
+        grid-column: 4 / -1;
         background: color-mix(in srgb, var(--the-white) 88%, transparent);
+    }
+}
+
+@media (max-width: 48rem) {
+    .kunya-sticky-overview {
+        position: static;
+        top: auto;
+        height: auto;
+        pointer-events: auto;
+    }
+
+    .kunya-sticky-overview__inner {
+        width: 100%;
+        padding-inline: var(--space-sm);
+    }
+
+    .kunya-sticky-overview__content {
+        grid-column: 1 / -1;
+        backdrop-filter: none;
+    }
+
+    #kunya-hero {
+        min-height: 70vh;
+    }
+
+    .kunya-hero__media {
+        height: 78vh;
+    }
+
+    .kuhnya-features-list {
+        flex-wrap: wrap;
+        gap: var(--space-md);
     }
 }
 
@@ -316,7 +348,12 @@
     }
 
     #details .kuhnya-layout-card.is-expanded {
-        min-height: 58vh;
+        min-height: 50vh;
+    }
+
+    #details .kuhnya-layout-toggle {
+        width: var(--tap-target-size);
+        height: var(--tap-target-size);
     }
 }
 

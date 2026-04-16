@@ -1,7 +1,9 @@
 const shell = document.querySelector('.archive-layout-shell');
 const posts = document.querySelectorAll('.archive-post-entry');
+const archiveReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const archiveIsPhone = window.matchMedia('(max-width: 48rem)').matches;
 
-if (shell && posts.length > 0) {
+if (shell && posts.length > 0 && !archiveReducedMotion && !archiveIsPhone) {
     shell.addEventListener('scroll', () => {
         const shellRect = shell.getBoundingClientRect();
         

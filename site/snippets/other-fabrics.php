@@ -64,7 +64,7 @@ if ($otherFabrics->isEmpty()) {
     return;
 }
 ?>
-<section class="other-fabrics-section">
+<div class="other-fabrics-section">
     <h2>Другие производители</h2>
 
     <div class="fabric-grid">
@@ -174,4 +174,4 @@ if ($otherFabrics->isEmpty()) {
             </figure>
         <?php endforeach ?>
     </div>
-</section>
+</div>

@@ -5,7 +5,7 @@ const initKunyaHeroEffects = () => {
     const media = document.querySelector('[data-kunya-media]');
     const image = document.querySelector('[data-kunya-media-image]');
 
-    if (!hero || !media || !image) {
+    if (!hero || !media || !image || kunyaReducedMotion || kunyaIsPhone) {
         return;
     }
 
@@ -45,8 +45,9 @@ const KUNYA_LAYOUT_TOGGLE_SELECTOR = '[data-kuhnya-layout-toggle]';
 const KUNYA_LAYOUT_GRID_SELECTOR = '.kuhnya-layout-grid';
 const KUNYA_LAYOUT_MEDIA_SELECTOR = '.kuhnya-layout-media';
 const KUNYA_LAYOUT_EXPANDED_COL_START = '1';
-const KUNYA_LAYOUT_EXPANDED_COL_SPAN = '12';
+const KUNYA_LAYOUT_EXPANDED_COL_SPAN = 'var(--grid-columns)';
 const kunyaReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const kunyaIsPhone = window.matchMedia('(max-width: 48rem)').matches;
 
 const setStyleVariable = (element, name, value) => {
     if (value && value !== '') {
@@ -245,7 +246,7 @@ const initKunyaLayoutParallax = () => {
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
         medias.forEach((media) => {
-            if (kunyaReducedMotion) {
+            if (kunyaReducedMotion || kunyaIsPhone) {
                 media.style.setProperty('--kuhnya-layout-parallax-y', '0px');
                 media.style.setProperty('--kuhnya-layout-parallax-scale', '0');
                 return;

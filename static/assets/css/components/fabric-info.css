@@ -92,7 +92,43 @@
     width: fit-content;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 64rem) and (min-width: 48.01rem) {
+    .fabric-info__layout {
+        grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    }
+
+    .fabric-info__map-wrap {
+        grid-column: span var(--grid-columns);
+    }
+
+    .fabric-info__inner {
+        grid-column: 2 / -2;
+        align-self: start;
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: var(--space-sm);
+    }
+
+    .fabric-info__brand,
+    .fabric-info__inner > .fabric-info__eyebrow {
+        grid-column: 1 / span 3;
+        align-self: start;
+    }
+
+    .fabric-info__inner > h2,
+    .fabric-info__inner > .fabric-info__text,
+    .fabric-info__inner > .fabric-info__link {
+        grid-column: 4 / span 3;
+    }
+
+    .fabric-info__logo {
+        width: min(100%, 220px);
+    }
+}
+
+@media (max-width: 48rem) {
     .fabric-info__layout {
         grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
     }
@@ -103,9 +139,11 @@
     }
 
     .fabric-info__inner {
-        grid-column: span var(--grid-columns);
+        grid-column: 2 / -2;
         align-self: start;
         width: 100%;
+        height: auto;
+        display: flex;
     }
 
     .fabric-info__logo {

@@ -158,6 +158,14 @@
     }
 }
 
+@media (max-width: 64rem) {
+    #faq.section-wrapper {
+        .faq-content {
+            grid-column: 4 / span 7;
+        }
+    }
+}
+
 @media (max-width: 720px) {
     #faq.section-wrapper {
         h2 {

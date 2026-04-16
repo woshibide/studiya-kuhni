@@ -4,8 +4,9 @@ const initArchivePostParallax = () => {
 	const cover = document.querySelector('[data-archive-post-cover]')
 	const image = document.querySelector('[data-archive-post-cover-image]')
 	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+	const isPhone = window.matchMedia('(max-width: 48rem)').matches
 
-	if (!cover || !image || reducedMotion) {
+	if (!cover || !image || reducedMotion || isPhone) {
 		return
 	}
 

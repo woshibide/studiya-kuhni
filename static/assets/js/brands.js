@@ -118,6 +118,12 @@ const buildMarquee = () => {
 		return;
 	}
 
+	const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+	const phoneQuery = window.matchMedia('(max-width: 48rem)');
+	if (reducedMotionQuery.matches || phoneQuery.matches) {
+		return;
+	}
+
 	gsap.registerPlugin(ScrollTrigger);
 
 	let direction = 1;

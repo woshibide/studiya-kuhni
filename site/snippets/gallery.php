@@ -1,5 +1,5 @@
 <?php
-$galleryHeading = 'Она станет вашей новой кухней?';
+$galleryHeading = 'Привезти вам новую кухню?';
 $galleryImages = [];
 $isKitchenPage = $page->intendedTemplate()->name() === 'kuhnya';
 
@@ -58,7 +58,7 @@ $kuhnyaPrice = trim((string)$page->price()->value());
 
 <div class="section-wrapper" id="gallery">
     <h2><?= esc($galleryHeading) ?></h2>
-    <p style="max-width: 75ch; margin-bottom: var(--space-sm);">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.</p>
+    <p class="gallery__intro">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.</p>
 
     <div class="gallery" data-gallery data-gallery-count="<?= (int)count($galleryImages) ?>">
         <figure class="gallery-inline">

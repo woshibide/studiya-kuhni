@@ -3,6 +3,14 @@
 home:
 [] gallery pages orchestrated openning of images
     [] same for single kitchen page
+[] contacts toggle right allign on the grid
+[] middle home button try to allign on the grid / footer also..?
+[] ultra wide monitors base space and font size adjustd
+    [] global rue for paragraph max width 80 ch
+    [] other-fabrics-section doesnt actually take up full width of the screen
+    [] for super duper ultra wide --the-width is to be constrained
+[] contacts panel lower border radius
+[] faq no border radius / tinier border radius
 
 
 designers: 

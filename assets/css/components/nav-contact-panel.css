@@ -209,3 +209,32 @@
     }
 }
 
+@media (max-width: 64rem) {
+    .nav-right {
+        .nav-contact-panel {
+            right: 0;
+            width: min(calc(100vw - (var(--space-sm) * 2)), 42rem);
+            max-height: min(72vh, 44rem);
+            border-radius: var(--space-xs);
+        }
+    }
+}
+
+@media (max-width: 48rem) {
+    .nav-right {
+        width: 100%;
+
+        .nav-contact-toggle-shell {
+            width: 100%;
+            justify-content: flex-start;
+            padding-inline: 0;
+        }
+
+        .nav-contact-panel {
+            width: 100%;
+            max-width: 100%;
+            max-height: min(68vh, 38rem);
+        }
+    }
+}
+

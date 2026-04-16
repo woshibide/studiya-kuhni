@@ -77,7 +77,16 @@
 
 @media (max-width: 48rem) {
     #home-hero {
+        padding-top: 12vh;
         min-height: 75vh;
+
+        .hero-description p {
+            max-width: 48ch;
+        }
+
+        .hero__cta-wrapper {
+            width: 100%;
+        }
 
         .home-hero-seo-copy {
             max-width: 100%;
@@ -280,11 +289,70 @@
     }
 }
 
+@media (max-width: 64rem) {
+    #fabrics-intro {
+        .fabrics-listing {
+            gap: var(--space-md);
+        }
+
+        .fabrics-row {
+            figure {
+                min-height: clamp(19rem, 46vh, 27rem);
+
+                .home-fabric-kitchens {
+                    top: var(--space-xs);
+                    left: var(--space-xs);
+                    gap: var(--space-xs);
+
+                    a {
+                        max-width: 16rem;
+                        opacity: 0.92;
+                        transform: translateX(0) scaleX(1);
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        pointer-events: auto;
+                        color: var(--the-white);
+                        background-color: var(--jet-black);
+                        padding-inline: var(--space-xs);
+                        transition-delay: 0ms;
+                    }
+
+                    a:hover,
+                    a:focus-visible,
+                    a.is-active {
+                        color: var(--jet-black);
+                        background-color: var(--the-white);
+                        opacity: 1;
+                    }
+                }
+
+                figcaption {
+                    left: var(--space-xs);
+                    bottom: var(--space-xs);
+
+                    a {
+                        padding-inline: var(--space-xs);
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (max-width: 48rem) {
     #fabrics-intro {
         .fabrics-row {
             figure {
                 min-height: clamp(18rem, 44vh, 24rem);
+
+                .home-fabric-kitchens a {
+                    max-width: 100%;
+                }
+
+                .home-fabric-toggle {
+                    width: var(--tap-target-size);
+                    height: var(--tap-target-size);
+                }
             }
         }
     }
