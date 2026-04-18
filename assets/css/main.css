@@ -54,7 +54,7 @@ SuisseIntl-SemiBold.woff */
 
     --shadow-s: 0px 0px 4px #00000012, 4px 0px 16px 2px #00000006;
     --shadow-m: 0px 0px 8px #00000012, 4px 0px 24px 8px #00000012;
-    --shadow-l: 0 0 3px rgba(0, 0, 0, 1)2, 4px 0px 16px 2px rgba(0, 0, 0, 0.06);
+    --shadow-l: 0 0 3px rgba(0, 0, 0, 1), 4px 0px 16px 2px rgba(0, 0, 0, 0.06);
 
     --super-white: rgb(255,255,255);
     --the-white: rgba(243, 243, 241, 0.9);

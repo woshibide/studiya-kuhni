@@ -13,19 +13,19 @@ home:
 [x] faq no border radius / tinier border radius
 
 phone:
-[] section sticky in cta to be at the bottom
-[] benefits section needs padding
-    [] one benefit per row?
-[] blog posts padding
-[] faq section padding
-[] hero section padding
-[] buttons text centered
+[x] section sticky in cta to be at the bottom
+[x] benefits section needs padding
+    [x] one benefit per row?
+[x] blog posts padding
+[x] faq section padding
+[x] hero section padding
+[x] buttons text centered
 [] nav remake, nothing is on grid
-[] nav contact panel too thin
-[] text in designers who work with us needs padding
-[] footer kitchens to be right alligned
-[] archive posts to be 110vh
-[] kunya-sticky-overview is beyond grid, must constrain
+[x] nav contact panel too thin
+[x] text in designers who work with us needs padding
+[x] footer kitchens to be right alligned
+[x] archive posts to be 110vh
+[x] kunya-sticky-overview is beyond grid, must constrain
 [] kuhnya page title also off grid
 [] fabric info can be 1 / -1
 [] big-message__text appears off screen
@@ -34,6 +34,9 @@ phone:
 
 ultra wide:
 [] contacts text to be even bigger
+
+tablet: 
+[] memories weird space at the top
 
 
 designers: 
@@ -129,3 +132,30 @@ benefits:
 Защита от влаги и пятен
 Практичные покрытия
 ```
+
+
+
+
+
+
+
+
+
+Brand           | Country        | Town / City of Origin
+----------------|----------------|------------------------
+Aran Cucine     | Italy          | Atri
+Aster Cucine    | Italy          | Pesaro
+Home Cucine     | Italy          | Montebelluna
+KitchenAid      | United States  | Benton Harbor (MI)
+Lottocento      | Italy          | Montelabbate
+Lubiex          | Italy          | Treviso area
+Küppersbusch    | Germany        | Gelsenkirchen
+Miele           | Germany        | Gütersloh
+Mossman         | Russia         | Moscow
+Neff            | Germany        | Bretten
+Nolte Küchen    | Germany        | Löhne
+Scavolini       | Italy          | Montelabbate
+Smeg            | Italy          | Guastalla
+
+
+

@@ -14,11 +14,11 @@
 	}
 	
 	.section-wrapper {
-		background: var(--jet-black);
-		color: var(--the-white);
+		color: var(--jet-black);
+		background: var(--the-white);
 		display: grid;
 		/* gap: var(--fs-sm); */
-		margin-bottom: var(--space-xl);
+		/* margin-bottom: var(--space-xl); */
 	}
 
 	h2 {
@@ -29,7 +29,7 @@
 		width: 100%;
 		overflow: hidden;
 		display: grid;
-		gap: var(--fs-md);
+		/* gap: var(--fs-md); */
 	}
 
 	.marquee {
@@ -53,13 +53,13 @@
 		display: flex;
 		flex-shrink: 0;
 		align-items: center;
-		gap: var(--fs-md);
-		padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+		/* gap: var(--fs-lg); */
 	}
 
 	.brand-item {
-		width: clamp(220px, 20vw, 40vw);
+		width: clamp(220px, 10vw, 40vw);
 		flex-shrink: 0;
+		padding: var(--space-md);
 
 		figure {
 			margin: 0;
@@ -72,15 +72,21 @@
 		img {
 			width: 100%;
 			height: auto;
+			aspect-ratio: 5 / 4;
 			display: block;
+			/* border-bottom: 1px solid var(--silver); */
+			border-radius: 0;
 		}
 
 		figcaption {
 			text-align: center;
 			font-size: var(--fs-sm);
+			padding: calc(var(--space-xs) / 2) var(--space-xs);
+			line-height: 0.9;
+			background-color: var(--silver);
+			color: var(--super-white);
 			text-transform: uppercase;
 			letter-spacing: 0.06em;
-			color: var(--the-white);
 		}
 	}
 

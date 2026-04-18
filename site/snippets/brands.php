@@ -5,19 +5,19 @@
     <div class="section-wrapper">
         <?php
         $brandsJson = '[
-            {"file": "fabrics-aranCucine.png", "name": "aranCucine"},
-            {"file": "fabrics-aster.png", "name": "aster"},
-            {"file": "fabrics-homeCucine.png", "name": "homeCucine"},
-            {"file": "fabrics-kitchenAid.png", "name": "kitchenAid"},
-            {"file": "fabrics-lottocento.png", "name": "lottocento"},
-            {"file": "fabrics-lubiex.png", "name": "lubiex"},
-            {"file": "fabrics-Kuppersbuch.png", "name": "kuppersbuch"},
-            {"file": "fabrics-miele.png", "name": "miele"},
-            {"file": "fabrics-mossman.png", "name": "mossman"},
-            {"file": "fabrics-neff.png", "name": "neff"},
-            {"file": "fabrics-nolte.png", "name": "nolte"},
-            {"file": "fabrics-scavolini.png", "name": "scavolini"},
-            {"file": "fabrics-smeg.png", "name": "smeg"}
+            {"file": "fabrics-AranCucine.svg", "name": "aranCucine"},
+            {"file": "fabrics-Aster.svg", "name": "aster"},
+            {"file": "fabrics-HomeCucine.svg", "name": "homeCucine"},
+            {"file": "fabrics-KitchenAid.svg", "name": "kitchenAid"},
+            {"file": "fabrics-lottocento.svg", "name": "lottocento"},
+            {"file": "fabrics-Lubiex.svg", "name": "lubiex"},
+            {"file": "fabrics-Kuppersbuch.svg", "name": "kuppersbuch"},
+            {"file": "fabrics-Miele.svg", "name": "miele"},
+            {"file": "fabrics-Mossman.svg", "name": "mossman"},
+            {"file": "fabrics-Neff.svg", "name": "neff"},
+            {"file": "fabrics-Nolte.svg", "name": "nolte"},
+            {"file": "fabrics-Scavolini.svg", "name": "scavolini"},
+            {"file": "fabrics-Smeg.svg", "name": "smeg"}
         ]';
 
         $brandNameRemap = [
@@ -64,7 +64,7 @@
                                 <div class="brand-item">
                                     <figure>
                                         <?php snippet('turbo-image', [
-                                            'image' => asset('assets/brands/fabrics/png-white/' . $brand['file']),
+                                            'image' => asset('assets/brands/fabrics/black-svg/' . $brand['file']),
                                             'alt' => $formatName($brand['name']),
                                             'width' => 360,
                                             'loading' => 'lazy',
@@ -81,7 +81,7 @@
                                 <div class="brand-item">
                                     <figure>
                                         <?php snippet('turbo-image', [
-                                            'image' => asset('assets/brands/fabrics/png-white/' . $brand['file']),
+                                            'image' => asset('assets/brands/fabrics/black-svg/' . $brand['file']),
                                             'alt' => $formatName($brand['name']),
                                             'width' => 360,
                                             'loading' => 'lazy',
