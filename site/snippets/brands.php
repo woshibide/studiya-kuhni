@@ -1,8 +1,10 @@
 <section id="brands" class="brands section-full">
 
-    <h2 id="brands-intro">Мы привозим на КМВ</h2>
-
     <div class="section-wrapper">
+        <div id="brands-intro">
+            <h2>Мы привозим на КМВ</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur vel eius, exercitationem ducimus odio quas doloremque! Saepe tempore, ipsa placeat maiores perspiciatis nesciunt ducimus debitis magnam fugit nisi ea unde.</p>
+        </div>
         <?php
         $brandsJson = '[
             {"file": "fabrics-AranCucine.svg", "name": "aranCucine"},

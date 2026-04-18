@@ -77,13 +77,12 @@
 
 .fabric-info__eyebrow {
     font-size: var(--fs-xs);
-    color: var(--soft-grey);
+    color: var(--grey);
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }
 
 .fabric-info__text {
-    color: var(--grey);
     max-width: 70ch;
 }
 

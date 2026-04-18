@@ -77,7 +77,7 @@
 <script src="<?= esc(relative_url('assets/js/node_modules/embla-carousel-autoplay/embla-carousel-autoplay.umd.js'), 'attr') ?>" defer></script>
 
 <script src="<?= esc(relative_url('assets/js/gallery.js'), 'attr') ?>" defer></script>
-<script src="<?= esc(relative_url('assets/js/navbar-contact.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/navbar-menus.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(relative_url('assets/js/faq.js'), 'attr') ?>" defer></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="<?= esc(relative_url('assets/js/fabric-info-map.js'), 'attr') ?>" defer></script>

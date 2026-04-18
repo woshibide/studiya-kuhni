@@ -76,6 +76,7 @@ if ($isFirstVisit) {
     <link rel="stylesheet" href="<?= esc(relative_url('assets/css/main.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(relative_url('assets/css/footer.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(relative_url('assets/css/navbar.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/nav-menu-panel.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/cta.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/gallery.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(relative_url('assets/css/components/benefits.css'), 'attr') ?>">

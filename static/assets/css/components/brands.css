@@ -1,5 +1,11 @@
 #brands.brands {
 	/* margin-top: var(--space-xl); */
+	display: grid;
+	grid-column: span 6;
+	align-content: start;
+	margin-left: auto;
+	margin-right: auto;
+	width: var(--the-width);
 	
 	#brands-intro{
 		background-color: var(--jet-black);
@@ -19,10 +25,6 @@
 		display: grid;
 		/* gap: var(--fs-sm); */
 		margin-bottom: var(--space-xl);
-	}
-
-	h2 {
-		/* text-transform: uppercase; */
 	}
 
 	.marquee-wrapper {
@@ -81,6 +83,10 @@
 			text-transform: uppercase;
 			letter-spacing: 0.06em;
 			color: var(--the-white);
+
+			& :hover {
+				color: var(--jet-black);
+			}
 		}
 	}
 

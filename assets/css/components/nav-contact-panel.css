@@ -7,12 +7,23 @@
         padding: var(--space-xs) var(--space-sm);
         background: transparent;
         color: inherit;
-        /* transition: background-color 220ms ease, color 220ms ease; */
+        border-radius: var(--space-xxs) var(--space-xxs) 0 0 ;
+        /* transition: all 300ms var(--out); */
+
+        &:hover {
+            background: var(--jet-black);
+            color: var(--super-white);
+            border-radius: var(--space-xxs);
+
+            aria[expanded="true"] & {
+                border-radius: var(--space-xxs) var(--space-xxs) 0 0;   
+            }
+        }
     }
 
     .nav-contact-panel {
         text-transform: none !important;
-        border-radius: var(--space-xs) 0 var(--space-xs) var(--space-xs);
+        border-radius: var(--space-xxs) 0 var(--space-xxs) var(--space-xxs);
         position: absolute;
         top: 100%;
         right: 0;
@@ -40,7 +51,7 @@
 
         .nav-contact-panel__content {
             display: grid;
-            gap: var(--space-md);
+            gap: var(--space-lg);
         }
 
         .nav-contact-section {
@@ -87,7 +98,7 @@
 
             &.nav-contact-callback {
 
-                padding-top: var(--space-md);
+                /* padding-top: var(--space-md); */
             }
 
             .nav-contact-form {

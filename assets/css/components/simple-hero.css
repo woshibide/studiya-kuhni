@@ -22,6 +22,7 @@
             max-width: 65ch;
             letter-spacing: -0.05em;
             font-size: min(2rem, 4rem);
+            text-wrap: balance;
         }
     }
 

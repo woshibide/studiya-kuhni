@@ -2,6 +2,8 @@
 
     h2 {
         margin-bottom: var(--space-sm);
+        font-size: var(--fs-xl);
+        letter-spacing: -0.03em;
 
         @media (max-width: 48rem) {
             padding-inline: var(--space-sm);
@@ -9,8 +11,10 @@
     }
 
     .gallery__intro {
-        max-width: 75ch;
-        margin-bottom: var(--space-sm);
+        max-width: 45ch;
+        font-size: var(--fs-lg);
+        letter-spacing: -0.025em;
+        margin-bottom: var(--space-md);
 
         @media (max-width: 48rem) {
             padding-inline: var(--space-sm);
@@ -34,10 +38,20 @@
         justify-content: space-between;
         gap: var(--space-sm);
         overflow-x: auto;
+        border-radius: var(--space-md);
+        overflow-y: hidden;
     }
 
     .gallery-inline__item {
         flex: 1 0 clamp(120px, 10vw, 420px);
+
+        scale: 1;
+            will-change: scale;
+            transition: scale 3s var(--out);
+
+            &:hover {
+                scale: 1.05;
+            }
     }
 
     .gallery-inline__trigger {
@@ -54,14 +68,7 @@
             height: clamp(20rem, 60vh, 46rem);
             object-fit: cover;
             display: block;
-            scale: 1;
             transform-origin: center;
-            will-change: scale;
-            transition: scale 3s var(--out);
-
-            &:hover {
-                scale: 1.05;
-            }
         }
     }
 }

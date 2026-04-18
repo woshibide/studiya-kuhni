@@ -1,0 +1,114 @@
+/* Menu panel styles — reuse contact panel base but override layout and colors */
+[data-nav-menu] .nav-menu-panel,
+.nav-menu-panel {
+    border-radius: var(--space-xxs) 0 var(--space-xxs) var(--space-xxs) var(--space-xxs);
+    position: absolute;
+    top: calc(100% - var(--space-xs)); /* small negative overlap using spacing variable */
+    left: 0;
+    box-sizing: border-box;
+    background: var(--jet-black);
+    color: var(--the-white);
+    padding: var(--space-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.25rem);
+    pointer-events: none;
+    z-index: 1200;
+    transition: opacity 180ms var(--out), transform 200ms var(--out);
+}
+
+/* reveal when parent shell has is-open */
+[data-nav-menu].is-open .nav-menu-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* toggle visual state when open */
+[data-nav-menu].is-open .nav-contact-toggle-shell {
+    background: var(--jet-black);
+    color: var(--the-white);
+}
+
+/* layout for menu columns */
+.nav-menu-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    align-items: start;
+}
+
+.nav-menu-column h3,
+.nav-menu-column > a {
+    margin: 0 0 var(--space-xs) 0;
+    font-size: var(--fs-sm);
+    color: var(--the-white);
+    text-decoration: none;
+}
+
+.nav-menu-column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu-column li {
+    margin: 0.15rem 0;
+}
+
+/* use tap target sizing for interactive items */
+.nav-menu-panel a {
+    color: var(--the-white);
+    display: block;
+    padding-inline: var(--space-sm);
+    padding-block: calc(max(0px, (var(--tap-target-size) - 1rem) / 2));
+    min-height: var(--tap-target-size);
+    line-height: 1.1;
+    text-decoration: none;
+    transition: background-color 160ms var(--out), color 160ms var(--out);
+}
+
+/* invert colors on hover/focus for inner elements */
+.nav-menu-panel a:hover,
+.nav-menu-panel a:focus-visible {
+    background: var(--the-white);
+    color: var(--jet-black);
+}
+
+/* indentation for kitchens (hierarchy) */
+.nav-menu-sublist,
+.fabrics-list.sublist {
+    padding-left: var(--space-md);
+}
+
+/* small tweaks for lists */
+.fabrics-list { padding: 0; }
+
+@media (max-width: 64rem) {
+    .nav-menu-columns {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    [data-nav-menu] .nav-menu-panel {
+        max-height: clamp(60vh, 70vh, 80vh);
+        overflow-y: auto;
+        padding: var(--space-sm);
+    }
+}
+
+@media (max-width: 48rem) {
+    .nav-menu-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-menu-sublist,
+    .fabrics-list.sublist {
+        padding-left: calc(var(--space-sm));
+    }
+
+    [data-nav-menu] .nav-menu-panel {
+        padding: var(--space-sm);
+        top: 100%;
+    }
+}

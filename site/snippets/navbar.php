@@ -1,28 +1,27 @@
 <nav>
     <div class="nav-left">
-        <ul>
-            <?php
-            $navItems = [
-                ['title' => 'фабрики', 'url' => relative_url(page('fabrics') ? page('fabrics')->url() : '/fabrics')],
-                ['title' => 'дизайнерам', 'url' => relative_url(page('designers') ? page('designers')->url() : '/designers')],
-                ['title' => 'производство', 'url' => relative_url(page('proizvodstvo') ? page('proizvodstvo')->url() : '/proizvodstvo')],
-                ['title' => 'воспоминания', 'url' => relative_url(page('archive') ? page('archive')->url() : '/archive')],
-            ];
-
-            foreach ($navItems as $item): ?>
-                <li>
-                    <a class="internal-link__hidden hover-bg" href="<?= $item['url'] ?>"><?= $item['title'] ?></a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+        <div data-nav-menu>
+            <div class="nav-contact-toggle-shell hover-bg">
+                <button
+                    class="nav-contact-toggle hover-underline"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="nav-menu-panel"
+                    data-open-nav-menu
+                >
+                    меню
+                </button>
+            </div>
+            <?php snippet('nav-menu-panel') ?>
+        </div>
     </div>
     <div class="nav-center">
         <a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>
     </div>
     <div class="nav-right" data-nav-contact>
-        <div class="nav-contact-toggle-shell">
+        <div class="nav-contact-toggle-shell hover-bg">
             <button
-                class="nav-contact-toggle"
+                class="nav-contact-toggle hover-underline"
                 type="button"
                 aria-expanded="false"
                 aria-controls="nav-contact-panel"
