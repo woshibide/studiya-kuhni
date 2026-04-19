@@ -7,8 +7,8 @@
 
     <div id="footer-details">
         <div class="info">
-            <p><a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>, 2008 — 2026</p>
-            <p>Часть альянса <a class="external-link" target="_blank" href="https://mebelkmv.ru">Петру Групп</a></p>
+            <p><a class="hover-underline" href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>, 2008 — 2026</p>
+            <p>Часть альянса <a class="hover-underline external-link" target="_blank" href="https://mebelkmv.ru">Петру Групп</a></p>
             <address>
                  Пятигорск, Ермолова 14, ТЦ «Palazzo», 357500
             </address>

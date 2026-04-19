@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="&#x2F;studiya-kuhni&#x2F;assets&#x2F;css&#x2F;main.css">
     <link rel="stylesheet" href="&#x2F;studiya-kuhni&#x2F;assets&#x2F;css&#x2F;footer.css">
     <link rel="stylesheet" href="&#x2F;studiya-kuhni&#x2F;assets&#x2F;css&#x2F;navbar.css">
+    <link rel="stylesheet" href="&#x2F;studiya-kuhni&#x2F;assets&#x2F;css&#x2F;components&#x2F;nav-menu-panel.css">
     <link rel="stylesheet" href="&#x2F;studiya-kuhni&#x2F;assets&#x2F;css&#x2F;components&#x2F;cta.css">
     <link rel="stylesheet" href="&#x2F;studiya-kuhni&#x2F;assets&#x2F;css&#x2F;components&#x2F;gallery.css">
     <link rel="stylesheet" href="&#x2F;studiya-kuhni&#x2F;assets&#x2F;css&#x2F;components&#x2F;benefits.css">
@@ -49,32 +50,272 @@
 
 <nav>
     <div class="nav-left">
-        <ul>
-                            <li>
-                    <a class="internal-link__hidden hover-bg" href="/studiya-kuhni/fabrics">фабрики</a>
-                </li>
-                            <li>
-                    <a class="internal-link__hidden hover-bg" href="/studiya-kuhni/designers">дизайнерам</a>
-                </li>
-                            <li>
-                    <a class="internal-link__hidden hover-bg" href="/studiya-kuhni/proizvodstvo">производство</a>
-                </li>
-                            <li>
-                    <a class="internal-link__hidden hover-bg" href="/studiya-kuhni/archive">воспоминания</a>
-                </li>
-                    </ul>
+        <div class="nav-menu" data-nav-menu>
+            <div class="nav-menu-toggle-shell hover-bg">
+                <button
+                    class="nav-menu-toggle hover-underline"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="nav-menu-panel"
+                    data-open-nav-menu
+                    >
+                    меню
+                </button>
+            </div>
+            
+<aside class="nav-menu-panel" id="nav-menu-panel" aria-hidden="true" hidden>
+    <div class="nav-menu-panel__content">
+        <section class="nav-menu-section nav-menu-section--fabrics" aria-label="фабрики">
+
+            <ul class="nav-menu-list nav-menu-list--fabrics">
+                                    <li class="nav-menu-item">
+                        <a
+                            class="nav-menu-link __fabric hover-underline internal-link__hidden"
+                            style="--menu-stagger-index: 1"
+                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aran-cucine"
+                        >
+                            Aran Cucine                        </a>
+
+                                                    <ul class="nav-menu-sublist">
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 2"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aran-cucine&#x2F;lab13"
+                                        >
+                                            Lab13                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 3"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aran-cucine&#x2F;magistra"
+                                        >
+                                            Magistra                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 4"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aran-cucine&#x2F;mia"
+                                        >
+                                            Mia                                        </a>
+                                    </li>
+                                                            </ul>
+                                            </li>
+                                    <li class="nav-menu-item">
+                        <a
+                            class="nav-menu-link __fabric hover-underline internal-link__hidden"
+                            style="--menu-stagger-index: 5"
+                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aster-cucine"
+                        >
+                            Aster Cucine                        </a>
+
+                                                    <ul class="nav-menu-sublist">
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 6"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aster-cucine&#x2F;atelier"
+                                        >
+                                            Atelier                                        </a>
+                                    </li>
+                                                            </ul>
+                                            </li>
+                                    <li class="nav-menu-item">
+                        <a
+                            class="nav-menu-link __fabric hover-underline internal-link__hidden"
+                            style="--menu-stagger-index: 7"
+                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;home-cucine"
+                        >
+                            Home Cucine                        </a>
+
+                                                    <ul class="nav-menu-sublist">
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 8"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;home-cucine&#x2F;estetica"
+                                        >
+                                            Estetica                                        </a>
+                                    </li>
+                                                            </ul>
+                                            </li>
+                                    <li class="nav-menu-item">
+                        <a
+                            class="nav-menu-link __fabric hover-underline internal-link__hidden"
+                            style="--menu-stagger-index: 9"
+                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;mossman"
+                        >
+                            Mossman                        </a>
+
+                                                    <ul class="nav-menu-sublist">
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 10"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;mossman&#x2F;chelsea"
+                                        >
+                                            Chelsea                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 11"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;mossman&#x2F;mix"
+                                        >
+                                            Mix                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 12"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;mossman&#x2F;prestige"
+                                        >
+                                            Prestige                                        </a>
+                                    </li>
+                                                            </ul>
+                                            </li>
+                                    <li class="nav-menu-item">
+                        <a
+                            class="nav-menu-link __fabric hover-underline internal-link__hidden"
+                            style="--menu-stagger-index: 13"
+                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini"
+                        >
+                            Scavolini                        </a>
+
+                                                    <ul class="nav-menu-sublist">
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 14"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini&#x2F;baccarat"
+                                        >
+                                            Baccarat                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 15"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini&#x2F;baltimora"
+                                        >
+                                            Baltimora                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 16"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini&#x2F;delinea"
+                                        >
+                                            Delinea                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 17"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini&#x2F;exclusiva"
+                                        >
+                                            Exclusiva                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a
+                                            class="nav-menu-link nav-menu-link--kitchen internal-link__hidden"
+                                            style="--menu-stagger-index: 18"
+                                            href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini&#x2F;libra"
+                                        >
+                                            Libra                                        </a>
+                                    </li>
+                                                            </ul>
+                                            </li>
+                            </ul>
+        </section>
+
+        <section class="nav-menu-section nav-menu-section--pages" aria-label="разделы">
+            <ul class="nav-menu-list nav-menu-list--pages">
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 19"
+                            href="&#x2F;studiya-kuhni&#x2F;fabrics"
+                        >фабрики</a>
+                    </li>
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 20"
+                            href="&#x2F;studiya-kuhni&#x2F;designers"
+                        >дизайнерам</a>
+                    </li>
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 21"
+                            href="&#x2F;studiya-kuhni&#x2F;proizvodstvo"
+                        >производство</a>
+                    </li>
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 22"
+                            href="&#x2F;studiya-kuhni&#x2F;archive"
+                        >воспоминания</a>
+                    </li>
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 23"
+                            href="&#x2F;studiya-kuhni&#x2F;faq"
+                        >FAQ</a>
+                    </li>
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 24"
+                            href="&#x2F;studiya-kuhni&#x2F;contacts"
+                        >связь</a>
+                    </li>
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 25"
+                            href="&#x2F;studiya-kuhni&#x2F;mediakit"
+                        >медиа кит</a>
+                    </li>
+                                    <li>
+                        <a
+                            class="nav-menu-link internal-link__hidden"
+                            style="--menu-stagger-index: 26"
+                            href="&#x2F;studiya-kuhni&#x2F;privacy"
+                        >конфиденциальность</a>
+                    </li>
+                            </ul>
+        </section>
+
+        <p class="nav-menu-meta" style="--menu-stagger-index: 27">
+            <a href="&#x2F;studiya-kuhni&#x2F;">Студия Кухни</a>, 2008 — 2026
+        </p>
     </div>
+</aside>
+        </div>
+    </div>
+
     <div class="nav-center">
-        <a href="&#x2F;studiya-kuhni&#x2F;">Студия Кухни</a>
+        <a  
+            class="hover-underline" 
+            &#x2F;studiya-kuhni&#x2F;"
+            >
+            Студия Кухни
+        </a>
     </div>
+
     <div class="nav-right" data-nav-contact>
-        <div class="nav-contact-toggle-shell">
+        <div class="nav-contact-toggle-shell hover-bg">
             <button
-                class="nav-contact-toggle"
+                class="nav-contact-toggle hover-underline"
                 type="button"
                 aria-expanded="false"
                 aria-controls="nav-contact-panel"
-            >
+                >
                 контакты
             </button>
         </div>
@@ -235,56 +476,68 @@
 
 <div class="section-wrapper archive-posts-wrapper--grid" id="archive-posts">
             
-        <a class="archive-posts-card" href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-7">
+        <div class="archive-posts-card">
             <figure>
-                <img alt="" decoding="async" loading="lazy" src="/studiya-kuhni/media/pages/archive/kitchen-test-7/62ca1a41f0-1774476676/mom-child-43-960x.jpg">                <figcaption>
-                                            <p class="archive-posts-meta">
-                                                            <span>Scavolini</span>
+                <a href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-7">
+                    <img alt="" decoding="async" loading="lazy" src="/studiya-kuhni/media/pages/archive/kitchen-test-7/62ca1a41f0-1774476676/mom-child-43-960x.jpg">                </a>
+                <figcaption>
+                                            <div class="archive-posts-meta">
+                                                            <a href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini">Scavolini</a>
                             
                                                             <span aria-hidden="true">/</span>
                             
-                                                            <span>Libra</span>
-                                                    </p>
+                                                            <a href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini&#x2F;libra">Libra</a>
+                                                    </div>
                     
-                    <h3 class="archive-posts-title">Первые шаги во вкусе</h3>
+                    <a href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-7" class="archive-posts-title-link">
+                        <h3 class="archive-posts-title">Первые шаги во вкусе</h3>
+                    </a>
                     <p class="archive-posts-intro">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.</p>
                 </figcaption>
             </figure>
-        </a>
+        </div>
             
-        <a class="archive-posts-card" href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-1">
+        <div class="archive-posts-card">
             <figure>
-                <img alt="" decoding="async" loading="lazy" src="/studiya-kuhni/media/pages/archive/kitchen-test-1/d3aaa64063-1774475905/breakfast-in-bed4-960x.png">                <figcaption>
-                                            <p class="archive-posts-meta">
-                                                            <span>Aran Cucine</span>
+                <a href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-1">
+                    <img alt="" decoding="async" loading="lazy" src="/studiya-kuhni/media/pages/archive/kitchen-test-1/d3aaa64063-1774475905/breakfast-in-bed4-960x.png">                </a>
+                <figcaption>
+                                            <div class="archive-posts-meta">
+                                                            <a href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aran-cucine">Aran Cucine</a>
                             
                                                             <span aria-hidden="true">/</span>
                             
-                                                            <span>Lab13</span>
-                                                    </p>
+                                                            <a href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;aran-cucine&#x2F;lab13">Lab13</a>
+                                                    </div>
                     
-                    <h3 class="archive-posts-title">От Lab13 к постели</h3>
+                    <a href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-1" class="archive-posts-title-link">
+                        <h3 class="archive-posts-title">От Lab13 к постели</h3>
+                    </a>
                     <p class="archive-posts-intro">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.</p>
                 </figcaption>
             </figure>
-        </a>
+        </div>
             
-        <a class="archive-posts-card" href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-4">
+        <div class="archive-posts-card">
             <figure>
-                <img alt="" decoding="async" loading="lazy" src="/studiya-kuhni/media/pages/archive/kitchen-test-4/e91077d8b1-1774476217/rustic-2-960x.jpg">                <figcaption>
-                                            <p class="archive-posts-meta">
-                                                            <span>Scavolini</span>
+                <a href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-4">
+                    <img alt="" decoding="async" loading="lazy" src="/studiya-kuhni/media/pages/archive/kitchen-test-4/e91077d8b1-1774476217/rustic-2-960x.jpg">                </a>
+                <figcaption>
+                                            <div class="archive-posts-meta">
+                                                            <a href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini">Scavolini</a>
                             
                                                             <span aria-hidden="true">/</span>
                             
-                                                            <span>Baltimora</span>
-                                                    </p>
+                                                            <a href="&#x2F;studiya-kuhni&#x2F;fabrics&#x2F;scavolini&#x2F;baltimora">Baltimora</a>
+                                                    </div>
                     
-                    <h3 class="archive-posts-title">Там, где еда начинается с прогулки</h3>
+                    <a href="&#x2F;studiya-kuhni&#x2F;archive&#x2F;kitchen-test-4" class="archive-posts-title-link">
+                        <h3 class="archive-posts-title">Там, где еда начинается с прогулки</h3>
+                    </a>
                     <p class="archive-posts-intro">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vitae corporis saepe unde consectetur atque illum soluta laborum, in veritatis doloribus ex, facilis ab odio tenetur animi autem dicta harum.</p>
                 </figcaption>
             </figure>
-        </a>
+        </div>
     
     </div>    </section>
 
@@ -299,8 +552,8 @@
 
     <div id="footer-details">
         <div class="info">
-            <p><a href="&#x2F;studiya-kuhni&#x2F;">Студия Кухни</a>, 2008 — 2026</p>
-            <p>Часть альянса <a class="external-link" target="_blank" href="https://mebelkmv.ru">Петру Групп</a></p>
+            <p><a class="hover-underline" href="&#x2F;studiya-kuhni&#x2F;">Студия Кухни</a>, 2008 — 2026</p>
+            <p>Часть альянса <a class="hover-underline external-link" target="_blank" href="https://mebelkmv.ru">Петру Групп</a></p>
             <address>
                  Пятигорск, Ермолова 14, ТЦ «Palazzo», 357500
             </address>
@@ -390,7 +643,7 @@
 <script src="&#x2F;studiya-kuhni&#x2F;assets&#x2F;js&#x2F;node_modules&#x2F;embla-carousel-autoplay&#x2F;embla-carousel-autoplay.umd.js" defer></script>
 
 <script src="&#x2F;studiya-kuhni&#x2F;assets&#x2F;js&#x2F;gallery.js" defer></script>
-<script src="&#x2F;studiya-kuhni&#x2F;assets&#x2F;js&#x2F;navbar-contact.js" defer></script>
+<script src="&#x2F;studiya-kuhni&#x2F;assets&#x2F;js&#x2F;navbar-menus.js" defer></script>
 <script src="&#x2F;studiya-kuhni&#x2F;assets&#x2F;js&#x2F;faq.js" defer></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="&#x2F;studiya-kuhni&#x2F;assets&#x2F;js&#x2F;fabric-info-map.js" defer></script>

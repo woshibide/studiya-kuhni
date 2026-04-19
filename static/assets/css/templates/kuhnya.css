@@ -70,14 +70,20 @@
     flex-direction: column;
     gap: var(--space-sm);
     padding: clamp(1rem, 2vw, 2rem);
-    background: color-mix(in srgb, var(--the-white) 90%, transparent);
-    backdrop-filter: blur(6px);
+    background: var(--opaque-white);
     pointer-events: auto;
     border-radius: var(--space-xs);
+    opacity: 0.3;
+    transition: all 0.3s var(--out);
+
+        &:hover {
+            opacity: 0.95;
+            background: var(--the-white);
+        }
 }
 
 .kunya-sticky-overview__eyebrow {
-    color: var(--soft-grey);
+    color: var(--grey);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: var(--fs-xs);
@@ -90,7 +96,7 @@
 
 .kunya-sticky-overview__intro {
     margin: 0;
-    color: var(--grey);
+    color: var(--jet-black);
     font-size: var(--fs-base);
 }
 
@@ -300,6 +306,7 @@
     min-height: clamp(20rem, 52vh, 36rem);
     overflow: hidden;
     cursor: pointer;
+    border-radius: var(--space-sm);
 }
 
 #details .kuhnya-layout-card::after {
@@ -313,6 +320,7 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
+    
     --kuhnya-layout-parallax-y: 0px;
     --kuhnya-layout-parallax-scale: 0;
     --kuhnya-layout-hover-scale: 1;

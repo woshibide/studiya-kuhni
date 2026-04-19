@@ -104,6 +104,7 @@
 }
 
 .archive-post-blocks > figure:not(.archive-post-block-gallery) img {
+    border-radius: var(--space-xs);
     width: 100%;
     height: auto;
     display: block;

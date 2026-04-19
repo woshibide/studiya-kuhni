@@ -20,14 +20,14 @@ SuisseIntl-SemiBold.woff */
     --out: cubic-bezier(0.19, 1, 0.22, 1); /* nice ease out 2**10 */
     --in: cubic-bezier(0.5, 0, 0.75, 0) ; /* nice ease in 2**10 */
 
-
     /* negative space */
     --space-base: 1rem;
-    --space-xs: calc(var(--space-base) * 0.5);
-    --space-sm: calc(var(--space-base) * 0.75);
-    --space-md: calc(var(--space-base) * 2);
-    --space-lg: calc(var(--space-base) * 3);
-    --space-xl: calc(var(--space-base) * 5);
+    --space-xxs: calc(var(--space-base) * 0.25);
+    --space-xs:  calc(var(--space-base) * 0.5);
+    --space-sm:  calc(var(--space-base) * 0.75);
+    --space-md:  calc(var(--space-base) * 2);
+    --space-lg:  calc(var(--space-base) * 3);
+    --space-xl:  calc(var(--space-base) * 5);
     --space-xxl: calc(var(--space-base) * 20);
 
     /* typography */
@@ -54,29 +54,32 @@ SuisseIntl-SemiBold.woff */
 
     --shadow-s: 0px 0px 4px #00000012, 4px 0px 16px 2px #00000006;
     --shadow-m: 0px 0px 8px #00000012, 4px 0px 24px 8px #00000012;
-    --shadow-l: 0 0 3px rgba(0, 0, 0, 1)2, 4px 0px 16px 2px rgba(0, 0, 0, 0.06);
+    --shadow-l: 0 0 3px rgba(0, 0, 0, 1), 4px 0px 16px 2px rgba(0, 0, 0, 0.06);
 
+    /* colors */
     --super-white: rgb(255,255,255);
-    --the-white: rgba(243, 243, 241, 0.9);
+    --the-white: oklch(96.7% 0.003 264.542);
     --opaque-white: oklab(100% 0 -0.00011 / 0.3);
-    --silver: rgb(210, 210, 210);
-    --soft-grey: rgba(0, 0, 0, 0.30);
-    --grey: rgba(0, 0, 0, 0.75);
+    --silver: oklch(92% 0.004 286.32); /* touch of red tones to match photos */
+    --soft-grey: oklch(92.8% 0.006 264.531);
+    --grey: oklch(70.5% 0.015 286.067);
     --jet-black: rgb(0, 0, 0);
+    --yellow: oklch(79.5% 0.184 86.047);
+    --brighter-yellow: oklch(85.2% 0.199 91.936);
 
     /* accessibility */
     --tap-target-size: 22px;
 }
 
 /* ultra wide */
-@media (min-width: 2880px) {
+@media (min-width: 1680px) {
     :root {
-        font-size: clamp(16px, 0.5vw, 20px);
+        font-size: clamp(16px, 0.5vw, 36px);
         --space-base: 1.5rem;
         --grid-columns: 12;
-        --space-lg: calc(var(--space-base) * 5);
-        --space-xl: calc(var(--space-base) * 10);
-        --space-xxl: calc(var(--space-base) * 15);
+        --space-lg: calc(var(--space-base) * 4);
+        --space-xl: calc(var(--space-base) * 8);
+        --space-xxl: calc(var(--space-base) * 10);
     }
 }
 
@@ -173,6 +176,12 @@ img {
     scrollbar-width: thin;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    text-wrap: balance;
+}
+
 p {
     margin: 0;
     padding: 0;
@@ -182,11 +191,14 @@ address {
     font-style: normal;
 }
 
-a,
-.hover-underline {
+a {
     color: inherit;
     width: fit-content;
     text-decoration: none;
+    transition: all 300ms var(--out);
+}
+
+.hover-underline {
     background-image: linear-gradient(currentColor, currentColor);
     background-repeat: no-repeat;
     background-position: 0 calc(100% - 0.06em);
@@ -209,17 +221,21 @@ a:focus-visible,
     padding-left: var(--space-xs);
 }
 
-.internal-link__hidden::after {
-    margin-left: 0.35em;
-    height: 0.5em;
-    width: 0.5em;
-    content: " →";
-    opacity: 0;
-    transition: all 300ms var(--out);
+.internal-link__hidden {
+    &::after {
+        content: " →";
+        display: inline-block;
+        margin-left: 0.35em;
+        color: currentColor;
+        opacity: 0;
+        transform: translateX(-0.2em);
+        transition: opacity 300ms var(--out), transform 300ms var(--out);
+    }
 
-    .internal-link__hidden:hover&,
-    .internal-link__hidden:focus-visible& {
+    &:hover::after,
+    &:focus-visible::after {
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -335,7 +351,7 @@ button {
     text-align: inherit;
     line-height: inherit;
     letter-spacing: inherit;
-    border-radius: var(--space-xs);
+    border-radius: var(--space-xxs);
     box-shadow: none;
     cursor: pointer;
     min-height: var(--tap-target-size);

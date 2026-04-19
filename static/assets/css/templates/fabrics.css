@@ -73,8 +73,9 @@
                     height: 100%;
                     touch-action: pan-y pinch-zoom;
                 }
-
+                
                 .fabric-card__media-slide {
+                    border-radius: var(--space-sm);
                     position: absolute;
                     inset: 0;
                     width: 100%;
@@ -82,11 +83,13 @@
                     background-position: center;
                     background-repeat: no-repeat;
                     opacity: 0;
-                    transition: opacity 420ms var(--out);
-                    will-change: opacity;
+                    transition: all 420ms var(--out);
+                    will-change: opacity, border-radius;
                 }
 
                 .fabric-card__media-slide.is-active {
+                    /* TODO: somehow all elements are always active */
+                    border-radius: 0 var(--space-sm) var(--space-sm) var(--space-sm);
                     opacity: 1;
                 }
             }

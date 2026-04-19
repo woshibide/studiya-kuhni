@@ -5,13 +5,13 @@ footer {
     min-height: 50vh;
     width: var(--the-width);
     margin: 50vh auto 0;
-    padding: 2rem 0;
+    padding: var(--space-md) 0;
     font-size: var(--fs-sm);
     /* border: 1px solid black; */
 
     #footer-typed-line {
         margin: 0;
-        font-size: clamp(1.25rem, 2.2vw, 2rem);
+        font-size: var(--fs-lg);
         letter-spacing: -0.01em;
         line-height: 1.05;
     }
@@ -59,8 +59,8 @@ footer {
         align-items: baseline;
         justify-content: space-evenly;
         width: 100%;
-        margin-block: 2rem;
-        gap: 1rem;
+        margin-block: var(--space-md);
+        gap: var(--grid-gap);
 
         & div {
             display: flex;
@@ -69,7 +69,7 @@ footer {
         }
 
         & .info {
-            gap: 0.25rem;
+            gap: var(--space-sm);
 
             & p {
                 max-width: clamp(35ch, 60ch, 75ch);
@@ -82,7 +82,7 @@ footer {
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
-            gap: 1rem;
+            gap: var(--grid-gap);
 
             & > * {
                 flex: 1;
@@ -91,7 +91,6 @@ footer {
             & ul {
                 display: grid;
                 align-content: start;
-                /* grid-template-columns: 2fr 1fr; */
                 margin: 0;
                 padding: 0;
                 list-style: none;
@@ -104,7 +103,7 @@ footer {
 
                     &::after {
                         content: " →";
-                        margin-left: 0.35em;
+                        margin-left: var(--space-xs);
                         opacity: 0;
                         transform: translateX(-0.2em);
                         transition: all 300ms var(--out);

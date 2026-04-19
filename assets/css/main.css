@@ -197,7 +197,8 @@ a {
     text-decoration: none;
     transition: all 300ms var(--out);
 }
-    .hover-underline {
+
+.hover-underline {
     background-image: linear-gradient(currentColor, currentColor);
     background-repeat: no-repeat;
     background-position: 0 calc(100% - 0.06em);

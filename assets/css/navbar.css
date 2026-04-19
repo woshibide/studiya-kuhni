@@ -45,6 +45,7 @@ html.has-smart-nav nav.is-nav-hidden .nav-left {
     text-align: center;
     justify-self: center;
     font-size: var(--fs-md);
+    cursor: pointer;
 }
 
 .nav-right {

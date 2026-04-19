@@ -1,22 +1,24 @@
 #archive-posts__heading {
-		font-size: var(--fs-lg);
-		letter-spacing: -0.03em;
-		
-		@media (max-width: 48rem) {
-			padding-inline: var(--space-xs);
-		}
+	font-size: var(--fs-lg);
+	letter-spacing: -0.03em;
+	margin-bottom: var(--space-md);
+
+	@media (max-width: 48rem) {
+		padding-inline: var(--space-xs);
+	}
 }
 
 #archive-posts {
+
 	&.section-wrapper {
 		gap: var(--space-base);
 
 		@media (max-width: 64rem) {
-			gap:  var(--space-md) var(--grid-gap);
+			gap: var(--space-md) var(--grid-gap);
 		}
-}
+	}
 
-	
+
 	&.archive-posts-wrapper--grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -41,9 +43,11 @@
 		flex-direction: column;
 
 		.archive-posts-card {
+
 			figure {
 				grid-template-columns: minmax(220px, 320px) 1fr;
 				align-items: start;
+
 
 				@media (max-width: 64rem) {
 					grid-template-columns: 1fr;
@@ -55,29 +59,54 @@
 
 .archive-posts-card {
 	display: block;
+	transition: all 0.3s var(--out);
 
 	figure {
 		margin: 0;
 		display: grid;
 		gap: var(--space-sm);
-		
+
+		>a {
+			/* 	overwrite to remove default link styles
+				and allow hover on the whole card */
+			background-size: 0 !important;
+			width: 100% !important;
+		}
+
 		figcaption {
 			display: flex;
 			flex-direction: column;
 			gap: var(--space-xs);
+			padding-inline: var(--space-sm);
 
-			@media (max-width: 48rem) {
-				padding-inline: var(--space-xs);
+			.archive-posts-meta {
+
+				color: var(--grey);
+
+				a:hover {
+					color: var(--jet-black);
+				}
 			}
 		}
 	}
 
-	img {
-		width: 100%;
-		height: clamp(180px, 28vh, 320px);
-		object-fit: cover;
-		display: block;
+	@media (max-width: 48rem) {
+		padding-inline: var(--space-xs);
 	}
+}
+
+
+img {
+	width: 100%;
+	height: clamp(180px, 28vh, 320px);
+	object-fit: cover;
+	display: block;
+	border-radius: var(--space-md);
+
+	@media (max-width: 48rem) {
+		border-radius: var(--space-sm) var(--space-sm) 0 0;
+	}
+}
 }
 
 .archive-posts-meta {
@@ -99,15 +128,19 @@
 .archive-posts-title-link {
 	text-decoration: none;
 	color: inherit;
-}
 
-.archive-posts-title-link:hover .archive-posts-title {
-	text-decoration: underline;
+	&:hover .archive-posts-title {
+		text-decoration: underline;
+	}
 }
 
 .archive-posts-intro {
 	color: var(--grey);
 	font-size: var(--fs-sm);
+
+	.archive-posts-card:hover & {
+		color: var(--jet-black);
+	}
 }
 
 .archive-posts-empty {

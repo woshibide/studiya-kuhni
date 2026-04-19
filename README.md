@@ -1,15 +1,17 @@
 # TODO: 
 
+kuhnya gallery images are broken
+
 home:
 [] gallery pages orchestrated openning of images
     [] same for single kitchen page
-[] contacts toggle right allign on the grid
-[] middle home button try to allign on the grid / footer also..?
-[] ultra wide monitors base space and font size adjustd
-    [] global rue for paragraph max width 80 ch
+[x] contacts toggle right allign on the grid
+[x] middle home button try to allign on the grid / footer also..?
+[x] ultra wide monitors base space and font size adjustd
+    [x] global rue for paragraph max width 80 ch
     [] other-fabrics-section doesnt actually take up full width of the screen
-    [] for super duper ultra wide --the-width is to be constrained
-[] contacts panel lower border radius
+    [x] for super duper ultra wide --the-width is to be constrained
+[x] contacts panel lower border radius
 [x] faq no border radius / tinier border radius
 
 phone:
@@ -33,10 +35,10 @@ phone:
 [] other fabrics text needs padding, images are not to have padding
 
 ultra wide:
-[] contacts text to be even bigger
+[x] contacts text to be even bigger
 
 tablet: 
-[] memories weird space at the top
+[] memories weird space at the top in memories
 
 
 designers: 

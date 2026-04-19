@@ -8,7 +8,7 @@
                     aria-expanded="false"
                     aria-controls="nav-menu-panel"
                     data-open-nav-menu
-                >
+                    >
                     меню
                 </button>
             </div>
@@ -17,9 +17,14 @@
     </div>
 
     <div class="nav-center">
-        <a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>
+        <a  
+            class="hover-underline" 
+            <?= esc(relative_url('/'), 'attr') ?>"
+            >
+            Студия Кухни
+        </a>
     </div>
-    
+
     <div class="nav-right" data-nav-contact>
         <div class="nav-contact-toggle-shell hover-bg">
             <button
@@ -27,7 +32,7 @@
                 type="button"
                 aria-expanded="false"
                 aria-controls="nav-contact-panel"
-            >
+                >
                 контакты
             </button>
         </div>
