@@ -52,6 +52,9 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
                             </div>
 
                             <div class="archive-post-infobox relative-z" onclick="window.location.href='<?= esc(relative_url($post->url()), 'js') ?>'; event.stopPropagation();">
+                                <?php if ($post->is_new()->toBool()): ?>
+                                    <span class="badge--new archive-page-badge">new</span>
+                                <?php endif ?>
                                 <h3 class="archive-post-title">
                                     <a class="internal-link__hidden" href="<?= esc(relative_url($post->url()), 'attr') ?>"><?= esc($post->title()) ?></a>
                                 </h3>

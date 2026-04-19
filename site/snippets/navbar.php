@@ -19,7 +19,7 @@
     <div class="nav-center">
         <a  
             class="hover-underline" 
-            <?= esc(relative_url('/'), 'attr') ?>"
+            href="<?= esc(relative_url('/'), 'attr') ?>"
             >
             Студия Кухни
         </a>

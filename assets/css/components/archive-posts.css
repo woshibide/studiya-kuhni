@@ -95,6 +95,17 @@
 	}
 }
 
+.archive-posts-card-link {
+	display: block;
+	position: relative;
+}
+
+.archive-posts-badge {
+	position: absolute;
+	top: var(--space-sm);
+	left: var(--space-sm);
+	z-index: 2;
+}
 
 img {
 	width: 100%;
@@ -107,7 +118,7 @@ img {
 		border-radius: var(--space-sm) var(--space-sm) 0 0;
 	}
 }
-}
+
 
 .archive-posts-meta {
 	margin: 0;

@@ -40,6 +40,7 @@
 }
 
 .fabric-info__inner {
+    padding: 0 var(--space-base) var(--space-base) var(--space-base);
     grid-column: span 4;
     align-self: end;
     width: 100%;

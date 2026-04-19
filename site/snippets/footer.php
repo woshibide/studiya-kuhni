@@ -1,3 +1,7 @@
+<?php
+    $hasNewArchive = page('archive') && page('archive')->children()->listed()->filterBy('is_new', true)->count() > 0;
+?>
+
 <footer>
     
     <h3 id="footer-typed-line">
@@ -26,6 +30,9 @@
                 </li>
                 <li>
                     <a class="hover-bg" href="<?= esc(relative_url('/archive'), 'attr') ?>">Воспоминания</a>
+                    <?php if ($hasNewArchive): ?>
+                        <span class="badge--new">new</span>
+                    <?php endif ?>
                 </li>
             </ul>
             <ul>
@@ -53,7 +60,7 @@
                     <a class="hover-bg" href="<?= esc(relative_url('/designers'), 'attr') ?>">Дизайнерам</a>
                 </li>
                 <li>
-                    <a class="hover-bg" href="<?= esc(relative_url('/privacy'), 'attr') ?>">Политика Конфиденциальности</a>
+                    <a class="hover-bg" href="<?= esc(relative_url('/privacy'), 'attr') ?>">Конфиденциальность</a>
                 </li>
             </ul>
         </div>

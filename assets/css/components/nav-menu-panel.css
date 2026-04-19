@@ -140,12 +140,16 @@
             color: var(--grey);
             padding-inline: var(--space-xs);
             padding-top: var(--space-sm);
-            
-            a:hover {
-                color: var(--the-white);
-            }
+            font-size: var(--fs-sm) !important; 
 
-            p { font-size: var(--fs-xs) !important; }
+            a { 
+                font-size: var(--fs-sm) !important; 
+                margin-right: var(--space-xs);
+
+                &:hover {
+                    color: var(--the-white);
+                }
+            }
         }
 
         .nav-menu-link,
@@ -259,4 +263,9 @@
             }
         }
     }
+}
+
+.nav-menu-badge {
+    color: var(--yellow);
+    margin-left: 0.25em;
 }

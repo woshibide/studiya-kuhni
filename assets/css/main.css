@@ -273,7 +273,7 @@ section {
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
-        padding: 1rem;
+        padding: var(--space-base);
         background: var(--jet-black);
         color: var(--the-white);
         grid-column: span 4;
@@ -351,11 +351,24 @@ button {
     text-align: inherit;
     line-height: inherit;
     letter-spacing: inherit;
-    border-radius: var(--space-xxs);
+    border-radius: var(--space-xs);
     box-shadow: none;
     cursor: pointer;
     min-height: var(--tap-target-size);
     min-width: var(--tap-target-size);
+}
+
+.badge--new {
+    background-color: var(--yellow);
+    color: var(--jet-black);
+    padding: 2px 8px;
+    border-radius: var(--space-xs);
+    font-weight: 500;
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    line-height: 1.2;
 }
 
 input,

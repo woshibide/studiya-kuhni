@@ -34,7 +34,10 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
 
         <div class="archive-posts-card">
             <figure>
-                <a href="<?= esc(relative_url($post->url()), 'attr') ?>">
+                <a href="<?= esc(relative_url($post->url()), 'attr') ?>" class="archive-posts-card-link">
+                    <?php if ($post->is_new()->toBool()): ?>
+                        <span class="badge--new archive-posts-badge">new</span>
+                    <?php endif ?>
                     <?php snippet('turbo-image', [
                         'image' => $imgAsset,
                         'alt' => $imgAlt,
@@ -46,7 +49,7 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
                     <?php if ($fabric || $kitchen): ?>
                         <div class="archive-posts-meta">
                             <?php if ($fabric): ?>
-                                <a href="<?= esc(relative_url($fabric->url()), 'attr') ?>"><?= esc($fabric->title()) ?></a>
+                                <a class="hover-underline" href="<?= esc(relative_url($fabric->url()), 'attr') ?>"><?= esc($fabric->title()) ?></a>
                             <?php endif ?>
 
                             <?php if ($fabric && $kitchen): ?>
@@ -54,13 +57,13 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
                             <?php endif ?>
 
                             <?php if ($kitchen): ?>
-                                <a href="<?= esc(relative_url($kitchen->url()), 'attr') ?>"><?= esc($kitchen->title()) ?></a>
+                                <a class="hover-underline" href="<?= esc(relative_url($kitchen->url()), 'attr') ?>"><?= esc($kitchen->title()) ?></a>
                             <?php endif ?>
                         </div>
                     <?php endif ?>
 
                     <a href="<?= esc(relative_url($post->url()), 'attr') ?>" class="archive-posts-title-link">
-                        <h3 class="archive-posts-title"><?= esc($title) ?></h3>
+                        <h3 class="internal-link__hidden archive-posts-title"><?= esc($title) ?></h3>
                     </a>
                     <p class="archive-posts-intro"><?= esc($intro) ?></p>
                 </figcaption>

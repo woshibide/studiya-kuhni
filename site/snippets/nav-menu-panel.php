@@ -21,11 +21,13 @@ if ($fabricsPage && $fabricsPage->children()->isNotEmpty()) {
     }
 }
 
+$hasNewArchive = page('archive') && page('archive')->children()->listed()->filterBy('is_new', true)->count() > 0;
+
 $otherLinks = [
     ['title' => 'фабрики', 'url' => page('fabrics') ? relative_url((string)page('fabrics')->url()) : relative_url('/fabrics')],
     ['title' => 'дизайнерам', 'url' => page('designers') ? relative_url((string)page('designers')->url()) : relative_url('/designers')],
     ['title' => 'производство', 'url' => page('proizvodstvo') ? relative_url((string)page('proizvodstvo')->url()) : relative_url('/proizvodstvo')],
-    ['title' => 'воспоминания', 'url' => page('archive') ? relative_url((string)page('archive')->url()) : relative_url('/archive')],
+    ['title' => 'воспоминания' . ($hasNewArchive ? ' <sup class="nav-menu-badge">new</sup>' : ''), 'url' => page('archive') ? relative_url((string)page('archive')->url()) : relative_url('/archive')],
     ['title' => 'FAQ', 'url' => page('faq') ? relative_url((string)page('faq')->url()) : relative_url('/faq')],
     ['title' => 'связь', 'url' => page('contacts') ? relative_url((string)page('contacts')->url()) : relative_url('/contacts')],
     ['title' => 'медиа кит', 'url' => page('mediakit') ? relative_url((string)page('mediakit')->url()) : relative_url('/mediakit')],
@@ -79,14 +81,14 @@ $menuStaggerIndex = 1;
                             class="nav-menu-link internal-link__hidden"
                             style="--menu-stagger-index: <?= $menuStaggerIndex++ ?>"
                             href="<?= esc($link['url'], 'attr') ?>"
-                        ><?= esc($link['title']) ?></a>
+                        ><?= $link['title'] ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>
         </section>
 
         <p class="nav-menu-meta" style="--menu-stagger-index: <?= $menuStaggerIndex++ ?>">
-            <a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>, 2008 — 2026
+            <a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a> 2008 — 2026
         </p>
     </div>
 </aside>

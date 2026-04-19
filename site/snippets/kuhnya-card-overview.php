@@ -34,8 +34,8 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
 
 <article class="kuhnya-card-overview<?= $layout === 'content-only' ? ' kuhnya-card-overview--content-only' : '' ?>">
     <div class="kuhnya-card-overview__content">
-            <a class="internal-link__hidden kuhnya-card-overview__eyebrow" href="<?= esc($cardBrandUrl, 'attr') ?>"><?= esc($cardBrand) ?></a>
-            <a class="internal-link__hidden kuhnya-card-overview__title" href="<?= esc(relative_url($kuhnya->url()), 'attr') ?>"><?= esc($cardTitle) ?></a>
+            <a class="hover-underline internal-link__hidden kuhnya-card-overview__eyebrow" href="<?= esc($cardBrandUrl, 'attr') ?>"><?= esc($cardBrand) ?></a>
+            <a class="hover-underline internal-link__hidden kuhnya-card-overview__title" href="<?= esc(relative_url($kuhnya->url()), 'attr') ?>"><?= esc($cardTitle) ?></a>
             <p class="kuhnya-card-overview__intro"><?= esc($cardIntro) ?></p>
 
             <ul class="kuhnya-card-overview__facts">
@@ -61,7 +61,7 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
             </ul>
 
             <?php if (($showLink ?? false) === true): ?>
-                <a class="internal-link" href="<?= esc(relative_url($kuhnya->url()), 'attr') ?>">подробности</a>
+                <a class="hover-underline internal-link" href="<?= esc(relative_url($kuhnya->url()), 'attr') ?>">подробности</a>
             <?php endif ?>
     </div>
 

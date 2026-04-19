@@ -189,3 +189,8 @@ footer {
         }
     }
 }
+
+footer #footer-details .links ul li .badge--new {
+    margin-left: var(--space-xxs);
+    vertical-align: middle;
+}

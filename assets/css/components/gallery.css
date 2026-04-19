@@ -37,7 +37,7 @@
         display: flex;
         justify-content: space-between;
         gap: var(--space-sm);
-        overflow-x: auto;
+        overflow-x: hidden;
         border-radius: var(--space-md);
         overflow-y: hidden;
     }

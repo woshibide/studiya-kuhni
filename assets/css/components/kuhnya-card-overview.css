@@ -15,7 +15,7 @@
     }
 
     & .kuhnya-card-overview__eyebrow {
-        color: var(--soft-grey);
+        color: var(--grey);
         text-transform: uppercase;
         letter-spacing: 0.08em;
         font-size: var(--fs-xs);
@@ -55,7 +55,7 @@
     }
 
     & .kuhnya-card-overview__fact-label {
-        color: var(--soft-grey);
+        color: var(--grey);
         text-transform: lowercase;
     }
 
@@ -68,7 +68,6 @@
         aspect-ratio: 16 / 9;
         display: block;
         overflow: hidden;
-        background: var(--silver);
 
         & img {
             width: 100%;
