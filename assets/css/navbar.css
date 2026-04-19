@@ -27,13 +27,21 @@ html.has-smart-nav nav.is-nav-hidden .nav-left {
     min-width: 0;
 }
 
+.nav-contact-toggle-shell, .nav-menu-toggle-shell {
+    background-color: rgb(255 255 255 / 0.8);
+    /* box-shadow: var(--shadow-m); */
+    backdrop-filter: blur(8px);
+    --webkit-backdrop-filter: blur(8px);
+}
+
+
 .nav-left {
-    grid-column: 1 / span 4;
+    grid-column: 1 / span 5;
     transition: transform 280ms var(--out), opacity 280ms var(--out);
 }
 
 .nav-center {
-    grid-column: 5 / span 4;
+    grid-column: 6 / span 2;
     text-align: center;
     justify-self: center;
     font-size: var(--fs-md);
@@ -60,7 +68,7 @@ html.has-smart-nav nav.is-nav-hidden .nav-left {
     }
 
     .nav-left {
-        grid-column: 1 / span 4;
+        grid-column: 1 / span 6;
         grid-row: 2;
     }
 
@@ -74,8 +82,8 @@ html.has-smart-nav nav.is-nav-hidden .nav-left {
     }
 
     .nav-right {
-        grid-column: 7 / span 2;
-        grid-row: 1;
+        grid-column: 7 / span 6;
+        grid-row: 2;
         justify-self: end;
         align-self: start;
     }

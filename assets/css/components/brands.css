@@ -113,7 +113,7 @@
 			letter-spacing: 0.06em;
 			transition: all 0.3s var(--out);
 
-			&:hover {
+			.brand-item:hover & {
 				color: var(--jet-black);
 				background-color: var(--the-white);
 			}

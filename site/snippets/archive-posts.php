@@ -32,19 +32,21 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
         }
         ?>
 
-        <a class="archive-posts-card" href="<?= esc(relative_url($post->url()), 'attr') ?>">
+        <div class="archive-posts-card">
             <figure>
-                <?php snippet('turbo-image', [
-                    'image' => $imgAsset,
-                    'alt' => $imgAlt,
-                    'width' => 960,
-                    'loading' => 'lazy',
-                ]) ?>
+                <a href="<?= esc(relative_url($post->url()), 'attr') ?>">
+                    <?php snippet('turbo-image', [
+                        'image' => $imgAsset,
+                        'alt' => $imgAlt,
+                        'width' => 960,
+                        'loading' => 'lazy',
+                    ]) ?>
+                </a>
                 <figcaption>
                     <?php if ($fabric || $kitchen): ?>
-                        <p class="archive-posts-meta">
+                        <div class="archive-posts-meta">
                             <?php if ($fabric): ?>
-                                <span><?= esc($fabric->title()) ?></span>
+                                <a href="<?= esc(relative_url($fabric->url()), 'attr') ?>"><?= esc($fabric->title()) ?></a>
                             <?php endif ?>
 
                             <?php if ($fabric && $kitchen): ?>
@@ -52,16 +54,18 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
                             <?php endif ?>
 
                             <?php if ($kitchen): ?>
-                                <span><?= esc($kitchen->title()) ?></span>
+                                <a href="<?= esc(relative_url($kitchen->url()), 'attr') ?>"><?= esc($kitchen->title()) ?></a>
                             <?php endif ?>
-                        </p>
+                        </div>
                     <?php endif ?>
 
-                    <h3 class="archive-posts-title"><?= esc($title) ?></h3>
+                    <a href="<?= esc(relative_url($post->url()), 'attr') ?>" class="archive-posts-title-link">
+                        <h3 class="archive-posts-title"><?= esc($title) ?></h3>
+                    </a>
                     <p class="archive-posts-intro"><?= esc($intro) ?></p>
                 </figcaption>
             </figure>
-        </a>
+        </div>
     <?php endforeach ?>
 
     <?php if ($posts->isEmpty()): ?>

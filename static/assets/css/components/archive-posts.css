@@ -96,6 +96,15 @@
 	font-size: var(--fs-md);
 }
 
+.archive-posts-title-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.archive-posts-title-link:hover .archive-posts-title {
+	text-decoration: underline;
+}
+
 .archive-posts-intro {
 	color: var(--grey);
 	font-size: var(--fs-sm);

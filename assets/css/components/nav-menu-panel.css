@@ -1,114 +1,262 @@
-/* Menu panel styles — reuse contact panel base but override layout and colors */
-[data-nav-menu] .nav-menu-panel,
-.nav-menu-panel {
-    border-radius: var(--space-xxs) 0 var(--space-xxs) var(--space-xxs) var(--space-xxs);
-    position: absolute;
-    top: calc(100% - var(--space-xs)); /* small negative overlap using spacing variable */
-    left: 0;
-    box-sizing: border-box;
-    background: var(--jet-black);
-    color: var(--the-white);
-    padding: var(--space-md);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-0.25rem);
-    pointer-events: none;
-    z-index: 1200;
-    transition: opacity 180ms var(--out), transform 200ms var(--out);
-}
+.nav-menu {
+    position: relative;
 
-/* reveal when parent shell has is-open */
-[data-nav-menu].is-open .nav-menu-panel {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-}
+    .nav-menu-toggle-shell {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-xs) var(--space-sm);
+        background: transparent;
+        color: inherit;
+        border-radius: var(--space-xxs) var(--space-xxs) 0 0;
 
-/* toggle visual state when open */
-[data-nav-menu].is-open .nav-contact-toggle-shell {
-    background: var(--jet-black);
-    color: var(--the-white);
-}
-
-/* layout for menu columns */
-.nav-menu-columns {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
-    align-items: start;
-}
-
-.nav-menu-column h3,
-.nav-menu-column > a {
-    margin: 0 0 var(--space-xs) 0;
-    font-size: var(--fs-sm);
-    color: var(--the-white);
-    text-decoration: none;
-}
-
-.nav-menu-column ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-menu-column li {
-    margin: 0.15rem 0;
-}
-
-/* use tap target sizing for interactive items */
-.nav-menu-panel a {
-    color: var(--the-white);
-    display: block;
-    padding-inline: var(--space-sm);
-    padding-block: calc(max(0px, (var(--tap-target-size) - 1rem) / 2));
-    min-height: var(--tap-target-size);
-    line-height: 1.1;
-    text-decoration: none;
-    transition: background-color 160ms var(--out), color 160ms var(--out);
-}
-
-/* invert colors on hover/focus for inner elements */
-.nav-menu-panel a:hover,
-.nav-menu-panel a:focus-visible {
-    background: var(--the-white);
-    color: var(--jet-black);
-}
-
-/* indentation for kitchens (hierarchy) */
-.nav-menu-sublist,
-.fabrics-list.sublist {
-    padding-left: var(--space-md);
-}
-
-/* small tweaks for lists */
-.fabrics-list { padding: 0; }
-
-@media (max-width: 64rem) {
-    .nav-menu-columns {
-        grid-template-columns: repeat(2, 1fr);
+        &:hover {
+            background: var(--jet-black);
+            color: var(--super-white);
+            border-radius: var(--space-xxs);
+        }
     }
 
-    [data-nav-menu] .nav-menu-panel {
-        max-height: clamp(60vh, 70vh, 80vh);
-        overflow-y: auto;
-        padding: var(--space-sm);
+    .nav-menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+
+    .nav-menu-panel {
+        text-transform: none !important;
+        border-radius: 0 var(--space-xs) var(--space-xs) var(--space-xs);
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        background: var(--jet-black);
+        color: var(--the-white);
+        padding: var(--space-md);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-0.25rem);
+        transition: opacity 180ms ease, transform 220ms ease, visibility 0s;
+        z-index: 1200;
+
+        * {
+            font-size: var(--fs-md);
+        }
+
+        .nav-menu-panel__content {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--grid-gap);
+        }
+
+        .nav-menu-section {
+            min-width: 0;
+
+            &.nav-menu-section--fabrics {
+                .nav-menu-list--fabrics {
+                    display: grid;
+                    grid-template-columns: repeat(1, minmax(0, 1fr));
+                    gap: var(--space-md);
+                }
+            }
+
+            &.nav-menu-section--pages {
+                .nav-menu-list--pages {
+                    display: grid;
+                    grid-template-columns: repeat(1, minmax(0, 1fr));
+                    gap: var(--space-sm) var(--space-md);
+                }
+            }
+        }
+
+        .nav-menu-list,
+        .nav-menu-sublist {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            list-style: none;
+        }
+
+        .nav-menu-item {
+            min-width: 0;
+            break-inside: avoid;
+            transition: all 300ms var(--out);
+        }
+
+        .nav-menu-sublist {
+            display: grid;
+            gap: var(--space-xxs);
+            padding-left: var(--space-md);
+            margin-top: var(--space-xs);
+        }
+
+        .nav-menu-link {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            padding-inline: var(--space-xs);
+            padding-block: var(--space-xs);
+            margin-bottom: calc(var(--space-xs) * -1);
+            line-height: 1.12;
+            color: var(--the-white);
+            border-radius: var(--space-xxs);
+            text-decoration: none;
+
+            &.__fabric {
+                width: 100%;
+            }
+
+            &.nav-menu-link--kitchen {
+                background-image: none;
+                background-size: 0 0;
+
+                &::after {
+                    color: currentColor;
+                }
+
+                &:hover,
+                &:focus-visible {
+                    color: var(--super-white);
+                    background-size: 0 0;
+                }
+            }
+        }
+
+        /* Keep fabric link underline visible when hovering over its item/kitchens */
+        .nav-menu-item:hover > .nav-menu-link.hover-underline {
+            background-size: 100% 0.075em;
+        }
+
+        .nav-menu-meta {
+            grid-column: 1 / -1;
+            align-self: end;
+            justify-self: end;
+            margin: 0;
+            text-align: right;
+            line-height: 1.2;
+            color: var(--grey);
+            padding-inline: var(--space-xs);
+            padding-top: var(--space-sm);
+            
+            a:hover {
+                color: var(--the-white);
+            }
+
+            p { font-size: var(--fs-xs) !important; }
+        }
+
+        .nav-menu-link,
+        .nav-menu-meta {
+            opacity: 0;
+            transform: translateY(0.25rem);
+            transition: opacity 300ms var(--out), transform 320ms var(--out);
+            transition-delay: calc(var(--menu-stagger-index, 0) * 11ms);
+        }
+    }
+
+    &.is-open {
+        .nav-menu-toggle-shell {
+            background: var(--jet-black);
+            color: var(--super-white);
+            border-radius: var(--space-xxs) var(--space-xxs) 0 0;
+        }
+
+        .nav-menu-toggle {
+            background-size: 100% 1px;
+        }
+
+        .nav-menu-panel {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+            transition: opacity 220ms ease, transform 260ms var(--out), visibility 0s;
+        }
+
+        .nav-menu-link,
+        .nav-menu-meta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+@media (max-width: 64rem) {
+    .nav-menu {
+        .nav-menu-panel {
+            max-height: clamp(68vh, 78vh, 92vh);
+            overflow-y: auto;
+            
+            .nav-menu-section {
+                &.nav-menu-section--pages {
+                    .nav-menu-list--pages {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            }
+        }
     }
 }
 
 @media (max-width: 48rem) {
-    .nav-menu-columns {
-        grid-template-columns: 1fr;
-    }
+    .nav-menu {
+        .nav-menu-toggle-shell {
+            justify-content: flex-start;
+            padding-block: 0;
+            padding-inline: 0;
+        }
 
-    .nav-menu-sublist,
-    .fabrics-list.sublist {
-        padding-left: calc(var(--space-sm));
-    }
+        .nav-menu-panel {
+            width: 100vw;
+            border-radius: var(--space-xxs);
 
-    [data-nav-menu] .nav-menu-panel {
-        padding: var(--space-sm);
-        top: 100%;
+            .nav-menu-panel__content {
+                flex-direction: column;
+            }
+
+            .nav-menu-section {
+                &.nav-menu-section--fabrics {
+                    flex: auto;
+
+                    .nav-menu-list--fabrics {
+                        grid-template-columns: 1fr;
+                        gap: var(--space-sm);
+                    }
+                }
+
+                &.nav-menu-section--pages {
+                    flex: auto;
+
+                    .nav-menu-list--pages {
+                        grid-template-columns: 1fr;
+                        gap: var(--space-xxs);
+                    }
+                }
+            }
+
+            .nav-menu-meta {
+                justify-self: start;
+                text-align: left;
+            }
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-menu {
+        .nav-menu-panel {
+            transition-duration: 0ms;
+            transition-delay: 0ms;
+
+            .nav-menu-link,
+            .nav-menu-meta,
+            .nav-menu-link.internal-link__hidden::after {
+                transition-duration: 0ms;
+                transition-delay: 0ms;
+            }
+        }
     }
 }

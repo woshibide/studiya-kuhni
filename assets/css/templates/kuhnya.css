@@ -73,7 +73,7 @@
     background: var(--opaque-white);
     pointer-events: auto;
     border-radius: var(--space-xs);
-    opacity: 0.1;
+    opacity: 0.3;
     transition: all 0.3s var(--out);
 
         &:hover {

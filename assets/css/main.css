@@ -191,11 +191,13 @@ address {
     font-style: normal;
 }
 
-a,
-.hover-underline {
+a {
     color: inherit;
     width: fit-content;
     text-decoration: none;
+    transition: all 300ms var(--out);
+}
+    .hover-underline {
     background-image: linear-gradient(currentColor, currentColor);
     background-repeat: no-repeat;
     background-position: 0 calc(100% - 0.06em);
@@ -218,17 +220,21 @@ a:focus-visible,
     padding-left: var(--space-xs);
 }
 
-.internal-link__hidden::after {
-    margin-left: 0.35em;
-    height: 0.5em;
-    width: 0.5em;
-    content: " →";
-    opacity: 0;
-    transition: all 300ms var(--out);
+.internal-link__hidden {
+    &::after {
+        content: " →";
+        display: inline-block;
+        margin-left: 0.35em;
+        color: currentColor;
+        opacity: 0;
+        transform: translateX(-0.2em);
+        transition: opacity 300ms var(--out), transform 300ms var(--out);
+    }
 
-    .internal-link__hidden:hover&,
-    .internal-link__hidden:focus-visible& {
+    &:hover::after,
+    &:focus-visible::after {
         opacity: 1;
+        transform: translateX(0);
     }
 }
 

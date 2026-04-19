@@ -1,9 +1,9 @@
 <nav>
     <div class="nav-left">
-        <div data-nav-menu>
-            <div class="nav-contact-toggle-shell hover-bg">
+        <div class="nav-menu" data-nav-menu>
+            <div class="nav-menu-toggle-shell hover-bg">
                 <button
-                    class="nav-contact-toggle hover-underline"
+                    class="nav-menu-toggle hover-underline"
                     type="button"
                     aria-expanded="false"
                     aria-controls="nav-menu-panel"
@@ -15,9 +15,11 @@
             <?php snippet('nav-menu-panel') ?>
         </div>
     </div>
+
     <div class="nav-center">
         <a href="<?= esc(relative_url('/'), 'attr') ?>">Студия Кухни</a>
     </div>
+    
     <div class="nav-right" data-nav-contact>
         <div class="nav-contact-toggle-shell hover-bg">
             <button
