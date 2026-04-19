@@ -50,6 +50,10 @@ if ($heroWordsJson === false) {
         </div>
     </section>
 
+    <section>
+        <?php snippet('big-message') ?>
+    </section>
+
         <section id="fabrics-intro">
         <?php
         $fabricsPage = page('fabrics');
@@ -253,9 +257,7 @@ if ($heroWordsJson === false) {
         </div>
     </section>
 
-    <section>
-        <?php snippet('big-message') ?>
-    </section>
+
 
     <section>
         <?php snippet('brands') ?>
