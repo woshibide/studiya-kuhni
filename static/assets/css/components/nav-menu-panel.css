@@ -22,6 +22,9 @@
         align-items: center;
         justify-content: center;
         line-height: 1;
+        
+        /* overwrite of button from main */
+        border-radius: 0 !important;
     }
 
     .nav-menu-panel {
@@ -140,12 +143,16 @@
             color: var(--grey);
             padding-inline: var(--space-xs);
             padding-top: var(--space-sm);
-            
-            a:hover {
-                color: var(--the-white);
-            }
+            font-size: var(--fs-sm) !important; 
 
-            p { font-size: var(--fs-xs) !important; }
+            a { 
+                font-size: var(--fs-sm) !important; 
+                margin-right: var(--space-xs);
+
+                &:hover {
+                    color: var(--the-white);
+                }
+            }
         }
 
         .nav-menu-link,
@@ -186,9 +193,20 @@
 
 @media (max-width: 64rem) {
     .nav-menu {
+        
         .nav-menu-panel {
             max-height: clamp(68vh, 78vh, 92vh);
             overflow-y: auto;
+            padding: var(--space-sm);
+            padding-top: var(--space-md);
+            border-radius: 0 var(--space-xxs) var(--space-xxs) var(--space-xxs);
+            overflow-x: hidden;
+
+            .nav-menu-link {
+                padding: 0;
+                width: 100%;
+                min-height: var(--tab-target-size);
+            }
             
             .nav-menu-section {
                 &.nav-menu-section--pages {
@@ -259,4 +277,9 @@
             }
         }
     }
+}
+
+.nav-menu-badge {
+    color: var(--yellow);
+    margin-left: 0.25em;
 }

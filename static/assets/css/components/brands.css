@@ -34,8 +34,8 @@
 
 		#brands-intro p {
 			font-size: var(--fs-lg);
-			line-height: 0.95;
-			letter-spacing: -0.025em;
+			line-height: 1.15;
+			letter-spacing: -0.05em;
 			text-wrap: balance;
 			margin: 0;
 		}
@@ -131,7 +131,7 @@
 	#brands.brands {
 		.section-wrapper {
 			#brands-intro {
-				grid-column: 1 / span 6;
+				grid-column: 1 / -1;
 			}
 		}
 	}

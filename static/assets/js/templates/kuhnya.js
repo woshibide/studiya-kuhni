@@ -1,43 +1,54 @@
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-const initKunyaHeroEffects = () => {
-    const hero = document.querySelector('[data-kunya-hero]');
-    const media = document.querySelector('[data-kunya-media]');
-    const image = document.querySelector('[data-kunya-media-image]');
+const KUNYA_HERO_SELECTOR = '[data-kunya-hero]';
+const KUNYA_HERO_VIEWPORT_SELECTOR = '[data-kunya-hero-viewport]';
+const KUNYA_HERO_PREV_SELECTOR = '[data-kunya-hero-prev]';
+const KUNYA_HERO_NEXT_SELECTOR = '[data-kunya-hero-next]';
+const KUNYA_HERO_SLIDE_SELECTOR = '[data-kunya-hero-slide]';
 
-    if (!hero || !media || !image || kunyaReducedMotion || kunyaIsPhone) {
+const setHeroNavButtonState = (button, disabled) => {
+    if (!button) {
         return;
     }
 
-    let ticking = false;
+    button.disabled = disabled;
+    button.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+};
 
-    const update = () => {
-        const mediaRect = media.getBoundingClientRect();
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+const initKunyaHeroCarousel = () => {
+    const hero = document.querySelector(KUNYA_HERO_SELECTOR);
+    const viewport = hero ? hero.querySelector(KUNYA_HERO_VIEWPORT_SELECTOR) : null;
+    const prevButton = hero ? hero.querySelector(KUNYA_HERO_PREV_SELECTOR) : null;
+    const nextButton = hero ? hero.querySelector(KUNYA_HERO_NEXT_SELECTOR) : null;
+    const slides = hero ? Array.from(hero.querySelectorAll(KUNYA_HERO_SLIDE_SELECTOR)) : [];
 
-        // start at 0 when media enters viewport and finish at 1 when it leaves.
-        const progress = clamp((viewportHeight - mediaRect.top) / (viewportHeight + mediaRect.height), 0, 1);
+    if (!hero || !viewport || slides.length <= 1 || typeof EmblaCarousel !== 'function') {
+        setHeroNavButtonState(prevButton, true);
+        setHeroNavButtonState(nextButton, true);
+        return;
+    }
 
-        // tiny parallax shift and zoom-in to keep movement subtle.
-        const parallaxY = (progress - 0.5) * 80;
-        const scale = 1.02 + progress * 0.05;
+    const embla = EmblaCarousel(viewport, {
+        axis: 'x',
+        align: 'start',
+        containScroll: false,
+        dragFree: false,
+        loop: true,
+        skipSnaps: false,
+        duration: kunyaReducedMotion ? 20 : 32,
+    });
 
-        image.style.transform = `translate3d(0, ${parallaxY}px, 0) scale(${scale})`;
-        ticking = false;
+    const syncHeroNavButtons = () => {
+        setHeroNavButtonState(prevButton, !embla.canScrollPrev());
+        setHeroNavButtonState(nextButton, !embla.canScrollNext());
     };
 
-    const onScroll = () => {
-        if (ticking) {
-            return;
-        }
+    prevButton?.addEventListener('click', () => embla.scrollPrev());
+    nextButton?.addEventListener('click', () => embla.scrollNext());
 
-        ticking = true;
-        requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    embla.on('select', syncHeroNavButtons);
+    embla.on('reInit', syncHeroNavButtons);
+    syncHeroNavButtons();
 };
 
 const KUNYA_LAYOUT_CARD_SELECTOR = '[data-kuhnya-layout-card]';
@@ -280,12 +291,12 @@ const initKunyaLayoutParallax = () => {
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        initKunyaHeroEffects();
+        initKunyaHeroCarousel();
         initKunyaLayoutCards();
         initKunyaLayoutParallax();
     });
 } else {
-    initKunyaHeroEffects();
+    initKunyaHeroCarousel();
     initKunyaLayoutCards();
     initKunyaLayoutParallax();
 }

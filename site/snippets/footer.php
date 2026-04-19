@@ -29,10 +29,10 @@
                     <a class="hover-bg" href="<?= esc(relative_url('/faq'), 'attr') ?>">FAQ</a>
                 </li>
                 <li>
-                    <a class="hover-bg" href="<?= esc(relative_url('/archive'), 'attr') ?>">Воспоминания</a>
                     <?php if ($hasNewArchive): ?>
                         <span class="badge--new">new</span>
                     <?php endif ?>
+                    <a class="hover-bg" href="<?= esc(relative_url('/archive'), 'attr') ?>">Воспоминания</a>
                 </li>
             </ul>
             <ul>

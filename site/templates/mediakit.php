@@ -7,6 +7,10 @@
     </section>
 
     <section>
+        <h2>Логотипы</h2>
+    </section>
+
+    <section>
         <h2>Миссия</h2>
     </section>
 
@@ -15,11 +19,7 @@
     </section>
 
     <section>
-        <h2>Логотипы</h2>
-    </section>
-
-    <section>
-        <h2>Press Kit</h2>
+        <h2>Пресс Кит</h2>
     </section>
 
     <section>

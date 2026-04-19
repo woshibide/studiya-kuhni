@@ -110,7 +110,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                                 $mapUrl = (string)$mapLink->url();
                                 $mapIcon = $resolveContactIcon($mapTitle, $mapUrl);
                                 ?>
-                                <a class="contacts-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
+                                <a class="hover-underline external-link__hidden contacts-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
                                     <?php if ($mapIcon): ?>
                                         <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                     <?php endif ?>
@@ -143,7 +143,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                                 $messengerUrl = (string)$messenger->url();
                                 $messengerIcon = $resolveContactIcon($messengerTitle, $messengerUrl);
                                 ?>
-                                <a class="contacts-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
+                                <a class="hover-underline contacts-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
                                     <?php if ($messengerIcon): ?>
                                         <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                     <?php endif ?>

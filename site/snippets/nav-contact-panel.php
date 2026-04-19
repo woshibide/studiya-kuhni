@@ -65,10 +65,10 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
             <div class="nav-contact-overview__main">
                 <h2><?= esc($studioName !== '' ? $studioName : $panelTitle) ?></h2>
                 <?php if ($studioEmail !== ''): ?>
-                    <a href="mailto:<?= esc($studioEmail) ?>"><?= esc($studioEmail) ?></a>
+                    <a class="hover-underline" href="mailto:<?= esc($studioEmail) ?>"><?= esc($studioEmail) ?></a>
                 <?php endif ?>
                 <?php if ($phone !== '' && $phoneHref !== ''): ?>
-                    <a href="tel:<?= esc($phoneHref) ?>" class="nav-contact-phone"><?= esc($phone) ?></a>
+                    <a class="hover-underline" href="tel:<?= esc($phoneHref) ?>" class="nav-contact-phone"><?= esc($phone) ?></a>
                 <?php endif ?>
 
                 <?php if (!empty($messengers)): ?>
@@ -79,7 +79,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                             $messengerUrl = (string)$messenger->url();
                             $messengerIcon = $resolveContactIcon($messengerTitle, $messengerUrl);
                             ?>
-                            <a class="nav-contact-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
+                            <a class="hover-underline nav-contact-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
                                 <?php if ($messengerIcon): ?>
                                     <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                 <?php endif ?>
@@ -107,7 +107,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                             $mapUrl = (string)$mapLink->url();
                             $mapIcon = $resolveContactIcon($mapTitle, $mapUrl);
                             ?>
-                            <a class="nav-contact-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
+                            <a class="hover-underline external-link__hidden nav-contact-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
                                 <?php if ($mapIcon): ?>
                                     <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                 <?php endif ?>

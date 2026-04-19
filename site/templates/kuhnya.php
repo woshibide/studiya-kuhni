@@ -10,9 +10,23 @@ if ($heroGalleryImages->isEmpty()) {
         });
 }
 
-$heroImage = $heroGalleryImages->first();
-$heroImageAsset = $heroImage ?? asset('assets/placeholder.svg');
-$heroImageAlt = $heroImage ? $heroImage->alt()->or($page->title())->value() : $page->title()->value();
+$heroSlides = [];
+foreach ($heroGalleryImages as $heroGalleryImage) {
+    $heroSlides[] = [
+        'image' => $heroGalleryImage,
+        'alt' => $heroGalleryImage->alt()->or($page->title())->value(),
+    ];
+}
+
+if (empty($heroSlides)) {
+    $heroSlides[] = [
+        'image' => asset('assets/placeholder.svg'),
+        'alt' => $page->title()->value(),
+    ];
+}
+
+$heroSlideCount = count($heroSlides);
+$heroHasMultipleSlides = $heroSlideCount > 1;
 $kuhnyaLayoutImages = $heroGalleryImages->limit(6);
 $kuhnyaImageSlots = [
     [
@@ -128,14 +142,35 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
 
 
         <section id="kunya-hero" class="section-full" data-kunya-hero>
-            <div class="kunya-hero__media" data-kunya-media>
-                <?php snippet('turbo-image', [
-                    'image' => $heroImageAsset,
-                    'alt' => $heroImageAlt,
-                    'width' => 2200,
-                    'loading' => 'eager',
-                    'attrs' => ['data-kunya-media-image' => true],
-                ]) ?>
+            <div class="kunya-hero__shell">
+                <?php if ($heroHasMultipleSlides): ?>
+                    <button class="kunya-hero__arrow kunya-hero__arrow--prev" type="button" data-kunya-hero-prev aria-label="Previous kitchen image">
+                        <span aria-hidden="true">←</span>
+                    </button>
+                    <button class="kunya-hero__arrow kunya-hero__arrow--next" type="button" data-kunya-hero-next aria-label="Next kitchen image">
+                        <span aria-hidden="true">→</span>
+                    </button>
+                <?php endif ?>
+
+                <div class="kunya-hero__media" data-kunya-media data-kunya-hero-viewport aria-roledescription="carousel" aria-label="Kitchen gallery">
+                    <div class="kunya-hero__container">
+                        <?php foreach ($heroSlides as $heroIndex => $heroSlide): ?>
+                            <div
+                                class="kunya-hero__slide"
+                                data-kunya-hero-slide
+                                aria-label="<?= esc(($heroIndex + 1) . ' of ' . $heroSlideCount, 'attr') ?>"
+                            >
+                                <?php snippet('turbo-image', [
+                                    'image' => $heroSlide['image'],
+                                    'alt' => $heroSlide['alt'],
+                                    'width' => 2200,
+                                    'loading' => $heroIndex === 0 ? 'eager' : 'lazy',
+                                    'attrs' => ['data-kunya-hero-image' => true],
+                                ]) ?>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                </div>
             </div>
         </section>
 

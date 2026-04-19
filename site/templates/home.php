@@ -50,6 +50,14 @@ if ($heroWordsJson === false) {
         </div>
     </section>
 
+    <section>
+        <?php snippet('brands') ?>
+    </section>
+
+    <section>
+        <?php snippet('big-message') ?>
+    </section>
+
     <section id="fabrics-intro">
         <?php
         $fabricsPage = page('fabrics');
@@ -254,19 +262,11 @@ if ($heroWordsJson === false) {
     </section>
 
     <section>
-        <?php snippet('big-message') ?>
-    </section>
-
-    <section>
-        <?php snippet('brands') ?>
-    </section>
-
-    <section>
         <?php snippet('cta-warmup') ?>
     </section>
 
     <section>
-        <?php snippet('benefits')?>
+        <?php snippet('benefits') ?>
     </section>
 
     <?php snippet('cta') ?>

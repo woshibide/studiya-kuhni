@@ -16,8 +16,7 @@
     }
 
     p {
-        padding-top: var(--space-lg);
-        font-size: min(2rem, 4rem);
+        font-size: var(--fs-lg);
     }
 
     .home-hero-typed {
@@ -53,7 +52,7 @@
     }
 
     .hero__cta-wrapper {
-        margin-top: var(--space-md);
+        margin-top: var(--space-sm);
         min-width: calc(var(--grid-col) * 2 + var(--grid-gap));
         width: fit-content;
         max-width: 100%;
@@ -247,8 +246,10 @@
                 z-index: 1;
                 left: var(--space-sm);
                 bottom: var(--space-sm);
+                border-radius: var(--space-xs);
+                font-size: var(--fs-md);
                 margin-top: 0;
-
+                
                 a {
                     color: var(--the-white);
                     background-color: var(--jet-black);
@@ -340,6 +341,7 @@
                 figcaption {
                     left: var(--space-xs);
                     bottom: var(--space-xs);
+                    font-size: var(--fs-sm);
 
                     a {
                         padding-inline: var(--space-xs);

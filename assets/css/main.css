@@ -38,6 +38,10 @@ SuisseIntl-SemiBold.woff */
     --fs-sm: clamp(0.9rem, 0.9rem + 0.4vw, 1rem);
     --fs-md: clamp(1.25rem, 1.25rem + 0.6vw, 1.35rem);
     --fs-lg: clamp(1.5rem, 1.5rem + 1vw, 2rem);
+    /* if multiline text:
+            line-height: 1.15;
+			letter-spacing: -0.05em; 
+    */
     --fs-xl: clamp(2rem, 2rem + 1.5vw, 3rem);
     --fs-xxl: clamp(4rem, 4vw, 72px);
     --fs-display: clamp(var(--fs-xl), 15vw, 128px);
@@ -221,6 +225,24 @@ a:focus-visible,
     padding-left: var(--space-xs);
 }
 
+.external-link__hidden {
+    &::after {
+        content: " ↗";
+        display: inline-block;
+        margin-left: 0.35em;
+        color: currentColor;
+        opacity: 0;
+        transform: translateX(-0.2em);
+        transition: opacity 300ms var(--out), transform 300ms var(--out);
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .internal-link__hidden {
     &::after {
         content: " →";
@@ -361,14 +383,14 @@ button {
 .badge--new {
     background-color: var(--yellow);
     color: var(--jet-black);
-    padding: 2px 8px;
-    border-radius: var(--space-xs);
-    font-weight: 500;
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: var(--space-xxs);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     display: inline-block;
     line-height: 1.2;
+    /* pulsating animation  */
 }
 
 input,

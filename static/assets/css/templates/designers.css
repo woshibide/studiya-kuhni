@@ -11,7 +11,7 @@
 	position: sticky;
 	top: var(--space-xxl);
 	align-self: start;
-	padding: var(--space-sm);
+	padding: var(--space-base);
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-xs);
@@ -21,12 +21,11 @@
 }
 
 .designers-proof__heading {
-	margin: 0;
 	font-size: var(--fs-lg);
 }
 
 .designers-proof__lead {
-	margin: 0;
+	text-wrap: balance;
 	font-size: var(--fs-sm);
 }
 
@@ -45,7 +44,6 @@
 .designers-proof-card__name {
 	grid-column: 6 / span 4;
 	grid-row: 1;
-	margin: 0;
 	font-size: var(--fs-lg);
 }
 
@@ -80,7 +78,6 @@
 }
 
 .designers-proof-card__facts p {
-	margin: 0;
 	font-size: var(--fs-sm);
 }
 
@@ -88,7 +85,6 @@
 	grid-column: 10 / span 3;
 	grid-row: 2;
 	align-self: end;
-	margin: 0;
 	font-size: var(--fs-sm);
 	line-height: 1.4;
 }

@@ -146,6 +146,15 @@
     position: relative;
     isolation: isolate;
     background: var(--silver);
+    overflow: hidden;
+    --hero-arrow-offset: clamp(0.75rem, calc((100vw - var(--the-width)) / 2), 4rem);
+}
+
+.kunya-hero__shell {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .kunya-hero__media {
@@ -153,6 +162,7 @@
     z-index: 1;
     height: 120vh;
     overflow: hidden;
+    touch-action: pan-y;
 }
 
 .kunya-hero__media::after {
@@ -160,6 +170,20 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
+}
+
+.kunya-hero__container {
+    display: flex;
+    height: 100%;
+}
+
+.kunya-hero__slide {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 .kunya-hero__media img {
@@ -170,6 +194,94 @@
     transform: translate3d(0, 0, 0) scale(1.02);
     transform-origin: center;
     will-change: transform;
+    border-radius: 0;
+}
+
+.kunya-hero__arrow {
+    position: absolute;
+    inset-block: 0;
+    z-index: 3;
+    width: 5vw;
+    min-width: var(--tap-target-size);
+    display: flex;
+    align-items: center;
+    color: var(--jet-black);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+    transition: color 320ms var(--out), opacity 320ms var(--out);
+}
+
+.kunya-hero__arrow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 360ms var(--out);
+}
+
+.kunya-hero__arrow span {
+    position: relative;
+    z-index: 1;
+    transition: transform 360ms var(--out), opacity 360ms var(--out);
+}
+
+.kunya-hero__arrow:hover,
+.kunya-hero__arrow:focus-visible {
+    color: var(--jet-black);
+}
+
+.kunya-hero__arrow:hover::before,
+.kunya-hero__arrow:focus-visible::before {
+    opacity: 1;
+}
+
+.kunya-hero__arrow:disabled {
+    opacity: 0;
+    cursor: default;
+    pointer-events: none;
+}
+
+.kunya-hero__arrow--prev {
+    inset-inline-start: 0;
+    justify-content: flex-start;
+    padding-inline-start: clamp(0.5rem, 1.2vw, 1.25rem);
+}
+
+.kunya-hero__arrow--next {
+    inset-inline-end: 0;
+    justify-content: flex-end;
+    padding-inline-end: clamp(0.5rem, 1.2vw, 1.25rem);
+}
+
+.kunya-hero__arrow--prev:hover,
+.kunya-hero__arrow--prev:focus-visible {
+    background: transparent;
+}
+
+.kunya-hero__arrow--next:hover,
+.kunya-hero__arrow--next:focus-visible {
+    background: transparent;
+}
+
+.kunya-hero__arrow--prev::before {
+    background: linear-gradient(to right, var(--the-white), transparent 75%);
+}
+
+.kunya-hero__arrow--next::before {
+    background: linear-gradient(to left, var(--the-white), transparent 75%);
+}
+
+.kunya-hero__arrow--prev:hover span,
+.kunya-hero__arrow--prev:focus-visible span {
+    transform: translateX(0.15rem);
+}
+
+.kunya-hero__arrow--next:hover span,
+.kunya-hero__arrow--next:focus-visible span {
+    transform: translateX(-0.15rem);
 }
 
 @media (max-width: 64rem) {
@@ -243,6 +355,10 @@
     }
 
     #kunya-hero {
+        min-height: 70vh;
+    }
+
+    .kunya-hero__shell {
         min-height: 70vh;
     }
 

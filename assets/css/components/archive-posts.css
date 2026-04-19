@@ -105,6 +105,12 @@
 	top: var(--space-sm);
 	left: var(--space-sm);
 	z-index: 2;
+
+	@media (max-width: 64rem) {
+		top: unset;
+		bottom: var(--space-sm);
+		left: var(--space-sm);
+	}
 }
 
 img {

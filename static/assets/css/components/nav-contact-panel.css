@@ -204,6 +204,9 @@
         }
 
         .nav-contact-toggle {
+            /* overwrite of button from main */
+            border-radius: 0 !important;
+
             background-size: 100% 1px;
         }
     }

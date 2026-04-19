@@ -36,9 +36,11 @@ phone:
 
 ultra wide:
 [x] contacts text to be even bigger
+[] menu nav appears off
 
 tablet: 
-[] memories weird space at the top in memories
+[x] memories weird space at the top in memories
+[x] contact panel visually apears to be off
 
 
 designers: 

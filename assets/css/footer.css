@@ -122,7 +122,7 @@ footer {
 
 @media (max-width: 64rem) {
     footer {
-        margin-top: 30vh;
+        margin-top: 50vh;
 
         #footer-details {
             align-items: flex-start;
@@ -193,4 +193,23 @@ footer {
 footer #footer-details .links ul li .badge--new {
     margin-left: var(--space-xxs);
     vertical-align: middle;
+}
+
+@media (max-width: 64rem) {
+    dd
+    footer #footer-details .links ul li:has(> .badge--new) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    footer #footer-details .links ul li:has(> .badge--new) > a {
+        order: 1;
+    }
+
+    footer #footer-details .links ul li:has(> .badge--new) > .badge--new {
+        order: 2;
+        margin-left: 0;
+        vertical-align: baseline;
+    }
 }

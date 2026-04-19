@@ -54,6 +54,36 @@ $kuhnyaBrand = $fabricPage ? $fabricPage->title()->value() : 'Название �
 $kuhnyaBrandUrl = relative_url($fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#'));
 $kuhnyaCountry = trim((string)$page->country_of_origin()->value());
 $kuhnyaPrice = trim((string)$page->price()->value());
+$kuhnyaIntro = trim((string)$page->intro()->value());
+$kuhnyaSpecs = $page->kitchen_specs()->toStructure();
+
+if ($isKitchenPage) {
+    $kuhnyaBlueprint = $page->blueprint();
+    $kuhnyaFieldDefault = function (string $fieldName) use ($kuhnyaBlueprint): string {
+        $field = $kuhnyaBlueprint->field($fieldName);
+        return trim((string)($field['default'] ?? ''));
+    };
+
+    if ($kuhnyaIntro === '') {
+        $kuhnyaIntro = $kuhnyaFieldDefault('intro');
+    }
+
+    if ($kuhnyaCountry === '') {
+        $kuhnyaCountry = $kuhnyaFieldDefault('country_of_origin');
+    }
+
+    if ($kuhnyaPrice === '') {
+        $kuhnyaPrice = $kuhnyaFieldDefault('price');
+    }
+
+    if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+        if (mb_strlen($kuhnyaIntro) > 180) {
+            $kuhnyaIntro = rtrim(mb_substr($kuhnyaIntro, 0, 180)) . '...';
+        }
+    } elseif (strlen($kuhnyaIntro) > 180) {
+        $kuhnyaIntro = rtrim(substr($kuhnyaIntro, 0, 180)) . '...';
+    }
+}
 ?>
 
 <div class="section-wrapper" id="gallery">
@@ -118,12 +148,45 @@ $kuhnyaPrice = trim((string)$page->price()->value());
 
                     <?php if ($isKitchenPage): ?>
                         <div class="gallery-overlay__meta">
-                            <p class="gallery-overlay__titleline">
-                                <?= esc($kuhnyaBrand) ?> / <?= esc($kuhnyaTitle) ?>
-                            </p>
-                            <button class="gallery-overlay__cta hover-underline" type="button" data-open-nav-contact>
-                                узнать подробности
-                            </button>
+                            <article class="gallery-overlay__meta-card" aria-label="<?= esc($kuhnyaTitle, 'attr') ?>">
+                                <a class="gallery-overlay__eyebrow" href="<?= esc($kuhnyaBrandUrl, 'attr') ?>"><?= esc($kuhnyaBrand) ?></a>
+                                <h3 class="gallery-overlay__titleline"><?= esc($kuhnyaTitle) ?></h3>
+
+                                <?php if ($kuhnyaIntro !== ''): ?>
+                                    <p class="gallery-overlay__intro"><?= esc($kuhnyaIntro) ?></p>
+                                <?php endif ?>
+
+                                <ul class="gallery-overlay__facts">
+                                    <?php if ($kuhnyaCountry !== ''): ?>
+                                        <li class="gallery-overlay__fact-item">
+                                            <span class="gallery-overlay__fact-value"><?= esc($kuhnyaCountry) ?></span>
+                                        </li>
+                                    <?php endif ?>
+
+                                    <?php if ($kuhnyaPrice !== ''): ?>
+                                        <li class="gallery-overlay__fact-item gallery-overlay__fact-item--price">
+                                            <span class="gallery-overlay__fact-value"><?= esc($kuhnyaPrice) ?></span>
+                                            <button class="gallery-overlay__cta hover-underline" type="button" data-open-nav-contact>
+                                                узнать подробности
+                                            </button>
+                                        </li>
+                                    <?php endif ?>
+
+                                    <?php foreach ($kuhnyaSpecs as $spec): ?>
+                                        <?php
+                                        $specLabel = trim($spec->label()->value());
+                                        $specValue = trim($spec->value()->value());
+                                        if ($specLabel === '' && $specValue === '') {
+                                            continue;
+                                        }
+                                        ?>
+                                        <li class="gallery-overlay__fact-item">
+                                            <span class="gallery-overlay__fact-label"><?= esc($specLabel !== '' ? $specLabel : 'detail') ?></span>
+                                            <span class="gallery-overlay__fact-value"><?= esc($specValue) ?></span>
+                                        </li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </article>
                         </div>
                     <?php endif ?>
                 </div>

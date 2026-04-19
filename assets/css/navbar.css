@@ -69,7 +69,7 @@ html.has-smart-nav nav.is-nav-hidden .nav-left {
     }
 
     .nav-left {
-        grid-column: 1 / span 6;
+        grid-column: 1 / span 4;
         grid-row: 2;
     }
 
@@ -83,14 +83,14 @@ html.has-smart-nav nav.is-nav-hidden .nav-left {
     }
 
     .nav-right {
-        grid-column: 7 / span 6;
+        grid-column: 5 / span 4;
         grid-row: 2;
-        justify-self: end;
+        width: 100%;
         align-self: start;
     }
 
     body {
-        padding-top: var(--mobile-nav-height, 7.5rem);
+        /* padding-top: var(--mobile-nav-height, 7.5rem); */
     }
 }
 
