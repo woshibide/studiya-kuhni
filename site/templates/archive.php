@@ -34,30 +34,31 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
                                     <?= esc($collab_name) ?>
                                 <?php endif ?>
                             </h2>
-                            
-                            <div class="archive-layout-visual-meta relative-z" onclick="event.stopPropagation();">
-                                <span><?= esc($location) ?></span>
-                                <span>/</span>
-                                <?php if ($fabric): ?>
-                                    <a class="hover-underline" href="<?= esc(relative_url($fabric->url()), 'attr') ?>"><?= esc($fabric->title()->value()) ?></a>
-                                <?php else: ?>
-                                    <span>—</span>
-                                <?php endif ?>
-                                <span>/</span>
-                                <?php if ($kitchen): ?>
-                                    <a class="hover-underline" href="<?= esc(relative_url($kitchen->url()), 'attr') ?>"><?= esc($kitchen->title()->value()) ?></a>
-                                <?php else: ?>
-                                    <span>—</span>
-                                <?php endif ?>
-                            </div>
 
-                            <div class="archive-post-infobox relative-z" onclick="window.location.href='<?= esc(relative_url($post->url()), 'js') ?>'; event.stopPropagation();">
+                            <div class="archive-post-infobox relative-z<?= $post->is_new()->toBool() ? ' archive-post-infobox--new' : '' ?>" onclick="window.location.href='<?= esc(relative_url($post->url()), 'js') ?>'; event.stopPropagation();">
+                                
                                 <?php if ($post->is_new()->toBool()): ?>
                                     <span class="badge--new archive-page-badge">new</span>
                                 <?php endif ?>
                                 <h3 class="archive-post-title">
                                     <a class="internal-link__hidden" href="<?= esc(relative_url($post->url()), 'attr') ?>"><?= esc($post->title()) ?></a>
                                 </h3>
+                                <div class="archive-layout-visual-meta relative-z" onclick="event.stopPropagation();">
+                                    <span><?= esc($location) ?></span>
+                                    <span>/</span>
+                                    <?php if ($fabric): ?>
+                                        <a class="hover-underline" href="<?= esc(relative_url($fabric->url()), 'attr') ?>"><?= esc($fabric->title()->value()) ?></a>
+                                    <?php else: ?>
+                                        <span>—</span>
+                                    <?php endif ?>
+                                    <span>/</span>
+                                    <?php if ($kitchen): ?>
+                                        <a class="hover-underline" href="<?= esc(relative_url($kitchen->url()), 'attr') ?>"><?= esc($kitchen->title()->value()) ?></a>
+                                    <?php else: ?>
+                                        <span>—</span>
+                                    <?php endif ?>
+                                </div>
+
                                 <?php if ($post->intro()->isNotEmpty()): ?>
                                     <p class="archive-layout-intro"><?= esc($post->intro()) ?></p>
                                 <?php endif ?>

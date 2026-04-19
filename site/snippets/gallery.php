@@ -166,7 +166,7 @@ if ($isKitchenPage) {
                                     <?php if ($kuhnyaPrice !== ''): ?>
                                         <li class="gallery-overlay__fact-item gallery-overlay__fact-item--price">
                                             <span class="gallery-overlay__fact-value"><?= esc($kuhnyaPrice) ?></span>
-                                            <button class="gallery-overlay__cta hover-underline" type="button" data-open-nav-contact>
+                                            <button class="gallery-overlay__cta" type="button" data-open-nav-contact>
                                                 узнать подробности
                                             </button>
                                         </li>

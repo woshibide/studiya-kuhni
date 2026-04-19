@@ -11,6 +11,12 @@ footer {
 
     #footer-typed-line {
         margin: 0;
+        display: inline-flex;
+        align-items: baseline;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
         font-size: var(--fs-lg);
         letter-spacing: -0.01em;
         line-height: 1.05;
@@ -27,7 +33,7 @@ footer {
         padding-right: 0.08em;
         border-right: 0.08em solid currentColor;
         animation: footer-blink-caret 640ms steps(1, end) infinite;
-        white-space: nowrap;
+        white-space: pre;
         vertical-align: baseline;
         line-height: 1.05;
     }

@@ -108,6 +108,11 @@
         text-transform: uppercase;
         align-items: baseline;
         padding-left: var(--space-sm);
+
+        @media (max-width: 48rem) {
+            gap: var(--space-xxs);
+            font-size: var(--fs-xs)
+        }
     }
 
     & .archive-post-infobox {
@@ -127,6 +132,16 @@
             position: absolute;
             top: var(--space-sm);
             right: var(--space-sm);
+        }
+
+        & .archive-layout-visual-meta {
+            padding-left: 0;
+            color: inherit;
+            color: var(--silver);
+        }
+
+        & .archive-layout-visual-meta a {
+            color: inherit;
         }
         
         & .archive-post-title {
@@ -191,6 +206,24 @@
 
     .archive-post-entry .archive-post-infobox {
         opacity: 1;
+    }
+
+    .archive-post-entry .archive-post-infobox--new {
+        padding-top: var(--space-md);
+    }
+
+    .archive-post-entry .archive-post-infobox .archive-post-infobox-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .archive-post-entry .archive-post-infobox .archive-post-infobox-bottom .archive-layout-date,
+    .archive-post-entry .archive-post-infobox .archive-post-infobox-bottom .archive-post-btn {
+        grid-column: 1 / -1;
+    }
+
+    .archive-post-entry .archive-post-infobox--new .archive-page-badge {
+        left: var(--space-sm);
+        right: auto;
     }
 }
 

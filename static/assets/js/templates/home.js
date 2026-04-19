@@ -8,7 +8,7 @@ if (heroTyped) {
 	try {
 		const parsed = JSON.parse(wordsSource)
 		words = Array.isArray(parsed)
-			? parsed.map((word) => String(word).trim()).filter(Boolean)
+			? parsed.map((word) => String(word)).filter(Boolean)
 			: []
 	} catch (error) {
 		words = []

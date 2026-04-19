@@ -256,7 +256,6 @@
         gap: var(--space-sm);
         padding-top: calc(var(--space-xxs) * 0.7);
         margin-top: calc(var(--space-xxs) * 0.5);
-        border-top: 1px solid color-mix(in srgb, var(--the-white) 20%, transparent);
     }
 
     .gallery-overlay__fact-label {
@@ -277,7 +276,9 @@
         padding: calc(var(--space-xxs) * 0.9) var(--space-sm);
         font-size: var(--fs-sm);
         line-height: 1.1;
+        border-radius: var(--fs-xxs);
         text-align: left;
+        transition: all 300ms var(--out);
 
         &:hover {
             background-color: var(--the-white);

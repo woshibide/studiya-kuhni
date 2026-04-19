@@ -65,6 +65,7 @@
     }
 
     .faq-list {
+        gap: var(--space-xxs);
         margin: 0;
         padding: 0;
         list-style: none;
@@ -192,7 +193,6 @@
         .faq-content {
             grid-column: 1 / -1;
             padding-inline: var(--space-xs);
-            margin-top: 0;
         }
 
         .faq-tabs {
@@ -200,7 +200,7 @@
         }
 
         .faq-tab {
-            padding: 0.7rem 0.8rem;
+            padding: var(--space-xs) var(--space-sm);
             font-size: var(--fs-md);
         }
 
@@ -208,6 +208,10 @@
             gap: var(--space-xs);
             padding: var(--space-xs);
             font-size: var(--fs-sm);
+        }
+
+        .faq-question[aria-expanded="true"] {
+           padding-bottom: 0;
         }
 
         .faq-answer {

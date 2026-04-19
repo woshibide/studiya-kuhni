@@ -13,6 +13,9 @@
         margin: 0;
         font-size: var(--fs-xxl);
         letter-spacing: -0.05em;
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
     }
 
     p {
@@ -25,7 +28,7 @@
         padding-right: 0.1em;
         border-right: 0.08em solid currentColor;
         animation: hero-blink-caret 640ms steps(1, end) infinite;
-        white-space: nowrap;
+        white-space: pre;
         vertical-align: baseline;
         line-height: 1.02;
     }
@@ -78,7 +81,7 @@
 
 @media (max-width: 48rem) {
     #home-hero {
-        padding-top: 5vh;
+        padding-top: 15vh;
         padding-inline: var(--space-xs);
         min-height: 75vh;
 

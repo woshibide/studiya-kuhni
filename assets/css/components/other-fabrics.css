@@ -248,20 +248,23 @@
 
 @media (max-width: 48rem) {
     .other-fabrics-section {
+        padding-inline: var(--space-sm);
+        box-sizing: border-box;
+
         & > h2 {
             margin-top: var(--space-xl);
-            padding-inline: var(--space-sm);
+            padding-inline: 0;
         }
 
         & .fabric-grid {
             grid-template-columns: 1fr;
-            width: calc(100% + (var(--space-sm) * 2));
-            margin-inline: calc(var(--space-sm) * -1);
+            width: 100%;
+            margin-inline: 0;
             gap: var(--space-md);
         }
 
         & .fabric-card {
-            min-height: clamp(100vh, 110svh, 110vh);
+            min-height: clamp(80vh, 85svh, 95vh);
         }
 
         & .fabric-card__kitchens a {

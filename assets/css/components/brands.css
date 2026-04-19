@@ -151,6 +151,7 @@
 
 			#brands-intro {
 				grid-row: 1;
+				padding-inline: var(--space-xs);
 			}
 
 			.marquee-wrapper {

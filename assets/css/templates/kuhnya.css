@@ -73,13 +73,7 @@
     background: var(--opaque-white);
     pointer-events: auto;
     border-radius: var(--space-xs);
-    opacity: 0.3;
     transition: all 0.3s var(--out);
-
-        &:hover {
-            opacity: 0.95;
-            background: var(--the-white);
-        }
 }
 
 .kunya-sticky-overview__eyebrow {
@@ -325,9 +319,11 @@
 
 @media (max-width: 48rem) {
     #kuhnya-intro {
-        width: var(--the-width);
+        width: 100%;
+        max-width: var(--the-width);
         margin-inline: auto;
         padding-inline: var(--space-sm);
+        box-sizing: border-box;
         height: auto;
 
         h1 {

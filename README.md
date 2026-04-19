@@ -163,3 +163,86 @@ Smeg            | Italy          | Guastalla
 
 
 
+
+
+
+content checklist: 
+- home
+    - typed words?
+    - hero paragraph
+    - message?
+    - cta #2?
+    - benefits
+
+- every kitchen
+    - intro
+    - country
+    - price?
+    - benefits
+    - photos
+    - more benefits
+    - gallery heading
+    - gallery body
+
+- every factory
+    - intro
+    - fabric description
+        - title
+        - body
+        - map
+
+- fabriki page
+    - intro
+    - benefits
+    - message?
+    - cta?
+    - cta #2 ?
+
+- designers
+    - hero
+        - title
+        - paragraph
+    - message
+    - benefits
+    - who works with us
+        - studio 1
+        ...
+    - format of work
+    
+- proizvodstvo
+    - hero
+        - title
+        - paragraph
+    - benefits
+    - message
+    - cta #2 ?
+
+
+- brands
+    - match of photo / name
+    - title
+    - paragraph
+
+
+- faq section 
+    - tab 1
+    ...
+
+- contact details
+    - phone
+        - telegram
+        - wa
+    - mail
+    - address
+    - maps
+        - yandex
+        - 2gis
+
+
+- media kit?
+    - hero paragrpah
+    - logotypes
+    - mission
+    - values
+    - press kit
+

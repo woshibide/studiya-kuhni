@@ -121,7 +121,7 @@ img {
 	border-radius: var(--space-md);
 
 	@media (max-width: 48rem) {
-		border-radius: var(--space-sm) var(--space-sm) 0 0;
+		border-radius: var(--space-sm);
 	}
 }
 
