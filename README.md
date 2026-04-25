@@ -1,10 +1,11 @@
 # TODO: 
 
-kuhnya gallery images are broken
+[x] kuhnya gallery images are broken
+[x] footer parallax 
 
 home:
-[] gallery pages orchestrated openning of images
-    [] same for single kitchen page
+[x] gallery pages orchestrated openning of images
+    [x] same for single kitchen page
 [x] contacts toggle right allign on the grid
 [x] middle home button try to allign on the grid / footer also..?
 [x] ultra wide monitors base space and font size adjustd
@@ -36,7 +37,7 @@ phone:
 
 ultra wide:
 [x] contacts text to be even bigger
-[] menu nav appears off
+[x] menu nav appears off
 
 tablet: 
 [x] memories weird space at the top in memories
@@ -246,3 +247,7 @@ content checklist:
     - values
     - press kit
 
+
+
+моб адаптация
+микро анимации

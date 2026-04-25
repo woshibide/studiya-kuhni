@@ -50,8 +50,8 @@ $firstTabSlug = array_key_first($tabs);
     <h2>
         FAQ
     </h2>
-    <div class="faq-content">
-        <div class="faq-tabs" role="tablist" aria-label="Категории FAQ">
+    <div class="faq-section-content">
+        <div class="faq-category-tabs" role="tablist" aria-label="Категории FAQ">
             <?php foreach ($tabs as $tabSlug => $tabLabel): ?>
                 <?php
                 $tabId = 'faq-tab-' . $tabSlug;
@@ -60,7 +60,7 @@ $firstTabSlug = array_key_first($tabs);
                 ?>
                 <button
                     id="<?= $tabId ?>"
-                    class="faq-tab"
+                    class="faq-category-tab"
                     type="button"
                     role="tab"
                     aria-controls="<?= $panelId ?>"
@@ -81,43 +81,43 @@ $firstTabSlug = array_key_first($tabs);
             ?>
             <div
                 id="<?= $panelId ?>"
-                class="faq-panel"
+                class="faq-category-panel"
                 role="tabpanel"
                 aria-labelledby="<?= $tabId ?>"
                 data-faq-panel="<?= $tabSlug ?>"
                 <?= $isActive ? '' : 'hidden' ?>
             >
                 <?php if (empty($groupedItems[$tabSlug])): ?>
-                    <p class="faq-empty">В этом разделе скоро появятся вопросы.</p>
+                    <p class="faq-empty-state">В этом разделе скоро появятся вопросы.</p>
                 <?php else: ?>
-                    <ul class="faq-list" role="list">
+                    <ul class="faq-question-list" role="list">
                         <?php foreach ($groupedItems[$tabSlug] as $index => $item): ?>
                             <?php
                             $questionId = 'faq-question-' . $tabSlug . '-' . $index;
                             $answerId = 'faq-answer-' . $tabSlug . '-' . $index;
                             ?>
-                            <li class="faq-item">
+                            <li class="faq-question-item">
                                 <h3>
                                     <button
                                         id="<?= $questionId ?>"
-                                        class="faq-question"
+                                        class="faq-question-trigger"
                                         type="button"
                                         aria-expanded="false"
                                         aria-controls="<?= $answerId ?>"
                                         data-faq-question
                                     >
-                                        <span class="faq-question-text"><?= $item->question() ?></span>
-                                        <span class="faq-toggle-icon" aria-hidden="true"></span>
+                                        <span class="faq-question-title"><?= $item->question() ?></span>
+                                        <span class="faq-question-icon" aria-hidden="true"></span>
                                     </button>
                                 </h3>
                                 <div
                                     id="<?= $answerId ?>"
-                                    class="faq-answer-wrap"
+                                    class="faq-answer-panel"
                                     role="region"
                                     aria-labelledby="<?= $questionId ?>"
                                     hidden
                                 >
-                                    <div class="faq-answer">
+                                    <div class="faq-answer-content">
                                         <?= $item->answer()->kt() ?>
                                     </div>
                                 </div>

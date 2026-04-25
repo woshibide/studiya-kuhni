@@ -50,11 +50,7 @@ if ($heroWordsJson === false) {
         </div>
     </section>
 
-    <section>
-        <?php snippet('big-message') ?>
-    </section>
-
-        <section id="fabrics-intro">
+    <section id="fabrics-intro">
         <?php
         $fabricsPage = page('fabrics');
         $placeholderImageUrl = relative_url('assets/placeholder.svg');
@@ -257,7 +253,9 @@ if ($heroWordsJson === false) {
         </div>
     </section>
 
-
+    <section>
+        <?php snippet('big-message') ?>
+    </section>
 
     <section>
         <?php snippet('brands') ?>

@@ -294,10 +294,21 @@
                 }
             }
 
+            .fabrics-row.is-animating & {
+                .home-fabric-media {
+                    --home-fabric-hover-scale: 1;
+                    transition: none;
+                }
+
+                .home-fabric-kitchens a {
+                    transition-delay: 0ms;
+                }
+            }
+
             &.is-expanded {
-                margin-top: 0 !important;
-                min-height: 80vh;
-                z-index: 2;
+                margin-top: 0;
+                min-height: calc(100svh - var(--space-xl));
+                z-index: 3000;
             }
         }
 
@@ -361,13 +372,12 @@
             figure {
                 min-height: 100vh;
 
-                .home-fabric-kitchens a {
-                    max-width: 100%;
+                .home-fabric-toggle {
+                    display: none;
                 }
 
-                .home-fabric-toggle {
-                    width: var(--tap-target-size);
-                    height: var(--tap-target-size);
+                .home-fabric-kitchens a {
+                    max-width: 100%;
                 }
             }
         }

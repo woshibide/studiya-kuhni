@@ -2,6 +2,10 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    --footer-parallax-y: -120px;
     min-height: 50vh;
     width: var(--the-width);
     margin: 50vh auto 0;
@@ -10,6 +14,9 @@ footer {
     /* border: 1px solid black; */
 
     #footer-typed-line {
+        background: var(--the-white);
+        position: relative;
+        z-index: 2;
         margin: 0;
         display: inline-flex;
         align-items: baseline;
@@ -44,6 +51,8 @@ footer {
     }
 
     #big-footer-text {
+        position: relative;
+        z-index: 1;
         width: 100%;
         margin-top: auto;
         font-size: var(--fs-display);
@@ -51,6 +60,8 @@ footer {
         text-align: center;
         text-decoration: none;
         background-image: none;
+        transform: translate3d(0, var(--footer-parallax-y), 0);
+        will-change: transform;
 
         &:hover,
         &:focus-visible {
@@ -60,22 +71,26 @@ footer {
     }
 
     #footer-details {
+        position: relative;
+        z-index: 2;
         display: flex;
         flex-direction: row;
         align-items: baseline;
         justify-content: space-evenly;
         width: 100%;
         margin-block: var(--space-md);
+        background: var(--the-white);
         gap: var(--grid-gap);
-
+        
         & div {
             display: flex;
             flex-direction: column;
             width: 100%;
         }
-
+        
         & .info {
             gap: var(--space-sm);
+            background: var(--the-white);
 
             & p {
                 max-width: clamp(35ch, 60ch, 75ch);
@@ -172,6 +187,7 @@ footer {
         #big-footer-text {
             line-height: 0.95;
             margin-top: var(--space-md);
+            transform: translate3d(0, var(--footer-parallax-y), 0);
         }
     }
 }
@@ -189,6 +205,8 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
     footer {
+        --footer-parallax-y: 0px;
+
         #footer-typed-word {
             border-right: 0;
             animation: none;

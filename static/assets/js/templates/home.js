@@ -88,7 +88,7 @@ const HOME_LAYOUT_FLIP_ANIMATION_ID = 'home-layout-flip'
 const HOME_VIEWPORT_BOTTOM_GAP_CSS_VAR = '--space-md'
 const HOME_VIEWPORT_BOTTOM_GAP_FALLBACK_PX = 24
 const HOME_VIEWPORT_ALIGNMENT_THRESHOLD_PX = 1
-const HOME_EMBLA_DEBUG = window.location.search.includes('emblaDebug=1') || window.localStorage.getItem('emblaDebug') === '1'
+const HOME_EMBLA_DEBUG = true
 const homeReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const homeCardState = new WeakMap()
 let homeFabricsEmblaCleanup = null

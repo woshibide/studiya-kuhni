@@ -89,7 +89,9 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="<?= esc(relative_url('assets/js/fabric-info-map.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(relative_url('assets/js/other-fabrics.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/footer-parallax.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(relative_url('assets/js/footer-typing.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/mason-gallery.js'), 'attr') ?>" defer></script>
 
 <?php
 $template = $page->intendedTemplate()->name();
