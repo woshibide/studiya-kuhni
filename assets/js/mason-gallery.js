@@ -1,9 +1,9 @@
-const HOME_FABRICS_SELECTOR = '#fabrics-intro .fabrics-listing'
-const HOME_FABRIC_ROW_SELECTOR = '[data-home-fabric-row]'
-const HOME_FABRIC_CARD_SELECTOR = '[data-home-fabric-card]'
-const HOME_FABRIC_MEDIA_SELECTOR = '.home-fabric-media'
+const HOME_FABRICS_SELECTOR = '#fabrics-intro .fabrics-listing, #details .kuhnya-layout-grid'
+const HOME_FABRIC_ROW_SELECTOR = '[data-home-fabric-row], .kuhnya-layout-grid'
+const HOME_FABRIC_CARD_SELECTOR = '[data-home-fabric-card], [data-kuhnya-layout-card]'
+const HOME_FABRIC_MEDIA_SELECTOR = '.home-fabric-media, .kuhnya-layout-media'
 const HOME_FABRIC_KITCHEN_LINK_SELECTOR = 'a[data-fabric-image]'
-const HOME_FABRIC_TOGGLE_SELECTOR = '[data-home-fabric-toggle]'
+const HOME_FABRIC_TOGGLE_SELECTOR = '[data-home-fabric-toggle], [data-kuhnya-layout-toggle]'
 const HOME_FABRIC_EMBLA_VIEWPORT_SELECTOR = '[data-home-embla-viewport]'
 const HOME_FABRIC_EMBLA_SLIDE_SELECTOR = '.home-fabric-media__slide'
 
@@ -391,81 +391,83 @@ const syncMobileMode = (listing, cards) => {
 
 // bind listeners and initialize masonry gallery logic
 const initHomeFabrics = () => {
-	const listing = document.querySelector(HOME_FABRICS_SELECTOR)
-	if (!listing || listing.dataset.homeFabricsBound === 'true') {
-		return
-	}
-	const cards = Array.from(listing.querySelectorAll(HOME_FABRIC_CARD_SELECTOR))
-	if (!cards.length) {
-		return
-	}
-
-	cards.forEach((card) => {
-		applyCardLayout(card, false)
-		setToggleState(card, false)
-		setToggleInteractivity(card, false)
-		initCardEmbla(card)
-	})
-
-	syncMobileMode(listing, cards)
-	homeMobileQuery.addEventListener('change', () => syncMobileMode(listing, cards))
-
-	const onKitchenHover = (event) => {
-		if (isHomeMobile()) {
+	const listings = document.querySelectorAll(HOME_FABRICS_SELECTOR)
+	listings.forEach(listing => {
+		if (listing.dataset.homeFabricsBound === 'true') {
 			return
 		}
-		const link = event.target.closest(HOME_FABRIC_KITCHEN_LINK_SELECTOR)
-		if (!link || !listing.contains(link)) {
-			return
-		}
-		const card = link.closest(HOME_FABRIC_CARD_SELECTOR)
-		if (!card || !listing.contains(card)) {
-			return
-		}
-		const state = getCardState(card)
-		const linkIndex = getLinkIndex(state, link)
-		if (linkIndex >= 0) {
-			setCardByIndex(card, linkIndex)
-			// logHomeDebug('interaction:kitchen-hover', { linkIndex })
-		}
-	}
-
-	listing.addEventListener('click', (event) => {
-		// logHomeDebug('interaction:card-image-click', {
-		// 	targetTag: event.target && event.target.tagName ? event.target.tagName.toLowerCase() : 'unknown',
-		// 	insideLink: Boolean(event.target.closest('a')),
-		// 	blockedByMobileMode: isHomeMobile(),
-		// })
-
-		if (isHomeMobile() || event.target.closest('a')) {
+		const cards = Array.from(listing.querySelectorAll(HOME_FABRIC_CARD_SELECTOR))
+		if (!cards.length) {
 			return
 		}
 
-		let card = null
-		const toggle = event.target.closest(HOME_FABRIC_TOGGLE_SELECTOR)
-		if (toggle && listing.contains(toggle)) {
-			card = toggle.closest(HOME_FABRIC_CARD_SELECTOR)
-		} else {
-			const media = event.target.closest(HOME_FABRIC_MEDIA_SELECTOR)
-			if (media && listing.contains(media)) {
-				card = media.closest(HOME_FABRIC_CARD_SELECTOR)
+		cards.forEach((card) => {
+			applyCardLayout(card, false)
+			setToggleState(card, false)
+			setToggleInteractivity(card, false)
+			initCardEmbla(card)
+		})
+
+		syncMobileMode(listing, cards)
+		homeMobileQuery.addEventListener('change', () => syncMobileMode(listing, cards))
+
+		const onKitchenHover = (event) => {
+			if (isHomeMobile()) {
+				return
+			}
+			const link = event.target.closest(HOME_FABRIC_KITCHEN_LINK_SELECTOR)
+			if (!link || !listing.contains(link)) {
+				return
+			}
+			const card = link.closest(HOME_FABRIC_CARD_SELECTOR)
+			if (!card || !listing.contains(card)) {
+				return
+			}
+			const state = getCardState(card)
+			const linkIndex = getLinkIndex(state, link)
+			if (linkIndex >= 0) {
+				setCardByIndex(card, linkIndex)
+				// logHomeDebug('interaction:kitchen-hover', { linkIndex })
 			}
 		}
 
-		if (!card || !listing.contains(card)) {
-			return
-		}
-		const row = card.closest(HOME_FABRIC_ROW_SELECTOR)
-		if (row) {
-			setRowExpandedCard(row, card)
-		}
+		listing.addEventListener('click', (event) => {
+			// logHomeDebug('interaction:card-image-click', {
+			// 	targetTag: event.target && event.target.tagName ? event.target.tagName.toLowerCase() : 'unknown',
+			// 	insideLink: Boolean(event.target.closest('a')),
+			// 	blockedByMobileMode: isHomeMobile(),
+			// })
+
+			if (isHomeMobile() || event.target.closest('a')) {
+				return
+			}
+
+			let card = null
+			const toggle = event.target.closest(HOME_FABRIC_TOGGLE_SELECTOR)
+			if (toggle && listing.contains(toggle)) {
+				card = toggle.closest(HOME_FABRIC_CARD_SELECTOR)
+			} else {
+				const media = event.target.closest(HOME_FABRIC_MEDIA_SELECTOR)
+				if (media && listing.contains(media)) {
+					card = media.closest(HOME_FABRIC_CARD_SELECTOR)
+				}
+			}
+
+			if (!card || !listing.contains(card)) {
+				return
+			}
+			const row = card.closest(HOME_FABRIC_ROW_SELECTOR)
+			if (row) {
+				setRowExpandedCard(row, card)
+			}
+		})
+
+		listing.addEventListener('mouseover', onKitchenHover)
+		listing.addEventListener('focusin', onKitchenHover)
+
+		listing.dataset.homeFabricsBound = 'true'
+		// logHomeDebug('init:done', { cards: cards.length })
 	})
-
-	listing.addEventListener('mouseover', onKitchenHover)
-	listing.addEventListener('focusin', onKitchenHover)
-
-	listing.dataset.homeFabricsBound = 'true'
-	// logHomeDebug('init:done', { cards: cards.length })
 }
 
 if (document.readyState === 'loading') {
