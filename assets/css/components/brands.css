@@ -64,20 +64,8 @@
 	.marquee-track {
 		display: flex;
 		width: max-content;
-		animation: marquee-left 45s linear infinite;
-	}
-
-	.marquee[data-reversed="true"] {
-		.marquee-track {
-			animation-direction: reverse;
-		}
-	}
-
-	.marquee-content {
-		display: flex;
-		flex-shrink: 0;
 		align-items: center;
-		/* gap: var(--fs-lg); */
+		will-change: transform;
 	}
 
 	.brand-item {
@@ -159,15 +147,5 @@
 				width: 100%;
 			}
 		}
-	}
-}
-
-@keyframes marquee-left {
-	from {
-		transform: translateX(0);
-	}
-
-	to {
-		transform: translateX(-50%);
 	}
 }

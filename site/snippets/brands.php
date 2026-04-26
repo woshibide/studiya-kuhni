@@ -6,95 +6,50 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur vel eius, exercitationem ducimus odio quas doloremque! Saepe tempore, ipsa placeat maiores perspiciatis nesciunt ducimus debitis magnam fugit nisi ea unde.</p>
         </div>
         <?php
-        $brandsJson = '[
-            {"file": "fabrics-AranCucine.svg", "name": "aranCucine"},
-            {"file": "fabrics-Aster.svg", "name": "aster"},
-            {"file": "fabrics-HomeCucine.svg", "name": "homeCucine"},
-            {"file": "fabrics-KitchenAid.svg", "name": "kitchenAid"},
-            {"file": "fabrics-lottocento.svg", "name": "lottocento"},
-            {"file": "fabrics-Lubiex.svg", "name": "lubiex"},
-            {"file": "fabrics-Kuppersbuch.svg", "name": "kuppersbuch"},
-            {"file": "fabrics-Miele.svg", "name": "miele"},
-            {"file": "fabrics-Mossman.svg", "name": "mossman"},
-            {"file": "fabrics-Neff.svg", "name": "neff"},
-            {"file": "fabrics-Nolte.svg", "name": "nolte"},
-            {"file": "fabrics-Scavolini.svg", "name": "scavolini"},
-            {"file": "fabrics-Smeg.svg", "name": "smeg"}
-        ]';
-
-        $brandNameRemap = [
-            'aranCucine' => 'Aran Cucine',
-            'aster' => 'Aster',
-            'homeCucine' => 'Home Cucine',
-            'kitchenAid' => 'KitchenAid',
-            'lottocento' => 'Lottocento',
-            'lubiex' => 'Lubiex',
-            'kuppersbuch' => 'K&uuml;ppersbuch',
-            'miele' => 'Miele',
-            'mossman' => 'Mossman',
-            'neff' => 'Neff',
-            'nolte' => 'Nolte',
-            'scavolini' => 'Scavolini',
-            'smeg' => 'Smeg'
+        $brands = [
+            ['file' => 'fabrics-AranCucine.svg', 'label' => 'Aran Cucine'],
+            ['file' => 'fabrics-Aster.svg', 'label' => 'Aster'],
+            ['file' => 'fabrics-HomeCucine.svg', 'label' => 'Home Cucine'],
+            ['file' => 'fabrics-KitchenAid.svg', 'label' => 'KitchenAid'],
+            ['file' => 'fabrics-lottocento.svg', 'label' => 'Lottocento'],
+            ['file' => 'fabrics-Lubiex.svg', 'label' => 'Lubiex'],
+            ['file' => 'fabrics-Kuppersbuch.svg', 'label' => 'K&uuml;ppersbuch'],
+            ['file' => 'fabrics-Miele.svg', 'label' => 'Miele'],
+            ['file' => 'fabrics-Mossman.svg', 'label' => 'Mossman'],
+            ['file' => 'fabrics-Neff.svg', 'label' => 'Neff'],
+            ['file' => 'fabrics-Nolte.svg', 'label' => 'Nolte'],
+            ['file' => 'fabrics-Scavolini.svg', 'label' => 'Scavolini'],
+            ['file' => 'fabrics-Smeg.svg', 'label' => 'Smeg'],
         ];
 
-        $brands = json_decode($brandsJson, true) ?? [];
         $rows = [[], [], []];
 
         foreach ($brands as $index => $brand) {
             $rows[$index % 3][] = $brand;
         }
 
-        $formatName = function ($name) use ($brandNameRemap) {
-            if (isset($brandNameRemap[$name])) {
-                return $brandNameRemap[$name];
-            }
-
-            $name = preg_replace('/([a-z])([A-Z])/', '$1 $2', $name);
-            $name = str_replace(['-', '_'], ' ', $name);
-            return ucwords($name);
-        };
         ?>
 
         <div class="marquee-wrapper">
             <?php foreach ($rows as $rowIndex => $rowBrands): ?>
                 <?php if (empty($rowBrands)) { continue; } ?>
-                <div class="marquee" data-reversed="<?= $rowIndex % 2 === 1 ? 'true' : 'false' ?>">
-                    <div class="marquee-track">
-                        <div class="marquee-content">
-                            <?php foreach ($rowBrands as $brand): ?>
-                                <div class="brand-item">
-                                    <figure>
-                                        <?php snippet('turbo-image', [
-                                            'image' => asset('assets/brands/fabrics/black-svg/' . $brand['file']),
-                                            'alt' => $formatName($brand['name']),
-                                            'width' => 360,
-                                            'loading' => 'lazy',
-                                        ]) ?>
-                                        <figcaption class="brand-label">
-                                            <?= $formatName($brand['name']) ?>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="marquee-content" aria-hidden="true">
-                            <?php foreach ($rowBrands as $brand): ?>
-                                <div class="brand-item">
-                                    <figure>
-                                        <?php snippet('turbo-image', [
-                                            'image' => asset('assets/brands/fabrics/black-svg/' . $brand['file']),
-                                            'alt' => $formatName($brand['name']),
-                                            'width' => 360,
-                                            'loading' => 'lazy',
-                                        ]) ?>
-                                        <figcaption class="brand-label">
-                                            <?= $formatName($brand['name']) ?>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                <div class="marquee" data-direction="<?= $rowIndex % 2 === 0 ? 'ltr' : 'rtl' ?>" data-speed="<?= $rowIndex === 1 ? '96' : '84' ?>">
+                    <div class="marqueeInner marquee-track">
+                        <?php foreach ($rowBrands as $brand): ?>
+                            <div class="brand-item marquee-item">
+                                <figure>
+                                    <?php snippet('turbo-image', [
+                                        'image' => asset('assets/brands/fabrics/black-svg/' . $brand['file']),
+                                        'alt' => $brand['label'],
+                                        'width' => 360,
+                                        'loading' => 'lazy',
+                                    ]) ?>
+                                    <figcaption class="brand-label">
+                                        <?= $brand['label'] ?>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

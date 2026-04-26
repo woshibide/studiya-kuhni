@@ -83,6 +83,8 @@
 <script src="<?= esc(relative_url('assets/js/node_modules/embla-carousel/embla-carousel.umd.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(relative_url('assets/js/node_modules/embla-carousel-autoplay/embla-carousel-autoplay.umd.js'), 'attr') ?>" defer></script>
 
+<script src="<?= esc(relative_url('assets/js/gsap-marquee.js'), 'attr') ?>" defer></script>
+<script src="<?= esc(relative_url('assets/js/brands.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(relative_url('assets/js/gallery.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(relative_url('assets/js/navbar-menus.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(relative_url('assets/js/faq.js'), 'attr') ?>" defer></script>
