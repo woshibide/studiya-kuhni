@@ -16,10 +16,11 @@ return [
     // version control for css and js
     'pixelopen.asset-version.active' => true,
 
+    // for github pages: /studiya-kuhni/
     'jr.static_site_generator' => [
         'endpoint' => 'generate-static-site',
         'output_folder' => './static',
-        'base_url' => '/',
+        'base_url' => '/studiya-kuhni/',
         'skip_media' => false,
     ],
 

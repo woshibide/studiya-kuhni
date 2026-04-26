@@ -313,6 +313,7 @@
             aspect-ratio: 1 / 1;
             width: clamp(40px, 8vw, 80px);
             height: auto;
+            border-radius: 0;
         }
     }
 }
