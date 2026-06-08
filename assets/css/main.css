@@ -351,6 +351,7 @@ section {
     --col-span: 1;
     grid-column: var(--col-start) / span var(--col-span);
     min-width: 0;
+    border-radius: var(--space-xs);
 
     @media (max-width: 48rem) {
         grid-column: var(--col-start-mobile, 1) / span var(--col-span-mobile, var(--grid-columns));
