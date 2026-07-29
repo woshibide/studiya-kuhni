@@ -89,7 +89,6 @@ tabs:
                     label: текст
                     type: text
                     maxlength: 80
-                    required: true
           benefits_section:
             type: fields
             fields:

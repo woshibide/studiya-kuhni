@@ -6,9 +6,10 @@ $fabricPage = $kuhnya->parent();
 $fabricsIndex = site()->find('fabrics');
 $cardBrand = $fabricPage ? $fabricPage->title()->value() : 'Название фабрики';
 $cardBrandUrl = relative_url($fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#'));
-$cardGalleryImages = $kuhnya->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+$cardGalleryImages = $kuhnya->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
 if ($cardGalleryImages->isEmpty()) {
     $cardGalleryImages = $kuhnya->images()
+        ->sorted()
         ->filterBy('type', 'image')
         ->filter(function ($image) {
             return strtolower($image->extension()) !== 'svg';

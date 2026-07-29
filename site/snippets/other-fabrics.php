@@ -22,12 +22,13 @@ $otherFabrics = $fabricsPage->childrenAndDrafts();
 $placeholderImageUrl = relative_url('assets/placeholder.svg');
 
 $resolveKitchenGalleryImages = static function ($kitchen) {
-    $selected = $kitchen->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+    $selected = $kitchen->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
     if ($selected->isNotEmpty()) {
         return $selected;
     }
 
     return $kitchen->images()
+        ->sorted()
         ->filterBy('type', 'image')
         ->filter(function ($image) {
             return strtolower($image->extension()) !== 'svg';

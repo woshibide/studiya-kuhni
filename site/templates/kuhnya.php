@@ -1,9 +1,10 @@
 <?php snippet('header') ?>
 
 <?php
-$heroGalleryImages = $page->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+$heroGalleryImages = $page->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
 if ($heroGalleryImages->isEmpty()) {
     $heroGalleryImages = $page->images()
+        ->sorted()
         ->filterBy('type', 'image')
         ->filter(function ($image) {
             return strtolower($image->extension()) !== 'svg';
@@ -181,7 +182,7 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
                         <?php
                         $featureText = trim($feature->text()->value());
                         $featureImage = $feature->image()->toFile();
-                        if ($featureText === '' && !$featureImage) {
+                        if ($featureText === '') {
                             continue;
                         }
                         ?>

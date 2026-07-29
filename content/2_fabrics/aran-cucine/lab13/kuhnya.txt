@@ -18,6 +18,22 @@ Kitchen-specs:
 
 ----
 
+Kitchen-gallery-images:
+
+- file://j7gzau1chpvm2v46
+- file://14o6aufzd98krkjd
+- file://odhuauzxgkju16st
+
+----
+
+Kitchen-features:
+
+- 
+  image: [ ]
+  text: ""
+
+----
+
 Benefits-heading: 
 
 ----

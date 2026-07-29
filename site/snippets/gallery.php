@@ -4,10 +4,11 @@ $galleryImages = [];
 $isKitchenPage = $page->intendedTemplate()->name() === 'kuhnya';
 
 if ($isKitchenPage) {
-    $galleryImages = $page->kitchen_gallery_images()->toFiles()->filterBy('type', 'image');
+    $galleryImages = $page->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
 
     if ($galleryImages->isEmpty()) {
         $galleryImages = $page->images()
+            ->sorted()
             ->filterBy('type', 'image')
             ->filter(function ($image) {
                 return strtolower($image->extension()) !== 'svg';
