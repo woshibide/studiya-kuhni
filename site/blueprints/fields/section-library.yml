@@ -1,0 +1,39 @@
+type: studio-library
+duplicate: false
+limit: 12
+empty: Добавьте первый элемент библиотеки
+columns:
+  image:
+    label: Иконка
+    width: 1/5
+  title:
+    label: Название
+    width: 4/5
+    mobile: true
+fields:
+  key:
+    type: hidden
+  title:
+    label: Название
+    type: text
+    required: true
+    maxlength: 80
+    help: Общее для всех страниц, где выбран этот элемент.
+  image:
+    label: Иконка или изображение
+    type: files
+    max: 1
+    layout: cards
+    query: site.images
+    text: '{{ file.alt.or(file.name) }}'
+    uploads:
+      parent: site
+      template: section-icon
+    image:
+      ratio: 1/1
+      cover: false
+      back: white
+  alt:
+    label: Описание изображения
+    type: text
+    help: Оставьте пустым для декоративной иконки, которая повторяет название.

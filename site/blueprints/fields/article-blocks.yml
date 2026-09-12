@@ -1,0 +1,58 @@
+label: 'Содержание публикации'
+type: blocks
+fieldsets:
+  tiptap:
+    extends: blocks/tiptap
+    name: 'Текст с форматированием'
+    fields:
+      text:
+        extends: fields/rich-text
+  heading:
+    extends: blocks/heading
+    fields:
+      level:
+        default: h2
+        options:
+          -
+            value: h2
+            icon: h2
+            text: H2
+          -
+            value: h3
+            icon: h3
+            text: H3
+          -
+            value: h4
+            icon: h4
+            text: H4
+          -
+            value: h5
+            icon: h5
+            text: H5
+          -
+            value: h6
+            icon: h6
+            text: H6
+        help: 'Название публикации уже использует H1. Выбирайте уровни последовательно, без пропусков.'
+  text:
+    extends: blocks/text
+  list:
+    extends: blocks/list
+  image:
+    extends: blocks/image
+    fields:
+      image:
+        uploads:
+          template: image
+      alt:
+        help: 'Если поле пустое, используется описание из карточки файла.'
+  gallery:
+    extends: blocks/gallery
+    fields:
+      images:
+        uploads:
+          template: image
+  quote:
+    extends: blocks/quote
+  line:
+    extends: blocks/line

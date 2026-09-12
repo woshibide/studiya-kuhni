@@ -95,7 +95,7 @@
             overflow: hidden;
             white-space: nowrap;
             pointer-events: none;
-            transition: all 360ms var(--out);
+            transition: opacity 360ms var(--out), transform 360ms var(--out), color 360ms var(--out), background-color 360ms var(--out);
             transition-delay: calc((var(--kitchen-count) - var(--kitchen-index)) * 48ms);
         }
 
@@ -110,7 +110,7 @@
         & a.internal-link::after {
             opacity: 0;
             transform: translateX(-0.2em);
-            transition: all 300ms var(--out);
+            transition: color 300ms var(--out), background-color 300ms var(--out), background-size 300ms var(--out), opacity 300ms var(--out), transform 300ms var(--out);
         }
 
         & a.internal-link:hover::after,
@@ -144,7 +144,7 @@
             margin-left: 0.35em;
             opacity: 0;
             transform: translateX(-0.2em);
-            transition: all 300ms var(--out);
+            transition: color 300ms var(--out), background-color 300ms var(--out), background-size 300ms var(--out), opacity 300ms var(--out), transform 300ms var(--out);
         }
 
         & a:hover::after,

@@ -1,0 +1,8 @@
+extends: fields/rich-text
+inline: true
+size: small
+buttons:
+  - bold
+  - italic
+  - link
+  - removeFormatting

@@ -15,6 +15,7 @@
     min-height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 0;
     transform: translate3d(0, 0, 0) scale(1.02);
     transform-origin: center;
     will-change: transform;
@@ -60,7 +61,7 @@
 
 .archive-post-intro__meta {
     margin: var(--space-lg) 0 0;
-    color: var(--grey);
+    color: var(--text-muted);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     display: flex;
@@ -112,7 +113,7 @@
 
 .archive-post-blocks > figure:not(.archive-post-block-gallery) figcaption {
     margin-top: var(--space-xs);
-    color: var(--grey);
+    color: var(--text-muted);
     font-size: var(--fs-xs);
 }
 
@@ -161,7 +162,7 @@
 
 .archive-post-blocks .archive-post-block-gallery__caption {
     margin-top: var(--space-xs);
-    color: var(--grey);
+    color: var(--text-muted);
     font-size: var(--fs-xs);
 }
 

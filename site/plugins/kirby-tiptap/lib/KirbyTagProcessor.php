@@ -1,0 +1,144 @@
+<?php
+
+namespace Medienbaecker\Tiptap;
+
+use Kirby\Text\KirbyTags;
+
+/**
+ * Processes KirbyTags in Tiptap content
+ * Handles the transformation of KirbyTag text
+ */
+class KirbyTagProcessor
+{
+	/**
+	 * Process a content node for KirbyTags.
+	 *
+	 * Returns an array of nodes: a text node containing tags expands into a
+	 * sequence of literal text nodes and one kirbyTag node per tag, so block
+	 * detection and paragraph splitting can work per tag.
+	 *
+	 * @param array $node Node to process
+	 * @param object $parent Parent page/model for KirbyTag context
+	 * @param bool $allowHtml Whether to allow raw HTML in literal text
+	 * @param bool $inCodeBlock Whether we're inside a code block
+	 * @return array Replacement node sequence
+	 */
+	public static function processContent(array $node, $parent, bool $allowHtml = false, bool $inCodeBlock = false): array
+	{
+		// Track if we're entering a code block context
+		if (($node['type'] ?? '') === 'codeBlock') {
+			$inCodeBlock = true;
+		}
+
+		if (isset($node['text'])) {
+			if (static::isCode($node, $inCodeBlock) === false) {
+				return static::renderText($node, $parent, $allowHtml);
+			}
+			return [$node];
+		}
+
+		// Recursively process nested content
+		if (isset($node['content']) && is_array($node['content'])) {
+			$children = [];
+			foreach ($node['content'] as $child) {
+				if (!is_array($child)) {
+					continue;
+				}
+				array_push($children, ...static::processContent($child, $parent, $allowHtml, $inCodeBlock));
+			}
+			$node['content'] = $children;
+		}
+
+		return [$node];
+	}
+
+	/**
+	 * Whether a text node is inside code (code block or inline code mark).
+	 */
+	private static function isCode(array $node, bool $inCodeBlock): bool
+	{
+		if ($inCodeBlock === true) {
+			return true;
+		}
+
+		foreach ($node['marks'] ?? [] as $mark) {
+			if (($mark['type'] ?? '') === 'code') {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Render a text node as a node sequence: literal segments stay text
+	 * nodes (escaped later by the text snippet), each parsed KirbyTag
+	 * becomes its own kirbyTag node.
+	 */
+	private static function renderText(array $node, $parent, bool $allowHtml): array
+	{
+		$text = $node['text'];
+
+		// Split into literal-text and balanced KirbyTag segments
+		$regex = '!(?=[^\]])(?=\([a-z0-9_-]+:)(\((?:[^()]+|(?1))*+\))!isx';
+		$parts = preg_split($regex, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+		$hasTag = $parts !== false && count($parts) > 1;
+
+		// Plain text without tags: leave as a text node so text.php escapes it.
+		if ($hasTag === false && $allowHtml === false) {
+			return [$node];
+		}
+
+		$marks = $node['marks'] ?? null;
+		$nodes = [];
+
+		foreach ($parts === false ? [$text] : $parts as $i => $part) {
+			if ($part === '') {
+				continue;
+			}
+
+			if ($i % 2 === 1) {
+				$parsed = KirbyTags::parse($part, ['parent' => $parent]);
+				if ($parsed !== $part) {
+					// Kirby's file tag escapes underscores in the filename for a
+					// Markdown pass that only happens on markdown values
+					$nodes[] = static::tagNode(str_replace('\_', '_', $parsed), $marks);
+					continue;
+				}
+			}
+
+			if ($allowHtml) {
+				$nodes[] = static::tagNode($part, $marks);
+			} else {
+				$literal = ['type' => 'text', 'text' => $part];
+				if ($marks !== null) {
+					$literal['marks'] = $marks;
+				}
+				$nodes[] = $literal;
+			}
+		}
+
+		return $nodes;
+	}
+
+	/**
+	 * Build a kirbyTag node carrying rendered (or raw) HTML.
+	 */
+	private static function tagNode(string $content, ?array $marks): array
+	{
+		$node = [
+			'type' => 'kirbyTag',
+			'attrs' => ['content' => $content],
+		];
+
+		// Don't wrap block-level tag output (e.g. an image's <figure>) in an inline mark
+		if (
+			$marks !== null &&
+			!preg_match('/<(figure|video|audio|iframe|table|ul|ol|blockquote|pre|div|hr|h[1-6])\b/i', $content)
+		) {
+			$node['marks'] = $marks;
+		}
+
+		return $node;
+	}
+}

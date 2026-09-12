@@ -106,6 +106,8 @@
 				var firstOuter = outerWidth(items[0], true);
 				while (total < marquee.clientWidth + firstOuter) {
 					var clone = items[i % items.length].cloneNode(true);
+                    clone.setAttribute('aria-hidden', 'true');
+                    clone.inert = true;
 					inner.appendChild(clone);
 					items.push(clone);
 					total = getSetWidth(items);

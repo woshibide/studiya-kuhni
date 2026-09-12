@@ -1,26 +1,46 @@
 <?php
 
-ini_set('memory_limit', '512M');
+require_once dirname(__DIR__) . '/plugins/studio/Environment.php';
+require_once dirname(__DIR__) . '/plugins/studio-panel/Panel.php';
+
+$environment = Studio\Environment::name(getenv('STUDIO_ENV') ?: null);
+$host = strtolower((string)parse_url('http://' . ($_SERVER['HTTP_HOST'] ?? ''), PHP_URL_HOST));
+$localRequest = (in_array($host, ['localhost', '127.0.0.1', '[::1]'], true) &&
+    in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)) || PHP_SAPI === 'cli';
 
 return [
-    
-    'debug' => true,
-    'users' => [
-        'admin' => [
-            'email' => 'test@test.test',
-            'password' => '1q2w3e4r', 
+    'debug' => $environment === 'local' && $localRequest,
+    'studio.environment' => $environment,
+    'studio.productionUrl' => Studio\Environment::origin(getenv('STUDIO_PRODUCTION_URL') ?: null),
+    'studio.map.tileUrl' => 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/{z}/{y}/{x}.jpg',
+    'studio.map.attribution' => '<a href="https://cloudless.eox.at/">EOxCloudless</a> by <a href="https://eox.at/">EOX IT Services GmbH</a> (Contains modified Copernicus Sentinel data 2016) · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · <a href="https://maps.eox.at/">EOX::Maps</a>',
+    'studio.map.maxZoom' => 14,
+    // Archive is intentionally excluded from the current launch in the templates.
+    'studio.unpublishedPaths' => ['archive'],
+    'session' => [
+        'cookieName' => 'studio_' . $environment . '_session',
+        'cookieDomain' => null,
+    ],
+    'panel' => [
+        'menu' => static fn () => Studio\Panel::menu(kirby()),
+        'viewButtons' => [
+            'page' => Studio\Panel::pageButtons(),
+            'site' => Studio\Panel::siteButtons(),
         ],
     ],
-
 
     // version control for css and js
     'pixelopen.asset-version.active' => true,
 
+    // Locator 2.1 reads this default even with OpenStreetMap selected.
+    // A string avoids its null array key deprecation on PHP 8.5.
+    'sylvainjule.locator.mapbox.id' => 'mapbox/outdoors-v11',
+
     // for github pages: /studiya-kuhni/
     'jr.static_site_generator' => [
-        'endpoint' => 'generate-static-site',
+        'endpoint' => $environment === 'local' ? 'generate-static-site' : null,
         'output_folder' => './static',
-        'base_url' => '/studiya-kuhni/',
+        'base_url' => '/',
         'skip_media' => false,
     ],
 
@@ -28,7 +48,7 @@ return [
     'cache' => [
         'pages' => [
             'active' => false,
-            'type'   => 'apcu'
+            // Forms contain CSRF tokens; public HTML must not be shared in cache.
         ]
     ],
 
@@ -52,67 +72,5 @@ return [
             ],
         ],
     ],
-
-    // 'johannschopplich.locked-pages' => [
-    //     'slug' => 'HZIYKIcigTmbDQ6',
-    //     'title' => 'Вход в кабинет',
-    //     'error' => [
-    //         'csrf' => 'Неверный CSRF-токен.',
-    //         'password' => 'Неверный пароль.'
-    //     ]
-    // ],
-    
-    // 'tobimori.seo.canonicalBase' => 'https://www.luxor-kmv.ru',
-    // 'tobimori.seo.lang' => 'ru_RU',
-
-    // 'panel' => [
-    //     'slug' => 'nRu1pn4T1m5LYmm',
-    //     'favicon' => 'assets/favicons/favicon.svg'
-    // ],
-
-    // 'hooks' => [
-    //     'page.update:after' => function ($newPage, $oldPage) {
-    //         kirby()->cache('pages')->flush();
-    //         kirby()->cache('hero-carousel')->flush();
-    //         kirby()->cache('home-about-brand')->flush();
-    //         kirby()->cache('home-collection')->flush();
-    //         kirby()->cache('home-brands')->flush();
-    //     },
-    //     'page.create:after' => function ($page) {
-    //         kirby()->cache('pages')->flush();
-    //         kirby()->cache('hero-carousel')->flush();
-    //         kirby()->cache('home-about-brand')->flush();
-    //         kirby()->cache('home-collection')->flush();
-    //         kirby()->cache('home-brands')->flush();
-    //     },
-    //     'page.delete:after' => function ($page) {
-    //         kirby()->cache('pages')->flush();
-    //         kirby()->cache('hero-carousel')->flush();
-    //         kirby()->cache('home-about-brand')->flush();
-    //         kirby()->cache('home-collection')->flush();
-    //         kirby()->cache('home-brands')->flush();
-    //     },
-    //     'file.create:after' => function ($file) {
-    //         kirby()->cache('pages')->flush();
-    //         kirby()->cache('hero-carousel')->flush();
-    //         kirby()->cache('home-about-brand')->flush();
-    //         kirby()->cache('home-collection')->flush();
-    //         kirby()->cache('home-brands')->flush();
-    //     },
-    //     'file.update:after' => function ($newFile, $oldFile) {
-    //         kirby()->cache('pages')->flush();
-    //         kirby()->cache('hero-carousel')->flush();
-    //         kirby()->cache('home-about-brand')->flush();
-    //         kirby()->cache('home-collection')->flush();
-    //         kirby()->cache('home-brands')->flush();
-    //     },
-    //     'file.delete:after' => function ($file) {
-    //         kirby()->cache('pages')->flush();
-    //         kirby()->cache('hero-carousel')->flush();
-    //         kirby()->cache('home-about-brand')->flush();
-    //         kirby()->cache('home-collection')->flush();
-    //         kirby()->cache('home-brands')->flush();
-    //     }
-    // ],
 
 ];

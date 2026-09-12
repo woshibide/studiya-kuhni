@@ -6,7 +6,7 @@ Fabric-info-title: Фабрика с берегов Адриатики
 
 ----
 
-Fabric-info-text: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+Fabric-info-text: История Scavolini начинается в Пезаро - городе на побережье Адриатического моря. В 1961 году братья Вальтер и Эльвино Скаволини основали здесь семейную мастерскую, заложив основу будущего бренда. Сегодня Scavolini объединяет итальянское наследие, современный дизайн и технологии, создавая пространства для кухни и дома, в которых эстетика сочетается с функциональностью. Начав свою историю в Пезаро, Scavolini сохраняет связь с культурой города, превращая итальянский характер в стиль современной жизни.
 
 ----
 
@@ -43,3 +43,11 @@ Cta-button:
 ----
 
 Uuid: jaoaqbfgayebavjj
+
+----
+
+Fabric-location:
+
+lat: 43.919659
+lon: 12.922428
+zoom: 13

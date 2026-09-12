@@ -26,22 +26,24 @@ if ($heroWordsJson === false) {
 }
 ?>
 
-<main>
+<main id="main-content" tabindex="-1">
 
     <section>
         <div class="section-wrapper" id="home-hero">
-            <h1 >
+            <h1>
+                <span class="sr-only"><?= esc($heroSeoText) ?></span>
+                <span aria-hidden="true">
                 <span class="home-hero-prefix"><?= esc($heroHeading) ?></span>
                 <span
                     id="home-hero-typed"
                     class="home-hero-typed"
                     data-words="<?= esc($heroWordsJson, 'attr') ?>"
                 ><?= esc($heroWords[0]) ?></span>
+                </span>
             </h1>
-            <h1 class="home-hero-seo-copy"><?= esc($heroSeoText) ?></h1>
             <div class="hero-description">
                 <p>
-                    Уже более 00 лет мы привозим и реализуем кухни под ключ на Северном Кавказе, продумывая каждую деталь — от проекта до установки, чтобы вы получили самую удобную и долговечную кухню для жизни.
+                    <?= $page->hero_description()->or('Уже более 00 лет мы привозим и реализуем кухни под ключ на Северном Кавказе, продумывая каждую деталь — от проекта до установки, чтобы вы получили самую удобную и долговечную кухню для жизни.')->studioText(true) ?>
                 </p>
             </div>
             <div class="hero__cta-wrapper">
@@ -54,19 +56,7 @@ if ($heroWordsJson === false) {
         <?php
         $fabricsPage = page('fabrics');
         $placeholderImageUrl = relative_url('assets/placeholder.svg');
-        $resolveKitchenGalleryImages = static function ($kitchen) {
-            $selected = $kitchen->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
-            if ($selected->isNotEmpty()) {
-                return $selected;
-            }
-
-            return $kitchen->images()
-                ->sorted()
-                ->filterBy('type', 'image')
-                ->filter(function ($image) {
-                    return strtolower($image->extension()) !== 'svg';
-                });
-        };
+        $resolveKitchenGalleryImages = static fn ($kitchen) => $kitchen->studioKitchenImages();
         $resolveOptimizedImageUrl = static function ($image, int $width = 1600) use ($placeholderImageUrl): string {
             if (!$image || !is_object($image) || !method_exists($image, 'url')) {
                 return $placeholderImageUrl;
@@ -127,12 +117,12 @@ if ($heroWordsJson === false) {
                 <div class="fabrics-row main-grid" data-home-fabric-row>
                     <?php foreach ($row as $item): ?>
                         <?php
-                        $fabric = $fabricsPage ? $fabricsPage->childrenAndDrafts()->findBy('slug', $item['slug']) : null;
+                        $fabric = $fabricsPage ? $fabricsPage->children()->filter(fn ($child) => $child->studioPubliclyVisible())->findBy('slug', $item['slug']) : null;
                         if (!$fabric) {
                             continue;
                         }
 
-                        $kitchens = $fabric->childrenAndDrafts();
+                        $kitchens = $fabric->children()->filter(fn ($child) => $child->studioPubliclyVisible());
                         $kitchenLinks = [];
                         $kitchenSlides = [];
 
@@ -217,7 +207,7 @@ if ($heroWordsJson === false) {
                                 type="button"
                                 data-home-fabric-toggle
                                 aria-expanded="false"
-                                aria-label="Expand fabric card"
+                                aria-label="Увеличить фотографии <?= esc($fabric->title(), 'attr') ?>"
                             >
                                 <span aria-hidden="true">+</span>
                             </button>
@@ -272,9 +262,11 @@ if ($heroWordsJson === false) {
 
     <?php snippet('cta') ?>
 
+    <?php /* archive section hidden for the next launch
     <section>
         <?php snippet('archive-posts') ?>
     </section>
+    */ ?>
 
     <section>
         <?php snippet('faq-section') ?>

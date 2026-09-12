@@ -4,16 +4,7 @@ $galleryImages = [];
 $isKitchenPage = $page->intendedTemplate()->name() === 'kuhnya';
 
 if ($isKitchenPage) {
-    $galleryImages = $page->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
-
-    if ($galleryImages->isEmpty()) {
-        $galleryImages = $page->images()
-            ->sorted()
-            ->filterBy('type', 'image')
-            ->filter(function ($image) {
-                return strtolower($image->extension()) !== 'svg';
-            });
-    }
+    $galleryImages = $page->studioKitchenImages();
 } elseif ($page->gallery()->isNotEmpty()) {
     $galleryData = $page->gallery()->yaml();
     if (is_array($galleryData)) {
@@ -55,7 +46,7 @@ $kuhnyaBrand = $fabricPage ? $fabricPage->title()->value() : 'Название �
 $kuhnyaBrandUrl = relative_url($fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#'));
 $kuhnyaCountry = trim((string)$page->country_of_origin()->value());
 $kuhnyaPrice = trim((string)$page->price()->value());
-$kuhnyaIntro = trim((string)$page->intro()->value());
+$kuhnyaIntro = $page->intro()->studioPlainText(180);
 $kuhnyaSpecs = $page->kitchen_specs()->toStructure();
 
 if ($isKitchenPage) {
@@ -66,7 +57,7 @@ if ($isKitchenPage) {
     };
 
     if ($kuhnyaIntro === '') {
-        $kuhnyaIntro = $kuhnyaFieldDefault('intro');
+        $kuhnyaIntro = (clone $page->intro())->value($kuhnyaFieldDefault('intro'))->studioPlainText(180);
     }
 
     if ($kuhnyaCountry === '') {
@@ -89,9 +80,17 @@ if ($isKitchenPage) {
 
 <div class="section-wrapper" id="gallery">
     <h2><?= esc($galleryHeading) ?></h2>
-    <p class="gallery__intro">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.</p>
+    <p class="gallery__intro">Рассмотрите кухню со всех сторон. Откройте галерею фотографий, чтобы изучить детали и принять решение.</p>
 
     <div class="gallery" data-gallery data-gallery-count="<?= (int)count($galleryImages) ?>">
+        <div class="gallery-inline__navigation" data-gallery-scroll-controls role="group" aria-label="Прокрутка фотографий" hidden>
+            <button type="button" class="gallery-inline__arrow" data-gallery-scroll-prev aria-label="Прокрутить фотографии влево" disabled>
+                <svg width="32" height="24" viewBox="0 0 32 24" fill="none" aria-hidden="true"><path d="M29 12H3m9-9-9 9 9 9" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+            <button type="button" class="gallery-inline__arrow" data-gallery-scroll-next aria-label="Прокрутить фотографии вправо" disabled>
+                <svg width="32" height="24" viewBox="0 0 32 24" fill="none" aria-hidden="true"><path d="M3 12h26m-9-9 9 9-9 9" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+        </div>
         <figure class="gallery-inline">
             <ul class="gallery-inline__list" data-gallery-list>
                 <?php foreach ($galleryImages as $index => $image): ?>
@@ -115,90 +114,110 @@ if ($isKitchenPage) {
             </ul>
         </figure>
 
-        <div class="gallery-overlay" data-gallery-overlay aria-hidden="true" hidden>
+        <dialog class="gallery-overlay" data-gallery-overlay aria-label="Галерея: <?= esc($kuhnyaTitle, 'attr') ?>" hidden>
             <div class="gallery-overlay__backdrop" data-gallery-close></div>
-            <div class="gallery-overlay__layout">
-                <button class="gallery-overlay__nav gallery-overlay__nav--prev" type="button" data-gallery-prev aria-label="Предыдущее изображение">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.41 12l5.3 5.3a1 1 0 1 1-1.42 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0Z" fill="currentColor" />
-                    </svg>
+            <div class="gallery-overlay__image-frame" data-gallery-frame aria-busy="false">
+                <button class="gallery-overlay__photo" type="button" data-gallery-expand aria-label="Развернуть фотографию" aria-pressed="false">
+                    <img class="gallery-overlay__image" data-gallery-image alt="" decoding="async" width="<?= (int)$galleryImages[0]->width() ?>" height="<?= (int)$galleryImages[0]->height() ?>">
+                    <img class="gallery-overlay__image" data-gallery-image-buffer alt="" aria-hidden="true" decoding="async" width="<?= (int)$galleryImages[0]->width() ?>" height="<?= (int)$galleryImages[0]->height() ?>">
                 </button>
-
-                <div class="gallery-overlay__main embla" data-gallery-overlay-embla>
-                    <div class="gallery-overlay__viewport" data-gallery-overlay-viewport>
-                        <div class="gallery-overlay__container">
-                            <?php foreach ($galleryImages as $image): ?>
-                                <div class="gallery-overlay__slide">
-                                    <div class="gallery-overlay__image-frame">
-                                        <?php snippet('turbo-image', [
-                                            'image' => $image,
-                                            'alt' => $image->alt()->or($kuhnyaTitle)->value(),
-                                            'width' => 1800,
-                                            'loading' => 'lazy',
-                                        ]) ?>
-                                        <button class="gallery-overlay__close" type="button" data-gallery-close aria-label="Закрыть галерею">
-                                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                                <path d="M6.7 5.3a1 1 0 0 1 1.4 0L12 9.17l3.9-3.87a1 1 0 0 1 1.4 1.4L13.42 10.6l3.88 3.9a1 1 0 1 1-1.4 1.4L12 12.02l-3.9 3.88a1 1 0 0 1-1.4-1.4l3.88-3.9L6.7 6.7a1 1 0 0 1 0-1.4Z" fill="currentColor" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            <?php endforeach ?>
-                        </div>
-                    </div>
-
-                    <?php if ($isKitchenPage): ?>
-                        <div class="gallery-overlay__meta">
-                            <article class="gallery-overlay__meta-card" aria-label="<?= esc($kuhnyaTitle, 'attr') ?>">
-                                <a class="gallery-overlay__eyebrow" href="<?= esc($kuhnyaBrandUrl, 'attr') ?>"><?= esc($kuhnyaBrand) ?></a>
-                                <h3 class="gallery-overlay__titleline"><?= esc($kuhnyaTitle) ?></h3>
-
-                                <?php if ($kuhnyaIntro !== ''): ?>
-                                    <p class="gallery-overlay__intro"><?= esc($kuhnyaIntro) ?></p>
-                                <?php endif ?>
-
-                                <ul class="gallery-overlay__facts">
-                                    <?php if ($kuhnyaCountry !== ''): ?>
-                                        <li class="gallery-overlay__fact-item">
-                                            <span class="gallery-overlay__fact-value"><?= esc($kuhnyaCountry) ?></span>
-                                        </li>
-                                    <?php endif ?>
-
-                                    <?php if ($kuhnyaPrice !== ''): ?>
-                                        <li class="gallery-overlay__fact-item gallery-overlay__fact-item--price">
-                                            <span class="gallery-overlay__fact-value"><?= esc($kuhnyaPrice) ?></span>
-                                            <button class="gallery-overlay__cta" type="button" data-open-nav-contact>
-                                                узнать подробности
-                                            </button>
-                                        </li>
-                                    <?php endif ?>
-
-                                    <?php foreach ($kuhnyaSpecs as $spec): ?>
-                                        <?php
-                                        $specLabel = trim($spec->label()->value());
-                                        $specValue = trim($spec->value()->value());
-                                        if ($specLabel === '' && $specValue === '') {
-                                            continue;
-                                        }
-                                        ?>
-                                        <li class="gallery-overlay__fact-item">
-                                            <span class="gallery-overlay__fact-label"><?= esc($specLabel !== '' ? $specLabel : 'detail') ?></span>
-                                            <span class="gallery-overlay__fact-value"><?= esc($specValue) ?></span>
-                                        </li>
-                                    <?php endforeach ?>
-                                </ul>
-                            </article>
-                        </div>
-                    <?php endif ?>
-                </div>
-
-                <button class="gallery-overlay__nav gallery-overlay__nav--next" type="button" data-gallery-next aria-label="Следующее изображение">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M9.3 18.7a1 1 0 0 1 0-1.4l5.29-5.3-5.3-5.3a1 1 0 0 1 1.42-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0Z" fill="currentColor" />
-                    </svg>
-                </button>
-
+                <p class="gallery-overlay__error" data-gallery-error role="alert" hidden>
+                    Не удалось загрузить фото.
+                    <button type="button" data-gallery-retry>Попробовать снова</button>
+                </p>
             </div>
-        </div>
+            <div class="gallery-overlay__layout">
+                <button class="gallery-overlay__close" type="button" data-gallery-close aria-label="Закрыть галерею">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+                </button>
+                <button class="gallery-overlay__nav gallery-overlay__nav--prev" type="button" data-gallery-prev aria-label="Предыдущее изображение">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
+                </button>
+                <button class="gallery-overlay__nav gallery-overlay__nav--next" type="button" data-gallery-next aria-label="Следующее изображение">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg>
+                </button>
+                <div class="gallery-overlay__main">
+                    <div class="gallery-overlay__image-slot" data-gallery-slot aria-hidden="true"></div>
+                    <div class="gallery-overlay__footer">
+                        <div class="gallery-overlay__explorer">
+                            <div class="gallery-overlay__thumbnails" aria-label="Фотографии кухни">
+                                <?php foreach ($galleryImages as $index => $image): ?>
+                                    <button
+                                        class="gallery-overlay__thumbnail"
+                                        type="button"
+                                        data-gallery-thumbnail
+                                        data-index="<?= (int)$index ?>"
+                                        data-gallery-key="<?= esc($image->filename(), 'attr') ?>"
+                                        data-gallery-src="<?= esc(relative_url($image->resize(2200)->url()), 'attr') ?>"
+                                        aria-label="Показать изображение <?= (int)$index + 1 ?>"
+                                        aria-pressed="false"
+                                    >
+                                        <span class="gallery-overlay__thumbnail-map">
+                                            <?php snippet('turbo-image', [
+                                                'image' => $image,
+                                                'alt' => $image->alt()->or($kuhnyaTitle)->value(),
+                                                'width' => 320,
+                                                'sizes' => '160px',
+                                                'loading' => 'lazy',
+                                                'attrs' => ['draggable' => 'false'],
+                                            ]) ?>
+                                            <span class="gallery-overlay__crop" aria-hidden="true"></span>
+                                        </span>
+                                    </button>
+                                <?php endforeach ?>
+                            </div>
+                        </div>
+                        <?php if ($isKitchenPage): ?>
+                            <div class="gallery-overlay__meta">
+                                <button class="gallery-overlay__share" type="button" data-gallery-share aria-label="Скопировать ссылку на фотографию" title="Скопировать ссылку">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2" /><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3" /></svg>
+                                </button>
+                                <span class="gallery-overlay__share-status" data-gallery-share-status role="status" aria-live="polite"></span>
+                                <article class="gallery-overlay__meta-card" aria-label="<?= esc($kuhnyaTitle, 'attr') ?>">
+                                    <a class="gallery-overlay__eyebrow" href="<?= esc($kuhnyaBrandUrl, 'attr') ?>"><?= esc($kuhnyaBrand) ?></a>
+                                    <h3 class="gallery-overlay__titleline"><?= esc($kuhnyaTitle) ?></h3>
+
+                                    <?php if ($kuhnyaIntro !== ''): ?>
+                                        <p class="gallery-overlay__intro"><?= esc($kuhnyaIntro) ?></p>
+                                    <?php endif ?>
+
+                                    <ul class="gallery-overlay__facts">
+                                        <?php if ($kuhnyaCountry !== ''): ?>
+                                            <li class="gallery-overlay__fact-item">
+                                                <span class="gallery-overlay__fact-value"><?= esc($kuhnyaCountry) ?></span>
+                                            </li>
+                                        <?php endif ?>
+
+                                        <?php if ($kuhnyaPrice !== ''): ?>
+                                            <li class="gallery-overlay__fact-item gallery-overlay__fact-item--price">
+                                                <span class="gallery-overlay__fact-value"><?= esc($kuhnyaPrice) ?></span>
+                                                <button class="gallery-overlay__cta" type="button" data-open-nav-contact>
+                                                    узнать подробности
+                                                </button>
+                                            </li>
+                                        <?php endif ?>
+
+                                        <?php foreach ($kuhnyaSpecs as $spec): ?>
+                                            <?php
+                                            $specLabel = trim($spec->label()->value());
+                                            $specValue = trim($spec->value()->value());
+                                            if ($specLabel === '' && $specValue === '') {
+                                                continue;
+                                            }
+                                            ?>
+                                            <li class="gallery-overlay__fact-item">
+                                                <span class="gallery-overlay__fact-label"><?= esc($specLabel !== '' ? $specLabel : 'detail') ?></span>
+                                                <span class="gallery-overlay__fact-value"><?= esc($specValue) ?></span>
+                                            </li>
+                                        <?php endforeach ?>
+                                    </ul>
+                                    <input class="gallery-overlay__share-link" data-gallery-share-link aria-label="Ссылка на фотографию: скопируйте её" readonly hidden>
+                                </article>
+                            </div>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </div>
+        </dialog>
     </div>
 </div>

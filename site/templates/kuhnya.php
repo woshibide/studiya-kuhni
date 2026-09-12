@@ -1,15 +1,7 @@
 <?php snippet('header') ?>
 
 <?php
-$heroGalleryImages = $page->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
-if ($heroGalleryImages->isEmpty()) {
-    $heroGalleryImages = $page->images()
-        ->sorted()
-        ->filterBy('type', 'image')
-        ->filter(function ($image) {
-            return strtolower($image->extension()) !== 'svg';
-        });
-}
+$heroGalleryImages = $page->studioKitchenImages();
 
 $heroSlides = [];
 foreach ($heroGalleryImages as $heroGalleryImage) {
@@ -31,22 +23,22 @@ $heroHasMultipleSlides = $heroSlideCount > 1;
 $kuhnyaLayoutImages = $heroGalleryImages->limit(6);
 $kuhnyaImageSlots = [
     [
-        'style' => '--col-start: 7; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: 12;',
+        'style' => '--col-start: 7; --col-span: 6; --col-start-mobile: 1; --col-span-mobile: var(--grid-columns);',
     ],
     [
-        'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
+        'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: var(--grid-columns);',
     ],
     [
-        'style' => '--col-start: 5; --col-span: 7; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: calc(var(--space-xxl) * 1.5);',
+        'style' => '--col-start: 5; --col-span: 7; --col-start-mobile: 1; --col-span-mobile: var(--grid-columns); margin-top: calc(var(--space-xxl) * 1.5);',
     ],
     [
-        'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: 12;',
+        'style' => '--col-start: 1; --col-span: 3; --col-start-mobile: 1; --col-span-mobile: var(--grid-columns);',
     ],
     [
-        'style' => '--col-start: 8; --col-span: 5; --col-start-mobile: 1; --col-span-mobile: 12; margin-top: var(--space-xxl);',
+        'style' => '--col-start: 8; --col-span: 5; --col-start-mobile: 1; --col-span-mobile: var(--grid-columns); margin-top: var(--space-xxl);',
     ],
     [
-        'style' => '--col-start: 1; --col-span: 7; --col-start-mobile: 1; --col-span-mobile: 12;',
+        'style' => '--col-start: 1; --col-span: 7; --col-start-mobile: 1; --col-span-mobile: var(--grid-columns);',
     ],
 ];
 $kuhnyaTitle = trim((string)$page->title()->value());
@@ -60,13 +52,9 @@ $kuhnyaFieldDefault = function (string $fieldName) use ($kuhnyaBlueprint): strin
     return trim((string)($field['default'] ?? ''));
 };
 
-$kuhnyaIntro = trim((string)$page->intro()->value());
+$kuhnyaIntro = $page->intro()->or($kuhnyaFieldDefault('intro'))->studioText(true);
 $kuhnyaCountry = trim((string)$page->country_of_origin()->value());
 $kuhnyaPrice = trim((string)$page->price()->value());
-
-if ($kuhnyaIntro === '') {
-    $kuhnyaIntro = $kuhnyaFieldDefault('intro');
-}
 
 if ($kuhnyaCountry === '') {
     $kuhnyaCountry = $kuhnyaFieldDefault('country_of_origin');
@@ -77,24 +65,17 @@ if ($kuhnyaPrice === '') {
 }
 
 $kuhnyaSpecs = $page->kitchen_specs()->toStructure();
-$kuhnyaFeatures = $page->kitchen_features()->toStructure();
+$kuhnyaFeatures = $page->studioFeatures();
 $hasOtherKitchens = $fabricPage
     ? $fabricPage
-        ->childrenAndDrafts()
+        ->children()->filter(fn ($entry) => $entry->studioPubliclyVisible())
         ->filter(fn ($kitchen) => $kitchen->id() !== $page->id())
         ->isNotEmpty()
     : false;
 
-if (function_exists('mb_strlen') && function_exists('mb_substr')) {
-    if (mb_strlen($kuhnyaIntro) > 180) {
-        $kuhnyaIntro = rtrim(mb_substr($kuhnyaIntro, 0, 180)) . '...';
-    }
-} elseif (strlen($kuhnyaIntro) > 180) {
-    $kuhnyaIntro = rtrim(substr($kuhnyaIntro, 0, 180)) . '...';
-}
 ?>
 
-<main>
+<main id="main-content" class="kuhnya-page" tabindex="-1">
 
     <section id="kuhnya-intro">
         <h1><?= $page->title() ?></h1>
@@ -111,7 +92,7 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
                 <article class="kunya-sticky-overview__content" aria-label="<?= esc($kuhnyaTitle, 'attr') ?>">
                     <a class="kunya-sticky-overview__eyebrow" href="<?= esc($kuhnyaBrandUrl, 'attr') ?>"><?= esc($kuhnyaBrand) ?></a>
                     <h2 class="kunya-sticky-overview__title"><?= esc($kuhnyaTitle) ?></h2>
-                    <p class="kunya-sticky-overview__intro"><?= esc($kuhnyaIntro) ?></p>
+                    <p class="kunya-sticky-overview__intro"><?= $kuhnyaIntro ?></p>
 
                     <ul class="kunya-sticky-overview__facts">
                         <li class="kunya-sticky-overview__fact-item">
@@ -145,29 +126,41 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
         <section id="kunya-hero" class="section-full" data-kunya-hero>
             <div class="kunya-hero__shell">
                 <?php if ($heroHasMultipleSlides): ?>
-                    <button class="kunya-hero__arrow kunya-hero__arrow--prev" type="button" data-kunya-hero-prev aria-label="Previous kitchen image">
+                    <button class="kunya-hero__arrow kunya-hero__arrow--prev" type="button" data-kunya-hero-prev aria-label="Предыдущее фото кухни">
                         <span aria-hidden="true">←</span>
                     </button>
-                    <button class="kunya-hero__arrow kunya-hero__arrow--next" type="button" data-kunya-hero-next aria-label="Next kitchen image">
+                    <button class="kunya-hero__arrow kunya-hero__arrow--next" type="button" data-kunya-hero-next aria-label="Следующее фото кухни">
                         <span aria-hidden="true">→</span>
                     </button>
                 <?php endif ?>
 
-                <div class="kunya-hero__media" data-kunya-media data-kunya-hero-viewport aria-roledescription="carousel" aria-label="Kitchen gallery">
+                <div class="kunya-hero__media" data-kunya-media data-kunya-hero-viewport aria-roledescription="carousel" aria-label="Фотографии кухни">
                     <div class="kunya-hero__container">
                         <?php foreach ($heroSlides as $heroIndex => $heroSlide): ?>
                             <div
                                 class="kunya-hero__slide"
                                 data-kunya-hero-slide
-                                aria-label="<?= esc(($heroIndex + 1) . ' of ' . $heroSlideCount, 'attr') ?>"
+                                aria-label="<?= esc(($heroIndex + 1) . ' из ' . $heroSlideCount, 'attr') ?>"
                             >
+                                <?php if ($heroGalleryImages->isNotEmpty()): ?>
+                                <button
+                                    class="kunya-hero__photo"
+                                    type="button"
+                                    data-gallery-hero-open="<?= esc($heroSlide['image']->filename(), 'attr') ?>"
+                                    aria-label="Открыть фото кухни в галерее"
+                                    aria-haspopup="dialog"
+                                >
+                                <?php endif ?>
                                 <?php snippet('turbo-image', [
                                     'image' => $heroSlide['image'],
                                     'alt' => $heroSlide['alt'],
                                     'width' => 2200,
                                     'loading' => $heroIndex === 0 ? 'eager' : 'lazy',
-                                    'attrs' => ['data-kunya-hero-image' => true],
+                                    'attrs' => ['data-kunya-hero-image' => true, 'draggable' => 'false'],
                                 ]) ?>
+                                <?php if ($heroGalleryImages->isNotEmpty()): ?>
+                                </button>
+                                <?php endif ?>
                             </div>
                         <?php endforeach ?>
                     </div>
@@ -175,35 +168,35 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
             </div>
         </section>
 
+        <?php if ($kuhnyaFeatures->isNotEmpty()): ?>
         <section id="features">
-            <?php if ($kuhnyaFeatures->isNotEmpty()): ?>
-                <ul class="kuhnya-features-list">
-                    <?php foreach ($kuhnyaFeatures as $feature): ?>
-                        <?php
-                        $featureText = trim($feature->text()->value());
-                        $featureImage = $feature->image()->toFile();
-                        if ($featureText === '') {
-                            continue;
-                        }
-                        ?>
-                        <li class="kuhnya-features-list__item">
-                            <?php if ($featureImage): ?>
-                                <?php snippet('turbo-image', [
-                                    'image' => $featureImage,
-                                    'class' => 'kuhnya-features-list__image',
-                                    'alt' => $featureImage->alt()->or($featureText)->or($kuhnyaTitle)->value(),
-                                    'width' => 960,
-                                    'loading' => 'lazy',
-                                ]) ?>
-                            <?php endif ?>
-                            <?php if ($featureText !== ''): ?>
-                                <p class="kuhnya-features-list__text"><?= esc($featureText) ?></p>
-                            <?php endif ?>
-                        </li>
-                    <?php endforeach ?>
-                </ul>
-            <?php endif ?>
+            <ul class="kuhnya-features-list">
+                <?php foreach ($kuhnyaFeatures as $feature): ?>
+                    <?php
+                    $featureText = $feature->text()->studioText(true);
+                    $featureImage = $feature->image()->toFile();
+                    if ($featureText === '') {
+                        continue;
+                    }
+                    ?>
+                    <li class="kuhnya-features-list__item">
+                        <?php if ($featureImage): ?>
+                            <?php snippet('turbo-image', [
+                                'image' => $featureImage,
+                                'class' => 'kuhnya-features-list__image',
+                                'alt' => $featureImage->alt()->or($feature->text()->studioPlainText())->or($kuhnyaTitle)->value(),
+                                'width' => 960,
+                                'loading' => 'lazy',
+                            ]) ?>
+                        <?php endif ?>
+                        <?php if ($featureText !== ''): ?>
+                            <p class="kuhnya-features-list__text"><?= $featureText ?></p>
+                        <?php endif ?>
+                    </li>
+                <?php endforeach ?>
+            </ul>
         </section>
+        <?php endif ?>
 
         <section id="about-the-brand">
             <?php snippet('fabric-info') ?>
@@ -226,21 +219,26 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
                             style="<?= esc($slot['style'], 'attr') ?>"
                             data-kuhnya-layout-card
                         >
-                            <div class="kuhnya-layout-media">
+                            <button
+                                class="kuhnya-layout-media"
+                                type="button"
+                                data-gallery-layout-open="<?= esc($layoutImage->filename(), 'attr') ?>"
+                                aria-label="Увеличить фото кухни"
+                            >
                                 <?php snippet('turbo-image', [
                                     'image' => $layoutImage,
                                     'alt' => $layoutAlt,
                                     'width' => 1600,
                                     'loading' => 'lazy',
                                 ]) ?>
-                            </div>
+                            </button>
 
                             <button
                                 class="kuhnya-layout-toggle"
                                 type="button"
                                 data-kuhnya-layout-toggle
                                 aria-expanded="false"
-                                aria-label="Expand image"
+                                aria-label="Увеличить фото кухни"
                             >
                                 <span aria-hidden="true">+</span>
                             </button>
@@ -252,9 +250,11 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
         </section>
 
 
-        <section id="benefits">
+        <?php if ($page->studioBenefits()->isNotEmpty()): ?>
+        <section>
             <?php snippet('benefits') ?>
         </section>
+        <?php endif ?>
 
         <!-- 
         <section id="table-top">
@@ -267,7 +267,7 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
             <h2>oblitsovka</h2>
         </section> -->
 
-        <section id="cta">
+    <section>
             <?php snippet('cta') ?>
         </section>
     </div>
@@ -288,9 +288,11 @@ if (function_exists('mb_strlen') && function_exists('mb_substr')) {
         <?php snippet('other-fabrics', ['contextPage' => $page]) ?>
     </section>
 
+    <?php /* archive section hidden for the next launch
     <section>
         <?php snippet('archive-posts') ?>
     </section>
+    */ ?>
 
     <section>
         <?php snippet('faq-section') ?>

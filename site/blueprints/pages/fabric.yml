@@ -1,109 +1,168 @@
 title: Фабрика
-
+extends: page-options/standard
+image:
+  query: page.fabric_logo.toFile
+  ratio: 3/2
+  cover: false
+  back: white
 tabs:
+  collections:
+    label: Кухни
+    icon: grid
+    sections:
+      pages:
+        type: pages
+        templates:
+          - kuhnya
+        layout: cards
+        status: all
+        image:
+          query: page.studioKitchenImages.first
+          ratio: 4/3
+          cover: true
+        label: 'Кухни фабрики'
+        size: small
+        info: '{{ page.country_of_origin }}'
+        help: 'Создайте кухню как черновик, заполните карточку и фотографии, затем измените статус для публикации.'
   card:
-    label: Карточка
+    label: 'О фабрике'
+    icon: text
     columns:
-      - width: 2/3
+      -
+        width: 2/3
         sections:
-          main:
+          hero:
             type: fields
             fields:
+              hero_heading_ui:
+                type: headline
+                label: 'Первый экран'
               title:
-                label: название фабрики
+                label: 'Название фабрики'
                 type: text
               simple_hero_heading:
-                label: заголовок simple hero
+                label: 'Заголовок первого экрана'
                 type: text
-                help: если пусто, используется название страницы
+                help: 'Если поле пустое, используется название страницы.'
               simple_hero_description:
-                label: описание simple hero
-                type: textarea
+                extends: fields/rich-text-inline
+                label: 'Описание первого экрана'
                 size: small
-                buttons: false
               simple_hero_button_label:
-                label: текст кнопки simple hero
+                label: 'Текст кнопки связи'
                 type: text
-                placeholder: давайте)
-              fabric_info_title:
-                label: заголовок блока о фабрике
-                type: text
-                default: О фабрике
-              fabric_info_text:
-                label: текст блока о фабрике
-                type: textarea
-                buttons: false
-                size: medium
-                help: этот текст будет показан на странице фабрики и на страницах кухонь этой фабрики
-
-      - width: 1/3
-        sections:
-          brand_media:
+                placeholder: Давайте)
+                help: 'Открывает общую форму связи. Оставьте пустым, чтобы убрать кнопку.'
+          about:
             type: fields
             fields:
+              about_heading_ui:
+                type: headline
+                label: 'О фабрике'
+              fabric_info_title:
+                label: 'Заголовок рассказа о фабрике'
+                type: text
+                default: 'О фабрике'
+                placeholder: 'О фабрике'
+              fabric_info_text:
+                extends: fields/rich-text
+                label: 'Рассказ о фабрике'
+                size: medium
+                help: 'Показывается на странице фабрики и на страницах всех её кухонь.'
+          message:
+            type: fields
+            fields:
+              message_heading_ui:
+                type: headline
+                label: 'Крупная фраза'
+              big_message:
+                label: 'Фраза перед кухнями фабрики'
+                type: text
+                placeholder: 'Кухни. Созданные для вашей жизни'
+                help: 'Если поле пустое, используется фраза, показанная в подсказке.'
+      -
+        width: 1/3
+        sections:
+          brand:
+            type: fields
+            fields:
+              brand_heading_ui:
+                type: headline
+                label: Логотип
               fabric_logo:
-                label: логотип фабрики
+                label: Логотип
                 type: files
                 multiple: false
                 max: 1
                 layout: cards
                 size: tiny
-                query: page.images.template("fabric-logo")
+                image:
+                  back: white
+                  cover: false
+                query: 'page.images.template("fabric-logo")'
                 uploads:
                   template: fabric-logo
-                help: загрузите логотип в формате svg или png
-
-          map:
+                help: 'Загрузите логотип в формате SVG или PNG.'
+          sharing:
+            type: info
+            label: 'Общие данные'
+            text: 'Рассказ, логотип и карта фабрики автоматически используются на страницах её кухонь.'
+  location:
+    label: Карта
+    icon: map
+    columns:
+      -
+        width: 2/3
+        sections:
+          location:
             type: fields
             fields:
-              fabric_map_lat:
-                label: карта широта
-                type: number
-                default: 55.709744
-                step: 0.000001
-              fabric_map_lng:
-                label: карта долгота
-                type: number
-                default: 37.592538
-                step: 0.000001
-              fabric_map_zoom:
-                label: карта zoom
-                type: number
-                default: 13
-                min: 1
-                max: 19
+              location_heading_ui:
+                type: headline
+                label: Местоположение
+              fabric_location:
+                label: 'Местоположение фабрики'
+                type: locator
+                tiles: openstreetmap
+                geocoding: nominatim
+                autocomplete: false
+                language: ru
+                saveZoom: true
+                autoSaveZoom: true
+                draggable: true
+                collapse: false
+                dblclick: marker
+                center:
+                  lat: 0
+                  lon: 0
+                zoom:
+                  min: 2
+                  default: 3
+                  max: 19
+                display:
+                  - lat
+                  - lon
+                  - address
+                  - city
+                  - country
+                help: 'Найдите адрес или введите координаты «широта, долгота». Точку можно переместить на карте. Сохраните страницу, чтобы обновить карту фабрики и её кухонь. Удаление точки скрывает карту.'
+      -
+        width: 1/3
+        sections:
+          map_label:
+            type: fields
+            fields:
+              map_label_heading_ui:
+                type: headline
+                label: Подпись
               fabric_map_label:
-                label: подпись маркера на карте
+                label: 'Название точки на карте'
                 type: text
-                placeholder: название фабрики
-
-  cta:
-    label: CTA
-    sections:
-      cta_fields:
-        type: fields
-        fields:
-          cta_heading:
-            label: заголовок cta
-            type: text
-            default: Отпразднуем вашу новую кухню?
-          cta_text:
-            label: текст cta
-            type: textarea
-            size: small
-            buttons: false
-            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
-          cta_button:
-            label: кнопка cta
-            type: text
-            default: Свяжитесь со мной
-
-  collections:
-    label: Кухни
-    sections:
-      pages:
-        type: pages
-        headline: Кухни
-        templates:
-          - kuhnya
-        layout: cards
+                placeholder: 'Название фабрики'
+                help: 'Если поле пустое, используется название фабрики.'
+          map_help:
+            type: info
+            label: 'Сохранение точки'
+            text: 'Укажите адрес или координаты, уточните положение маркера и сохраните страницу. Удаление точки скрывает карту фабрики и её кухонь.'
+  files: tabs/files
+  seo: tabs/seo

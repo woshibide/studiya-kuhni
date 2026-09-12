@@ -1,16 +1,125 @@
-title: Site
-
-sections:
+title: 'Студия кухни'
+tabs:
   pages:
-    type: pages
-
-  static_site_generator:
-    type: fields
-    fields:
-      staticSiteGenerator:
-        type: staticSiteGenerator
-        label: Сгенерировать статическую версию сайта
-        help: Запускает генерацию статической версии сайта.
-        progress: Идёт генерация статической версии...
-        success: Статическая версия готова.
-        error: Не удалось сгенерировать статическую версию.
+    label: Страницы
+    icon: page
+    columns:
+      -
+        width: 2/3
+        sections:
+          primary_pages:
+            type: pages
+            label: 'Основные страницы'
+            status: all
+            create: false
+            templates:
+              - home
+              - designers
+              - proizvodstvo
+              - contacts
+              - faq
+            layout: list
+          other_pages:
+            type: pages
+            label: 'Другие текстовые страницы'
+            status: all
+            create: true
+            templates:
+              - default
+            layout: list
+            help: 'Здесь можно добавить отдельную текстовую страницу, например условия доставки. Чтобы посетители нашли её, вставьте ссылку на неё в текст одной из основных страниц.'
+      -
+        width: 1/3
+        sections:
+          supporting_pages:
+            type: pages
+            label: 'Дополнительные страницы'
+            status: all
+            create: false
+            templates:
+              - mediakit
+            layout: list
+          service_pages:
+            type: pages
+            label: 'Служебные страницы'
+            text: '{{ page.blueprint.title }}'
+            status: all
+            create: false
+            templates:
+              - privacy
+              - error
+            layout: list
+          archive_page:
+            type: pages
+            label: Архив
+            status: all
+            create: false
+            templates:
+              - archive
+            layout: list
+            help: 'Архив закрыт для посетителей независимо от статуса страниц. Внутри можно готовить публикации.'
+  catalogue:
+    label: 'Каталог кухонь'
+    icon: grid
+    sections:
+      catalogue_page:
+        type: pages
+        label: 'Страница каталога'
+        status: all
+        create: false
+        templates:
+          - fabrics
+        layout: list
+        help: 'Вступление, преимущества, заявка и консультация на общей странице всех фабрик.'
+      factories:
+        type: pages
+        label: 'Фабрики и кухни'
+        parent: 'site.find("fabrics")'
+        templates:
+          - fabric
+        status: all
+        layout: cards
+        size: small
+        info: 'Кухни: {{ page.childrenAndDrafts.count }}'
+        image:
+          query: page.fabric_logo.toFile
+          ratio: 3/2
+          cover: false
+          back: white
+        help: 'Откройте фабрику, затем выберите кухню. Здесь же добавляются новые фабрики.'
+  settings:
+    label: 'Настройки сайта'
+    icon: cog
+    columns:
+      -
+        width: 2/3
+        sections:
+          site_seo_fields:
+            type: fields
+            fields:
+              title:
+                label: 'Название сайта'
+                type: text
+                required: true
+              seo:
+                extends: fields/seo
+          site_files:
+            type: files
+            label: 'Файлы для общих настроек'
+            layout: cards
+            size: small
+            image:
+              ratio: 4/3
+              cover: false
+            help: 'Общее изображение для соцсетей выбирается в поле выше.'
+      -
+        width: 1/3
+        sections:
+          settings_guide:
+            type: info
+            label: 'Настройки по умолчанию'
+            text: 'Описание и изображение используются страницами, где не заполнены собственные настройки поиска и соцсетей.'
+          publishing:
+            type: info
+            label: 'Сохранение и публикация'
+            text: 'Сохранение изменяет текущую среду сайта. Черновики доступны через предпросмотр. Перенос подготовленной версии на основной домен пока не настроен.'

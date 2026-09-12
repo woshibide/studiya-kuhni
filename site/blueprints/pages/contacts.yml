@@ -1,148 +1,164 @@
 title: Контакты
-
-status:
-  draft: true
-  listed: true
-
+extends: page-options/singleton
 tabs:
   contacts:
     label: Контакты
-    columns:
-      main:
-        width: 2/3
-        sections:
-          contact_fields:
-            type: fields
+    icon: phone
+    sections:
+      usage:
+        type: info
+        label: 'Общие контакты'
+        text: 'Телефон, адрес, ссылки и форма используются на странице контактов и в панели связи на всём сайте.'
+      details:
+        type: fields
+        fields:
+          details_heading_ui:
+            type: headline
+            label: 'Как связаться'
+          phone:
+            label: Телефон
+            type: tel
+            placeholder: '+7 968 263-82-70'
+            default: '+7 968 263-82-70'
+          messengers:
+            label: Мессенджеры
+            type: structure
             fields:
-              panel_title:
-                label: заголовок панели контактов
+              title:
+                label: Название
                 type: text
-                default: Контакты
-              panel_close_text:
-                label: текст кнопки закрытия панели
+                required: true
+              url:
+                label: Ссылка
+                type: url
+                required: true
+            columns:
+              title:
+                label: Название
+                width: 1/3
+              url:
+                label: Ссылка
+                width: 2/3
+          email:
+            label: 'Электронная почта'
+            type: email
+            placeholder: Info@petru-grupp.ru
+      address:
+        type: fields
+        fields:
+          address_heading_ui:
+            type: headline
+            label: 'Студия и адрес'
+          studio_name:
+            label: 'Название студии'
+            type: text
+            default: 'Студия Кухни'
+            placeholder: 'Студия Кухни'
+          address:
+            label: Адрес
+            type: textarea
+            buttons: false
+          hours:
+            label: 'График работы'
+            type: text
+            default: 'Ежедневно с 10:00 до 22:00'
+            placeholder: 'Ежедневно с 10:00 до 22:00'
+          map_links:
+            label: 'Ссылки на карты'
+            type: structure
+            fields:
+              title:
+                label: Название
                 type: text
-                default: Закрыть
-              panel_close_aria_label:
-                label: aria-label кнопки закрытия панели
-                type: text
-                default: Закрыть окно связи
-              help_title:
-                label: заголовок блока контактов
-                type: text
-                default: Контакты
-              intro_text:
-                label: вступительный текст
-                type: textarea
-                size: medium
-                default: Выберите удобный способ связи и оставьте заявку, если хотите обратный звонок.
-              phone:
-                label: телефон
-                type: tel
-                placeholder: +7 968 263-82-70
-                default: +7 968 263-82-70
-              messengers:
-                label: мессенджеры
-                type: structure
-                fields:
-                  title:
-                    label: название
-                    type: text
-                    required: true
-                  url:
-                    label: ссылка
-                    type: url
-                    required: true
-      sidebar:
-        width: 1/3
-        sections:
-          files:
-            type: files
-
+                required: true
+              url:
+                label: Ссылка
+                type: url
+                required: true
+            columns:
+              title:
+                label: Название
+                width: 1/3
+              url:
+                label: Ссылка
+                width: 2/3
   form:
-    label: Форма обратной связи
-    columns:
-      main:
-        width: 2/3
-        sections:
-          form_fields:
-            type: fields
-            fields:
-              callback_title:
-                label: заголовок формы обратной связи
-                type: text
-                default: Форма обратной связи
-              callback_phone_placeholder:
-                label: placeholder поля телефона
-                type: text
-                default: Ваш номер телефона?
-              callback_name_placeholder:
-                label: placeholder поля имени
-                type: text
-                default: Как к Вам обращаться?
-              callback_email_placeholder:
-                label: placeholder поля email
-                type: text
-                default: Электронная почта? (Опционально)
-              consent_text:
-                label: текст согласия
-                type: textarea
-                buttons: false
-                default: С порядком обработки данных ознакомился и даю согласие на обратную связь
-              callback_button_text:
-                label: текст кнопки формы
-                type: text
-                default: Перезвоните мне
-      side:
-        width: 1/3
-        sections:
-          form_info:
-            type: info
-            text: Поля этой вкладки используются на странице контактов и в панели контактов в шапке сайта.
-
-  address:
-    label: Адрес и карты
-    columns:
-      main:
-        width: 2/3
-        sections:
-          address_fields:
-            type: fields
-            fields:
-              address_section_title:
-                label: заголовок блока адреса
-                type: text
-                default: Адрес и карты
-              studio_name:
-                label: название студии
-                type: text
-                default: Студия Кухни
-              email:
-                label: email
-                type: email
-                placeholder: info@petru-grupp.ru
-              address:
-                label: адрес
-                type: textarea
-                buttons: false
-              hours:
-                label: график работы
-                type: text
-                default: Ежедневно с 10:00 до 22:00
-              map_links:
-                label: ссылки на карты
-                type: structure
-                fields:
-                  title:
-                    label: название
-                    type: text
-                    required: true
-                  url:
-                    label: ссылка
-                    type: url
-                    required: true
-      side:
-        width: 1/3
-        sections:
-          info:
-            type: info
-            text: Эти поля используются одновременно на странице контактов и в панели контактов в шапке сайта.
+    label: 'Форма заявки'
+    icon: email
+    sections:
+      form_fields:
+        type: fields
+        fields:
+          form_heading_ui:
+            type: headline
+            label: 'Текст формы'
+          callback_title:
+            label: 'Заголовок формы обратной связи'
+            type: text
+            default: 'Форма обратной связи'
+            placeholder: 'Форма обратной связи'
+          consent_text:
+            label: 'Текст согласия'
+            type: textarea
+            buttons: false
+            default: 'С порядком обработки данных ознакомился и даю согласие на обратную связь'
+            placeholder: 'С порядком обработки данных ознакомился и даю согласие на обратную связь'
+          callback_button_text:
+            label: 'Текст кнопки формы'
+            type: text
+            default: 'Перезвоните мне'
+            placeholder: 'Перезвоните мне'
+      hints:
+        type: fields
+        fields:
+          hints_heading_ui:
+            type: headline
+            label: 'Подсказки в полях'
+          callback_phone_placeholder:
+            label: 'Подсказка в поле телефона'
+            type: text
+            default: 'Ваш номер телефона?'
+            placeholder: 'Ваш номер телефона?'
+          callback_name_placeholder:
+            label: 'Подсказка в поле имени'
+            type: text
+            default: 'Как к Вам обращаться?'
+            placeholder: 'Как к Вам обращаться?'
+          callback_email_placeholder:
+            label: 'Подсказка в поле электронной почты'
+            type: text
+            default: 'Электронная почта? (Опционально)'
+            placeholder: 'Электронная почта? (Опционально)'
+  content:
+    label: 'Заголовки страницы'
+    icon: text
+    sections:
+      titles:
+        type: fields
+        fields:
+          titles_heading_ui:
+            type: headline
+            label: 'Страница и панель связи'
+          panel_title:
+            label: 'Заголовок панели контактов'
+            type: text
+            default: Контакты
+            placeholder: Контакты
+          help_title:
+            label: 'Заголовок блока контактов'
+            type: text
+            default: Контакты
+            placeholder: Контакты
+          intro_text:
+            extends: fields/rich-text-inline
+            label: 'Вступительный текст'
+            size: medium
+            default: 'Выберите удобный способ связи и оставьте заявку, если хотите обратный звонок.'
+            placeholder: 'Выберите удобный способ связи и оставьте заявку, если хотите обратный звонок.'
+          address_section_title:
+            label: 'Заголовок блока адреса'
+            type: text
+            default: 'Адрес и карты'
+            placeholder: 'Адрес и карты'
+  files: tabs/files
+  seo: tabs/seo

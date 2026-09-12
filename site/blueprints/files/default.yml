@@ -1,0 +1,4 @@
+title: Файл
+fields:
+  image_metadata:
+    extends: fields/image-metadata

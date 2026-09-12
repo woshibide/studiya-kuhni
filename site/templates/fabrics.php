@@ -1,22 +1,10 @@
 <?php snippet('header') ?>
 
-<main>
+<main id="main-content" tabindex="-1">
 
     <?php
     $placeholderImageUrl = relative_url('assets/placeholder.svg');
-    $resolveKitchenGalleryImages = static function ($kitchen) {
-        $selected = $kitchen->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
-        if ($selected->isNotEmpty()) {
-            return $selected;
-        }
-
-        return $kitchen->images()
-            ->sorted()
-            ->filterBy('type', 'image')
-            ->filter(function ($image) {
-                return strtolower($image->extension()) !== 'svg';
-            });
-    };
+    $resolveKitchenGalleryImages = static fn ($kitchen) => $kitchen->studioKitchenImages();
     $resolveOptimizedImageUrl = static function ($image, int $width = 1600) use ($placeholderImageUrl): string {
         if (!$image || !is_object($image) || !method_exists($image, 'url')) {
             return $placeholderImageUrl;
@@ -45,9 +33,9 @@
     </section>
 
     <section class="fabric-grid">
-        <?php foreach ($page->childrenAndDrafts() as $fabric): ?>
+        <?php foreach ($page->children()->filter(fn ($entry) => $entry->studioPubliclyVisible()) as $fabric): ?>
             <?php
-            $kitchens = $fabric->childrenAndDrafts();
+            $kitchens = $fabric->children()->filter(fn ($entry) => $entry->studioPubliclyVisible());
             $kitchenLinks = [];
             $kitchenSlides = [];
 
@@ -107,6 +95,7 @@
                     data-fabric-card
                     data-default-image="<?= esc($cardImageUrl, 'attr') ?>"
                 >
+                    <button type="button" class="fabric-card__toggle" data-fabric-toggle aria-expanded="false" aria-label="Увеличить фотографии <?= esc($fabric->title(), 'attr') ?>">+</button>
                     <div class="fabric-card__media">
                         <div class="fabric-card__media-viewport">
                             <div class="fabric-card__media-container">
@@ -167,9 +156,11 @@
         <?php snippet('faq-section') ?>
     </section>
 
+    <?php /* archive section hidden for the next launch
     <section>
         <?php snippet('archive-posts') ?>
     </section>
+    */ ?>
 
 
 </main>

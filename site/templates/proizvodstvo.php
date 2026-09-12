@@ -6,7 +6,7 @@ $singleImageAsset = $singleImage ?? asset('assets/placeholder.svg');
 $singleImageAlt = $page->single_image_alt();
 ?>
 
-<main>
+<main id="main-content" tabindex="-1">
 
     <section>
         <?php snippet('simple-hero') ?>
@@ -18,7 +18,7 @@ $singleImageAlt = $page->single_image_alt();
             'alt' => $singleImage ? $singleImageAlt->or($singleImage->alt())->value() : '',
             'width' => 2200,
             'loading' => 'eager',
-            'attrs' => ['style' => 'width: 100%;'],
+            'class' => 'proizvodstvo-image',
         ]) ?>
     </section>    
 

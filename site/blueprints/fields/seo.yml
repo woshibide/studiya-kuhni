@@ -1,0 +1,24 @@
+type: group
+fields:
+  seo_title:
+    label: Заголовок для поиска и социальных сетей
+    type: text
+    maxlength: 80
+    help: Если поле пустое, используется название страницы или сайта.
+  seo_description:
+    label: Описание для поиска и социальных сетей
+    type: textarea
+    buttons: false
+    size: small
+    maxlength: 200
+    help: Короткое описание содержимого страницы. Для сайта задаёт описание по умолчанию.
+  seo_image:
+    label: Изображение для социальных сетей
+    type: files
+    multiple: false
+    max: 1
+    layout: cards
+    query: model.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      template: social-image
+    help: Горизонтальное изображение JPG, PNG или WebP. Рекомендуемый размер 1200 × 630 пикселей.

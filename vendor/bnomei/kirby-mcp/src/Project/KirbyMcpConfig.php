@@ -1,0 +1,596 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Bnomei\KirbyMcp\Project;
+
+final readonly class KirbyMcpConfig
+{
+    public const DEFAULT_CACHE_TTL_SECONDS = 60;
+    public const DEFAULT_DOCS_TTL_SECONDS = 86400; // 1 day
+    public const DEFAULT_DUMPS_MAX_BYTES = 2097152; // 2 MB
+    public const DEFAULT_DUMPS_ENABLED = true;
+    public const DEFAULT_IDE_TYPE_HINT_SCAN_BYTES = 16384; // 16 KB
+
+    /**
+     * @param array<mixed> $data
+     */
+    private function __construct(
+        public ?string $path,
+        public array $data,
+        public ?string $error = null,
+    ) {
+    }
+
+    /**
+     * @return array<string, array{stamp:string, config:self}>
+     */
+    private static function &cache(): array
+    {
+        /** @var array<string, array{stamp:string, config:self}> $cache */
+        static $cache = [];
+
+        return $cache;
+    }
+
+    public static function clearCache(): int
+    {
+        $cache = &self::cache();
+        $count = count($cache);
+        $cache = [];
+
+        return $count;
+    }
+
+    public static function load(string $projectRoot): self
+    {
+        /** @var array<string, array{stamp:string, config:self}> $cache */
+        $cache = &self::cache();
+
+        $dir = rtrim($projectRoot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.kirby-mcp';
+
+        $candidates = [
+            $dir . DIRECTORY_SEPARATOR . 'mcp.json',
+            $dir . DIRECTORY_SEPARATOR . 'config.json',
+        ];
+
+        $selectedPath = null;
+        foreach ($candidates as $path) {
+            if (is_file($path)) {
+                $selectedPath = $path;
+                break;
+            }
+        }
+
+        $cacheKey = rtrim($projectRoot, DIRECTORY_SEPARATOR);
+
+        if (is_string($selectedPath) && $selectedPath !== '') {
+            $mtime = filemtime($selectedPath);
+            $stamp = $selectedPath . '|' . (is_int($mtime) ? $mtime : 0);
+        } else {
+            $dirMtime = is_dir($dir) ? filemtime($dir) : false;
+            $stamp = 'none|' . (is_int($dirMtime) ? $dirMtime : 0);
+        }
+
+        $cached = $cache[$cacheKey] ?? null;
+        if (is_array($cached) && ($cached['stamp'] ?? null) === $stamp && ($cached['config'] ?? null) instanceof self) {
+            return $cached['config'];
+        }
+
+        if (is_string($selectedPath) && $selectedPath !== '') {
+            $contents = file_get_contents($selectedPath);
+            if (!is_string($contents)) {
+                $config = new self($selectedPath, [], 'Failed to read config file.');
+                $cache[$cacheKey] = ['stamp' => $stamp, 'config' => $config];
+                return $config;
+            }
+
+            $contents = trim($contents);
+            if ($contents === '') {
+                $config = new self($selectedPath, [], 'Config file is empty.');
+                $cache[$cacheKey] = ['stamp' => $stamp, 'config' => $config];
+                return $config;
+            }
+
+            try {
+                /** @var mixed $decoded */
+                $decoded = json_decode($contents, true, flags: JSON_THROW_ON_ERROR);
+            } catch (\JsonException $exception) {
+                $config = new self($selectedPath, [], 'Invalid JSON in config file: ' . $exception->getMessage());
+                $cache[$cacheKey] = ['stamp' => $stamp, 'config' => $config];
+                return $config;
+            }
+
+            if (!is_array($decoded)) {
+                $config = new self($selectedPath, [], 'Config JSON must be an object.');
+                $cache[$cacheKey] = ['stamp' => $stamp, 'config' => $config];
+                return $config;
+            }
+
+            /** @var array<mixed> $decoded */
+            $config = new self($selectedPath, $decoded);
+            $cache[$cacheKey] = ['stamp' => $stamp, 'config' => $config];
+            return $config;
+        }
+
+        $config = new self(null, []);
+        $cache[$cacheKey] = ['stamp' => $stamp, 'config' => $config];
+        return $config;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function cliAllow(): array
+    {
+        return $this->stringList($this->data['cli']['allow'] ?? null);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function cliAllowWrite(): array
+    {
+        return $this->stringList($this->data['cli']['allowWrite'] ?? null);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function cliDeny(): array
+    {
+        return $this->stringList($this->data['cli']['deny'] ?? null);
+    }
+
+    public function kirbyHost(): ?string
+    {
+        $kirby = $this->data['kirby'] ?? null;
+        if (is_array($kirby)) {
+            $host = $kirby['host'] ?? null;
+            if (is_string($host) && trim($host) !== '') {
+                return trim($host);
+            }
+        }
+
+        return null;
+    }
+
+    public function evalEnabled(): bool
+    {
+        $eval = $this->data['eval'] ?? null;
+        if (is_array($eval)) {
+            $enabled = $eval['enabled'] ?? null;
+            if ($enabled === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function queryEnabled(): bool
+    {
+        $query = $this->data['query'] ?? null;
+        if (is_array($query)) {
+            $enabled = $query['enabled'] ?? null;
+            if (is_bool($enabled)) {
+                return $enabled;
+            }
+        }
+
+        return true;
+    }
+
+    public function cacheTtlSeconds(): int
+    {
+        $cache = $this->data['cache'] ?? null;
+        if (!is_array($cache)) {
+            return self::DEFAULT_CACHE_TTL_SECONDS;
+        }
+
+        $ttl = $cache['ttlSeconds'] ?? $cache['ttl'] ?? null;
+
+        if (is_string($ttl) && trim($ttl) !== '' && ctype_digit(trim($ttl))) {
+            $ttl = (int) trim($ttl);
+        }
+
+        if (!is_int($ttl)) {
+            return self::DEFAULT_CACHE_TTL_SECONDS;
+        }
+
+        return max(0, min(3600, $ttl));
+    }
+
+    public function docsTtlSeconds(): int
+    {
+        $docs = $this->data['docs'] ?? null;
+        if (!is_array($docs)) {
+            return self::DEFAULT_DOCS_TTL_SECONDS;
+        }
+
+        $ttl = $docs['ttlSeconds'] ?? $docs['ttl'] ?? null;
+
+        if (is_string($ttl) && trim($ttl) !== '' && ctype_digit(trim($ttl))) {
+            $ttl = (int) trim($ttl);
+        }
+
+        if (!is_int($ttl)) {
+            return self::DEFAULT_DOCS_TTL_SECONDS;
+        }
+
+        return max(0, min(604800, $ttl)); // max 7 days
+    }
+
+    public function dumpsMaxBytes(): int
+    {
+        $dumps = $this->data['dumps'] ?? null;
+        if (!is_array($dumps)) {
+            return self::DEFAULT_DUMPS_MAX_BYTES;
+        }
+
+        $maxBytes = $dumps['maxBytes'] ?? $dumps['maxbytes'] ?? $dumps['max_bytes'] ?? null;
+
+        if (is_string($maxBytes) && trim($maxBytes) !== '' && ctype_digit(trim($maxBytes))) {
+            $maxBytes = (int) trim($maxBytes);
+        }
+
+        if (!is_int($maxBytes)) {
+            return self::DEFAULT_DUMPS_MAX_BYTES;
+        }
+
+        return max(0, $maxBytes);
+    }
+
+    public function dumpsEnabled(): bool
+    {
+        $dumps = $this->data['dumps'] ?? null;
+        if (!is_array($dumps)) {
+            return self::DEFAULT_DUMPS_ENABLED;
+        }
+
+        $enabled = $dumps['enabled'] ?? null;
+        if (is_bool($enabled)) {
+            return $enabled;
+        }
+
+        if (is_string($enabled)) {
+            $value = strtolower(trim($enabled));
+            if ($value === '0' || $value === 'false' || $value === 'off' || $value === 'no') {
+                return false;
+            }
+
+            if ($value === '1' || $value === 'true' || $value === 'on' || $value === 'yes') {
+                return true;
+            }
+        }
+
+        if (is_int($enabled)) {
+            return $enabled !== 0;
+        }
+
+        return self::DEFAULT_DUMPS_ENABLED;
+    }
+
+    /**
+     * Get secret masking patterns for dumps.
+     * Returns null to use defaults, or an array of custom patterns (empty array disables masking).
+     *
+     * @return array<int, string>|null
+     */
+    public function dumpsSecretPatterns(): ?array
+    {
+        $dumps = $this->data['dumps'] ?? null;
+        if (!is_array($dumps)) {
+            return null; // Use defaults
+        }
+
+        // Check if secretPatterns key exists
+        if (!array_key_exists('secretPatterns', $dumps)) {
+            return null; // Use defaults
+        }
+
+        $patterns = $dumps['secretPatterns'];
+
+        // Explicitly set to null means use defaults
+        if ($patterns === null) {
+            return null;
+        }
+
+        // Must be an array (can be empty to disable masking)
+        if (!is_array($patterns)) {
+            return null; // Invalid, use defaults
+        }
+
+        // Filter to only valid string patterns
+        $result = [];
+        foreach ($patterns as $pattern) {
+            if (is_string($pattern) && trim($pattern) !== '') {
+                $result[] = trim($pattern);
+            }
+        }
+
+        return $result;
+    }
+
+    public function ideTypeHintScanBytes(): int
+    {
+        $ide = $this->data['ide'] ?? null;
+        if (!is_array($ide)) {
+            return self::DEFAULT_IDE_TYPE_HINT_SCAN_BYTES;
+        }
+
+        $bytes = $ide['typeHintScanBytes'] ?? $ide['typeHintsScanBytes'] ?? $ide['scanBytes'] ?? null;
+
+        if (is_string($bytes) && trim($bytes) !== '' && ctype_digit(trim($bytes))) {
+            $bytes = (int) trim($bytes);
+        }
+
+        if (!is_int($bytes) || $bytes <= 0) {
+            return self::DEFAULT_IDE_TYPE_HINT_SCAN_BYTES;
+        }
+
+        return max(1024, min(1048576, $bytes));
+    }
+
+    public function http(): KirbyMcpHttpConfig
+    {
+        $http = $this->data['http'] ?? null;
+        $http = is_array($http) ? $http : [];
+        $auth = $http['auth'] ?? null;
+        $auth = is_array($auth) ? $auth : [];
+        $oauthProvider = $http['oauthProvider'] ?? $http['oauth_provider'] ?? $auth['provider'] ?? null;
+        $oauthProvider = is_array($oauthProvider) ? $oauthProvider : [];
+        $scopes = $this->envStringList('KIRBY_MCP_HTTP_SCOPES')
+            ?? $this->stringList($auth['scopes'] ?? null);
+
+        return new KirbyMcpHttpConfig(
+            enabled: $this->envBool('KIRBY_MCP_HTTP_ENABLED')
+                ?? $this->boolValue($http['enabled'] ?? null)
+                ?? KirbyMcpHttpConfig::DEFAULT_ENABLED,
+            host: $this->envString('KIRBY_MCP_HTTP_HOST')
+                ?? $this->stringValue($http['host'] ?? null)
+                ?? KirbyMcpHttpConfig::DEFAULT_HOST,
+            port: $this->envInt('KIRBY_MCP_HTTP_PORT')
+                ?? $this->intValue($http['port'] ?? null)
+                ?? KirbyMcpHttpConfig::DEFAULT_PORT,
+            path: $this->normalizeHttpPath(
+                $this->envString('KIRBY_MCP_HTTP_PATH')
+                    ?? $this->stringValue($http['path'] ?? null)
+                    ?? KirbyMcpHttpConfig::DEFAULT_PATH,
+            ),
+            allowedOrigins: $this->envStringList('KIRBY_MCP_HTTP_ALLOWED_ORIGINS')
+                ?? $this->stringList($http['allowedOrigins'] ?? $http['allowed_origins'] ?? null),
+            authMode: $this->normalizeAuthMode(
+                $this->envString('KIRBY_MCP_HTTP_AUTH_MODE')
+                    ?? $this->stringValue($auth['mode'] ?? null),
+            ),
+            sharedToken: $this->envString('KIRBY_MCP_HTTP_TOKEN')
+                ?? $this->stringValue($auth['token'] ?? $auth['sharedToken'] ?? null),
+            oauthIssuer: $this->envString('KIRBY_MCP_HTTP_OAUTH_ISSUER')
+                ?? $this->stringValue($auth['issuer'] ?? null),
+            oauthAudience: $this->envString('KIRBY_MCP_HTTP_OAUTH_AUDIENCE')
+                ?? $this->stringValue($auth['audience'] ?? null),
+            oauthJwksUri: $this->envString('KIRBY_MCP_HTTP_OAUTH_JWKS_URI')
+                ?? $this->stringValue($auth['jwksUri'] ?? $auth['jwks_uri'] ?? null),
+            scopes: $scopes,
+            remoteTokens: $this->remoteTokens($auth, $scopes),
+            oauthProvider: new KirbyMcpOAuthProviderConfig(
+                enabled: $this->envBool('KIRBY_MCP_HTTP_OAUTH_PROVIDER_ENABLED')
+                    ?? $this->boolValue($oauthProvider['enabled'] ?? null)
+                    ?? KirbyMcpOAuthProviderConfig::DEFAULT_ENABLED,
+                path: $this->normalizeHttpPath(
+                    $this->envString('KIRBY_MCP_HTTP_OAUTH_PROVIDER_PATH')
+                        ?? $this->stringValue($oauthProvider['path'] ?? null)
+                        ?? KirbyMcpOAuthProviderConfig::DEFAULT_PATH,
+                ),
+                consent: $this->normalizeOAuthConsent(
+                    $this->envString('KIRBY_MCP_HTTP_OAUTH_PROVIDER_CONSENT')
+                        ?? $this->stringValue($oauthProvider['consent'] ?? null),
+                ),
+                consentSnippet: $this->envString('KIRBY_MCP_HTTP_OAUTH_PROVIDER_CONSENT_SNIPPET')
+                    ?? $this->stringValue($oauthProvider['consentSnippet'] ?? $oauthProvider['consent_snippet'] ?? null)
+                    ?? KirbyMcpOAuthProviderConfig::DEFAULT_CONSENT_SNIPPET,
+                role: $this->envString('KIRBY_MCP_HTTP_OAUTH_PROVIDER_ROLE')
+                    ?? $this->stringValue($oauthProvider['role'] ?? null)
+                    ?? KirbyMcpOAuthProviderConfig::DEFAULT_ROLE,
+            ),
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $auth
+     * @param list<string> $globalScopes
+     * @return list<KirbyMcpHttpToken>
+     */
+    private function remoteTokens(array $auth, array $globalScopes): array
+    {
+        $tokens = [];
+        $configured = $auth['tokens'] ?? null;
+
+        if (is_array($configured)) {
+            if (array_is_list($configured)) {
+                foreach ($configured as $index => $item) {
+                    if (is_array($item)) {
+                        $tokens[] = $this->remoteTokenFromArray($item, 'token-' . ((int) $index + 1), $globalScopes);
+                    }
+                }
+            } else {
+                foreach ($configured as $id => $item) {
+                    if (is_array($item)) {
+                        $tokens[] = $this->remoteTokenFromArray($item, is_string($id) ? $id : 'token', $globalScopes);
+                    }
+                }
+            }
+        }
+
+        $envToken = $this->envString('KIRBY_MCP_HTTP_REMOTE_TOKEN');
+        $envHash = $this->envString('KIRBY_MCP_HTTP_REMOTE_TOKEN_HASH');
+        $envId = $this->envString('KIRBY_MCP_HTTP_REMOTE_TOKEN_ID') ?? 'env';
+        $envScopes = $this->envStringList('KIRBY_MCP_HTTP_REMOTE_TOKEN_SCOPES') ?? $globalScopes;
+
+        if ($envToken !== null) {
+            $tokens[] = KirbyMcpHttpToken::fromPlainText($envId, $envToken, $envScopes);
+        } elseif ($envHash !== null) {
+            $tokens[] = new KirbyMcpHttpToken($envId, $envHash, $envScopes);
+        }
+
+        return $tokens;
+    }
+
+    /**
+     * @param array<string, mixed> $item
+     * @param list<string> $globalScopes
+     */
+    private function remoteTokenFromArray(array $item, string $fallbackId, array $globalScopes): KirbyMcpHttpToken
+    {
+        $scopes = $this->stringList($item['scopes'] ?? null);
+
+        return new KirbyMcpHttpToken(
+            id: $this->stringValue($item['id'] ?? null) ?? trim($fallbackId),
+            hash: $this->stringValue($item['hash'] ?? $item['tokenHash'] ?? $item['token_hash'] ?? null) ?? '',
+            scopes: $scopes === [] ? $globalScopes : $scopes,
+        );
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function stringList(mixed $value): array
+    {
+        if (!is_array($value)) {
+            return [];
+        }
+
+        $out = [];
+        foreach ($value as $item) {
+            if (!is_string($item)) {
+                continue;
+            }
+
+            $item = trim($item);
+            if ($item === '') {
+                continue;
+            }
+
+            $out[] = $item;
+        }
+
+        $out = array_values(array_unique($out));
+        sort($out);
+
+        return $out;
+    }
+
+    private function envString(string $name): ?string
+    {
+        $value = getenv($name);
+
+        return is_string($value) && trim($value) !== '' ? trim($value) : null;
+    }
+
+    private function envBool(string $name): ?bool
+    {
+        return $this->boolValue($this->envString($name));
+    }
+
+    private function envInt(string $name): ?int
+    {
+        return $this->intValue($this->envString($name));
+    }
+
+    /**
+     * @return list<string>|null
+     */
+    private function envStringList(string $name): ?array
+    {
+        $value = $this->envString($name);
+        if ($value === null) {
+            return null;
+        }
+
+        return $this->stringList(explode(',', $value));
+    }
+
+    private function boolValue(mixed $value): ?bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        if (is_int($value)) {
+            return $value !== 0;
+        }
+
+        if (is_string($value)) {
+            $normalized = strtolower(trim($value));
+            if (in_array($normalized, ['1', 'true', 'on', 'yes'], true)) {
+                return true;
+            }
+
+            if (in_array($normalized, ['0', 'false', 'off', 'no'], true)) {
+                return false;
+            }
+        }
+
+        return null;
+    }
+
+    private function intValue(mixed $value): ?int
+    {
+        if (is_int($value)) {
+            return $value;
+        }
+
+        if (is_string($value) && trim($value) !== '' && ctype_digit(trim($value))) {
+            return (int) trim($value);
+        }
+
+        return null;
+    }
+
+    private function stringValue(mixed $value): ?string
+    {
+        return is_string($value) && trim($value) !== '' ? trim($value) : null;
+    }
+
+    private function normalizeHttpPath(string $path): string
+    {
+        $path = trim($path);
+        if ($path === '') {
+            return KirbyMcpHttpConfig::DEFAULT_PATH;
+        }
+
+        return str_starts_with($path, '/') ? $path : '/' . $path;
+    }
+
+    private function normalizeAuthMode(?string $mode): ?string
+    {
+        if ($mode === null) {
+            return null;
+        }
+
+        $mode = strtolower(trim($mode));
+        if ($mode === 'shared' || $mode === 'token') {
+            return KirbyMcpHttpConfig::AUTH_MODE_SHARED_TOKEN;
+        }
+
+        if (in_array($mode, ['api-key', 'api_key', 'bearer', 'remote', 'remote-bearer'], true)) {
+            return KirbyMcpHttpConfig::AUTH_MODE_REMOTE_TOKEN;
+        }
+
+        return $mode;
+    }
+
+    /**
+     * @return 'auto'|'remember'|'always'|'snippet'
+     */
+    private function normalizeOAuthConsent(?string $consent): string
+    {
+        $consent = strtolower(trim($consent ?? ''));
+
+        return match ($consent) {
+            'auto', 'remember', 'always', 'snippet' => $consent,
+            default => KirbyMcpOAuthProviderConfig::DEFAULT_CONSENT,
+        };
+    }
+}

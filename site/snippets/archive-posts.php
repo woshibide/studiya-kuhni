@@ -65,7 +65,7 @@ $wrapperClass = 'section-wrapper ' . $layoutClass;
                     <a href="<?= esc(relative_url($post->url()), 'attr') ?>" class="archive-posts-title-link">
                         <h3 class="internal-link__hidden archive-posts-title"><?= esc($title) ?></h3>
                     </a>
-                    <p class="archive-posts-intro"><?= esc($intro) ?></p>
+                    <p class="archive-posts-intro"><?= esc($intro->studioPlainText()) ?></p>
                 </figcaption>
             </figure>
         </div>

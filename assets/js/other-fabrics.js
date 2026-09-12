@@ -6,7 +6,7 @@ const OTHER_FABRIC_KITCHEN_LINK_SELECTOR = 'a[data-fabric-image]';
 const OTHER_FABRIC_EMBLA_VIEWPORT_SELECTOR = '[data-other-embla-viewport]';
 const OTHER_FABRIC_EMBLA_SLIDE_SELECTOR = '.fabric-card__media-slide';
 const OTHER_FABRICS_AUTOPLAY_INTERVAL_MS = 3000;
-const OTHER_FABRICS_EMBLA_DEBUG = window.location.search.includes('emblaDebug=1') || window.localStorage.getItem('emblaDebug') === '1';
+const OTHER_FABRICS_EMBLA_DEBUG = false;
 const otherFabricsReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const otherFabricsCardState = new WeakMap();
 let otherFabricsCleanup = null;
@@ -91,7 +91,7 @@ const setOtherFabricCardByIndex = (card, index, options = {}) => {
     setOtherFabricActiveKitchenLink(card, normalized);
 
     if (state.emblaApi) {
-        state.emblaApi.scrollTo(normalized, jump);
+        state.emblaApi.scrollTo(normalized, jump || otherFabricsReducedMotion || Boolean(window.studioMotion?.paused));
     }
 };
 
@@ -152,7 +152,7 @@ const initOtherFabricEmbla = (card) => {
 };
 
 const shouldOtherFabricAutoplay = (card) => {
-    if (otherFabricsReducedMotion) {
+    if (otherFabricsReducedMotion || window.studioMotion?.paused) {
         return false;
     }
 
@@ -162,7 +162,7 @@ const shouldOtherFabricAutoplay = (card) => {
         return false;
     }
 
-    if (!state.isPointerInside && !state.isFocusInside) {
+    if (!state.isPointerInside || state.isFocusInside) {
         return false;
     }
 
@@ -230,6 +230,7 @@ const initOtherFabrics = () => {
             return;
         }
 
+        cleanupHandlers.push(window.studioMotion?.subscribe(() => cards.forEach((card) => queueOtherFabricAutoplay(card))) || (() => {}));
         let otherEmblaInitializedCount = 0;
 
         cards.forEach((card) => {
@@ -343,7 +344,6 @@ const initOtherFabrics = () => {
         };
 
         grid.addEventListener('mouseover', onKitchenHover);
-        grid.addEventListener('focusin', onKitchenHover);
         grid.addEventListener('mouseover', onCardMouseOver);
         grid.addEventListener('mouseout', onCardMouseOut);
         grid.addEventListener('focusin', onCardFocusIn);
@@ -351,7 +351,6 @@ const initOtherFabrics = () => {
 
         cleanupHandlers.push(() => {
             grid.removeEventListener('mouseover', onKitchenHover);
-            grid.removeEventListener('focusin', onKitchenHover);
             grid.removeEventListener('mouseover', onCardMouseOver);
             grid.removeEventListener('mouseout', onCardMouseOut);
             grid.removeEventListener('focusin', onCardFocusIn);

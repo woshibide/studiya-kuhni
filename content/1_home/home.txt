@@ -33,65 +33,53 @@ Benefits-heading:
 Benefits-items:
 
 - 
-  image:
-    - file://rrqdydelhhl7tvmq
-  alt: ""
-  title: >
-    Работаем со всем
-    миром
+  reference: 1701dbcdf12b61cae59243ec
   text: >
-    Lorem ipsum dolor sit amet consectetur
-    adipiscing elit quisque faucibus ex
-    sapien vitae pellentesque sem placerat
-    in id cursus mi pretium tellus duis
-    convallis tempus.
+    Привозим итальянские
+    и российские кухни,
+    чтобы лучшие решения
+    были доступны рядом с
+    вами.
 - 
-  image:
-    - file://ns2euefphcpqn8ek
-  alt: ""
-  title: >
-    Занимаемся кухнями 00
-    лет
+  reference: fbd2fa5ef543f38757f3b40f
   text: >
-    Lorem ipsum dolor sit amet consectetur
-    adipiscing elit quisque faucibus ex
-    sapien vitae pellentesque sem placerat
-    in id cursus mi pretium tellus duis
-    convallis tempus.
+    Мы работаем с
+    проверенными
+    производителями и
+    помогаем воплощать
+    проекты в жизнь.
 - 
-  image:
-    - file://7twacghu9qrji5mu
-  alt: >
-    иконка кавказских
-    минеральных вод
-  title: >
-    Кавказские
-    Минеральные Воды это
-    наш дом
+  reference: 1cb92c10fc8643413e5d5e7e
   text: >
-    Lorem ipsum dolor sit amet consectetur
-    adipiscing elit quisque faucibus ex
-    sapien vitae pellentesque sem placerat
-    in id cursus mi pretium tellus duis
-    convallis tempus.
+    Мы находимся в
+    Пятигорске, чтобы вы
+    могли лично
+    познакомиться с
+    материалами,
+    производителями и
+    будущей кухней.
 
 ----
 
-Cta-warmup-heading: Нужен дизайн план?
+Cta-warmup-heading:
+
+Ваша идея заслуживает хорошего дизайн-плана.
 
 ----
 
-Cta-warmup-text: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar.
+Cta-warmup-text: Расскажите нам о своей идее, а мы поможем найти лучшее визуальное решение.
 
 ----
 
 Cta-heading:
 
-Созрели для новой кухни?
+Кухня, созданная под вас
 
 ----
 
-Cta-text: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar.
+Cta-text:
+
+Продумываем каждую деталь - от планировки до материалов, чтобы кухня была красивой, функциональной и действительно вашей.
 
 ----
 
@@ -104,3 +92,19 @@ Text:
 ----
 
 Uuid: vlwhvzhr7fsdl1dq
+
+----
+
+Hero-description:
+
+Кухня, продуманная до деталей. Мы помогаем создавать кухни, в которых продумано всё: от планировки и материалов до техники и установки. Подбираем решения под пространство, ваши пожелания, индивидуальное проектирование, функциональность и комфорт.
+
+----
+
+Brands-heading: Мы привозим на КМВ
+
+----
+
+Brands-intro-text:
+
+…кухни, которые хочется видеть в своём доме - красивые, продуманные до деталей и созданные с вниманием к тому, как вы живёте.

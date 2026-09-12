@@ -1,100 +1,163 @@
-title: Home Page
-
+title: Главная
+extends: page-options/singleton
+options:
+  changeStatus: false
 tabs:
   hero:
-    label: Hero 
+    label: 'Первый экран'
+    icon: home
     columns:
-      - width: 2/3
+      -
+        width: 2/3
         sections:
-          hero_words_listing:
+          hero_fields:
             type: fields
             fields:
+              hero_heading_ui:
+                type: headline
+                label: Заголовок
               hero_heading:
-                label: заголовок hero
+                label: 'Постоянная часть заголовка'
                 type: text
-                default: Кухни для
+                default: Кухни
+                placeholder: Кухни
+                help: 'Если поле пустое, на сайте показано «Кухни».'
               hero_words:
-                label: слова с эффектом печати
+                label: 'Сменяющиеся фразы'
                 type: structure
-                help: эти слова будут печататься и стираться по кругу в hero
+                help: 'Если список пустой, используются фразы: «для вас», «на КМВ», «для новоселья», «для влюбленных», «для жизни». Перетащите строки, чтобы изменить порядок.'
                 columns:
                   word:
-                    label: слово
+                    label: Фраза
                     width: 1/1
                 fields:
                   word:
-                    label: слово
+                    label: Фраза
                     type: text
                     required: true
-
+              hero_description:
+                extends: fields/rich-text-inline
+                label: 'Вступительное описание'
+                help: 'Если поле пустое, используется текущий текст первого экрана.'
+      -
+        width: 1/3
+        sections:
+          home_guide:
+            type: info
+            label: 'Откуда берутся данные'
+            text: 'Фабрики, названия кухонь и фотографии берутся из каталога. (link: /panel/pages/fabrics text: Открыть каталог). Общие вопросы редактируются на странице «Вопросы и ответы».'
   content:
-    label: Контент
-    columns:
-      - width: 2/3
-        sections:
-          gallery_section:
-            type: fields
+    label: 'Блоки страницы'
+    icon: text
+    sections:
+      message:
+        type: fields
+        fields:
+          message_heading_ui:
+            type: headline
+            label: 'Крупная фраза'
+          big_message:
+            label: 'Крупная фраза'
+            type: text
+            placeholder: 'Кухни. Созданные для вашей жизни'
+            help: 'Если поле пустое, используется фраза, показанная в подсказке.'
+      brands:
+        type: fields
+        fields:
+          brands_heading_ui:
+            type: headline
+            label: 'Фабрики и бренды'
+          brands_heading:
+            label: 'Заголовок блока брендов'
+            type: text
+            placeholder: 'Мы привозим на КМВ'
+            help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
+          brands_intro_text:
+            extends: fields/rich-text-inline
+            label: 'Описание блока брендов'
+            help: 'Если поле пустое, используется текущий текст блока.'
+          brands_items:
+            label: 'Лента логотипов'
+            type: structure
+            help: 'Общая лента для главной страницы и страницы «Дизайнерам». Пока список пуст, показываются текущие 13 брендов. Добавление первой строки заменяет всю текущую ленту. Перетаскивайте строки, чтобы изменить порядок.'
+            columns:
+              logo:
+                width: 1/4
+              name:
+                width: 3/4
             fields:
-              gallery:
-                extends: fields/gallery
-      - width: 1/3
-        sections:
-          files:
-            type: files
-
-  benefits:
-    label: Преимущества
-    columns:
-      - width: 2/3
-        sections:
-          benefits_fields:
-            type: fields
-            fields:
-              benefits_heading:
-                label: заголовок преимуществ
+              name:
+                label: 'Название бренда'
                 type: text
-                default: Преимущества
-              benefits_items:
-                extends: fields/benefits
-      - width: 1/3
-        sections:
-          files:
-            type: files
-
-  cta_warmup:
-    label: CTA Warmup
-    sections:
-      warmup_fields:
+                required: true
+              logo:
+                label: Логотип
+                type: files
+                multiple: false
+                max: 1
+                required: true
+                layout: cards
+                image:
+                  back: white
+                  cover: false
+                query: 'page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp", "avif", "gif"])'
+                uploads:
+                  template: image
+                help: 'Рекомендуется PNG с прозрачным фоном.'
+      warmup:
         type: fields
         fields:
-          cta_warmup_heading:
-            label: заголовок cta warmup
+          warmup_heading_ui:
+            type: headline
+            label: Консультация
+          consultation:
+            extends: fields/consultation
+      benefits:
+        type: fields
+        fields:
+          benefits_heading_ui:
+            type: headline
+            label: Преимущества
+          benefits_heading:
+            label: 'Заголовок преимуществ'
             type: text
-            default: CTA warm up
-          cta_warmup_text:
-            label: текст cta warmup
-            type: textarea
-            size: medium
-            buttons: false
-            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit.
-
-  cta:
-    label: CTA
-    sections:
-      cta_fields:
+            default: Преимущества
+            placeholder: Преимущества
+          benefits_items:
+            extends: fields/benefits
+      cta:
         type: fields
         fields:
+          cta_heading_ui:
+            type: headline
+            label: Заявка
           cta_heading:
-            label: заголовок cta
+            label: 'Заголовок блока заявки'
             type: text
-            default: Отпразднуем вашу новую кухню?
+            default: 'Отпразднуем вашу новую кухню?'
+            placeholder: 'Отпразднуем вашу новую кухню?'
+            help: 'Если поле пустое, используется текст по умолчанию.'
           cta_text:
-            label: текст cta
-            type: textarea
+            extends: fields/rich-text-inline
+            label: 'Текст блока заявки'
             size: small
-            buttons: false
-            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
+            default: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.'
+            placeholder: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.'
+            help: 'Если поле пустое, используется текст по умолчанию.'
           cta_button:
-            label: кнопка cta
+            label: 'Текст кнопки заявки'
             type: text
-            default: Свяжитесь со мной
+            default: 'Свяжитесь со мной'
+            placeholder: 'Свяжитесь со мной'
+            help: 'Если поле пустое, используется текст по умолчанию.'
+          cta_image:
+            label: 'Изображение блока заявки'
+            type: files
+            multiple: false
+            max: 1
+            layout: cards
+            query: page.images
+            uploads:
+              template: image
+  files: tabs/files
+  seo: tabs/seo

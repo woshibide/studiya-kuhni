@@ -5,7 +5,7 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
 
 <?php snippet('header') ?>
 
-<main>
+<main id="main-content" tabindex="-1">
 
     <section>
         <?php snippet('simple-hero') ?>
@@ -13,7 +13,10 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
 
 
     <section>
-        Студия кухни это
+        <h2><?= esc($page->designers_about_heading()->or('Студия кухни это')) ?></h2>
+        <?php if ($page->designers_about_text()->isNotEmpty()): ?>
+            <?= $page->designers_about_text()->studioText(false, 3) ?>
+        <?php endif ?>
     </section>
 
     
@@ -37,7 +40,7 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
                     <?= esc($designersProofHeading) ?>
                 </h2>
 
-                <p class="designers-proof__lead">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.</p>
+                <p class="designers-proof__lead"><?= $page->designers_proof_lead()->or('Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.')->studioText(true) ?></p>
 
                 <button class="primary-btn" type="button" data-open-nav-contact>
                     связаться с нами
@@ -84,7 +87,7 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
                                 </p>
                             </div>
 
-                            <p class="designers-proof-card__description"><?= esc($description) ?></p>
+                            <p class="designers-proof-card__description"><?= $description->studioText(true) ?></p>
                         </article>
                     <?php endforeach; ?>
                 </div>
@@ -93,14 +96,17 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
     </section>
     
     <section>
-        <h2>       
-            what is the format of work
-        </h2>
+        <h2><?= esc($page->designers_work_heading()->or('what is the format of work')) ?></h2>
+        <?php if ($page->designers_work_text()->isNotEmpty()): ?>
+            <?= $page->designers_work_text()->studioText(false, 3) ?>
+        <?php endif ?>
     </section>
         
+    <?php /* archive section hidden for the next launch
     <section>
         <?php snippet('archive-posts') ?>
     </section>
+    */ ?>
 
 
 </main>

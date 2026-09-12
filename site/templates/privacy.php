@@ -1,14 +1,14 @@
 
 <?php snippet('header') ?>
 
-<main>
+<main id="main-content" tabindex="-1">
 
     <section>
         <?php snippet('simple-hero') ?>
     </section>    
     
     <article class="privacy-content">
-        <?= $page->text()->kt() ?>
+        <?php snippet('article-text', ['text' => $page->text()]) ?>
     </article>
     
 </main>

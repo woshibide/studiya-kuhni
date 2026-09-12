@@ -1,0 +1,11 @@
+type: studio-features
+label: Детали
+search: true
+sort: false
+options:
+  type: query
+  query: page.studioFeatureOptions
+  text: '{{ item.text }}'
+  value: '{{ item.value }}'
+  info: '{{ item.info }}'
+help: 'Выберите детали из библиотеки. Перетаскивайте выбранные элементы, чтобы изменить порядок. (link: /panel/pages/fabrics?tab=library text: Открыть библиотеку target: _blank)'

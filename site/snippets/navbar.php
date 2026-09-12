@@ -1,4 +1,4 @@
-<nav>
+<nav data-site-nav aria-label="Основная навигация">
     <div class="nav-left">
         <div class="nav-menu" data-nav-menu>
             <div class="nav-menu-toggle-shell hover-bg">

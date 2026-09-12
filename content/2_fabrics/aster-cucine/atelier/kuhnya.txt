@@ -2,7 +2,13 @@ Title: Atelier
 
 ----
 
-Intro: 
+Intro:
+
+{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Профессиональная кухня для просторных интерьеров. Продуманная система модулей обеспечивает максимум возможностей для хранения, сохраняя выразительную архитектуру и цельность пространства."}]}],"inline":true}
+
+----
+
+Kitchen-gallery-images: 
 
 ----
 
@@ -18,47 +24,18 @@ Kitchen-specs:
 
 ----
 
-Kitchen-gallery-images:
-
-- file://rsf98ytiq2p0vubn
-- file://w0by2tqyjqpb2bbi
-- file://b8fzas0qodxrt9iw
-- file://dptqws1ikse14olp
-- file://wonh19mu4avpe0ap
-- file://m0soowfonfius4ki
-
-----
-
 Kitchen-features:
 
 - 
-  image:
-    - file://p33hy1eli04n3fze
-  text: >
-    Деликатная подсветка
-    внутри ящиков
+  reference: 0869f38a8aab08626f4cf8a0
 - 
-  image:
-    - file://o9tkwveqq8x2wbff
-  text: Выдвижной винный бар
+  reference: 6e730dd012c002f4ab711413
 - 
-  image:
-    - file://ibq7fylbsbetkshb
-  text: >
-    Мягкое фоновое
-    освещение
+  reference: 10dc0d799d4be4a0d225d37d
 - 
-  image:
-    - file://aov25ojx8ticcwmq
-  text: >
-    Встроенные решения
-    премиум-класса
+  reference: b6a1608562c34acbb5b242be
 - 
-  image:
-    - file://4bffhq9rzfb0weog
-  text: >
-    Система бесшумного
-    закрывания
+  reference: 74dd87721b2eafe115efc583
 
 ----
 
@@ -69,57 +46,17 @@ Benefits-heading:
 Benefits-items:
 
 - 
-  image:
-    - file://ljjssagpzxecqfok
-  alt: ""
-  title: >
-    Экологичные
-    материалы
-  text: >
-    Lorem ipsum dolor sit amet consectetur
-    adipiscing elit quisque faucibus ex
-    sapien vitae pellentesque sem placerat
-    in id cursus mi pretium tellus duis
-    convallis tempus leo eu aenean
+  reference: b103fecf61bce3077aa53bfa
+  text: '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean"}]}],"inline":true}'
 - 
-  image:
-    - file://qxa1kklp2d1sbu64
-  alt: ""
-  title: >
-    Скрытые розетки и
-    интерфейсы
-  text: >
-    Lorem ipsum dolor sit amet consectetur
-    adipiscing elit quisque faucibus ex
-    sapien vitae pellentesque sem placerat
-    in id cursus mi pretium tellus duis
-    convallis tempus.
+  reference: 06ba1decfeb4d0357b123213
+  text: '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus."}]}],"inline":true}'
 - 
-  image:
-    - file://cmtjob8xnoagiqh2
-  alt: ""
-  title: >
-    Логичная организация
-    зон
-  text: >
-    Lorem ipsum dolor sit amet consectetur
-    adipiscing elit quisque faucibus ex
-    sapien vitae pellentesque sem placerat
-    in id cursus mi pretium tellus duis
-    convallis tempus.
+  reference: 2f5cb669146f4bc99cbfd990
+  text: '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus."}]}],"inline":true}'
 - 
-  image:
-    - file://xsdwt4v4gl0plaqn
-  alt: ""
-  title: >
-    Лёгкое и мягкое
-    открывание
-  text: >
-    Lorem ipsum dolor sit amet consectetur
-    adipiscing elit quisque faucibus ex
-    sapien vitae pellentesque sem placerat
-    in id cursus mi pretium tellus duis
-    convallis tempus.
+  reference: f08537fa6211463c628458a3
+  text: '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus."}]}],"inline":true}'
 
 ----
 
@@ -132,6 +69,26 @@ Cta-text:
 ----
 
 Cta-button: 
+
+----
+
+Cta-image: 
+
+----
+
+Seo-title: 
+
+----
+
+Seo-description: 
+
+----
+
+Seo-image: 
+
+----
+
+Seo-noindex: false
 
 ----
 

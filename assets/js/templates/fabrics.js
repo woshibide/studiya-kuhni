@@ -1,3 +1,4 @@
+(() => {
 const FABRIC_GRID_SELECTOR = '.fabric-grid';
 const FABRIC_CARD_SELECTOR = '[data-fabric-card]';
 const FABRIC_KITCHEN_LINK_SELECTOR = 'ul a[data-fabric-image]';
@@ -111,7 +112,7 @@ const getKitchenLinkIndex = (state, link) => {
 };
 
 const shouldCardAutoplay = (card) => {
-    if (fabricsReducedMotion) {
+    if (fabricsReducedMotion || window.studioMotion?.paused || card.matches(':hover, :focus-within')) {
         return false;
     }
 
@@ -169,6 +170,12 @@ const setExpandedCard = (grid, cards, nextExpandedCard) => {
     cards.forEach((card) => {
         const isExpanded = card === nextExpandedCard;
         card.classList.toggle('is-expanded', isExpanded);
+        const toggle = card.querySelector('[data-fabric-toggle]');
+        if (toggle) {
+            toggle.setAttribute('aria-expanded', String(isExpanded));
+            toggle.textContent = isExpanded ? '-' : '+';
+            toggle.setAttribute('aria-label', isExpanded ? 'Уменьшить фотографии' : 'Увеличить фотографии');
+        }
 
         const cardItem = card.closest(FABRIC_ITEM_SELECTOR);
         if (cardItem) {
@@ -201,6 +208,7 @@ const initFabricsCards = () => {
         clearCardAutoplay(card);
     });
 
+    const unsubscribeMotion = window.studioMotion?.subscribe(() => syncCardsAutoplay(cards));
     syncCardsAutoplay(cards);
 
     const onGridClick = (event) => {
@@ -267,32 +275,34 @@ const initFabricsCards = () => {
 
     const onKitchenFocus = (event) => {
         const link = event.target.closest(FABRIC_KITCHEN_LINK_SELECTOR);
-        if (!link || !grid.contains(link)) {
-            return;
-        }
-
+        if (!link || !grid.contains(link)) return;
         const card = link.closest(FABRIC_CARD_SELECTOR);
-        if (!card || !card.classList.contains('is-expanded')) {
-            return;
-        }
-
-        const state = getFabricsCardState(card);
-        const linkIndex = getKitchenLinkIndex(state, link);
-        if (linkIndex >= 0) {
-            setCardByIndex(card, linkIndex);
-        }
+        if (!card) return;
+        if (!card.classList.contains('is-expanded')) setExpandedCard(grid, cards, card);
+        clearCardAutoplay(card);
+        const linkIndex = getKitchenLinkIndex(getFabricsCardState(card), link);
+        if (linkIndex >= 0) setCardByIndex(card, linkIndex);
     };
 
+    const onInteractionEnd = (event) => {
+        const card = event.target.closest(FABRIC_CARD_SELECTOR);
+        if (card && !card.contains(event.relatedTarget)) queueCardAutoplay(card);
+    };
+    grid.addEventListener('mouseout', onInteractionEnd);
+    grid.addEventListener('focusout', onInteractionEnd);
     grid.addEventListener('click', onGridClick);
     grid.addEventListener('mouseover', onKitchenHover);
     grid.addEventListener('mouseout', onKitchenMouseOut);
     grid.addEventListener('focusin', onKitchenFocus);
 
     fabricsCleanup = () => {
+        unsubscribeMotion?.();
         cards.forEach((card) => {
             clearCardAutoplay(card);
         });
 
+        grid.removeEventListener('mouseout', onInteractionEnd);
+        grid.removeEventListener('focusout', onInteractionEnd);
         grid.removeEventListener('click', onGridClick);
         grid.removeEventListener('mouseover', onKitchenHover);
         grid.removeEventListener('mouseout', onKitchenMouseOut);
@@ -307,3 +317,5 @@ if (document.readyState === 'loading') {
 } else {
     initFabricsCards();
 }
+
+})();

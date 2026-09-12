@@ -1,13 +1,7 @@
 <?php snippet('header') ?>
 
-<?php
-$posts = $page->children()->listed()->sortBy('date', 'desc');
-?>
-
-<main>
-
-
-    
+<main id="main-content" tabindex="-1">
+    <?php /* archive page hidden for the next launch
     <section class="archive-layout-shell section-wrapper">
         <?php if ($posts->isNotEmpty()): ?>
             <?php foreach ($posts as $post): ?>
@@ -60,7 +54,7 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
                                 </div>
 
                                 <?php if ($post->intro()->isNotEmpty()): ?>
-                                    <p class="archive-layout-intro"><?= esc($post->intro()) ?></p>
+                                    <p class="archive-layout-intro"><?= esc($post->intro()->studioPlainText()) ?></p>
                                 <?php endif ?>
                                 <div class="archive-post-infobox-bottom">
                                     <div class="archive-layout-date">
@@ -83,6 +77,7 @@ $posts = $page->children()->listed()->sortBy('date', 'desc');
     <section>
         <?php snippet('big-message') ?>
     </section>
+    */ ?>
 
 </main>
 

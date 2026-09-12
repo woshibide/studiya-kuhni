@@ -1,0 +1,6 @@
+extends: page-options/standard
+options:
+  changeSlug: false
+  delete: false
+  duplicate: false
+  move: false

@@ -10,7 +10,7 @@ $publishedDate = $page->date()->isNotEmpty() ? $page->date()->toDate('d.m.Y') : 
 $location = $page->location()->or('локация не указана');
 ?>
 
-<main>
+<main id="main-content" tabindex="-1">
 
     <section class="section-full archive-post-cover" data-archive-post-cover>
         <?php snippet('turbo-image', [
@@ -43,7 +43,7 @@ $location = $page->location()->or('локация не указана');
         </div>
 
         <?php if ($page->intro()->isNotEmpty()): ?>
-            <p class="archive-post-intro__lead"><?= esc($page->intro()) ?></p>
+            <p class="archive-post-intro__lead"><?= $page->intro()->studioText(true) ?></p>
         <?php endif ?>
     </section>
 

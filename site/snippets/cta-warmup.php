@@ -17,7 +17,7 @@ $randomImage = $fallbackImages[array_rand($fallbackImages)];
     <div class="section-sticky">
         <h2><?= esc($ctaWarmupHeading) ?></h2>
         <div class="section-sticky-content">
-            <p><?= esc($ctaWarmupText) ?></p>
+            <p><?= $ctaWarmupText->studioText(true) ?></p>
             <button class="primary-btn" data-open-nav-contact><?= esc($ctaWarmupButtonText) ?></button>
         </div>
     </div>

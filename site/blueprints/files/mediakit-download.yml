@@ -1,0 +1,38 @@
+title: 'Материал для скачивания'
+accept:
+  extension:
+    - pdf
+    - zip
+    - svg
+    - png
+    - jpg
+    - jpeg
+    - jpe
+    - webp
+  mime:
+    - application/pdf
+    - application/zip
+    - application/x-zip
+    - application/x-zip-compressed
+    - image/svg+xml
+    - image/png
+    - image/jpeg
+    - image/webp
+image:
+  back: white
+  cover: false
+fields:
+  download_label:
+    label: 'Название для посетителей'
+    type: text
+    maxlength: 160
+    help: 'Например: «Логотип студии, вектор». Если поле пустое, показывается имя файла.'
+  download_description:
+    label: 'Описание материала'
+    type: textarea
+    buttons: false
+    size: small
+    maxlength: 400
+    help: 'Необязательно. Уточните содержимое или назначение файла. Формат и размер показываются автоматически.'
+  image_metadata:
+    extends: fields/image-metadata

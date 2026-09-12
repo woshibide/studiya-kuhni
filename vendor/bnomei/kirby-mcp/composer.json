@@ -1,0 +1,97 @@
+{
+  "name": "bnomei/kirby-mcp",
+  "description": "A CLI-first MCP server for Kirby CMS",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "firebase/php-jwt": "^7.0",
+    "getkirby/cli": "^1.0",
+    "guzzlehttp/psr7": "^2.8",
+    "mcp/sdk": "^0.8.0",
+    "symfony/finder": "^7.3",
+    "symfony/process": "^7.0",
+    "symfony/yaml": "^7.0"
+  },
+  "require-dev": {
+    "getkirby/cms": "^5.2",
+    "larastan/larastan": "^3.0",
+    "laravel/pint": "^1.26",
+    "pestphp/pest": "^4.0",
+    "pestphp/pest-plugin-type-coverage": "^4.0"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/modelcontextprotocol/php-sdk"
+    }
+  ],
+  "config": {
+    "allow-plugins": {
+      "getkirby/composer-installer": true,
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": false
+    },
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Bnomei\\KirbyMcp\\": "src/"
+    },
+    "files": [
+      "src/mcp-dump.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Bnomei\\KirbyMcp\\Tests\\": "tests/"
+    },
+    "files": [
+      "tests/dev-autoload.php"
+    ],
+    "exclude-from-classmap": [
+      "tests/cms/",
+      "tests/fixture/"
+    ]
+  },
+  "bin": [
+    "bin/kirby-mcp"
+  ],
+  "scripts": {
+    "coverage": "herd coverage ./vendor/bin/pest --coverage-clover=coverage.xml",
+    "test": "php -d auto_prepend_file=tests/prepend.php vendor/bin/pest",
+    "analyse": "php -d auto_prepend_file=tests/prepend.php vendor/bin/phpstan analyse --autoload-file=tests/phpstan-autoload.php --memory-limit=512M",
+    "format": "vendor/bin/pint",
+    "mcp": "bin/kirby-mcp",
+    "cms:patch-kirby-helpers": [
+      "sed -i.bak 's/function dump(/function xdump(/g' vendor/getkirby/cms/config/helpers.php",
+      "sed -i.bak 's/function e(/function xe(/g' vendor/getkirby/cms/config/helpers.php"
+    ],
+    "cms:install-fixtures": [
+      "bash tests/fixture/install.sh config",
+      "bash tests/fixture/install.sh site/plugins/mcp-test",
+      "bash tests/fixture/install.sh .kirby-mcp"
+    ],
+    "cms:plainkit": [
+      "@cms:patch-kirby-helpers",
+      "rm -rf tests/cms",
+      "vendor/bin/kirby install:kit plainkit tests/cms",
+      "@cms:install-fixtures"
+    ],
+    "cms:starterkit": [
+      "@cms:patch-kirby-helpers",
+      "rm -rf tests/cms",
+      "vendor/bin/kirby install:kit starterkit tests/cms",
+      "@cms:install-fixtures"
+    ],
+    "dist": [
+       "rm -rf tests/cms"
+    ]
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "extra": {
+    "kirby-cms-path": false
+  }
+}

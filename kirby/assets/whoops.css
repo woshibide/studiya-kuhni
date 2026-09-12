@@ -42,7 +42,7 @@ header {
 }
 
 .frame-code {
-  background: var(--jet-black);
+  background: #000;
 }
 
 pre.code-block,

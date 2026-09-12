@@ -1,81 +1,80 @@
-title: Proizvodstvo
-
+title: Производство
+extends: page-options/singleton
 tabs:
   content:
-    label: контент
-    columns:
-      - width: 2/3
-        sections:
-          content_fields:
-            type: fields
-            fields:
-              title:
-                label: название страницы
-                type: text
-              simple_hero_heading:
-                label: заголовок simple hero
-                type: text
-                help: если пусто, используется название страницы
-              simple_hero_description:
-                label: описание simple hero
-                type: textarea
-                size: small
-                buttons: false
-              simple_hero_button_label:
-                label: текст кнопки simple hero
-                type: text
-                placeholder: давайте)
-              single_image:
-                label: изображение секции
-                type: files
-                max: 1
-                layout: cards
-                query: page.images
-              single_image_alt:
-                label: alt изображения
-                type: text
-                width: 1/2
-              big_message:
-                label: текст большого сообщения
-                type: text
-      - width: 1/3
-        sections:
-          files:
-            type: files
-
-  benefits:
-    label: преимущества
+    label: Страница
+    icon: text
     sections:
-      benefits_fields:
+      hero:
         type: fields
         fields:
-          benefits_heading:
-            label: заголовок преимуществ
+          hero_heading_ui:
+            type: headline
+            label: 'Первый экран'
+          title:
+            label: 'Название страницы'
             type: text
-            default: Преимущества
-          benefits_items:
-            extends: fields/benefits
-
-  cta_warmup:
-    label: cta warmup
-    sections:
-      cta_warmup_fields:
-        type: fields
-        fields:
-          cta_warmup_heading:
-            label: заголовок cta warmup
+          simple_hero_heading:
+            label: 'Заголовок первого экрана'
             type: text
-          cta_warmup_text:
-            label: текст cta warmup
-            type: textarea
+            help: 'Если поле пустое, используется название страницы.'
+          simple_hero_description:
+            extends: fields/rich-text-inline
+            label: 'Описание первого экрана'
             size: small
-            buttons: false
-          cta_warmup_button_text:
-            label: текст кнопки cta warmup
+          simple_hero_button_label:
+            label: 'Текст кнопки связи'
             type: text
-          cta_warmup_image:
-            label: изображение cta warmup
+            placeholder: Давайте)
+            help: 'Открывает общую форму связи. Оставьте пустым, чтобы убрать кнопку.'
+      image:
+        type: fields
+        fields:
+          image_heading_ui:
+            type: headline
+            label: 'Основное изображение'
+          single_image:
+            label: 'Основное изображение'
             type: files
             max: 1
             layout: cards
             query: page.images
+            uploads:
+              template: image
+          single_image_alt:
+            label: 'Описание изображения'
+            type: text
+            width: 1/2
+            help: 'Для незрячих пользователей. Если поле пустое, используется описание из карточки файла.'
+      benefits:
+        type: fields
+        fields:
+          benefits_heading_ui:
+            type: headline
+            label: Преимущества
+          benefits_heading:
+            label: 'Заголовок преимуществ'
+            type: text
+            default: Преимущества
+            placeholder: Преимущества
+          benefits_items:
+            extends: fields/benefits
+      message:
+        type: fields
+        fields:
+          message_heading_ui:
+            type: headline
+            label: 'Крупная фраза'
+          big_message:
+            label: 'Крупная фраза'
+            type: text
+      warmup:
+        type: fields
+        fields:
+          warmup_heading_ui:
+            type: headline
+            label: Консультация
+          consultation:
+            extends: fields/consultation
+  files: tabs/files
+  seo: tabs/seo

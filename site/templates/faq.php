@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<main>
+<main id="main-content" tabindex="-1">
   
   <section>
     <?php snippet('simple-hero') ?>
@@ -8,7 +8,7 @@
 
   <?php if ($page->text()->isNotEmpty()): ?>
     <div class="faq-text">
-      <?= $page->text()->kt() ?>
+      <?= $page->text()->studioText() ?>
     </div>
   <?php endif ?>
 

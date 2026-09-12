@@ -1,35 +1,35 @@
-# reusable benefits structure field
-label: преимущества
 type: structure
+label: Карточки преимуществ
 max: 5
-help: до 5 элементов
+duplicate: false
+empty: Добавьте преимущество из библиотеки
+validate:
+  sectionReferences: true
 columns:
-  title:
-    label: заголовок
+  reference:
     width: 1/3
+    mobile: true
   text:
-    label: текст
     width: 2/3
+help: 'До пяти карточек. Порядок меняется перетаскиванием. Карточки без текста скрыты. (link: /panel/pages/fabrics?tab=library text: Открыть библиотеку target: _blank)'
 fields:
-  image:
-    label: изображение
-    type: files
-    max: 1
-    layout: cards
-    query: page.images
-  alt:
-    label: alt
-    type: text
-    width: 1/2
-  title:
-    label: заголовок
-    type: text
-    maxlength: 50
-    counter: true
+  reference:
+    label: Преимущество
+    type: select
+    required: true
+    placeholder: Выберите из библиотеки
+    options:
+      type: query
+      query: page.studioBenefitOptions
+      text: '{{ item.text }}'
+      value: '{{ item.value }}'
+      info: '{{ item.info }}'
+    help: Название и иконка общие для всех страниц, где выбрано это преимущество.
   text:
-    label: текст
-    type: textarea
+    extends: fields/rich-text-inline
+    label: Текст для этой страницы
+    placeholder: Чем это преимущество полезно здесь…
+    help: Оставьте пустым, чтобы скрыть карточку на этой странице.
     maxlength: 180
     counter: true
-    buttons: false
     size: small

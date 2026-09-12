@@ -2,8 +2,8 @@
 
     <div class="section-wrapper">
         <div id="brands-intro">
-            <h2>Мы привозим на КМВ</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur vel eius, exercitationem ducimus odio quas doloremque! Saepe tempore, ipsa placeat maiores perspiciatis nesciunt ducimus debitis magnam fugit nisi ea unde.</p>
+            <h2><?= esc($page->brands_heading()->or('Мы привозим на КМВ')) ?></h2>
+            <p><?= $page->brands_intro_text()->or('Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur vel eius, exercitationem ducimus odio quas doloremque! Saepe tempore, ipsa placeat maiores perspiciatis nesciunt ducimus debitis magnam fugit nisi ea unde.')->studioText(true) ?></p>
         </div>
         <?php
         $brands = [
@@ -22,6 +22,23 @@
             ['file' => 'fabrics-Smeg.svg', 'label' => 'Smeg'],
         ];
 
+        $brandSource = $page->intendedTemplate()->name() === 'home' ? $page : page('home');
+        $customBrands = $brandSource?->brands_items()->toStructure();
+        if ($customBrands && $customBrands->isNotEmpty()) {
+            $brands = [];
+            foreach ($customBrands as $item) {
+                $logo = $item->logo()->toFile();
+                $name = trim((string)$item->name()->value());
+                if (!$logo || $logo->type() !== 'image' || $name === '') continue;
+                $brands[] = ['image' => $logo, 'label' => $name];
+            }
+        } else {
+            $brands = array_map(static fn ($brand) => [
+                'image' => asset('assets/brands/fabrics/black-svg/' . $brand['file']),
+                'label' => html_entity_decode($brand['label'], ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+            ], $brands);
+        }
+
         $rows = [[], [], []];
 
         foreach ($brands as $index => $brand) {
@@ -39,13 +56,13 @@
                             <div class="brand-item marquee-item">
                                 <figure>
                                     <?php snippet('turbo-image', [
-                                        'image' => asset('assets/brands/fabrics/black-svg/' . $brand['file']),
+                                        'image' => $brand['image'],
                                         'alt' => $brand['label'],
                                         'width' => 360,
                                         'loading' => 'lazy',
                                     ]) ?>
                                     <figcaption class="brand-label">
-                                        <?= $brand['label'] ?>
+                                        <?= esc($brand['label']) ?>
                                     </figcaption>
                                 </figure>
                             </div>

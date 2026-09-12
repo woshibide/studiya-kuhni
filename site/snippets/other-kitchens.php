@@ -12,7 +12,7 @@ if (!$currentFabric) {
 }
 
 $otherKitchens = $currentFabric
-    ->childrenAndDrafts()
+    ->children()->filter(fn ($entry) => $entry->studioPubliclyVisible())
     ->filter(fn ($kitchen) => $kitchen->id() !== $kuhnya->id());
 
 if ($otherKitchens->isEmpty()) {

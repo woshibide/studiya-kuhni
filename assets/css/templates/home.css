@@ -13,9 +13,9 @@
         margin: 0;
         font-size: var(--fs-xxl);
         letter-spacing: -0.05em;
-        white-space: nowrap;
+        white-space: normal;
         max-width: 100%;
-        overflow: hidden;
+        overflow-wrap: anywhere;
     }
 
     p {
@@ -28,7 +28,7 @@
         padding-right: 0.1em;
         border-right: 0.08em solid currentColor;
         animation: hero-blink-caret 640ms steps(1, end) infinite;
-        white-space: pre;
+        white-space: pre-wrap;
         vertical-align: baseline;
         line-height: 1.02;
     }
@@ -136,7 +136,7 @@
             margin: 0;
             min-height: clamp(20rem, 52vh, 36rem);
             overflow: hidden;
-            /* transition: all 5s var(--out); */
+            /* transition: color 5s var(--out); */
 
             .home-fabric-toggle {
                 opacity: 1;
@@ -151,7 +151,7 @@
                 color: var(--super-white);
                 background-color: transparent;
                 font-size: var(--fs-base);
-                /* transition: all 1s var(--out); */
+                /* transition: color 1s var(--out); */
             }
 
             .home-fabric-toggle:hover,
@@ -232,7 +232,7 @@
                     overflow: hidden;
                     white-space: nowrap;
                     pointer-events: none;
-                    transition: all 360ms var(--out);
+                    transition: opacity 360ms var(--out), transform 360ms var(--out), color 360ms var(--out), background-color 360ms var(--out);
                     transition-delay: calc((var(--kitchen-count) - var(--kitchen-index)) * 48ms);
                 }
 
@@ -263,7 +263,7 @@
                         margin-left: 0.35em;
                         opacity: 0;
                         transform: translateX(-0.2em);
-                        transition: all 300ms var(--out);
+                        transition: color 300ms var(--out), background-color 300ms var(--out), background-size 300ms var(--out), opacity 300ms var(--out), transform 300ms var(--out);
                     }
                     
                     &:hover::after,

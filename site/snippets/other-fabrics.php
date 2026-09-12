@@ -18,22 +18,10 @@ if (!$fabricsPage) {
     return;
 }
 
-$otherFabrics = $fabricsPage->childrenAndDrafts();
+$otherFabrics = $fabricsPage->children()->filter(fn ($entry) => $entry->studioPubliclyVisible());
 $placeholderImageUrl = relative_url('assets/placeholder.svg');
 
-$resolveKitchenGalleryImages = static function ($kitchen) {
-    $selected = $kitchen->kitchen_gallery_images()->toFiles()->sorted()->filterBy('type', 'image');
-    if ($selected->isNotEmpty()) {
-        return $selected;
-    }
-
-    return $kitchen->images()
-        ->sorted()
-        ->filterBy('type', 'image')
-        ->filter(function ($image) {
-            return strtolower($image->extension()) !== 'svg';
-        });
-};
+$resolveKitchenGalleryImages = static fn ($kitchen) => $kitchen->studioKitchenImages();
 
 $resolveOptimizedImageUrl = static function ($image, int $width = 1600) use ($placeholderImageUrl): string {
     if (!$image || !is_object($image) || !method_exists($image, 'url')) {
@@ -71,7 +59,7 @@ if ($otherFabrics->isEmpty()) {
     <div class="fabric-grid">
         <?php foreach ($otherFabrics as $fabric): ?>
             <?php
-            $kitchens = $fabric->childrenAndDrafts();
+            $kitchens = $fabric->children()->filter(fn ($entry) => $entry->studioPubliclyVisible());
             $kitchenLinks = [];
             $kitchenSlides = [];
 
@@ -92,6 +80,8 @@ if ($otherFabrics->isEmpty()) {
                         foreach ($galleryImages as $image) {
                             $kitchenSlides[] = [
                                 'image' => $resolveOptimizedImageUrl($image, 1600),
+                                'url' => relative_url($kuhnya->url()),
+                                'title' => (string)$kuhnya->title(),
                             ];
                         }
                     }
@@ -110,6 +100,8 @@ if ($otherFabrics->isEmpty()) {
 
                     $kitchenSlides[] = [
                         'image' => $kitchenImageUrl,
+                        'url' => relative_url($kuhnya->url()),
+                        'title' => (string)$kuhnya->title(),
                     ];
                 }
             }
@@ -117,6 +109,8 @@ if ($otherFabrics->isEmpty()) {
             if (empty($kitchenSlides)) {
                 $kitchenSlides[] = [
                     'image' => $placeholderImageUrl,
+                    'url' => $kitchenLinks[0]['url'] ?? relative_url($fabric->url()),
+                    'title' => $kitchenLinks[0]['title'] ?? (string)$fabric->title(),
                 ];
             }
 
@@ -130,21 +124,14 @@ if ($otherFabrics->isEmpty()) {
                 <div class="fabric-card__media" data-other-embla>
                     <div class="fabric-card__media-viewport" data-other-embla-viewport>
                         <div class="fabric-card__media-container">
-                            <?php if (!empty($kitchenSlides)): ?>
-                                <?php foreach ($kitchenSlides as $slide): ?>
-                                    <div
-                                        class="fabric-card__media-slide"
-                                        style="background-image: url('<?= esc($slide['image'], 'attr') ?>');"
-                                        aria-hidden="true"
-                                    ></div>
-                                <?php endforeach ?>
-                            <?php else: ?>
-                                <div
+                            <?php foreach ($kitchenSlides as $slide): ?>
+                                <a
                                     class="fabric-card__media-slide"
-                                    style="background-image: url('<?= esc($cardImageUrl, 'attr') ?>');"
-                                    aria-hidden="true"
-                                ></div>
-                            <?php endif ?>
+                                    href="<?= esc($slide['url'], 'attr') ?>"
+                                    aria-label="<?= esc($slide['title'], 'attr') ?>"
+                                    style="background-image: url('<?= esc($slide['image'], 'attr') ?>');"
+                                ></a>
+                            <?php endforeach ?>
                         </div>
                     </div>
                 </div>

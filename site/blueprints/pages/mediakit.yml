@@ -1,23 +1,125 @@
-title: Медиа Кит
-
+title: 'Медиа Кит'
+extends: page-options/singleton
 tabs:
   content:
-    label: Контент
+    label: Страница
+    icon: text
     sections:
-      hero_fields:
+      guide:
+        type: info
+        label: 'Содержимое страницы'
+        text: 'Разделы расположены в порядке страницы. Выбранные файлы доступны посетителям для скачивания. Ниже разделов показываются общие вопросы со страницы «Вопросы и ответы».'
+      hero:
         type: fields
         fields:
+          hero_heading_ui:
+            type: headline
+            label: 'Первый экран'
           simple_hero_heading:
-            label: заголовок simple hero
+            label: 'Заголовок первого экрана'
             type: text
-            help: если пусто, используется название страницы
+            help: 'Если поле пустое, используется название страницы.'
           simple_hero_description:
-            label: описание simple hero
-            type: textarea
+            extends: fields/rich-text-inline
+            label: 'Описание первого экрана'
             size: small
-            buttons: false
           simple_hero_button_label:
-            label: текст кнопки simple hero
+            label: 'Текст кнопки связи'
             type: text
-            placeholder: Свяжитесь с нами
-
+            placeholder: 'Свяжитесь с нами'
+            help: 'Открывает общую форму связи. Оставьте пустым, чтобы убрать кнопку.'
+      logos:
+        type: fields
+        fields:
+          logos_heading_ui:
+            type: headline
+            label: Логотипы
+          mediakit_logos_heading:
+            label: 'Заголовок раздела логотипов'
+            type: text
+            placeholder: Логотипы
+            help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
+          mediakit_logos_text:
+            extends: fields/rich-text
+            label: 'Текст раздела логотипов'
+            help: 'Описание или правила использования логотипов. Можно оставить пустым.'
+          mediakit_logos_files:
+            extends: fields/mediakit-downloads
+            label: 'Файлы логотипов'
+      mission:
+        type: fields
+        fields:
+          mission_heading_ui:
+            type: headline
+            label: Миссия
+          mediakit_mission_heading:
+            label: 'Заголовок миссии'
+            type: text
+            placeholder: Миссия
+            help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
+          mediakit_mission_text:
+            extends: fields/rich-text
+            label: 'Текст миссии'
+            help: 'Можно оставить пустым.'
+          mediakit_mission_files:
+            extends: fields/mediakit-downloads
+            label: 'Материалы о миссии'
+      values:
+        type: fields
+        fields:
+          values_heading_ui:
+            type: headline
+            label: Ценности
+          mediakit_values_heading:
+            label: 'Заголовок ценностей'
+            type: text
+            placeholder: Ценности
+            help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
+          mediakit_values_text:
+            extends: fields/rich-text
+            label: 'Текст ценностей'
+            help: 'Можно оставить пустым.'
+          mediakit_values_files:
+            extends: fields/mediakit-downloads
+            label: 'Материалы о ценностях'
+      press:
+        type: fields
+        fields:
+          press_heading_ui:
+            type: headline
+            label: 'Пресс-кит'
+          mediakit_press_heading:
+            label: 'Заголовок пресс-кита'
+            type: text
+            placeholder: 'Пресс Кит'
+            help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
+          mediakit_press_text:
+            extends: fields/rich-text
+            label: 'Текст пресс-кита'
+            help: 'Описание материалов для прессы. Можно оставить пустым.'
+          mediakit_press_files:
+            extends: fields/mediakit-downloads
+            label: 'Файлы пресс-кита'
+  files:
+    label: Файлы
+    icon: download
+    sections:
+      downloads:
+        type: files
+        label: 'Материалы для скачивания'
+        template: mediakit-download
+        layout: list
+        text: '{{ file.download_label.or(file.filename) }}'
+        info: '{{ file.extension }} · {{ file.niceSize }}'
+        image:
+          back: white
+          cover: false
+        help: 'PDF, ZIP, SVG, PNG, JPG и WebP. После загрузки выберите материал в нужном разделе вкладки «Страница». Порядок скачиваний задаётся в выбранном списке раздела.'
+      other_files:
+        type: files
+        label: 'Другие файлы страницы'
+        query: 'page.files.filterBy("template", "!=", "mediakit-download")'
+        create: false
+        layout: list
+        help: 'Изображения для соцсетей и другие ранее загруженные файлы. Для публикации материалов используйте список выше.'
+  seo: tabs/seo

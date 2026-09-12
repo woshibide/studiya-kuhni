@@ -30,9 +30,6 @@ nav.is-nav-hidden {
 
 .nav-contact-toggle-shell, .nav-menu-toggle-shell {
     background-color: rgb(255 255 255 / 0.8);
-    /* box-shadow: var(--shadow-m); */
-    backdrop-filter: blur(8px);
-    --webkit-backdrop-filter: blur(8px);
 
     @media (max-width: 48rem) {
         background-color: transparent;
@@ -62,6 +59,11 @@ nav.is-nav-hidden {
 }
 
 @media (max-width: 64rem) {
+    html:not(.is-nav-panel-open) nav.is-scrolled {
+        background-color: var(--the-white);
+        border-radius: var(--space-xs);
+    }
+
     nav {
         top: var(--space-sm);
         width: var(--the-width);
@@ -146,3 +148,51 @@ nav ul {
     padding: 0;
 }
 
+
+[data-site-nav] button {
+    min-height: var(--tap-target-size);
+    min-width: var(--tap-target-size);
+}
+
+[data-site-nav]:focus-within {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nav-menu .nav-menu-panel,
+.nav-right .nav-contact-panel {
+    max-height: calc(100dvh - 7rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+.nav-menu .nav-menu-panel:focus,
+.nav-right .nav-contact-panel:focus {
+    outline: none;
+}
+
+@media (max-width: 48rem) {
+    [data-site-nav]:has(.is-open) {
+        transform: none;
+    }
+
+    .nav-menu .nav-menu-panel,
+    .nav-right .nav-contact-panel {
+        max-height: 100dvh;
+        padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom));
+        background: rgb(0 0 0 / 0.92);
+    }
+
+    [data-site-nav]:has(.is-open) .nav-center {
+        position: relative;
+        z-index: 1300;
+        color: var(--super-white);
+    }
+
+    [data-site-nav]:has(.is-open) .nav-menu-toggle,
+    [data-site-nav]:has(.is-open) .nav-contact-toggle {
+        color: var(--super-white);
+    }
+}

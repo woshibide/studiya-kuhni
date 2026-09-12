@@ -1,0 +1,206 @@
+import type { Editor } from '@tiptap/vue-2'
+import type { AnyExtension, Editor as CoreEditor } from '@tiptap/core'
+import type { Component } from 'vue'
+
+// Links configuration
+export interface LinksConfig {
+	options?: string[]
+	fields?: Record<string, unknown>
+}
+
+// Files configuration
+export interface FilesConfig {
+	query?: string
+	image?: Record<string, unknown>
+	fields?: Record<string, unknown>
+}
+
+// Endpoints configuration
+export interface EndpointsConfig {
+	field: string
+	'process-kirbytag'?: string
+}
+
+// Registered KirbyTags: tag name => registered attribute names
+export type KirbytagsMap = Record<string, string[]>
+
+// Uploads configuration
+export interface UploadsConfig {
+	template?: string
+	parent?: string
+}
+
+// UUID configuration
+export interface UuidConfig {
+	pages?: boolean
+	files?: boolean
+}
+
+// Button registry types
+export type ButtonGroup = 'text' | 'blocks' | 'lists' | 'registry'
+
+export interface ButtonMeta {
+	icon: string
+	group: ButtonGroup
+	buttonName?: string
+	buttonConfig?: RegistryButton
+}
+
+// Config for buttons that render a plain ToolbarButton without a
+// dedicated component (icon comes from ButtonMeta)
+export interface SimpleButtonConfig {
+	title: string // i18n key
+	command: string | ((editor: CoreEditor) => void)
+	activeCheck?: string | ((editor: CoreEditor) => boolean)
+	disabledCheck?: (editor: CoreEditor) => boolean
+}
+
+export interface ButtonRegistryEntry {
+	component?: () => Promise<{ default: Component }>
+	simple?: SimpleButtonConfig
+	meta: ButtonMeta
+}
+
+// Button item types for field configuration
+export type ButtonItem =
+	| string           // Core buttons: 'bold', 'italic', '|', etc.
+	| HeadingsButton   // { headings: [1, 2, 3] }
+
+export interface HeadingsButton {
+	headings: number[]
+}
+
+// Tiptap document structure
+export interface TiptapDocument {
+	type: 'doc'
+	content: TiptapNode[]
+}
+
+export interface TiptapNode {
+	type: string
+	attrs?: Record<string, unknown>
+	content?: TiptapNode[]
+	text?: string
+	marks?: TiptapMark[]
+}
+
+export interface TiptapMark {
+	type: string
+	attrs?: Record<string, unknown>
+}
+
+// Resolved KirbyTag navigation target
+export interface ResolvedKirbyTag {
+	panelUrl?: string
+	url?: string
+	type: 'page' | 'file' | 'external' | 'none'
+}
+
+// Navigation target extracted from a parsed KirbyTag
+export interface NavigationTarget {
+	reference: string
+	type: string
+}
+
+// KirbyTag parsing result
+export interface ParsedKirbyTag {
+	_type: string
+	href?: string
+	uuid?: string
+	value?: string
+	text?: string
+	target?: string
+	rel?: string
+	title?: string
+	class?: string
+	[key: string]: unknown
+}
+
+// Input validation result - discriminated union for type safety
+export type ValidationResult =
+	| { type: 'unknown'; text?: string }
+	| { type: 'url' | 'email' | 'tel' | 'page' | 'anchor'; href: string; text?: string }
+
+// Dialog field configuration
+export interface DialogFieldConfig {
+	type: string
+	label?: string
+	placeholder?: string
+	options?: DialogOption[]
+	required?: boolean
+	width?: string
+	[key: string]: unknown
+}
+
+export interface DialogOption {
+	value: string
+	text: string
+}
+
+// Registry types for Extension API — callbacks receive the core editor
+// instance (extensions run below the Vue layer)
+export interface RegistryButton {
+	name: string
+	label: string
+	icon: string
+	command: (ctx: { editor: CoreEditor }) => void
+	activeCheck?: (ctx: { editor: CoreEditor }) => boolean
+	disabledCheck?: (ctx: { editor: CoreEditor }) => boolean
+	shortcut?: string
+	dropdown?: (ctx: { editor: CoreEditor }) => Array<{ label: string; icon?: string; click: () => void }>
+}
+
+export interface RegistryShortcut {
+	name: string
+	keys: string[]
+	command: (ctx: { editor: CoreEditor }) => boolean | void
+}
+
+export interface RegistryExtension {
+	name: string
+	create: (ctx: TiptapContext) => AnyExtension
+	buttons?: () => RegistryButton[]
+}
+
+export interface TiptapContext {
+	tiptap: {
+		core: {
+			Extension: any
+			Node: any
+			Mark: any
+			mergeAttributes: any
+		}
+		vue2: {
+			VueNodeViewRenderer: any
+		}
+	}
+	pm: {
+		state: {
+			Plugin: any
+			PluginKey: any
+		}
+		view: {
+			Decoration: any
+			DecorationSet: any
+		}
+	}
+}
+
+export interface WindowKirbyTiptapRegistry {
+	extensions: RegistryExtension[]
+	buttons: RegistryButton[]
+	shortcuts: RegistryShortcut[]
+}
+
+export interface WindowKirbyTiptap {
+	registry: WindowKirbyTiptapRegistry
+}
+
+declare global {
+	interface Window {
+		kirbyTiptap?: WindowKirbyTiptap
+	}
+}
+
+// Editor type re-export for convenience
+export type { Editor }

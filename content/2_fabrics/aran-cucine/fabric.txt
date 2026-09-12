@@ -6,7 +6,7 @@ Fabric-info-title: Фабрика с берегов адриатики
 
 ----
 
-Fabric-info-text: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+Fabric-info-text: На побережье Адриатического моря в 1962 году родился бренд ARAN Cucine, впитавший в себя традиции итальянского производства, любовь к дизайну и особое отношение к кухне как сердцу дома. В итальянском доме кухня становится местом, вокруг которого собирается семья. Именно это особое отношение к кухне легло в основу философии ARAN Cucine - создавать пространство для жизни, общения и тех повседневных моментов, из которых складывается история дома. Так кухня становится не просто частью дома, а его настоящим сердцем - местом, где рождаются воспоминания и продолжаются семейные традиции.
 
 ----
 
@@ -43,3 +43,11 @@ Cta-button:
 ----
 
 Uuid: 8m1qqmbnvs4co2l0
+
+----
+
+Fabric-location:
+
+lat: 42.653145
+lon: 14.037308
+zoom: 13

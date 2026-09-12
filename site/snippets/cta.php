@@ -6,15 +6,11 @@ $getDefault = function (string $fieldName) use ($blueprint): string {
 };
 
 $ctaHeading = trim((string)$page->cta_heading()->value());
-$ctaText = trim((string)$page->cta_text()->value());
+$ctaText = $page->cta_text()->or($getDefault('cta_text'))->studioText(true);
 $ctaButton = trim((string)$page->cta_button()->value());
 
 if ($ctaHeading === '') {
     $ctaHeading = $getDefault('cta_heading');
-}
-
-if ($ctaText === '') {
-    $ctaText = $getDefault('cta_text');
 }
 
 if ($ctaButton === '') {
@@ -37,7 +33,7 @@ $randomImage = $fallbackImages[array_rand($fallbackImages)];
                 <h2><?= esc($ctaHeading) ?></h2>
             <?php endif ?>
             <?php if ($ctaText !== ''): ?>
-                <p><?= esc($ctaText) ?></p>
+                <p><?= $ctaText ?></p>
             <?php endif ?>
             <?php if ($ctaButton !== ''): ?>
                 <button type="button" data-open-nav-contact class="primary-btn">

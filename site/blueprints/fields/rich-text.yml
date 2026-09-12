@@ -1,0 +1,25 @@
+type: studio-tiptap
+pretty: false
+size: large
+spellcheck: true
+buttons:
+  -
+    headings:
+      - 2
+      - 3
+      - 4
+  - bold
+  - italic
+  - link
+  - bulletList
+  - orderedList
+  - blockquote
+  - removeFormatting
+uploads: false
+links:
+  options:
+    - page
+    - file
+    - url
+    - email
+    - tel

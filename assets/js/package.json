@@ -4,7 +4,7 @@
   "description": "",
   "main": "gallery.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ../../tests/frontend.cjs && node ../../tests/gallery.cjs && node ../../tests/masonry.cjs"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "embla-carousel": "^8.6.0",
-    "embla-carousel-autoplay": "^8.6.0"
+    "embla-carousel-autoplay": "^8.6.0",
+    "leaflet": "1.9.4"
   }
 }

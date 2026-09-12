@@ -1,0 +1,11 @@
+title: Иконка библиотеки
+accept:
+  mime:
+    - image/svg+xml
+    - image/jpeg
+    - image/png
+    - image/webp
+    - image/avif
+fields:
+  image_metadata:
+    extends: fields/image-metadata

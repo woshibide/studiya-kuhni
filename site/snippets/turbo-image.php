@@ -5,9 +5,8 @@ if (!isset($image) || $image === null || $image === '') {
     return;
 }
 
-if (!isset($alt) || $alt === null) {
-    $alt = '';
-}
+$explicitAlt = isset($alt);
+$alt = $alt ?? '';
 
 $renderWidth = null;
 $renderHeight = null;
@@ -37,11 +36,11 @@ $attrs = (isset($attrs) && is_array($attrs)) ? $attrs : [];
 $decoding = $decoding ?? 'async';
 
 if ($src === null) {
-    if (!is_object($image) || !method_exists($image, 'url')) {
+    if (!$image instanceof Kirby\Cms\File && !$image instanceof Kirby\Cms\FileVersion && !$image instanceof Kirby\Filesystem\Asset) {
         return;
     }
 
-    if ($alt === '' && method_exists($image, 'alt')) {
+    if (!$explicitAlt && $image instanceof Kirby\Cms\File) {
         $alt = $image->alt()->or('')->value();
     }
 
@@ -50,7 +49,7 @@ if ($src === null) {
 
     $rendered = $image;
     if (!$isSvg && method_exists($image, 'resize')) {
-        $originalWidth = method_exists($image, 'width') ? (int)$image->width() : 0;
+        $originalWidth = (int)$image->width();
         if ($originalWidth === 0 || $originalWidth > $width) {
             try {
                 $rendered = $image->resize($width);
@@ -61,8 +60,19 @@ if ($src === null) {
     }
 
     $src = relative_url($rendered->url());
-    $renderWidth = method_exists($rendered, 'width') ? $rendered->width() : null;
-    $renderHeight = method_exists($rendered, 'height') ? $rendered->height() : null;
+    $renderWidth = $rendered->width();
+    $renderHeight = $rendered->height();
+    if (!$isSvg && method_exists($image, 'srcset')) {
+        $sourceWidth = (int)$image->width();
+        $candidates = array_values(array_filter([480, 800, 1200, 1600, 2200], fn ($candidate) => $candidate < min($width, $sourceWidth)));
+        $candidates[] = min($width, $sourceWidth);
+        if ($sourceWidth > 0) {
+            $attrs += [
+                'srcset' => $image->srcset(array_unique($candidates)),
+                'sizes' => $sizes ?? '(max-width: 48rem) 100vw, 80vw',
+            ];
+        }
+    }
 }
 
 if (!is_numeric($renderWidth) || (int)$renderWidth <= 0) {

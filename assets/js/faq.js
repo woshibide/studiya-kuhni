@@ -1,6 +1,5 @@
 const setupFaq = () => {
     const faqRoot = document.querySelector('#faq.section-wrapper');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!faqRoot) {
         return;
@@ -30,73 +29,13 @@ const setupFaq = () => {
         });
     };
 
-    const openAnswer = (questionButton) => {
-        const answerWrapId = questionButton.getAttribute('aria-controls');
-        const answerWrap = answerWrapId ? faqRoot.querySelector(`#${answerWrapId}`) : null;
-
-        if (!answerWrap) {
-            return;
-        }
-
-        answerWrap.hidden = false;
-        questionButton.setAttribute('aria-expanded', 'true');
-
-        if (prefersReducedMotion) {
-            answerWrap.style.height = 'auto';
-            return;
-        }
-
-        answerWrap.style.height = '0px';
-
-        requestAnimationFrame(() => {
-            answerWrap.style.height = `${answerWrap.scrollHeight}px`;
-        });
-
-        const onTransitionEnd = (event) => {
-            if (event.propertyName !== 'height') {
-                return;
-            }
-
-            answerWrap.style.height = 'auto';
-            answerWrap.removeEventListener('transitionend', onTransitionEnd);
-        };
-
-        answerWrap.addEventListener('transitionend', onTransitionEnd);
-    };
-
-    const closeAnswer = (questionButton) => {
-        const answerWrapId = questionButton.getAttribute('aria-controls');
-        const answerWrap = answerWrapId ? faqRoot.querySelector(`#${answerWrapId}`) : null;
-
-        if (!answerWrap) {
-            return;
-        }
-
-        if (prefersReducedMotion) {
-            answerWrap.style.height = '0px';
-            answerWrap.hidden = true;
-            questionButton.setAttribute('aria-expanded', 'false');
-            return;
-        }
-
-        answerWrap.style.height = `${answerWrap.scrollHeight}px`;
-
-        requestAnimationFrame(() => {
-            answerWrap.style.height = '0px';
-        });
-
-        questionButton.setAttribute('aria-expanded', 'false');
-
-        const onTransitionEnd = (event) => {
-            if (event.propertyName !== 'height') {
-                return;
-            }
-
-            answerWrap.hidden = true;
-            answerWrap.removeEventListener('transitionend', onTransitionEnd);
-        };
-
-        answerWrap.addEventListener('transitionend', onTransitionEnd);
+    const setAnswer = (questionButton, expanded) => {
+        const answerId = questionButton.getAttribute('aria-controls');
+        const answer = answerId ? document.getElementById(answerId) : null;
+        if (!answer) return;
+        questionButton.setAttribute('aria-expanded', String(expanded));
+        answer.hidden = !expanded;
+        answer.style.height = expanded ? 'auto' : '0px';
     };
 
     faqRoot.addEventListener('click', (event) => {
@@ -113,9 +52,9 @@ const setupFaq = () => {
 
         const isExpanded = questionButton.getAttribute('aria-expanded') === 'true';
         if (isExpanded) {
-            closeAnswer(questionButton);
+            setAnswer(questionButton, false);
         } else {
-            openAnswer(questionButton);
+            setAnswer(questionButton, true);
         }
     });
 
@@ -139,12 +78,12 @@ const setupFaq = () => {
             setTab(tab.dataset.faqTab, true);
         };
 
-        if (event.key === 'ArrowRight') {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
             event.preventDefault();
             moveFocus((currentIndex + 1) % tabs.length);
         }
 
-        if (event.key === 'ArrowLeft') {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
             event.preventDefault();
             moveFocus((currentIndex - 1 + tabs.length) % tabs.length);
         }

@@ -1,3 +1,4 @@
+(() => {
 const HOME_FABRICS_SELECTOR = '#fabrics-intro .fabrics-listing, #details .kuhnya-layout-grid'
 const HOME_FABRIC_ROW_SELECTOR = '[data-home-fabric-row], .kuhnya-layout-grid'
 const HOME_FABRIC_CARD_SELECTOR = '[data-home-fabric-card], [data-kuhnya-layout-card]'
@@ -16,7 +17,7 @@ const HOME_LAYOUT_FLIP_EASE_OUT = 'cubic-bezier(0.87, 0, 0.13, 1)'
 const HOME_LAYOUT_FLIP_EASE_IN = 'cubic-bezier(0.16, 1, 0.3, 1)'
 const HOME_ANIMATION_ID_PREFIX = 'home-layout'
 const HOME_MOBILE_QUERY = '(max-width: 48rem)'
-const HOME_ANIMATION_DEBUG = true
+const HOME_ANIMATION_DEBUG = false
 
 const homeReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const homeMobileQuery = window.matchMedia(HOME_MOBILE_QUERY)
@@ -26,6 +27,15 @@ const homeRowState = new WeakMap()
 const homeCardState = new WeakMap()
 
 const isHomeMobile = () => homeMobileQuery.matches
+
+window.studioMotion?.subscribe((paused) => {
+    if (!paused) return;
+    document.querySelectorAll(HOME_FABRIC_CARD_SELECTOR).forEach((card) => {
+        card.getAnimations().forEach((animation) => {
+            if (animation.id.startsWith(HOME_ANIMATION_ID_PREFIX)) animation.cancel();
+        });
+    });
+})
 
 const logHomeDebug = (eventName, payload = {}) => {
 	if (!HOME_ANIMATION_DEBUG) {
@@ -94,7 +104,7 @@ const setCardByIndex = (card, index, options = {}) => {
 	const normalized = ((index % state.links.length) + state.links.length) % state.links.length
 	setActiveKitchenLink(card, normalized)
 	if (state.emblaApi) {
-		state.emblaApi.scrollTo(normalized, jump)
+		state.emblaApi.scrollTo(normalized, jump || homeReducedMotion || Boolean(window.studioMotion?.paused))
 	}
 }
 
@@ -164,12 +174,18 @@ const rememberOriginalLayout = (card) => {
 }
 
 const setToggleState = (card, expanded) => {
+	const photo = card.querySelector('[data-gallery-layout-open]')
+	if (photo) {
+		photo.setAttribute('aria-label', expanded ? 'Открыть фото кухни в галерее' : 'Увеличить фото кухни')
+		if (expanded) photo.setAttribute('aria-haspopup', 'dialog')
+		else photo.removeAttribute('aria-haspopup')
+	}
 	const toggle = card.querySelector(HOME_FABRIC_TOGGLE_SELECTOR)
 	if (!toggle) {
 		return
 	}
 	toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false')
-	toggle.setAttribute('aria-label', expanded ? 'Minimize fabric card' : 'Expand fabric card')
+	toggle.setAttribute('aria-label', expanded ? 'Уменьшить фотографии' : 'Увеличить фотографии')
 	toggle.textContent = expanded ? '-' : '+'
 }
 
@@ -228,7 +244,7 @@ const applyRowState = (row, cards, expandedCard) => {
 
 // orchestrate flip animation for smooth transitions
 const animateRow = (cards, direction, mutate) => {
-	if (homeReducedMotion) {
+	if (homeReducedMotion || window.studioMotion?.paused) {
 		mutate()
 		return Promise.resolve()
 	}
@@ -258,7 +274,7 @@ const animateRow = (cards, direction, mutate) => {
 			resolveCard()
 			return
 		}
-        
+
 
 		// calculate inverse deltas for flip technique
 		const dx = first.left - last.left
@@ -275,49 +291,49 @@ const animateRow = (cards, direction, mutate) => {
 		lockCardDimensions(card, first)
 		const keyframes = isExpand
 			? [
-				{ offset: 0, 
-                    transformOrigin: 'top left', 
-                    transform: `translate(${dx}px, ${dy}px)`, 
-                    width: `${first.width}px`, 
-                    minHeight: `${first.height}px`, 
+				{ offset: 0,
+                    transformOrigin: 'top left',
+                    transform: `translate(${dx}px, ${dy}px)`,
+                    width: `${first.width}px`,
+                    minHeight: `${first.height}px`,
                     easing: firstEase },
-                    
-				{ offset: phase, 
-                    transformOrigin: 'top left', 
-                    transform: `translate(0, ${dy}px)`, 
-                    width: `${last.width}px`, 
-                    minHeight: `${first.height}px`, 
+
+				{ offset: phase,
+                    transformOrigin: 'top left',
+                    transform: `translate(0, ${dy}px)`,
+                    width: `${last.width}px`,
+                    minHeight: `${first.height}px`,
                     easing: secondEase },
 
-				{ offset: 1, 
-                    transformOrigin: 'top left', 
-                    transform: 'translate(0, 0)', 
-                    width: `${last.width}px`, 
+				{ offset: 1,
+                    transformOrigin: 'top left',
+                    transform: 'translate(0, 0)',
+                    width: `${last.width}px`,
                     minHeight: `${last.height}px` },
 			]
 			: [
-				{ offset: 0, 
-                    transformOrigin: 'top left', 
-                    transform: `translate(${dx}px, ${dy}px)`, 
-                    idth: `${first.width}px`, 
-                    minHeight: `${first.height}px`, 
+				{ offset: 0,
+                    transformOrigin: 'top left',
+                    transform: `translate(${dx}px, ${dy}px)`,
+                    width: `${first.width}px`,
+                    minHeight: `${first.height}px`,
                     easing: firstEase },
 
-				{ offset: phase, 
-                    transformOrigin: 'top left', 
-                    transform: `translate(${dx}px, 0)`, 
-                    width: `${first.width}px`, 
-                    minHeight: `${last.height}px`, 
+				{ offset: phase,
+                    transformOrigin: 'top left',
+                    transform: `translate(${dx}px, 0)`,
+                    width: `${first.width}px`,
+                    minHeight: `${last.height}px`,
                     easing: secondEase },
 
-				{ offset: 1, 
-                    transformOrigin: 'top left', 
-                    transform: 'translate(0, 0)', 
-                    width: `${last.width}px`, 
+				{ offset: 1,
+                    transformOrigin: 'top left',
+                    transform: 'translate(0, 0)',
+                    width: `${last.width}px`,
                     minHeight: `${last.height}px` },
 			]
 // execute web animations api with calculated keyframes
-		
+
 		// logHomeDebug('card:animate:timeline', { cardIndex: index, direction, duration, dx, dy })
 		const animation = card.animate(keyframes, { duration })
 		animation.id = `${HOME_ANIMATION_ID_PREFIX}-${direction}`
@@ -364,7 +380,10 @@ const setRowExpandedCard = (row, card) => {
 }
 
 const setRowsExpandedByDefault = (listing) => {
-	Array.from(listing.querySelectorAll(HOME_FABRIC_ROW_SELECTOR)).forEach((row) => {
+	const rows = listing.matches(HOME_FABRIC_ROW_SELECTOR)
+		? [listing]
+		: Array.from(listing.querySelectorAll(HOME_FABRIC_ROW_SELECTOR))
+	rows.forEach((row) => {
 		const cards = Array.from(row.querySelectorAll(HOME_FABRIC_CARD_SELECTOR))
 		if (!cards.length) {
 			return
@@ -475,3 +494,5 @@ if (document.readyState === 'loading') {
 } else {
 	initHomeFabrics()
 }
+
+})();

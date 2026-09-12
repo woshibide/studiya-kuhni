@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<main>
+<main id="main-content" tabindex="-1">
     <section>
         <?php snippet('simple-hero') ?>
     </section>

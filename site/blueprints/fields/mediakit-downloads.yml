@@ -1,0 +1,13 @@
+label: 'Файлы для скачивания'
+type: files
+multiple: true
+layout: list
+query: 'page.files.template("mediakit-download")'
+text: '{{ file.download_label.or(file.filename) }}'
+info: '{{ file.extension }} · {{ file.niceSize }}'
+image:
+  back: white
+  cover: false
+uploads:
+  template: mediakit-download
+help: 'Загрузите или выберите файлы. Перетаскивайте строки, чтобы изменить порядок. Откройте файл, чтобы задать название и описание для посетителей. Пустой список не показывается на сайте.'

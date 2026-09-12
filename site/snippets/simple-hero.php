@@ -8,7 +8,7 @@ $heroButtonLabel = $page->simple_hero_button_label();
     <h1><?= esc($heroHeading) ?></h1>
 
     <div class="hero__description">
-        <p><?= nl2br(esc($heroDescription)) ?></p>
+        <p><?= $heroDescription->studioText(true) ?></p>
     </div>
 
     <?php if ($heroButtonLabel->isNotEmpty()): ?>

@@ -18,7 +18,7 @@ if (footerRoot && footerBigText && footerDetails) {
     const applyParallax = () => {
         ticking = false
 
-        if (reducedMotion.matches) {
+        if (reducedMotion.matches || window.studioMotion?.paused) {
             footerRoot.style.setProperty('--footer-parallax-y', '0px')
             return
         }
@@ -56,5 +56,6 @@ if (footerRoot && footerBigText && footerDetails) {
         reducedMotion.addListener(requestTick)
     }
 
+    window.studioMotion?.subscribe(requestTick)
     requestTick()
 }

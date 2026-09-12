@@ -1,81 +1,117 @@
 title: Фабрики
-
+extends: page-options/singleton
 tabs:
+  catalogue:
+    label: Фабрики
+    icon: grid
+    sections:
+      brands:
+        type: pages
+        templates:
+          - fabric
+        layout: cards
+        status: all
+        image:
+          query: page.fabric_logo.toFile
+          ratio: 3/2
+          cover: false
+          back: white
+        label: Фабрики
+        size: small
+        info: 'Кухни: {{ page.childrenAndDrafts.count }}'
+        help: 'Откройте фабрику, чтобы изменить её описание, карту или кухни. Перетаскиванием меняется порядок фабрик со статусом «Опубликована с сортировкой».'
   content:
-    label: Контент страницы
+    label: 'Страница каталога'
+    icon: text
     sections:
       hero:
         type: fields
         fields:
+          hero_heading_ui:
+            type: headline
+            label: 'Первый экран'
           title:
-            label: заголовок hero
+            label: 'Название страницы'
             type: text
           simple_hero_heading:
-            label: заголовок simple hero
+            label: 'Заголовок первого экрана'
             type: text
-            help: если пусто, используется название страницы
+            help: 'Если поле пустое, используется название страницы.'
           simple_hero_description:
-            label: описание simple hero
-            type: textarea
+            extends: fields/rich-text-inline
+            label: 'Описание первого экрана'
             size: small
-            buttons: false
           simple_hero_button_label:
-            label: текст кнопки simple hero
+            label: 'Текст кнопки связи'
             type: text
-            placeholder: давайте)
-
-      brands:
-        type: pages
-        headline: Фабрики (бренды)
-        templates:
-          - fabric
-        layout: cards
-
-      big_message:
+            placeholder: Давайте)
+            help: 'Открывает общую форму связи. Оставьте пустым, чтобы убрать кнопку.'
+      benefits:
         type: fields
         fields:
-          big_message:
-            label: большое сообщение
+          benefits_heading_ui:
+            type: headline
+            label: Преимущества
+          benefits_heading:
+            label: 'Заголовок преимуществ'
             type: text
-            default: Кухни, созданные для вашей жизни
-
-
-  benefits:
-    label: Преимущества
-    columns:
-      - width: 2/3
-        sections:
-          benefits:
-            type: fields
-            fields:
-              benefits_heading:
-                label: заголовок преимуществ
-                type: text
-                default: Преимущества
-              benefits_items:
-                extends: fields/benefits
-      - width: 1/3
-        sections:
-          files:
-            type: files
-
-  cta:
-    label: CTA
-    sections:
+            default: Преимущества
+            placeholder: Преимущества
+          benefits_items:
+            extends: fields/benefits
+      message:
+        type: fields
+        fields:
+          message_heading_ui:
+            type: headline
+            label: 'Крупная фраза'
+          big_message:
+            label: 'Крупная фраза'
+            type: text
+            placeholder: 'Кухни. Созданные для вашей жизни'
+            help: 'Если поле пустое, используется фраза, показанная в подсказке.'
       cta:
         type: fields
         fields:
+          cta_heading_ui:
+            type: headline
+            label: Заявка
           cta_heading:
-            label: заголовок cta
+            label: 'Заголовок блока заявки'
             type: text
-            default: Отпразднуем вашу новую кухню?
+            default: 'Отпразднуем вашу новую кухню?'
+            placeholder: 'Отпразднуем вашу новую кухню?'
+            help: 'Если поле пустое, используется текст по умолчанию.'
           cta_text:
-            label: текст cta
-            type: textarea
+            extends: fields/rich-text-inline
+            label: 'Текст блока заявки'
             size: small
-            buttons: false
-            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
+            default: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.'
+            placeholder: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.'
+            help: 'Если поле пустое, используется текст по умолчанию.'
           cta_button:
-            label: кнопка cta
+            label: 'Текст кнопки заявки'
             type: text
-            default: Свяжитесь со мной
+            default: 'Свяжитесь со мной'
+            placeholder: 'Свяжитесь со мной'
+            help: 'Если поле пустое, используется текст по умолчанию.'
+          cta_image:
+            label: 'Изображение блока заявки'
+            type: files
+            multiple: false
+            max: 1
+            layout: cards
+            query: page.images
+            uploads:
+              template: image
+      warmup:
+        type: fields
+        fields:
+          warmup_heading_ui:
+            type: headline
+            label: Консультация
+          consultation:
+            extends: fields/consultation
+  library: tabs/section-library
+  files: tabs/files
+  seo: tabs/seo

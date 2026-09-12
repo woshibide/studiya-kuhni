@@ -1,0 +1,112 @@
+.mediakit-page {
+    gap: var(--space-xl);
+}
+
+.mediakit-section {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: var(--space-lg);
+    row-gap: var(--space-md);
+    align-items: start;
+    min-height: 0;
+}
+
+.mediakit-section__heading {
+    font-size: var(--fs-lg);
+    letter-spacing: -0.03em;
+    overflow-wrap: anywhere;
+}
+
+.mediakit-section__content {
+    min-width: 0;
+}
+
+.mediakit-downloads {
+    list-style: none;
+    margin: var(--space-md) 0 0;
+    padding: 0;
+}
+
+.mediakit-downloads:first-child {
+    margin-top: 0;
+}
+
+.mediakit-downloads__item {
+    border-top: 1px solid var(--grey);
+}
+
+.mediakit-downloads__item:last-child {
+    border-bottom: 1px solid var(--grey);
+}
+
+.mediakit-download {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    width: 100%;
+    min-height: var(--tap-target-size);
+    padding-block: var(--space-base);
+}
+
+.mediakit-download__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    min-width: 0;
+}
+
+.mediakit-download__label {
+    font-size: var(--fs-md);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+}
+
+.mediakit-download__description {
+    max-width: 60ch;
+    line-height: 1.5;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.mediakit-download__meta {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-variant-numeric: tabular-nums;
+}
+
+.mediakit-download__action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--space-xs);
+}
+
+.mediakit-download:is(:hover, :focus-visible) .mediakit-download__label {
+    text-decoration-line: underline;
+}
+
+.mediakit-download:is(:hover, :focus-visible) .mediakit-download__action {
+    background: var(--yellow);
+}
+
+@media (max-width: 48rem) {
+    .mediakit-section {
+        grid-template-columns: minmax(0, 1fr);
+        padding-inline: var(--space-sm);
+    }
+
+    .mediakit-download {
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .mediakit-download__action {
+        padding-inline: 0;
+    }
+}

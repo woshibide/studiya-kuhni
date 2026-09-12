@@ -1,0 +1,27 @@
+type: group
+fields:
+  cta_warmup_heading:
+    label: 'Заголовок консультации'
+    type: text
+    placeholder: 'Нужен дизайн план?'
+    help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
+  cta_warmup_text:
+    extends: fields/rich-text-inline
+    label: 'Текст консультации'
+    size: small
+    help: 'Если поле пустое, используется текущий текст блока.'
+  cta_warmup_button_text:
+    label: 'Текст кнопки консультации'
+    type: text
+    placeholder: 'Получить бесплатную дизайн консультацию'
+    help: 'Если поле пустое, используется текст, показанный в подсказке.'
+  cta_warmup_image:
+    label: 'Изображение консультации'
+    type: files
+    multiple: false
+    max: 1
+    layout: cards
+    query: page.images
+    uploads:
+      template: image
+    help: 'Если изображение не выбрано, показывается одна из текущих иллюстраций консультации.'

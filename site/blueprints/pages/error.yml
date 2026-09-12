@@ -1,25 +1,37 @@
-title: Error
-
+title: 'Страница ошибки'
+extends: page-options/singleton
+options:
+  changeStatus: false
 tabs:
-	content:
-		label: Контент
-		sections:
-			error_fields:
-				type: fields
-				fields:
-					title:
-						label: название страницы
-						type: text
-					simple_hero_heading:
-						label: заголовок simple hero
-						type: text
-						help: если пусто, используется название страницы
-					simple_hero_description:
-						label: описание simple hero
-						type: textarea
-						size: small
-						buttons: false
-					simple_hero_button_label:
-						label: текст кнопки simple hero
-						type: text
-						placeholder: давайте)
+  content:
+    label: Страница
+    icon: text
+    sections:
+      guide:
+        type: info
+        label: 'Страница ошибки 404'
+        text: 'Показывается, когда запрошенный адрес не найден. Адрес и статус этой страницы защищены.'
+      hero:
+        type: fields
+        fields:
+          hero_heading_ui:
+            type: headline
+            label: 'Первый экран'
+          title:
+            label: 'Название страницы'
+            type: text
+          simple_hero_heading:
+            label: 'Заголовок первого экрана'
+            type: text
+            help: 'Если поле пустое, используется название страницы.'
+          simple_hero_description:
+            extends: fields/rich-text-inline
+            label: 'Описание первого экрана'
+            size: small
+          simple_hero_button_label:
+            label: 'Текст кнопки связи'
+            type: text
+            placeholder: Давайте)
+            help: 'Открывает общую форму связи. Оставьте пустым, чтобы убрать кнопку.'
+  files: tabs/files
+  seo: tabs/seo

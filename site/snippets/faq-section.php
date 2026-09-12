@@ -22,8 +22,7 @@ $faqEntities = [];
 
 foreach ($items as $item) {
     $question = trim((string)$item->question());
-    $answerHtml = (string)$item->answer()->kt();
-    $answerText = trim(preg_replace('/\s+/u', ' ', strip_tags($answerHtml)));
+    $answerText = $item->answer()->studioPlainText();
     $targetTab = trim((string)$item->category());
 
     if (array_key_exists($targetTab, $tabs) === false) {
@@ -106,7 +105,7 @@ $firstTabSlug = array_key_first($tabs);
                                         aria-controls="<?= $answerId ?>"
                                         data-faq-question
                                     >
-                                        <span class="faq-question-title"><?= $item->question() ?></span>
+                                        <span class="faq-question-title"><?= esc($item->question()) ?></span>
                                         <span class="faq-question-icon" aria-hidden="true"></span>
                                     </button>
                                 </h3>
@@ -118,7 +117,7 @@ $firstTabSlug = array_key_first($tabs);
                                     hidden
                                 >
                                     <div class="faq-answer-content">
-                                        <?= $item->answer()->kt() ?>
+                                        <?= $item->answer()->studioText(false, 4) ?>
                                     </div>
                                 </div>
                             </li>
@@ -135,7 +134,7 @@ $firstTabSlug = array_key_first($tabs);
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',
                 'mainEntity' => $faqEntities,
-            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>
         </script>
     <?php endif ?>
 </div>

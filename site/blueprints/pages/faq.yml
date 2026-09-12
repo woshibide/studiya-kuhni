@@ -1,60 +1,119 @@
-title: FAQ
-
-status:
-  draft: true
-  listed: true
-
+title: 'Вопросы и ответы'
+extends: page-options/singleton
 tabs:
   questions:
     label: Вопросы
-    columns:
-      - width: 2/3
-        sections:
-          faq_fields:
-            type: fields
-            fields:
-              questions:
-                label: часто задаваемые вопросы
-                type: structure
-                fields:
-                  category:
-                    label: категория
-                    type: select
-                    required: true
-                    default: general
-                    options:
-                      general: Общие
-                      delivery: Доставка
-                      installation: Установка
-                      care: Гарантии
-                  question:
-                    label: вопрос
-                    type: text
-                  answer:
-                    label: ответ
-                    type: textarea
-      - width: 1/3
-        sections:
-          files:
-            type: files
-
-  cta:
-    label: CTA
+    icon: question
     sections:
-      cta_fields:
+      faq_guide:
+        type: info
+        label: 'Общий раздел'
+        text: 'Изменения ответов используются во всех блоках вопросов на сайте.'
+      faq_fields:
         type: fields
         fields:
-          cta_heading:
-            label: заголовок cta
+          questions:
+            label: 'Вопросы и ответы'
+            type: structure
+            fields:
+              category:
+                label: Категория
+                type: select
+                required: true
+                default: general
+                options:
+                  general: Общие
+                  delivery: Доставка
+                  installation: Установка
+                  care: Гарантии
+              question:
+                label: Вопрос
+                type: text
+                required: true
+              answer:
+                extends: fields/rich-text
+                label: Ответ
+                required: true
+                buttons:
+                  - bold
+                  - italic
+                  - link
+                  - bulletList
+                  - orderedList
+                  - removeFormatting
+            help: 'Вопросы используются на этой странице и в общих блоках сайта. Порядок внутри категории задаётся перетаскиванием.'
+            columns:
+              category:
+                label: Категория
+                width: 1/4
+              question:
+                label: Вопрос
+                width: 3/4
+  content:
+    label: Страница
+    icon: text
+    sections:
+      hero:
+        type: fields
+        fields:
+          hero_heading_ui:
+            type: headline
+            label: 'Первый экран'
+          simple_hero_heading:
+            label: 'Заголовок первого экрана'
             type: text
-            default: Отпразднуем вашу новую кухню?
-          cta_text:
-            label: текст cta
-            type: textarea
+            help: 'Если поле пустое, используется название страницы.'
+          simple_hero_description:
+            extends: fields/rich-text-inline
+            label: 'Описание первого экрана'
             size: small
-            buttons: false
-            default: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.
-          cta_button:
-            label: кнопка cta
+          simple_hero_button_label:
+            label: 'Текст кнопки связи'
             type: text
-            default: Свяжитесь со мной
+            help: 'Открывает общую форму связи. Оставьте пустым, чтобы убрать кнопку.'
+      intro:
+        type: fields
+        fields:
+          intro_heading_ui:
+            type: headline
+            label: Вступление
+          text:
+            extends: fields/rich-text
+            label: 'Вступительный текст'
+            size: medium
+      cta:
+        type: fields
+        fields:
+          cta_heading_ui:
+            type: headline
+            label: Заявка
+          cta_heading:
+            label: 'Заголовок блока заявки'
+            type: text
+            default: 'Отпразднуем вашу новую кухню?'
+            placeholder: 'Отпразднуем вашу новую кухню?'
+            help: 'Если поле пустое, используется текст по умолчанию.'
+          cta_text:
+            extends: fields/rich-text-inline
+            label: 'Текст блока заявки'
+            size: small
+            default: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.'
+            placeholder: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.'
+            help: 'Если поле пустое, используется текст по умолчанию.'
+          cta_button:
+            label: 'Текст кнопки заявки'
+            type: text
+            default: 'Свяжитесь со мной'
+            placeholder: 'Свяжитесь со мной'
+            help: 'Если поле пустое, используется текст по умолчанию.'
+          cta_image:
+            label: 'Изображение блока заявки'
+            type: files
+            multiple: false
+            max: 1
+            layout: cards
+            query: page.images
+            uploads:
+              template: image
+  files: tabs/files
+  seo: tabs/seo

@@ -96,10 +96,10 @@
 			padding: var(--space-xxs) var(--space-sm);
 			line-height: 0.9;
 			background-color: var(--silver);
-			color: var(--super-white);
+			color: var(--jet-black);
 			text-transform: uppercase;
 			letter-spacing: 0.06em;
-			transition: all 0.3s var(--out);
+			transition: color 0.3s var(--out), background-color 0.3s var(--out);
 
 			.brand-item:hover & {
 				color: var(--jet-black);

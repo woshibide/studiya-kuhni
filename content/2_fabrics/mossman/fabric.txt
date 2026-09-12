@@ -2,11 +2,11 @@ Title: Mossman
 
 ----
 
-Fabric-info-title: Наши слоны
+Fabric-info-title: Фабрика из Чебоксар
 
 ----
 
-Fabric-info-text: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+Fabric-info-text: Российские кухни MOSSMAN - это 30 лет опыта в создании мебели премиального уровня по индивидуальным проектам. Фабрика не просто производит гарнитуры, а проектирует эргономичное пространство под любые повседневные сценарии. Высокотехнологичные автоматизированные линии гарантируют ювелирную точность деталей и многоэтапный контроль качества. Для дизайнеров интерьера и искушенных покупателей бренд предлагает безграничную свободу творчества: от нестандартных размеров до огромной палитры трендовых оттенков. MOSSMAN соединяет в себе эстетику высокой моды, премиальную фурнитуру и безупречную надежность.
 
 ----
 
@@ -26,7 +26,7 @@ Fabric-map-zoom:
 
 ----
 
-Fabric-map-label: 
+Fabric-map-label: MOSSMAN, Чебоксары, Россия
 
 ----
 

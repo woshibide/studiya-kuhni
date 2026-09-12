@@ -1,0 +1,39 @@
+label: Библиотека
+icon: box
+sections:
+  library_guide:
+    type: info
+    label: Общие названия и иконки
+    text: 'Все элементы доступны для выбора в пределах своей группы. Изменения применяются ко всем страницам, где выбран элемент. Текст преимущества заполняется отдельно на каждой странице.'
+  shared_pool:
+    type: fields
+    fields:
+      shared_library_heading:
+        type: headline
+        label: Для всего сайта
+        help: Преимущества для любых страниц, включая кухни.
+      benefit_library:
+        extends: fields/section-library
+        label: Общие преимущества
+        kind: benefits
+        fields:
+          title:
+            maxlength: 50
+  kitchen_pool:
+    type: fields
+    fields:
+      kitchen_library_heading:
+        type: headline
+        label: Только для кухонь
+        help: Доступны только на страницах отдельных кухонь.
+      kitchen_feature_library:
+        extends: fields/section-library
+        label: Детали кухни
+        kind: kitchen_features
+      kitchen_benefit_library:
+        extends: fields/section-library
+        label: Преимущества кухни
+        kind: kitchen_benefits
+        fields:
+          title:
+            maxlength: 50

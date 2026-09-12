@@ -1,0 +1,12 @@
+{
+	"toolbar.button.horizontalRule": "Trennlinie",
+	"toolbar.button.codeBlock": "Codeblock",
+	"toolbar.button.blockquote": "Zitat",
+	"toolbar.button.taskList": "Aufgabenliste",
+	"upload.error.disabled": "Datei-Uploads sind für dieses Feld nicht aktiviert",
+	"upload.error.noData": "Keine Dateien vom Upload erhalten",
+	"upload.error.insert": "Fehler beim Einfügen der hochgeladenen Datei",
+	"upload.error.dialog": "Fehler beim Öffnen des Upload-Dialogs",
+	"upload.error.failed": "Upload fehlgeschlagen",
+	"navigate.error": "Diese Referenz konnte nicht geöffnet werden"
+}

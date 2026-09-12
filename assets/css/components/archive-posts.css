@@ -59,7 +59,7 @@
 
 .archive-posts-card {
 	display: block;
-	transition: all 0.3s var(--out);
+	transition: color 0.3s var(--out);
 
 	figure {
 		margin: 0;
@@ -81,7 +81,7 @@
 
 			.archive-posts-meta {
 
-				color: var(--grey);
+				color: var(--text-muted);
 
 				a:hover {
 					color: var(--jet-black);
@@ -134,7 +134,7 @@ img {
 	font-size: var(--fs-xs);
 	text-transform: uppercase;
 	letter-spacing: .08em;
-	color: var(--grey);
+	color: var(--text-muted);
 }
 
 .archive-posts-title {
@@ -152,7 +152,7 @@ img {
 }
 
 .archive-posts-intro {
-	color: var(--grey);
+	color: var(--text-muted);
 	font-size: var(--fs-sm);
 
 	.archive-posts-card:hover & {
@@ -162,5 +162,5 @@ img {
 
 .archive-posts-empty {
 	margin: 0;
-	color: var(--grey);
+	color: var(--text-muted);
 }

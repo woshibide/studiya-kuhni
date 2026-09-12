@@ -7,11 +7,6 @@ $phoneDigits = preg_replace('/\D+/', '', $phone ?? '');
 $phoneHref = $phoneDigits !== '' ? '+' . $phoneDigits : '';
 
 $callbackTitle = $contactsPage ? $contactsPage->callback_title()->value() : '';
-$phonePlaceholder = $contactsPage ? $contactsPage->callback_phone_placeholder()->value() : '';
-$namePlaceholder = $contactsPage ? $contactsPage->callback_name_placeholder()->value() : '';
-$emailPlaceholder = $contactsPage ? $contactsPage->callback_email_placeholder()->value() : '';
-$consentText = $contactsPage ? $contactsPage->consent_text()->value() : '';
-$callbackButton = $contactsPage ? $contactsPage->callback_button_text()->value() : '';
 
 $studioName = $contactsPage ? $contactsPage->studio_name()->value() : '';
 $studioEmail = $contactsPage ? trim((string)$contactsPage->email()->value()) : '';
@@ -61,14 +56,14 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
 
 <aside class="nav-contact-panel" id="nav-contact-panel" aria-hidden="true" hidden>
     <div class="nav-contact-panel__content">
-        <section class="nav-contact-section nav-contact-overview" aria-label="Контакты студии">
-            <div class="nav-contact-overview__main">
-                <h2><?= esc($studioName !== '' ? $studioName : $panelTitle) ?></h2>
-                <?php if ($studioEmail !== ''): ?>
-                    <a class="hover-underline" href="mailto:<?= esc($studioEmail) ?>"><?= esc($studioEmail) ?></a>
-                <?php endif ?>
+        <section class="nav-contact-section nav-contact-overview" aria-labelledby="nav-contact-studio-label">
+            <div class="nav-contact-overview__main" style="--contact-stagger-index: 1">
+                <h2 class="nav-contact-label" id="nav-contact-studio-label"><?= esc($studioName !== '' ? $studioName : ($panelTitle !== '' ? $panelTitle : 'Студия Кухни')) ?></h2>
                 <?php if ($phone !== '' && $phoneHref !== ''): ?>
-                    <a class="hover-underline" href="tel:<?= esc($phoneHref) ?>" class="nav-contact-phone"><?= esc($phone) ?></a>
+                    <a class="hover-underline nav-contact-link nav-contact-phone" href="tel:<?= esc($phoneHref, 'attr') ?>"><?= esc($phone) ?></a>
+                <?php endif ?>
+                <?php if ($studioEmail !== ''): ?>
+                    <a class="hover-underline nav-contact-link nav-contact-email" href="mailto:<?= esc($studioEmail, 'attr') ?>"><?= esc($studioEmail) ?></a>
                 <?php endif ?>
 
                 <?php if (!empty($messengers)): ?>
@@ -79,9 +74,9 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                             $messengerUrl = (string)$messenger->url();
                             $messengerIcon = $resolveContactIcon($messengerTitle, $messengerUrl);
                             ?>
-                            <a class="hover-underline nav-contact-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
+                            <a class="hover-underline nav-contact-link" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
                                 <?php if ($messengerIcon): ?>
-                                    <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                    <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" width="24" height="24" aria-hidden="true" loading="lazy" decoding="async">
                                 <?php endif ?>
                                 <span><?= esc($messengerTitle) ?></span>
                             </a>
@@ -89,11 +84,15 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                     </div>
                 <?php endif ?>
             </div>
-            <div>
-
-
+            <div class="nav-contact-location" style="--contact-stagger-index: 2">
+                <h3 class="nav-contact-label">В салоне</h3>
                 <?php if (trim((string)$address) !== ''): ?>
-                    <address><?= esc($address) ?></address>
+                    <div class="nav-contact-address-wrap">
+                        <address>
+                            <button class="nav-contact-address" type="button" data-copy-address="<?= esc(trim((string)$address), 'attr') ?>" aria-label="<?= esc('Скопировать адрес: ' . $address, 'attr') ?>" title="Скопировать адрес"><?= esc($address) ?></button>
+                        </address>
+                        <span class="nav-contact-copy-status sr-only" data-address-copy-status role="status" aria-live="polite"></span>
+                    </div>
                     <?php if (trim((string)$hours) !== ''): ?>
                         <p class="nav-contact-hours"><?= esc($hours) ?></p>
                     <?php endif ?>
@@ -107,9 +106,9 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                             $mapUrl = (string)$mapLink->url();
                             $mapIcon = $resolveContactIcon($mapTitle, $mapUrl);
                             ?>
-                            <a class="hover-underline external-link__hidden nav-contact-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
+                            <a class="hover-underline nav-contact-link" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
                                 <?php if ($mapIcon): ?>
-                                    <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                    <img src="<?= esc($mapIcon, 'attr') ?>" alt="" width="24" height="24" aria-hidden="true" loading="lazy" decoding="async">
                                 <?php endif ?>
                                 <span><?= esc($mapTitle) ?></span>
                             </a>
@@ -120,18 +119,9 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
 
         </section>
 
-        <section class="nav-contact-section nav-contact-callback" aria-label="Форма обратной связи">
-            <h3 class="nav-contact-title"><?= esc($callbackTitle) ?></h3>
-            <form class="nav-contact-form" method="post" action="#">
-                <input type="tel" name="telephone" placeholder="<?= esc($phonePlaceholder) ?>" required>
-                <input type="text" name="name" placeholder="<?= esc($namePlaceholder) ?>" required>
-                <input type="email" name="email" placeholder="<?= esc($emailPlaceholder) ?>">
-                <label class="nav-contact-consent">
-                    <input type="checkbox" name="consent" required>
-                    <span><?= esc($consentText) ?></span>
-                </label>
-                <button class="primary-btn" type="submit"><?= esc($callbackButton) ?></button>
-            </form>
+        <section class="nav-contact-section nav-contact-callback" aria-labelledby="nav-contact-callback-label">
+            <h2 class="nav-contact-title" id="nav-contact-callback-label" style="--contact-stagger-index: 3"><?= esc($callbackTitle !== '' ? $callbackTitle : 'Заказать звонок') ?></h2>
+            <?php snippet('callback-form', ['formId' => 'nav-callback-form', 'variant' => 'panel']) ?>
         </section>
     </div>
 </aside>

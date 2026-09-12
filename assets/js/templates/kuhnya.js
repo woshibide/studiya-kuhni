@@ -1,3 +1,4 @@
+(() => {
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 const KUNYA_HERO_SELECTOR = '[data-kunya-hero]';
@@ -39,12 +40,17 @@ const initKunyaHeroCarousel = () => {
     });
 
     const syncHeroNavButtons = () => {
+        const selected = embla.selectedScrollSnap();
+        slides.forEach((slide, index) => {
+            slide.setAttribute('aria-hidden', String(index !== selected));
+            slide.inert = index !== selected;
+        });
         setHeroNavButtonState(prevButton, !embla.canScrollPrev());
         setHeroNavButtonState(nextButton, !embla.canScrollNext());
     };
 
-    prevButton?.addEventListener('click', () => embla.scrollPrev());
-    nextButton?.addEventListener('click', () => embla.scrollNext());
+    prevButton?.addEventListener('click', () => embla.scrollPrev(kunyaReducedMotion || Boolean(window.studioMotion?.paused)));
+    nextButton?.addEventListener('click', () => embla.scrollNext(kunyaReducedMotion || Boolean(window.studioMotion?.paused)));
 
     embla.on('select', syncHeroNavButtons);
     embla.on('reInit', syncHeroNavButtons);
@@ -68,7 +74,7 @@ const initKunyaLayoutParallax = () => {
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
         medias.forEach((media) => {
-            if (kunyaReducedMotion || kunyaIsPhone) {
+            if (kunyaReducedMotion || kunyaIsPhone || window.studioMotion?.paused) {
                 media.style.setProperty('--kuhnya-layout-parallax-y', '0px');
                 media.style.setProperty('--kuhnya-layout-parallax-scale', '0');
                 return;
@@ -95,6 +101,7 @@ const initKunyaLayoutParallax = () => {
         requestAnimationFrame(update);
     };
 
+    window.studioMotion?.subscribe(update);
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
@@ -109,3 +116,5 @@ if (document.readyState === 'loading') {
     initKunyaHeroCarousel();
     initKunyaLayoutParallax();
 }
+
+})();

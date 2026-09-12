@@ -72,7 +72,7 @@ SuisseIntl-SemiBold.woff */
     --brighter-yellow: oklch(85.2% 0.199 91.936);
 
     /* accessibility */
-    --tap-target-size: 22px;
+    --tap-target-size: 12px;
 }
 
 /* ultra wide */

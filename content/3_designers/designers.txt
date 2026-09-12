@@ -25,10 +25,7 @@ Benefits-heading:
 Benefits-items:
 
 - 
-  image:
-    - file://rzg8kt436o9alnxm
-  alt: ""
-  title: Хорошая компания
+  reference: 847eca131d23f2ec065f9a2d
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -36,10 +33,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus.
 - 
-  image:
-    - file://qsiuoebfcnsc1jiv
-  alt: ""
-  title: Надежный партнер
+  reference: 61aa02c6bf0a348e6c1d766f
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -47,10 +41,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus.
 - 
-  image:
-    - file://rxpxpjw97dmqeh8o
-  alt: ""
-  title: Все на равных правах
+  reference: 8d599a7b2d9c4e0dc37590cd
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -58,10 +49,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus.
 - 
-  image:
-    - file://waurmchhznb4afku
-  alt: ""
-  title: Вы у руля
+  reference: 96d949ade091968fda151ed7
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex

@@ -8,6 +8,10 @@
 # http://yourdomain.com/about-us/team
 RewriteEngine on
 
+# Source, tooling, test entrypoints and static preview exports are never public.
+RewriteRule ^(?:vendor|tools|tests|docs|ops|static)(?:/|$) - [F,L,NC]
+RewriteRule ^(?:composer\.(?:json|lock)|package(?:-lock)?\.json|test-ssg\.php|README\.md|skills-lock\.json)$ - [F,L,NC]
+
 # make sure to set the RewriteBase correctly
 # if you are running the site in a subfolder;
 # otherwise links or the entire site will break.
@@ -63,5 +67,7 @@ AddOutputFilterByType DEFLATE application/x-javascript
 # (hardens against attacks from malicious file uploads)
 Header set Content-Type "text/plain" "expr=-z %{CONTENT_TYPE}"
 Header set X-Content-Type-Options "nosniff"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set X-Robots-Tag "noindex, nofollow, noarchive" "expr=%{HTTP_HOST} =~ m#^design\.#i"
 
 </IfModule>

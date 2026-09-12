@@ -6,7 +6,7 @@ Fabric-info-title: Фабрика с берегов адриатики
 
 ----
 
-Fabric-info-text: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+Fabric-info-text: Пезаро, регион Марке - место, где итальянская культура красоты встречается с морским характером Адриатики. Именно здесь в 1983 году семья Дель Прете основала Aster Cucine, сделав ставку на дизайн, мастерство и качество. Философию бренда передаёт манифест Designed to build emotions - «Кухни, рождающие эмоции». Aster Cucine создаёт пространства с характером, смело сочетая стили, материалы и фактуры. Каждая коллекция - самостоятельный образ, в котором классика встречается с современностью, а природные материалы - с технологичными решениями. Aster Cucine - итальянский дизайн, превращающий кухню в источник эмоций.
 
 ----
 
@@ -43,3 +43,11 @@ Cta-button:
 ----
 
 Uuid: klkhbbcgywlpl4nu
+
+----
+
+Fabric-location:
+
+lat: 42.653145
+lon: 14.037308
+zoom: 13

@@ -48,3 +48,11 @@ Icon
 # ---------------
 
 /site/config/.license
+
+# Per-environment secrets, logs and local MCP runtime cache
+.env
+.env.*
+!.env.example
+/site/logs/*
+/.kirby-mcp/
+/site/commands/mcp/

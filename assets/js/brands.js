@@ -29,18 +29,31 @@ const initBrandsMarquee = () => {
 			const speed = Number(marquee.dataset.speed) || 100;
 			const direction = marquee.dataset.direction === 'rtl' ? 'rtl' : 'ltr';
 
-			window.gsapMarquee(marquee, {
+			const instance = window.gsapMarquee(marquee, {
 				speed,
 				direction,
-				pauseOnHover: true,
+				pauseOnHover: false,
 				pauseOnClick: false,
 				variableSpeed: false,
-				startPaused: reducedMotionQuery.matches,
+				startPaused: true,
 				responsive: true,
 				loop: true,
 				containerSelector: '.marqueeInner',
 				itemsSelector: '.marquee-item'
 			});
+            let hovering = false;
+            let focused = false;
+            const sync = () => {
+                if (window.studioMotion?.paused || reducedMotionQuery.matches || hovering || focused) instance.pause();
+                else instance.resume();
+            };
+            marquee.addEventListener('mouseenter', () => { hovering = true; sync(); });
+            marquee.addEventListener('mouseleave', () => { hovering = false; sync(); });
+            marquee.addEventListener('focusin', () => { focused = true; sync(); });
+            marquee.addEventListener('focusout', (event) => { focused = marquee.contains(event.relatedTarget); sync(); });
+            window.studioMotion?.subscribe(sync);
+            reducedMotionQuery.addEventListener('change', sync);
+            sync();
 		});
 	};
 

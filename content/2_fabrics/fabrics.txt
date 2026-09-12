@@ -15,12 +15,7 @@ Benefits-heading:
 Benefits-items:
 
 - 
-  image:
-    - file://f0ethpdweo3ybuiv
-  alt: ""
-  title: >
-    Работаем со всем
-    миром
+  reference: 06cb085b0b8ac0d3d265c340
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -28,12 +23,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus leo eu aenean
 - 
-  image:
-    - file://vlyjo83wvrvqqrak
-  alt: ""
-  title: >
-    Можно расплатиться
-    валютой
+  reference: c49a4c505660f18e483b8b08
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -41,12 +31,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus leo eu aenean
 - 
-  image:
-    - file://ngjwq8irfjlo9xaf
-  alt: ""
-  title: >
-    Выбор за вами —
-    дизайн за нами
+  reference: 6356062c9c70cfb7e8c34c41
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -69,3 +54,217 @@ Cta-button: Свяжитесь со мной
 ----
 
 Uuid: 044anx6sf0g3adu4
+
+----
+
+Feature-library: 
+
+----
+
+Benefit-library:
+
+- 
+  key: 1701dbcdf12b61cae59243ec
+  title: >
+    Собрали лучшее в
+    Пятигорске
+  image:
+    - file://s8ge6olkdkwuvjac
+  alt: ""
+  archived: false
+- 
+  key: fbd2fa5ef543f38757f3b40f
+  title: >
+    Опыт, которому можно
+    доверять
+  image:
+    - file://yube7v4zxnnkr47y
+  alt: ""
+  archived: false
+- 
+  key: 1cb92c10fc8643413e5d5e7e
+  title: >
+    Здесь начинается ваш
+    проект
+  image:
+    - file://vbnkmcojnhw8j9gr
+  alt: >
+    иконка кавказских
+    минеральных вод
+  archived: false
+- 
+  key: 06cb085b0b8ac0d3d265c340
+  title: >
+    Работаем со всем
+    миром
+  image:
+    - file://s8ge6olkdkwuvjac
+  alt: ""
+  archived: false
+- 
+  key: c49a4c505660f18e483b8b08
+  title: >
+    Можно расплатиться
+    валютой
+  image:
+    - file://ewlakxxq8hkzo2ex
+  alt: ""
+  archived: false
+- 
+  key: 6356062c9c70cfb7e8c34c41
+  title: >
+    Выбор за вами —
+    дизайн за нами
+  image:
+    - file://be4knrbhnkwarbup
+  alt: ""
+  archived: false
+- 
+  key: 847eca131d23f2ec065f9a2d
+  title: Хорошая компания
+  image:
+    - file://yube7v4zxnnkr47y
+  alt: ""
+  archived: false
+- 
+  key: 61aa02c6bf0a348e6c1d766f
+  title: Надежный партнер
+  image:
+    - file://7xfg7jflemkuekwl
+  alt: ""
+  archived: false
+- 
+  key: 8d599a7b2d9c4e0dc37590cd
+  title: Все на равных правах
+  image:
+    - file://nndgjets4pqkgpml
+  alt: ""
+  archived: false
+- 
+  key: 96d949ade091968fda151ed7
+  title: Вы у руля
+  image:
+    - file://be4knrbhnkwarbup
+  alt: ""
+  archived: false
+- 
+  key: 206a2dc3bdbf88991d53b159
+  title: Быстрая доставка
+  image:
+    - file://j4g001sh11rcxzgl
+  alt: ""
+  archived: false
+- 
+  key: fb0d9b4da5edcb67b15ccec1
+  title: КМВ это наш дом
+  image:
+    - file://vbnkmcojnhw8j9gr
+  alt: ""
+  archived: false
+- 
+  key: d673990d59ed87d7f8d43647
+  title: >
+    Профессионалы своего
+    дела
+  image:
+    - file://doxbewazxr6ecncg
+  alt: ""
+  archived: false
+- 
+  key: 3dc7c2552829cc26225349b8
+  title: >
+    Ко всему подходим с
+    любовью
+  image:
+    - file://13d87hpli9ge3ov5
+  alt: ""
+  archived: false
+
+----
+
+Kitchen-feature-library:
+
+- 
+  key: 0869f38a8aab08626f4cf8a0
+  title: >
+    Деликатная подсветка
+    внутри ящиков
+  image:
+    - file://srnkqsbi07wuahs5
+  alt: ""
+  archived: false
+- 
+  key: 6e730dd012c002f4ab711413
+  title: Выдвижной винный бар
+  image:
+    - file://t7cx5gmgcfvoqgar
+  alt: ""
+  archived: false
+- 
+  key: 10dc0d799d4be4a0d225d37d
+  title: >
+    Мягкое фоновое
+    освещение
+  image:
+    - file://atcuktgnyyuadovu
+  alt: ""
+  archived: false
+- 
+  key: b6a1608562c34acbb5b242be
+  title: >
+    Встроенные решения
+    премиум-класса
+  image:
+    - file://z5pwrmnbhfth6g1d
+  alt: ""
+  archived: false
+- 
+  key: 74dd87721b2eafe115efc583
+  title: >
+    Система бесшумного
+    закрывания
+  image:
+    - file://kunjkcfu3m4y8m6a
+  alt: ""
+  archived: false
+
+----
+
+Kitchen-benefit-library:
+
+- 
+  key: b103fecf61bce3077aa53bfa
+  title: >
+    Экологичные
+    материалы
+  image:
+    - file://ew0uqdgtspu98jbs
+  alt: ""
+  archived: false
+- 
+  key: 06ba1decfeb4d0357b123213
+  title: >
+    Скрытые розетки и
+    интерфейсы
+  image:
+    - file://p0xsy8qri0yupmlv
+  alt: ""
+  archived: false
+- 
+  key: 2f5cb669146f4bc99cbfd990
+  title: >
+    Логичная организация
+    зон
+  image:
+    - file://tovvw4iu1tqe7eqv
+  alt: ""
+  archived: false
+- 
+  key: f08537fa6211463c628458a3
+  title: >
+    Лёгкое и мягкое
+    открывание
+  image:
+    - file://x5b5u7mfbvvhklsn
+  alt: ""
+  archived: false

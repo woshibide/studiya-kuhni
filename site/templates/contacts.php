@@ -5,15 +5,10 @@ $phone = trim((string)$page->phone()->value());
 $phoneDigits = preg_replace('/\D+/', '', $phone ?? '');
 $phoneHref = $phoneDigits !== '' ? '+' . $phoneDigits : '';
 
-$introText = $page->intro_text()->value();
+$introText = $page->intro_text()->studioText(true);
 $contactsTitle = $page->help_title()->value();
 $callbackTitle = $page->callback_title()->value();
 $addressTitle = $page->address_section_title()->value();
-$phonePlaceholder = $page->callback_phone_placeholder()->value();
-$namePlaceholder = $page->callback_name_placeholder()->value();
-$emailPlaceholder = $page->callback_email_placeholder()->value();
-$consentText = $page->consent_text()->value();
-$callbackButton = $page->callback_button_text()->value();
 
 $studioName = $page->studio_name()->value();
 $studioEmail = trim((string)$page->email()->value());
@@ -61,12 +56,15 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
 };
 ?>
 
-<main class="contacts-page">
+<main class="contacts-page" id="main-content" tabindex="-1">
 
     <section>
         <h1>
             Контакты
         </h1>
+        <?php if ($introText !== ''): ?>
+            <p class="contacts-intro"><?= $introText ?></p>
+        <?php endif ?>
     </section>
 
 
@@ -75,18 +73,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
             <div class="contacts-form-column">
                 <div class="contacts-block contacts-block--form" aria-label="<?= esc($callbackTitle, 'attr') ?>">
                     <h2><?= esc($callbackTitle) ?></h2>
-                    <form class="contacts-form" method="post" action="#">
-                        <input type="tel" name="telephone" placeholder="<?= esc($phonePlaceholder) ?>" required>
-                        <input type="text" name="name" placeholder="<?= esc($namePlaceholder) ?>" required>
-                        <input type="email" name="email" placeholder="<?= esc($emailPlaceholder) ?>">
-
-                        <label class="contacts-consent">
-                            <input type="checkbox" name="consent" required>
-                            <span><?= esc($consentText) ?></span>
-                        </label>
-
-                        <button class="primary-btn" type="submit"><?= esc($callbackButton) ?></button>
-                    </form>
+                    <?php snippet('callback-form') ?>
                 </div>
             </div>
 
@@ -112,7 +99,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                                 ?>
                                 <a class="hover-underline external-link__hidden contacts-link-with-icon" href="<?= esc($mapUrl) ?>" target="_blank" rel="noopener noreferrer">
                                     <?php if ($mapIcon): ?>
-                                        <img src="<?= esc($mapIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                        <img src="<?= esc($mapIcon, 'attr') ?>" alt="" width="24" height="24" aria-hidden="true" loading="lazy" decoding="async">
                                     <?php endif ?>
                                     <span><?= esc($mapTitle) ?></span>
                                 </a>
@@ -145,7 +132,7 @@ $resolveContactIcon = static function (string $title, string $url): ?string {
                                 ?>
                                 <a class="hover-underline contacts-link-with-icon" href="<?= esc($messengerUrl) ?>" target="_blank" rel="noopener noreferrer">
                                     <?php if ($messengerIcon): ?>
-                                        <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                        <img src="<?= esc($messengerIcon, 'attr') ?>" alt="" width="24" height="24" aria-hidden="true" loading="lazy" decoding="async">
                                     <?php endif ?>
                                     <span><?= esc($messengerTitle) ?></span>
                                 </a>

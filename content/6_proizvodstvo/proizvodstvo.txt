@@ -33,10 +33,7 @@ Benefits-heading:
 Benefits-items:
 
 - 
-  image:
-    - file://e8dbv7mlhwcgok01
-  alt: ""
-  title: Быстрая доставка
+  reference: 206a2dc3bdbf88991d53b159
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -44,10 +41,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus leo eu aenean
 - 
-  image:
-    - file://vzhckxmwai6o1nlw
-  alt: ""
-  title: КМВ это наш дом
+  reference: fb0d9b4da5edcb67b15ccec1
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -55,12 +49,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus leo eu aenean
 - 
-  image:
-    - file://qy6i0dkwopaugqqw
-  alt: ""
-  title: >
-    Профессионалы своего
-    дела
+  reference: d673990d59ed87d7f8d43647
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex
@@ -68,12 +57,7 @@ Benefits-items:
     in id cursus mi pretium tellus duis
     convallis tempus leo eu aenean
 - 
-  image:
-    - file://gymlzbkqpk0xi6ik
-  alt: ""
-  title: >
-    Ко всему подходим с
-    любовью
+  reference: 3dc7c2552829cc26225349b8
   text: >
     Lorem ipsum dolor sit amet consectetur
     adipiscing elit quisque faucibus ex

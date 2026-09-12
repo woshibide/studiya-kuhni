@@ -6,7 +6,7 @@ Fabric-info-title: Фабрика из предгорья Альп
 
 ----
 
-Fabric-info-text: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+Fabric-info-text: Провинция Тревизо - место, где итальянские ремесленные традиции встречаются с любовью к красоте и качеству. Именно здесь в 1988 году три основателя создали Home Cucine, объединив опыт местных мастеров и современный взгляд на мебель. Сегодня бренд создаёт кухни, в которых выразительный итальянский дизайн сочетается с функциональностью, качественными материалами и вниманием к деталям. В основе философии Home Cucine - идея о том, что красивый и комфортный дом должен быть доступен каждой семье. Home Cucine - итальянский дизайн, созданный для жизни, дома и тех, кто в нём живёт.
 
 ----
 
@@ -43,3 +43,11 @@ Cta-button:
 ----
 
 Uuid: qgjqyhl3ixfm9kfs
+
+----
+
+Fabric-location:
+
+lat: 46.012002
+lon: 12.142432
+zoom: 13

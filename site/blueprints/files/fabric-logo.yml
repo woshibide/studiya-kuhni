@@ -1,5 +1,11 @@
 title: Логотип фабрики
+image:
+  back: white
+  cover: false
 accept:
   mime:
     - image/png
     - image/svg+xml
+fields:
+  image_metadata:
+    extends: fields/image-metadata

@@ -70,14 +70,14 @@
     flex-direction: column;
     gap: var(--space-sm);
     padding: clamp(1rem, 2vw, 2rem);
-    background: var(--opaque-white);
+    background: var(--the-white);
     pointer-events: auto;
     border-radius: var(--space-xs);
-    transition: all 0.3s var(--out);
+    transition: color 0.3s var(--out);
 }
 
 .kunya-sticky-overview__eyebrow {
-    color: var(--grey);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: var(--fs-xs);
@@ -117,12 +117,12 @@
 }
 
 .kunya-sticky-overview__fact-label {
-    color: var(--soft-grey);
+    color: var(--text-muted);
     text-transform: lowercase;
 }
 
 .kunya-sticky-overview__fact-value {
-    color: var(--grey);
+    color: var(--text-muted);
 }
 
 .kunya-sticky-overview__cta {
@@ -189,6 +189,20 @@
     transform-origin: center;
     will-change: transform;
     border-radius: 0;
+}
+
+.kunya-hero__photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    cursor: zoom-in;
+}
+
+.kunya-hero__photo:focus-visible {
+    outline-offset: -6px;
 }
 
 .kunya-hero__arrow {
@@ -291,7 +305,6 @@
 
     .kunya-sticky-overview__content {
         grid-column: 4 / -1;
-        background: color-mix(in srgb, var(--the-white) 88%, transparent);
     }
 }
 
@@ -319,17 +332,53 @@
 }
 
 @media (max-width: 48rem) {
+    main.kuhnya-page {
+        --space-base: 1rem;
+        --space-xxs: 0.25rem;
+        --space-xs: 0.5rem;
+        --space-sm: 0.75rem;
+        --space-md: 1.5rem;
+        --space-lg: 2rem;
+        --space-xl: 3rem;
+        --space-xxl: 4rem;
+        --the-width: calc(100% - 2rem);
+        gap: 0;
+    }
+
+    .kuhnya-page > * + * {
+        margin-top: 4rem;
+    }
+
+    .kuhnya-page section {
+        min-height: 0;
+    }
+
+    .kuhnya-page :is(h1, h2, h3) {
+        text-wrap: balance;
+        overflow-wrap: anywhere;
+    }
+
+    .kuhnya-page p {
+        line-height: 1.45;
+    }
+
     #kuhnya-intro {
         width: 100%;
         max-width: var(--the-width);
         margin-inline: auto;
-        padding-inline: var(--space-sm);
+        padding: 6.5rem 0 0;
         box-sizing: border-box;
         height: auto;
 
         h1 {
-            margin-block: 0.35em;
+            margin: 0;
+            font-size: clamp(2.75rem, 14vw, 4rem);
         }
+    }
+
+    .kuhnya-page .kunya-sticky-scope {
+        margin-top: 1.5rem;
+        gap: 3rem;
     }
 
     .kunya-sticky-overview {
@@ -343,24 +392,103 @@
         width: var(--the-width);
         margin-inline: auto;
         padding-inline: 0;
+        padding-bottom: 0;
     }
 
     .kunya-sticky-overview__content {
         padding: 0;
         grid-column: 1 / -1;
         backdrop-filter: none;
+        gap: 0.75rem;
+    }
+
+    .kunya-sticky-overview__title {
+        display: none;
+    }
+
+    .kunya-sticky-overview__fact-item--price {
+        flex-wrap: wrap;
+        gap: 0.25rem 1rem;
+    }
+
+    .kunya-sticky-overview__fact-value {
+        overflow-wrap: anywhere;
     }
 
     #kunya-hero {
-        min-height: 70vh;
+        min-height: 0;
     }
 
     .kunya-hero__shell {
-        min-height: 70vh;
+        min-height: 0;
     }
 
     .kunya-hero__media {
-        height: 78vh;
+        height: 70svh;
+        max-height: 44rem;
+    }
+
+    .kuhnya-page #cta {
+        min-height: 0;
+        gap: 1rem;
+    }
+
+    .kuhnya-page #cta .cta-media,
+    .kuhnya-page #cta .cta-media img {
+        height: 65svh;
+        min-height: 0;
+    }
+
+    .kuhnya-page #cta > .section-sticky {
+        margin-inline: 0;
+        padding: 1.25rem;
+    }
+
+    .kuhnya-page .fabric-info__layout {
+        gap: 1.5rem;
+    }
+
+    .kuhnya-page .fabric-info__map-empty {
+        min-height: 12rem;
+    }
+
+    .kuhnya-page .fabric-info__logo {
+        width: min(60%, 12rem);
+        aspect-ratio: 2 / 1;
+    }
+
+    .kuhnya-page #faq.section-wrapper {
+        padding-inline: 1rem;
+        box-sizing: border-box;
+        gap: 1.5rem;
+    }
+
+    .kuhnya-page #faq.section-wrapper h2 {
+        padding: 0;
+        font-size: 2rem;
+    }
+
+    .kuhnya-page #faq.section-wrapper .faq-section-content {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .kuhnya-page #faq .faq-category-tab {
+        font-size: 1rem;
+        min-width: 0;
+    }
+
+    .kuhnya-page #faq .faq-question-trigger {
+        box-sizing: border-box;
+        padding: 1rem 0;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .kuhnya-page #faq .faq-question-icon {
+        flex-basis: 24px;
+        inline-size: 24px;
+        block-size: 24px;
     }
 
     .kuhnya-features-list {
@@ -418,6 +546,7 @@
     margin: 0;
     min-height: clamp(20rem, 52vh, 36rem);
     overflow: hidden;
+    border-radius: var(--image-radius);
     cursor: pointer;
     z-index: 1200;
 }
@@ -432,6 +561,11 @@
 #details .kuhnya-layout-media {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
     overflow: hidden;
     
     --kuhnya-layout-parallax-y: 0px;
@@ -444,11 +578,20 @@
     will-change: transform;
 }
 
+#details .kuhnya-layout-card.is-expanded .kuhnya-layout-media[data-gallery-layout-open] {
+    cursor: zoom-in;
+}
+
+#details .kuhnya-layout-media:focus-visible {
+    outline-offset: -6px;
+}
+
 #details .kuhnya-layout-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 0;
 }
 
 #details .kuhnya-layout-toggle {
@@ -503,17 +646,37 @@
 }
 
 @media (max-width: 48rem) {
-    #details .kuhnya-layout-card {
-        min-height: clamp(18rem, 44vh, 24rem);
+    #details {
+        margin-block: 0;
     }
 
+    #details .kuhnya-layout-grid {
+        row-gap: 1rem;
+    }
+
+    #details .kuhnya-layout-card,
     #details .kuhnya-layout-card.is-expanded {
-        min-height: 50vh;
+        grid-column: 1 / -1;
+        min-height: 0;
+        margin-top: 0 !important;
+        border-radius: 0;
+        z-index: auto;
+    }
+
+    #details .kuhnya-layout-media {
+        position: relative;
+        height: auto;
+        display: block;
+        transform: none;
+        transition: none;
+        will-change: auto;
+    }
+
+    #details .kuhnya-layout-media img {
+        height: auto;
     }
 
     #details .kuhnya-layout-toggle {
-        width: var(--tap-target-size);
-        height: var(--tap-target-size);
+        display: none;
     }
 }
-

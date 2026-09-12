@@ -1,0 +1,13 @@
+label: Файлы
+icon: image
+sections:
+  page_files:
+    type: files
+    label: Файлы страницы
+    layout: cards
+    size: small
+    image:
+      ratio: 4/3
+      cover: false
+    info: "{{ file.alt }}"
+    help: Откройте изображение, чтобы добавить описание для незрячих пользователей. Загруженные файлы нужно выбрать в соответствующем блоке страницы.

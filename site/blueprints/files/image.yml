@@ -1,0 +1,11 @@
+title: Фотография
+accept:
+  mime:
+    - image/jpeg
+    - image/png
+    - image/webp
+    - image/avif
+    - image/gif
+fields:
+  image_metadata:
+    extends: fields/image-metadata

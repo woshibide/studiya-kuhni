@@ -1,0 +1,210 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Bnomei\KirbyMcp\Mcp;
+
+use Bnomei\KirbyMcp\Mcp\Http\HttpAuthFactory;
+use Bnomei\KirbyMcp\Project\KirbyMcpConfig;
+use Bnomei\KirbyMcp\Project\KirbyMcpHttpConfig;
+use Bnomei\KirbyMcp\Project\ProjectRootFinder;
+use GuzzleHttp\Psr7\HttpFactory;
+use GuzzleHttp\Psr7\ServerRequest;
+use Kirby\Cms\App as Kirby;
+use Kirby\Http\Response as KirbyResponse;
+use Mcp\Server\Session\FileSessionStore;
+use Psr\Http\Message\ServerRequestInterface;
+
+final class KirbyMcpRoute
+{
+    public static function handle(
+        ?string $projectRoot = null,
+        ?ServerRequestInterface $request = null,
+        int $sseMaxSeconds = 300,
+    ): KirbyResponse {
+        $request ??= ServerRequest::fromGlobals();
+        $projectRoot = self::resolveProjectRoot($projectRoot);
+        if ($projectRoot === null) {
+            return self::error(500, 'Unable to determine Kirby project root.');
+        }
+
+        $projectConfig = KirbyMcpConfig::load($projectRoot);
+        if ($projectConfig->error !== null) {
+            return self::error(503, 'HTTP MCP config could not be read.', [
+                'detail' => $projectConfig->error,
+            ]);
+        }
+
+        $config = KirbyMcpOAuthRoute::withResolvedOAuthProvider($projectConfig->http(), $request);
+        if ($config->enabled === false) {
+            return self::error(404, 'HTTP MCP route is disabled.');
+        }
+
+        $errors = self::validationErrors($config);
+        if ($errors !== []) {
+            return self::error(503, 'HTTP MCP route is not configured correctly.', [
+                'errors' => $errors,
+            ]);
+        }
+
+        if (
+            $config->authMode === KirbyMcpHttpConfig::AUTH_MODE_SHARED_TOKEN
+            && self::isLoopbackRequest($request) === false
+        ) {
+            return self::error(503, 'HTTP shared-token auth is only allowed for loopback requests.');
+        }
+
+        if (
+            $config->authMode === KirbyMcpHttpConfig::AUTH_MODE_REMOTE_TOKEN
+            && self::isLoopbackRequest($request) === false
+            && self::isHttpsRequest($request) === false
+        ) {
+            return self::error(503, 'HTTP remote-token auth requires HTTPS for non-loopback requests.');
+        }
+
+        putenv(ProjectContext::ENV_PROJECT_ROOT . '=' . $projectRoot);
+
+        try {
+            $handler = self::handler($projectRoot, $config, $sseMaxSeconds);
+        } catch (\Throwable $exception) {
+            return self::error(503, 'HTTP MCP route could not be started.', [
+                'detail' => $exception->getMessage(),
+            ]);
+        }
+
+        return new KirbyMcpResponse($handler->handle($request));
+    }
+
+    private static function handler(
+        string $projectRoot,
+        KirbyMcpHttpConfig $config,
+        int $sseMaxSeconds,
+    ): HttpMcpHandler {
+        $sessionDir = rtrim($projectRoot, DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR . '.kirby-mcp'
+            . DIRECTORY_SEPARATOR . 'http-sessions';
+
+        $sessionStore = new FileSessionStore($sessionDir, ServerFactory::HTTP_SESSION_TTL_SECONDS);
+        $factory = new HttpFactory();
+        $authFactory = new HttpAuthFactory();
+        $sharedToken = null;
+        $tokenValidator = null;
+        $protectedResourceMetadata = null;
+
+        if ($config->authMode === KirbyMcpHttpConfig::AUTH_MODE_SHARED_TOKEN && is_string($config->sharedToken)) {
+            $sharedToken = $config->sharedToken;
+            $tokenValidator = $authFactory->sharedTokenValidator($sharedToken, $config->scopes);
+        } elseif ($config->authMode === KirbyMcpHttpConfig::AUTH_MODE_REMOTE_TOKEN) {
+            $tokenValidator = $authFactory->remoteTokenValidator($config->remoteTokens);
+        } elseif ($config->authMode === KirbyMcpHttpConfig::AUTH_MODE_OAUTH && is_string($config->oauthIssuer) && is_string($config->oauthAudience)) {
+            $tokenValidator = $config->oauthProvider->enabled
+                ? $authFactory->oauthProviderValidator($config, $projectRoot)
+                : $authFactory->oauthValidator($config);
+            $protectedResourceMetadata = $authFactory->metadata($config->oauthIssuer, $config->oauthAudience);
+        }
+
+        return new HttpMcpHandler(
+            serverFactory: new ServerFactory(),
+            sessionStore: $sessionStore,
+            path: $config->path,
+            responseFactory: $factory,
+            streamFactory: $factory,
+            sharedToken: $sharedToken,
+            allowedOrigins: array_values($config->allowedOrigins),
+            sseMaxSeconds: $sseMaxSeconds,
+            tokenValidator: $tokenValidator,
+            protectedResourceMetadata: $protectedResourceMetadata,
+            projectRoot: $projectRoot,
+        );
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private static function validationErrors(KirbyMcpHttpConfig $config): array
+    {
+        $listenerOnlyErrors = [
+            'HTTP port must be between 1 and 65535.',
+            'HTTP shared-token auth is only allowed for loopback hosts.',
+            'Non-loopback HTTP binds require OAuth auth.',
+        ];
+
+        return array_values(array_diff($config->validationErrors(), $listenerOnlyErrors));
+    }
+
+    private static function resolveProjectRoot(?string $projectRoot): ?string
+    {
+        $finder = new ProjectRootFinder();
+
+        if (is_string($projectRoot) && trim($projectRoot) !== '') {
+            $projectRoot = trim($projectRoot);
+            $detected = $finder->findKirbyProjectRoot($projectRoot);
+
+            if ($detected !== null) {
+                return $detected;
+            }
+
+            return rtrim(realpath($projectRoot) ?: $projectRoot, DIRECTORY_SEPARATOR);
+        }
+
+        $kirbyRoot = Kirby::instance(lazy: true)?->root('index');
+        $detected = $finder->findKirbyProjectRoot($kirbyRoot);
+
+        return $detected ?? $finder->findKirbyProjectRoot();
+    }
+
+    private static function isLoopbackRemoteAddress(ServerRequestInterface $request): bool
+    {
+        $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? null;
+        if (!is_string($remoteAddress) || trim($remoteAddress) === '') {
+            return false;
+        }
+
+        $remoteAddress = strtolower(trim($remoteAddress, " \t\n\r\0\x0B[]"));
+
+        return self::isLoopbackHost($remoteAddress);
+    }
+
+    private static function isLoopbackRequest(ServerRequestInterface $request): bool
+    {
+        return self::isLoopbackRemoteAddress($request)
+            && self::isLoopbackHost($request->getUri()->getHost());
+    }
+
+    private static function isLoopbackHost(string $host): bool
+    {
+        $host = strtolower(trim($host, " \t\n\r\0\x0B[]"));
+
+        if ($host === 'localhost' || $host === '::1') {
+            return true;
+        }
+
+        return filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false
+            && str_starts_with($host, '127.');
+    }
+
+    private static function isHttpsRequest(ServerRequestInterface $request): bool
+    {
+        if (strtolower($request->getUri()->getScheme()) === 'https') {
+            return true;
+        }
+
+        $https = $request->getServerParams()['HTTPS'] ?? null;
+
+        return is_string($https) && in_array(strtolower($https), ['1', 'on', 'true'], true);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private static function error(int $code, string $message, array $data = []): KirbyResponse
+    {
+        return KirbyResponse::json([
+            'ok' => false,
+            'error' => [
+                'message' => $message,
+                ...$data,
+            ],
+        ], $code);
+    }
+}

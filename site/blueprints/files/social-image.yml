@@ -1,0 +1,9 @@
+title: Изображение для социальных сетей
+accept:
+  mime:
+    - image/jpeg
+    - image/png
+    - image/webp
+fields:
+  image_metadata:
+    extends: fields/image-metadata
