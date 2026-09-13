@@ -18,12 +18,7 @@ if ($ctaButton === '') {
 }
 
 $customImage = $page->cta_image()->toFile();
-$fallbackImages = [
-    'assets/cta/supper1.png',
-    'assets/cta/supper2.png',
-    'assets/cta/supper3.png'
-];
-$randomImage = $fallbackImages[array_rand($fallbackImages)];
+
 ?>
 
 <section class="section-full">
@@ -51,8 +46,8 @@ $randomImage = $fallbackImages[array_rand($fallbackImages)];
                 ]) ?>
             <?php else: ?>
                 <?php snippet('turbo-image', [
-                    'image' => asset($randomImage),
-                    'alt' => 'Call to Action',
+                    'image' => asset('assets/placeholder.svg'),
+                    'alt' => '',
                     'width' => 1200,
                     'loading' => 'lazy',
                 ]) ?>

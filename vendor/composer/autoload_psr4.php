@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-common/src'),
+    'mauricerenck\\OgImage\\' => array($baseDir . '/site/plugins/ogimage/lib'),
     'Whoops\\' => array($vendorDir . '/filp/whoops/src/Whoops'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Tiptap\\' => array($vendorDir . '/ueberdosis/tiptap-php/src'),
@@ -34,12 +35,13 @@ return array(
     'Opis\\Uri\\' => array($vendorDir . '/opis/uri/src'),
     'Opis\\String\\' => array($vendorDir . '/opis/string/src'),
     'Opis\\JsonSchema\\' => array($vendorDir . '/opis/json-schema/src'),
+    'Moinframe\\Loop\\' => array($baseDir . '/site/plugins/loop/src'),
     'Medienbaecker\\Tiptap\\' => array($baseDir . '/site/plugins/kirby-tiptap/lib'),
     'Mcp\\' => array($vendorDir . '/mcp/sdk/src'),
     'League\\ColorExtractor\\' => array($vendorDir . '/league/color-extractor/src'),
     'League\\CLImate\\' => array($vendorDir . '/league/climate/src'),
     'Laminas\\Escaper\\' => array($vendorDir . '/laminas/laminas-escaper/src'),
-    'Kirby\\' => array($baseDir . '/kirby/src', $vendorDir . '/getkirby/cli/src', $vendorDir . '/getkirby/cli/tests', $vendorDir . '/getkirby/composer-installer/src'),
+    'Kirby\\' => array($vendorDir . '/getkirby/cli/src', $vendorDir . '/getkirby/cli/tests', $baseDir . '/kirby/src', $vendorDir . '/getkirby/composer-installer/src'),
     'Http\\Discovery\\' => array($vendorDir . '/php-http/discovery/src'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),

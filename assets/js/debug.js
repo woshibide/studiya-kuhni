@@ -25,6 +25,7 @@
 		const key = (event.key || '').toLowerCase();
 		if (key !== 'd') return;
 
-		toggleDebugGrid();
+		/* make grid visible
+		 toggleDebugGrid(); */
 	});
 })();

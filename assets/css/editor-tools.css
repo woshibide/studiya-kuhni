@@ -1,0 +1,66 @@
+body:has(> .admin-bar) {
+    padding-top: var(--admin-bar--height);
+    padding-bottom: 5rem;
+}
+
+.admin-bar {
+    --admin-bar--z-index: 2000;
+    height: var(--admin-bar--height);
+}
+
+.admin-bar .admin-bar__links {
+    min-width: 0;
+    align-items: center;
+}
+
+.admin-bar .admin-bar__link {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.admin-bar .k-icon {
+    flex-shrink: 0;
+}
+
+.admin-bar .admin-bar__user {
+    min-width: 0;
+    max-width: min(45vw, 18rem);
+    margin-left: 1rem;
+}
+
+.admin-bar .admin-bar__user-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body:has(> .admin-bar) [data-site-nav] {
+    top: var(--admin-bar--height);
+}
+
+body:has(> .admin-bar) .skip-link:focus {
+    top: calc(var(--admin-bar--height) + 0.75rem);
+}
+
+body > kirby-loop {
+    --panel-top: calc(var(--admin-bar--height) + 8rem);
+    --panel-height: calc(100svh - var(--admin-bar--height) - 9rem);
+}
+
+body:has(> kirby-loop) #cookie-banner {
+    bottom: calc(5rem + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 64rem) {
+    body:has(> .admin-bar) [data-site-nav] {
+        top: calc(var(--admin-bar--height) + var(--space-sm));
+    }
+}
+
+@media (max-width: 48rem) {
+    body:has(> .admin-bar) :is(.nav-menu-panel, .nav-contact-panel) {
+        top: var(--admin-bar--height);
+        height: calc(100dvh - var(--admin-bar--height));
+    }
+}

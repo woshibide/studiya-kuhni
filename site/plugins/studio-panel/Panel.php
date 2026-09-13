@@ -35,39 +35,16 @@ final class Panel
     public static function menu(App $kirby): array
     {
         $menu = [];
-        $shortcutCurrent = false;
-        foreach (['fabrics' => 'Фабрики и кухни', 'contacts' => 'Контакты и форма'] as $id => $label) {
-            if ($page = self::editablePage($kirby, $id)) {
-                $current = self::pagePathIsCurrent($kirby, $id);
-                $shortcutCurrent = $shortcutCurrent || $current;
-                $menu['studio-' . $id] = [
-                    'label' => $label,
-                    'icon' => $id === 'fabrics' ? 'grid' : 'phone',
-                    'link' => $page->panel()->url(true),
-                    'current' => static fn (?string $area): bool => $area === 'site' && $current,
-                ];
-            }
+        if (\Studio\Callback\Inbox::allowed($kirby)) {
+            $menu['studio-callback'] = ['label' => 'Заявки', 'icon' => 'phone'];
         }
-        $menu['studio-guide'] = ['label' => 'Помощь', 'icon' => 'question'];
         return [
-            'site' => [
-                'label' => 'Страницы',
-                'icon' => 'page',
-                'current' => static fn (?string $area): bool => $area === 'site' && !$shortcutCurrent,
-            ],
-            ...$menu, '-', 'languages', 'users', 'system',
+            ...$menu,
+            'site' => ['label' => 'Страницы', 'icon' => 'page'],
+            'studio-guide' => ['label' => 'Помощь', 'icon' => 'question'],
+            'users',
+            'system',
         ];
-    }
-
-    private static function pagePathIsCurrent(App $kirby, string $id): bool
-    {
-        $panelRoot = trim((string)parse_url(\Kirby\Panel\Panel::url(), PHP_URL_PATH), '/');
-        $path = trim(rawurldecode($kirby->request()->url()->path()->toString()), '/');
-        if (!str_starts_with($path, $panelRoot . '/')) return false;
-
-        $path = substr($path, strlen($panelRoot) + 1);
-        $prefix = 'pages/' . str_replace('/', '+', $id);
-        return $path === $prefix || str_starts_with($path, $prefix . '+') || str_starts_with($path, $prefix . '/');
     }
 
     public static function pageButtons(): array
@@ -161,6 +138,7 @@ final class Panel
     public static function translations(): array
     {
         return [
+            'edit' => 'Изменить',
             'tiptap.toolbar.button.horizontalRule' => 'Разделитель',
             'tiptap.toolbar.button.codeBlock' => 'Блок кода',
             'tiptap.toolbar.button.blockquote' => 'Цитата',

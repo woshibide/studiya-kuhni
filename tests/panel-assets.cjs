@@ -89,6 +89,10 @@ async function main() {
         check(components[name], `Assembled bundle must register ${name}`);
     }
     check(components['k-studio-tiptap-field'].extends === 'k-tiptap-field', 'Studio editor inherits the registered official Tiptap component');
+    for (const name of ['k-serp-preview-section', 'k-studio-search-preview-section', 'k-studio-sharing-preview-section']) {
+        check(typeof components[name]?.render === 'function', `SEO preview registers ${name}`);
+    }
+    check(registrations.indexOf('johannschopplich/serp-preview') < registrations.indexOf('studio/seo'), 'Official SERP preview registers before site adapter');
     check(registrations.indexOf('medienbaecker/tiptap') < registrations.indexOf('studio/site'), 'Official editor registers before its adapter');
     check(typeof components['k-tiptap-field'].render === 'function', 'Official editor has its compiled render function');
     check(typeof components[manifest.guide.component].render === 'function', 'Guide view has a client renderer');

@@ -1,0 +1,19 @@
+title: Менеджер заявок
+description: Доступ к персональным данным заявок, статусам и заметкам.
+home: "{{ kirby.url('panel') }}/studio-callback"
+permissions:
+  '*': false
+  access:
+    '*': false
+    panel: true
+    account: true
+    studio-callback: true
+  studio.callback:
+    manage: true
+  user:
+    '*': false
+    access: true
+    changeName: true
+    changeEmail: true
+    changePassword: true
+    changeLanguage: true

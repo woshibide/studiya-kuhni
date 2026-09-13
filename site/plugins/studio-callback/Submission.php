@@ -23,6 +23,7 @@ final class Submission
         return ($config['environment'] ?? '') === 'production'
             && ($config['productionHost'] ?? false) === true
             && ($config['enabled'] ?? false) === true
+            && is_string($config['storage'] ?? null) && $config['storage'] !== ''
             && filter_var($config['from'] ?? '', FILTER_VALIDATE_EMAIL) !== false
             && filter_var($config['to'] ?? '', FILTER_VALIDATE_EMAIL) !== false
             && ($config['transport']['type'] ?? '') === 'smtp'

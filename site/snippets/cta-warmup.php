@@ -4,13 +4,7 @@ $ctaWarmupText = $page->cta_warmup_text()->or('Lorem ipsum dolor sit amet consec
 $ctaWarmupButtonText = $page->cta_warmup_button_text()->or('Получить бесплатную дизайн консультацию');
 
 $customImage = $page->cta_warmup_image()->toFile();
-$fallbackImages = [
-    'assets/cta-warmup/design1.png',
-    'assets/cta-warmup/design2.png',
-    'assets/cta-warmup/design4.png',
-    'assets/cta-warmup/design5.png'
-];
-$randomImage = $fallbackImages[array_rand($fallbackImages)];
+
 ?>
 
 <div class="section-wrapper" id="cta-warmup">
@@ -31,8 +25,8 @@ $randomImage = $fallbackImages[array_rand($fallbackImages)];
             ]) ?>
         <?php else: ?>
             <?php snippet('turbo-image', [
-                'image' => asset($randomImage),
-                'alt' => 'Design',
+                'image' => asset('assets/placeholder.svg'),
+                'alt' => '',
                 'width' => 1200,
                 'loading' => 'lazy',
             ]) ?>

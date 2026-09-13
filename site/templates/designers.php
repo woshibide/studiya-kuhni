@@ -63,16 +63,12 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
                             <h3 class="designers-proof-card__name"><?= esc($name) ?></h3>
 
                             <figure class="designers-proof-card__media">
-                                <?php if ($image): ?>
-                                    <?php snippet('turbo-image', [
-                                        'image' => $image,
-                                        'alt' => $name,
-                                        'width' => 720,
-                                        'loading' => 'lazy',
-                                    ]) ?>
-                                <?php else: ?>
-                                    <div class="designers-proof-card__media-placeholder" aria-hidden="true"></div>
-                                <?php endif; ?>
+                                <?php snippet('turbo-image', [
+                                    'image' => $image ?? asset('assets/placeholder.svg'),
+                                    'alt' => $image ? $name : '',
+                                    'width' => 720,
+                                    'loading' => 'lazy',
+                                ]) ?>
                             </figure>
 
                             <div class="designers-proof-card__facts">

@@ -4,9 +4,13 @@ use Kirby\Cms\App;
 use Kirby\Http\Response;
 use Studio\Callback\Submission;
 use Studio\Callback\Throttle;
+use Studio\Callback\Store;
+use Studio\Callback\Inbox;
 
 require_once __DIR__ . '/Submission.php';
 require_once __DIR__ . '/Throttle.php';
+require_once __DIR__ . '/Store.php';
+require_once __DIR__ . '/Inbox.php';
 
 function studio_callback_config(): array
 {
@@ -14,6 +18,7 @@ function studio_callback_config(): array
         'environment' => option('studio.environment', 'local'),
         'productionHost' => function_exists('studio_indexable') && studio_indexable(),
         'enabled' => option('studio.callback.enabled', filter_var(getenv('STUDIO_CALLBACK_ENABLED') ?: 'false', FILTER_VALIDATE_BOOLEAN)),
+        'storage' => Store::directory(kirby()),
         'from' => option('studio.callback.from', getenv('STUDIO_CALLBACK_FROM') ?: ''),
         'to' => option('studio.callback.to', getenv('STUDIO_CALLBACK_TO') ?: ''),
         'transport' => option('studio.callback.transport', [
@@ -29,6 +34,8 @@ function studio_callback_config(): array
 }
 
 App::plugin('studio/callback', [
+    'permissions' => ['manage' => false],
+    'areas' => ['studio-callback' => static fn (App $kirby) => Inbox::area($kirby)],
     'routes' => [
         [
             'pattern' => 'callback',
@@ -46,9 +53,11 @@ App::plugin('studio/callback', [
                     static fn () => $throttle->attempt((string)($_SERVER['REMOTE_ADDR'] ?? 'unknown')),
                     static function (array $values) use ($kirby, $config): bool {
                         $source = strlen($values['source']) <= 250 ? $kirby->page($values['source']) : null;
-                        if (!$source || $source->isDraft()) {
+                        if (!$source || !$source->studioPubliclyVisible()) {
                             $source = $kirby->site()->homePage();
                         }
+                        $store = Store::for($kirby);
+                        $id = $store->create($values, $source->title()->value(), $source->url());
                         $body = implode("\n", [
                             'Заявка на обратный звонок',
                             '',
@@ -59,19 +68,30 @@ App::plugin('studio/callback', [
                             'Адрес страницы: ' . $source->url(),
                             'Согласие на обработку персональных данных: получено',
                         ]);
-                        $email = $kirby->email([
-                            'from' => $config['from'],
-                            'to' => $config['to'],
-                            'replyTo' => $values['email'] ?: null,
-                            'subject' => 'Заявка на обратный звонок',
-                            'body' => $body,
-                            'transport' => $config['transport'],
-                            'beforeSend' => function ($mailer) {
-                                $mailer->Timeout = 15;
-                                return $mailer;
-                            },
-                        ]);
-                        return $email->isSent();
+                        $sent = false;
+                        try {
+                            $email = $kirby->email([
+                                'from' => $config['from'],
+                                'to' => $config['to'],
+                                'replyTo' => $values['email'] ?: null,
+                                'subject' => 'Заявка на обратный звонок',
+                                'body' => $body,
+                                'transport' => $config['transport'],
+                                'beforeSend' => function ($mailer) {
+                                    $mailer->Timeout = 15;
+                                    return $mailer;
+                                },
+                            ]);
+                            $sent = $email->isSent();
+                        } catch (\Throwable) {
+                            // The durable inbox already accepted the request.
+                        }
+                        try {
+                            $store->emailStatus($id, $sent);
+                        } catch (\Throwable) {
+                            // Keep pending if delivery status cannot be recorded.
+                        }
+                        return true;
                     }
                 );
 

@@ -45,13 +45,12 @@ if (!function_exists('relative_url')) {
     }
 }
 
-$siteTitle = $site->seo_title()->or($site->title())->value();
-$metaTitle = $page->seo_title()->or($page->title())->value();
-$metaDescription = (string)$page->seo_description()->or($site->seo_description())->value();
+$siteTitle = Studio\Seo\Metadata::siteTitle($site);
+$metaTitle = Studio\Seo\Metadata::title($page);
+$metaDescription = Studio\Seo\Metadata::description($page);
 $canIndex = studio_indexable() && $page->studioPubliclyVisible() && !$page->seo_noindex()->toBool();
-$canonicalBase = $kirby->option('studio.productionUrl', '');
-$canonical = $canonicalBase !== '' ? $canonicalBase . ($page->isHomePage() ? '' : '/' . $page->uri()) : '';
-$shareImage = $page->seo_image()->toFile() ?? $site->seo_image()->toFile();
+$canonical = Studio\Seo\Metadata::canonical($page);
+$shareImage = Studio\Seo\Metadata::image($page);
 $needsMap = in_array($page->intendedTemplate()->name(), ['fabric', 'kuhnya'], true) && $page->studioMapLocation() !== null;
 if (!$canIndex) $kirby->response()->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
 ?>
@@ -88,8 +87,10 @@ if (!$canIndex) $kirby->response()->header('X-Robots-Tag', 'noindex, nofollow, n
     <meta property="og:title" content="<?= esc($metaTitle, 'attr') ?>">
     <meta property="og:site_name" content="<?= esc($siteTitle, 'attr') ?>">
     <?php if ($shareImage): ?>
-        <meta property="og:image" content="<?= esc($shareImage->url(), 'attr') ?>">
-        <meta property="og:image:alt" content="<?= esc($shareImage->alt(), 'attr') ?>">
+        <meta property="og:image" content="<?= esc($shareImage['url'], 'attr') ?>">
+        <meta property="og:image:alt" content="<?= esc($shareImage['alt'], 'attr') ?>">
+        <meta property="og:image:width" content="<?= $shareImage['width'] ?>">
+        <meta property="og:image:height" content="<?= $shareImage['height'] ?>">
     <?php endif ?>
     <link rel="preload" href="<?= esc(relative_url('assets/fonts/SuisseIntl-Medium.woff2'), 'attr') ?>" as="font" type="font/woff2" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -115,6 +116,9 @@ if (!$canIndex) $kirby->response()->header('X-Robots-Tag', 'noindex, nofollow, n
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/fabric-info.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/cookie-consent.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/nav-contact-panel.css'), 'attr') ?>">
+    <?php if ($kirby->option('pechente.kirby-admin-bar.active')): ?>
+        <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/editor-tools.css'), 'attr') ?>">
+    <?php endif ?>
 
     <?php
     $template = $page->intendedTemplate()->name();

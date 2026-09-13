@@ -14,7 +14,7 @@ Simple-hero-button-label:
 
 ----
 
-Single-image: - file://pnz5hqinrwfzhw6r
+Single-image:
 
 ----
 

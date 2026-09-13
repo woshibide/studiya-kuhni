@@ -37,12 +37,14 @@ Generated runtime commands are ignored and excluded from production artifacts.
 ## Editing
 
 Open `/panel` for pages, the kitchen catalogue, contacts, and site settings.
+Signed-in editors can edit the current page with Admin Bar and leave contextual feedback with Loop; see [editor tools](docs/editor-tools.md).
 The Panel's “Помощь” section explains saving, preview, page status, inherited factory information, and the current environment.
 Narrative fields use Tiptap 1.3.1 while existing content remains readable without a migration.
 See [rich-text integration](docs/rich-text.md) for its storage format, compatibility adapter, and rendering rules.
 See [Media Kit downloads](docs/media-kit.md) for uploading, labeling, and ordering visitor downloads.
 After changing Panel plugins, follow the [Panel update workflow](docs/panel-updates.md) to refresh open tabs while preserving unfinished work.
 Shared kitchen details and benefits are managed in the Panel's “Фабрики → Библиотека” tab; see [section library](docs/section-library.md) for selection, page-specific text, and migration.
+The “Поиск и соцсети” tab previews search results and social cards, with automatic OG covers when needed; see [metadata editing](docs/seo.md).
 
 ## Runtime and publication
 

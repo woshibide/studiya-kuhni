@@ -1,0 +1,24 @@
+title: Менеджер
+description: Работа с заявками и страницами сайта без управления пользователями и системой.
+home: "{{ kirby.url('panel') }}/studio-callback"
+permissions:
+  '*': false
+  access:
+    '*': false
+    panel: true
+    account: true
+    site: true
+    studio-callback: true
+    studio-guide: true
+  studio.callback:
+    manage: true
+  pages: true
+  files: true
+  site: true
+  user:
+    '*': false
+    access: true
+    changeName: true
+    changeEmail: true
+    changePassword: true
+    changeLanguage: true

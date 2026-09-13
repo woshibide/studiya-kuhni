@@ -2,4 +2,32 @@ Title: ;(
 
 ----
 
+Simple-hero-heading: 
+
+----
+
+Simple-hero-description: 
+
+----
+
+Simple-hero-button-label: 
+
+----
+
+Seo-title: 
+
+----
+
+Seo-description: 
+
+----
+
+Seo-image: 
+
+----
+
+Seo-noindex: true
+
+----
+
 Uuid: wqmx26jd09z9ijyw

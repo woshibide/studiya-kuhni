@@ -18,6 +18,8 @@ The section library requires `k-studio-library-field` and `k-studio-features-fie
 The `k-studio-tiptap-field-preview` alias uses the official Tiptap preview inside native structure tables.
 After saving library changes, reopen the page editor to fetch new choices after preserving any unfinished page work.
 The Locator request adapter also needs a document reload in tabs opened before its installation.
+Search and sharing previews require `k-serp-preview-section`, `k-studio-search-preview-section` and `k-studio-sharing-preview-section`.
+The SERP plugin must register before the site adapter.
 
 Run `php tests/panel-assets.php` after plugin changes.
 It executes the complete assembled JavaScript bundle through the shipped Kirby registry with real Vue exports, checks required registrations and order, and invokes the help renderer with the actual PHP response.

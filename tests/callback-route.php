@@ -40,6 +40,7 @@ try {
             'studio.environment' => 'production',
             'studio.productionUrl' => 'https://studio.example.com',
             'studio.callback.enabled' => true,
+            'studio.callback.storage' => $temporary,
             'studio.callback.from' => 'sender@example.com',
             'studio.callback.to' => 'studio@example.com',
             'studio.callback.transport' => ['type' => 'smtp', 'host' => 'unused.invalid'],
@@ -62,6 +63,12 @@ try {
     $flash = $kirby->session()->get('studio.callback.flash');
     $assert($flash['result']['ok'] === true && $flash['values'] === [], 'Success clears personal values');
     $assert($flash['expires'] > time(), 'Flash has bounded expiration');
+    $store = Studio\Callback\Store::for($kirby);
+    $records = $store->listing('new')['records'];
+    $assert(count($records) === 1, 'Real route stores one durable callback');
+    $record = $store->find($records[0]['id']);
+    $assert($record['telephone'] === $input['telephone'] && $record['consent'] === 1, 'Validated contact details and consent persisted');
+    $assert($record['source_url'] === 'https://studio.example.com/contacts' && $record['email_status'] === 'sent', 'Source context and delivery outcome persisted');
 } finally {
     if (isset($kirby)) $kirby->session()->destroy();
     Dir::remove($temporary);

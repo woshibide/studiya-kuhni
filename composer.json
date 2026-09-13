@@ -26,7 +26,14 @@
     "pixelopen/kirby-asset-version": "^1.1",
     "jreisdorf/kirby-static-site-generator": "^2.4",
     "sylvainjule/locator": "^2.1",
-    "medienbaecker/kirby-tiptap": "^1.3"
+    "medienbaecker/kirby-tiptap": "^1.3",
+    "johannschopplich/kirby-serp-preview": "^1.3",
+    "mauricerenck/ogimage": "^1.2",
+    "ext-gd": "*",
+    "moinframe/kirby-loop": "^1.1",
+    "pechente/kirby-admin-bar": "^2.3",
+    "ext-sqlite3": "*",
+    "ext-pdo_sqlite": "*"
   },
   "config": {
     "allow-plugins": {

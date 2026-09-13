@@ -622,6 +622,7 @@ html.is-gallery-overlay-open {
 /* Editorial formatting stays scoped to CMS prose, including short descriptions. */
 :is(.studio-rich-text, .studio-rich-text-inline) {
     overflow-wrap: anywhere;
+    text-wrap: balance;
 }
 
 :is(.studio-rich-text, .studio-rich-text-inline) :is(strong, b) {

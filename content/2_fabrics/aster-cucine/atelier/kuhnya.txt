@@ -20,7 +20,11 @@ Price:
 
 ----
 
-Kitchen-specs: 
+Kitchen-specs:
+
+- 
+  label: пример
+  value: пу пупууу
 
 ----
 
@@ -76,11 +80,40 @@ Cta-image:
 
 ----
 
-Seo-title: 
+Seo-title: Atelier
 
 ----
 
-Seo-description: 
+Seo-description:
+
+Профессиональная кухня для просторных интерьеров. Продуманная система модулей обеспечивает максимум возможностей для хранения, сохраняя выразительную архитектуру и цельность пространства.
+
+----
+
+Seo-image-mode: cover
+
+----
+
+Seo-generate-image: true
+
+----
+
+Seo-og-title:
+
+Atelier, 
+Aster Cucine
+
+----
+
+Seo-og-size: 112
+
+----
+
+Seo-og-x: 40
+
+----
+
+Seo-og-y: 72
 
 ----
 

@@ -64,9 +64,29 @@ try {
 
     $menu = Panel::menu($kirby);
     $assert($menu['site']['label'] === 'Страницы', 'Site entry retains familiar page navigation');
-    $assert($menu['studio-fabrics']['link'] === '/pages/fabrics', 'Catalogue shortcut uses native Panel URL');
-    $assert($menu['studio-contacts']['link'] === '/pages/contacts', 'Contact shortcut uses native Panel URL');
-    foreach (['languages', 'users', 'system'] as $native) $assert(in_array($native, $menu, true), 'Native area retained: ' . $native);
+    $assert(array_keys($menu) === ['studio-callback', 'site', 'studio-guide', 0, 1], 'Only the requested areas appear in order');
+    foreach (['users', 'system'] as $native) $assert(in_array($native, $menu, true), 'Native area retained: ' . $native);
+
+    $manager = $kirby->roles()->find('manager');
+    $assert($manager !== null && $manager->title() === 'Менеджер', 'General manager role is available for account creation');
+    $permissions = $manager->permissions();
+    foreach (['panel', 'account', 'site', 'studio-callback', 'studio-guide'] as $area) {
+        $assert($permissions->for('access', $area), 'Manager can access ' . $area);
+    }
+    foreach (['users', 'system', 'languages', 'loop'] as $area) {
+        $assert(!$permissions->for('access', $area), 'Manager cannot access ' . $area);
+    }
+    $assert($permissions->for('studio.callback', 'manage'), 'Manager can process requests');
+    foreach (['pages', 'files', 'site'] as $category) {
+        $assert($permissions->for($category, 'update'), 'Manager can edit ' . $category);
+    }
+    foreach (['create', 'update', 'changeRole', 'delete'] as $action) {
+        $assert(!$permissions->for('users', $action), 'Manager cannot manage other accounts: ' . $action);
+    }
+    $assert(!$permissions->for('user', 'changeRole'), 'Manager cannot promote their own account');
+    $entries = (new Menu(NativePanel::areas(), $permissions->toArray(), 'site'))->entries();
+    $links = array_values(array_filter($entries, static fn ($entry): bool => is_array($entry) && isset($entry['link']) && !in_array($entry['link'], ['account', 'logout'], true)));
+    $assert(array_column($links, 'text') === ['Заявки', 'Страницы', 'Помощь'], 'Native permissions filter manager navigation');
 
     $kitchen = $kirby->page('fabrics/factory/kitchen');
     $assert($kitchen !== null, 'Kitchen fixture available without content files');
@@ -113,19 +133,19 @@ try {
     $assert(!isset($routeData['$view']['error']), 'Guide route has no hidden server-side rendering error');
 
     foreach ([
-        ['/panel/pages/fabrics', 'panel', '', 'Фабрики и кухни'],
-        ['/panel/pages/fabrics+factory', 'panel', '', 'Фабрики и кухни'],
-        ['/panel/pages/fabrics%2Bfactory%2Bkitchen', 'panel', '', 'Фабрики и кухни'],
-        ['/panel/pages/fabrics+factory/files/photo.jpg', 'panel', '', 'Фабрики и кухни'],
-        ['/panel/pages/contacts', 'panel', '', 'Контакты и форма'],
-        ['/panel/pages/contacts/files/photo.jpg', 'panel', '', 'Контакты и форма'],
+        ['/panel/pages/fabrics', 'panel', '', 'Страницы'],
+        ['/panel/pages/fabrics+factory', 'panel', '', 'Страницы'],
+        ['/panel/pages/fabrics%2Bfactory%2Bkitchen', 'panel', '', 'Страницы'],
+        ['/panel/pages/fabrics+factory/files/photo.jpg', 'panel', '', 'Страницы'],
+        ['/panel/pages/contacts', 'panel', '', 'Страницы'],
+        ['/panel/pages/contacts/files/photo.jpg', 'panel', '', 'Страницы'],
         ['/panel/pages/fabrics-extra', 'panel', '', 'Страницы'],
         ['/panel/pages/contacts-extra', 'panel', '', 'Страницы'],
         ['/panel/pages/home', 'panel', '', 'Страницы'],
         ['/panel/site', 'panel', '', 'Страницы'],
         ['/panel-extra/pages/fabrics', 'panel', '', 'Страницы'],
-        ['/workspace/editor/pages/fabrics+factory', 'editor', '/workspace', 'Фабрики и кухни'],
-        ['/workspace/editor/pages/contacts', 'editor', '/workspace', 'Контакты и форма'],
+        ['/workspace/editor/pages/fabrics+factory', 'editor', '/workspace', 'Страницы'],
+        ['/workspace/editor/pages/contacts', 'editor', '/workspace', 'Страницы'],
         ['/workspace/editor-extra/pages/fabrics', 'editor', '/workspace', 'Страницы'],
     ] as [$path, $slug, $base, $expected]) {
         $kirby->session()->commit();
@@ -135,14 +155,18 @@ try {
             'request' => ['url' => 'https://studio.example.com' . $path, 'method' => 'GET', 'query' => ['_json' => 1]],
         ]);
         $kirby->impersonate('kirby');
+        foreach (['manager', 'callback-manager'] as $role) {
+            $user = new Kirby\Cms\User(['email' => $role . '@example.test', 'role' => $role, 'kirby' => $kirby]);
+            $assert($user->panel()->home() === NativePanel::url('studio-callback'), 'Manager login home respects Panel base and slug: ' . $role);
+        }
         $entries = (new Menu(NativePanel::areas(), [], 'site'))->entries();
         $current = array_values(array_filter($entries, static fn ($entry): bool => is_array($entry) && ($entry['current'] ?? false)));
         $assert(array_column($current, 'text') === [$expected], 'Exactly one correct native menu entry is current at ' . $path);
         $outside = (new Menu(NativePanel::areas(), [], 'users'))->entries();
-        $assert(count(array_filter($outside, static fn ($entry): bool => is_array($entry) && ($entry['current'] ?? false) && in_array($entry['text'], ['Страницы', 'Фабрики и кухни', 'Контакты и форма'], true))) === 0, 'Page shortcuts never override another native area at ' . $path);
+        $assert(count(array_filter($outside, static fn ($entry): bool => is_array($entry) && ($entry['current'] ?? false) && in_array($entry['text'], ['Страницы'], true))) === 0, 'Page navigation never overrides another native area at ' . $path);
     }
 
-    foreach (['pages/fabrics+factory' => 'Фабрики и кухни', 'pages/fabrics+factory+kitchen' => 'Фабрики и кухни', 'pages/contacts' => 'Контакты и форма'] as $path => $expected) {
+    foreach (['pages/fabrics+factory' => 'Страницы', 'pages/fabrics+factory+kitchen' => 'Страницы', 'pages/contacts' => 'Страницы'] as $path => $expected) {
         $kirby->session()->commit();
         $kirby = $kirby->clone([
             'urls' => ['index' => 'https://studio.example.com'],
@@ -166,6 +190,7 @@ try {
     }
 
     $translations = Panel::translations();
+    $assert($translations['edit'] === 'Изменить', 'Russian edit controls use the requested label');
     $tiptap = json_decode(file_get_contents($root . '/site/plugins/kirby-tiptap/translations/en.json'), true);
     $locator = require $root . '/site/plugins/locator/lib/languages/en.php';
     foreach ([...array_map(static fn ($key) => 'tiptap.' . $key, array_keys($tiptap)), ...array_keys($locator)] as $key) {

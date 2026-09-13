@@ -21,7 +21,9 @@ $deliver = static function (array $data) use (&$sent): bool {
 };
 $allow = static fn () => 0;
 $config = ['environment' => 'production', 'productionHost' => true, 'enabled' => true, 'from' => 'sender@example.com', 'to' => 'studio@example.com', 'transport' => ['type' => 'smtp', 'host' => 'smtp.example.com']];
+$config['storage'] = '/private/callbacks';
 $assert(Submission::available($config), 'Configured production can send');
+$assert(!Submission::available(array_replace($config, ['storage' => ''])), 'Private storage configuration required');
 foreach (['local', 'staging', 'unknown'] as $environment) {
     $assert(!Submission::available(array_replace($config, ['environment' => $environment])), 'Non-production cannot send');
 }

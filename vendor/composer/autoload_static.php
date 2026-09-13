@@ -9,16 +9,16 @@ class ComposerStaticInitb77d7f8ed7aac5ba7a30ac911c88c8c1
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
-        '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'b6ec61354e97f32c0ae683041c78392a' => __DIR__ . '/..' . '/scrivo/highlight.php/HighlightUtilities/functions.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'f864ae44e8154e5ff6f4eec32f46d37f' => __DIR__ . '/../..' . '/kirby/config/setup.php',
         '87988fc7b1c1f093da22a1a3de972f3a' => __DIR__ . '/../..' . '/kirby/config/helpers.php',
+        '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        'b6ec61354e97f32c0ae683041c78392a' => __DIR__ . '/..' . '/scrivo/highlight.php/HighlightUtilities/functions.php',
         '47d2f3df2f537e38f6b394e89bd6f8d7' => __DIR__ . '/..' . '/bnomei/kirby-mcp/src/mcp-dump.php',
         'c6d07203d7e65d5c4f5a5a15079d2cc1' => __DIR__ . '/../..' . '/site/plugins/kirby-tiptap/lib/helpers.php',
     );
@@ -27,6 +27,10 @@ class ComposerStaticInitb77d7f8ed7aac5ba7a30ac911c88c8c1
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'm' => 
+        array (
+            'mauricerenck\\OgImage\\' => 21,
         ),
         'W' => 
         array (
@@ -72,6 +76,7 @@ class ComposerStaticInitb77d7f8ed7aac5ba7a30ac911c88c8c1
         ),
         'M' => 
         array (
+            'Moinframe\\Loop\\' => 15,
             'Medienbaecker\\Tiptap\\' => 21,
             'Mcp\\' => 4,
         ),
@@ -120,6 +125,10 @@ class ComposerStaticInitb77d7f8ed7aac5ba7a30ac911c88c8c1
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+        ),
+        'mauricerenck\\OgImage\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/site/plugins/ogimage/lib',
         ),
         'Whoops\\' => 
         array (
@@ -231,6 +240,10 @@ class ComposerStaticInitb77d7f8ed7aac5ba7a30ac911c88c8c1
         array (
             0 => __DIR__ . '/..' . '/opis/json-schema/src',
         ),
+        'Moinframe\\Loop\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/site/plugins/loop/src',
+        ),
         'Medienbaecker\\Tiptap\\' => 
         array (
             0 => __DIR__ . '/../..' . '/site/plugins/kirby-tiptap/lib',
@@ -253,9 +266,9 @@ class ComposerStaticInitb77d7f8ed7aac5ba7a30ac911c88c8c1
         ),
         'Kirby\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/kirby/src',
-            1 => __DIR__ . '/..' . '/getkirby/cli/src',
-            2 => __DIR__ . '/..' . '/getkirby/cli/tests',
+            0 => __DIR__ . '/..' . '/getkirby/cli/src',
+            1 => __DIR__ . '/..' . '/getkirby/cli/tests',
+            2 => __DIR__ . '/../..' . '/kirby/src',
             3 => __DIR__ . '/..' . '/getkirby/composer-installer/src',
         ),
         'Http\\Discovery\\' => 
@@ -1571,6 +1584,14 @@ class ComposerStaticInitb77d7f8ed7aac5ba7a30ac911c88c8c1
         'Medienbaecker\\Tiptap\\Validations' => __DIR__ . '/../..' . '/site/plugins/kirby-tiptap/lib/Validations.php',
         'Michelf\\SmartyPants' => __DIR__ . '/..' . '/michelf/php-smartypants/Michelf/SmartyPants.php',
         'Michelf\\SmartyPantsTypographer' => __DIR__ . '/..' . '/michelf/php-smartypants/Michelf/SmartyPantsTypographer.php',
+        'Moinframe\\Loop\\App' => __DIR__ . '/../..' . '/site/plugins/loop/src/App.php',
+        'Moinframe\\Loop\\Database' => __DIR__ . '/../..' . '/site/plugins/loop/src/Database.php',
+        'Moinframe\\Loop\\Enums\\CommentStatus' => __DIR__ . '/../..' . '/site/plugins/loop/src/Enums/CommentStatus.php',
+        'Moinframe\\Loop\\Middleware' => __DIR__ . '/../..' . '/site/plugins/loop/src/Middleware.php',
+        'Moinframe\\Loop\\Models\\Comment' => __DIR__ . '/../..' . '/site/plugins/loop/src/Models/Comment.php',
+        'Moinframe\\Loop\\Models\\Reply' => __DIR__ . '/../..' . '/site/plugins/loop/src/Models/Reply.php',
+        'Moinframe\\Loop\\Options' => __DIR__ . '/../..' . '/site/plugins/loop/src/Options.php',
+        'Moinframe\\Loop\\Routes' => __DIR__ . '/../..' . '/site/plugins/loop/src/Routes.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
         'Opis\\JsonSchema\\CompliantValidator' => __DIR__ . '/..' . '/opis/json-schema/src/CompliantValidator.php',
         'Opis\\JsonSchema\\ContentEncoding' => __DIR__ . '/..' . '/opis/json-schema/src/ContentEncoding.php',

@@ -2,6 +2,7 @@
 
 require_once dirname(__DIR__) . '/plugins/studio/Environment.php';
 require_once dirname(__DIR__) . '/plugins/studio-panel/Panel.php';
+require_once dirname(__DIR__) . '/plugins/studio-seo/OgImage.php';
 
 $environment = Studio\Environment::name(getenv('STUDIO_ENV') ?: null);
 $host = strtolower((string)parse_url('http://' . ($_SERVER['HTTP_HOST'] ?? ''), PHP_URL_HOST));
@@ -9,6 +10,21 @@ $localRequest = (in_array($host, ['localhost', '127.0.0.1', '[::1]'], true) &&
     in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)) || PHP_SAPI === 'cli';
 
 return [
+    'ready' => static function ($kirby): array {
+        $editorTools = PHP_SAPI !== 'cli' && $kirby->user() !== null &&
+            !$kirby->request()->query()->get('_preview') &&
+            $kirby->path() !== $kirby->option('api.slug', 'api') . '/' . $kirby->option('jr.static_site_generator.endpoint');
+
+        return [
+            'pechente.kirby-admin-bar.active' => $editorTools,
+            'moinframe.loop.enabled' => $editorTools,
+        ];
+    },
+    'moinframe.loop.public' => false,
+    'moinframe.loop.position' => 'bottom',
+    'moinframe.loop.welcome.enabled' => false,
+    'mauricerenck.ogimage' => Studio\Seo\OgImage::options(),
+    'cache.studio.seo.og' => ['active' => true],
     'debug' => $environment === 'local' && $localRequest,
     'studio.environment' => $environment,
     'studio.productionUrl' => Studio\Environment::origin(getenv('STUDIO_PRODUCTION_URL') ?: null),

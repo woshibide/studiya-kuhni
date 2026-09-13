@@ -1,4 +1,5 @@
 #cookie-banner {
+    box-sizing: border-box;
     position: fixed;
     right: calc((100vw - var(--the-width)) / 2);
     bottom: var(--space-md);

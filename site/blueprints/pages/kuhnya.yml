@@ -53,7 +53,7 @@ tabs:
                 type: headline
                 label: 'Краткие сведения'
               country_of_origin:
-                label: 'Страна производства'
+                label: 'Место производства'
                 type: text
                 placeholder: Италия
                 default: Италия

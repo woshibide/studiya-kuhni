@@ -1,24 +1,63 @@
 type: group
 fields:
   seo_title:
-    label: Заголовок для поиска и социальных сетей
+    label: Заголовок
     type: text
     maxlength: 80
-    help: Если поле пустое, используется название страницы или сайта.
+    autocomplete: off
+    help: Пусто - название страницы. В поиске название сайта добавится автоматически. Ориентир для полного заголовка - до 60 символов.
   seo_description:
-    label: Описание для поиска и социальных сетей
+    label: Описание
     type: textarea
     buttons: false
     size: small
     maxlength: 200
-    help: Короткое описание содержимого страницы. Для сайта задаёт описание по умолчанию.
+    autocomplete: off
+    help: О чём страница и чем она полезна. Ориентир - 120-160 символов. Пусто - общее описание сайта.
+  seo_social_heading:
+    type: headline
+    label: Соцсети и мессенджеры
+  seo_image_mode:
+    label: Изображение для ссылки
+    type: studio-image-mode
+    default: cover
+    empty: false
+    options:
+      cover: Обложка с текстом
+      custom: Своё изображение
+      shared: Общая обложка
+  seo_generate_image:
+    type: hidden
+  seo_og_title:
+    when:
+      seo_image_mode: cover
+    label: Текст на обложке
+    type: textarea
+    buttons: false
+    size: small
+    maxlength: 500
+    help: Пусто - заголовок страницы; для кухни - фабрика и модель. Enter переносит строку. Текст ссылки и поисковый заголовок не меняются.
+  seo_og_size:
+    type: hidden
+    default: 112
+  seo_og_x:
+    type: hidden
+    default: 40
+  seo_og_y:
+    type: hidden
+    default: 72
   seo_image:
-    label: Изображение для социальных сетей
+    when:
+      seo_image_mode: custom
+    label: Файл обложки
     type: files
     multiple: false
     max: 1
-    layout: cards
+    layout: cardlets
+    image:
+      ratio: 1200/630
+      cover: true
     query: model.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
     uploads:
       template: social-image
-    help: Горизонтальное изображение JPG, PNG или WebP. Рекомендуемый размер 1200 × 630 пикселей.
+    help: JPG, PNG или WebP, 1200 × 630 пикселей. Выберите файл для этой страницы. Пока файл не выбран, используется общая обложка.

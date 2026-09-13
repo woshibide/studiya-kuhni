@@ -1,0 +1,29 @@
+type: group
+fields:
+  seo_title:
+    label: Название сайта для посетителей
+    type: text
+    maxlength: 80
+    autocomplete: off
+    help: Добавляется к заголовку каждой страницы в поиске. Пусто - название сайта выше. Не вводите здесь заголовок главной страницы.
+  seo_description:
+    label: Общее описание
+    type: textarea
+    buttons: false
+    size: small
+    maxlength: 200
+    autocomplete: off
+    help: Используется, если у страницы нет своего описания. Ориентир - 120-160 символов.
+  seo_image:
+    label: Общее изображение для ссылок
+    type: files
+    multiple: false
+    max: 1
+    layout: cardlets
+    image:
+      ratio: 1200/630
+      cover: true
+    query: model.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      template: social-image
+    help: Используется, если у страницы нет своей картинки. JPG, PNG или WebP, желательно 1200 × 630 пикселей. Если не выбрано, используется фирменная обложка с адресом. Страницы в режиме «Обложка с текстом» используют свой шаблон.

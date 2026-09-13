@@ -46,7 +46,7 @@ $kuhnyaBrand = $fabricPage ? $fabricPage->title()->value() : 'Название �
 $kuhnyaBrandUrl = relative_url($fabricPage ? $fabricPage->url() : ($fabricsIndex ? $fabricsIndex->url() : '#'));
 $kuhnyaCountry = trim((string)$page->country_of_origin()->value());
 $kuhnyaPrice = trim((string)$page->price()->value());
-$kuhnyaIntro = $page->intro()->studioPlainText(180);
+$kuhnyaIntro = $page->intro()->studioPlainText();
 $kuhnyaSpecs = $page->kitchen_specs()->toStructure();
 
 if ($isKitchenPage) {
@@ -57,7 +57,7 @@ if ($isKitchenPage) {
     };
 
     if ($kuhnyaIntro === '') {
-        $kuhnyaIntro = (clone $page->intro())->value($kuhnyaFieldDefault('intro'))->studioPlainText(180);
+        $kuhnyaIntro = (clone $page->intro())->value($kuhnyaFieldDefault('intro'))->studioPlainText();
     }
 
     if ($kuhnyaCountry === '') {
@@ -66,14 +66,6 @@ if ($isKitchenPage) {
 
     if ($kuhnyaPrice === '') {
         $kuhnyaPrice = $kuhnyaFieldDefault('price');
-    }
-
-    if (function_exists('mb_strlen') && function_exists('mb_substr')) {
-        if (mb_strlen($kuhnyaIntro) > 180) {
-            $kuhnyaIntro = rtrim(mb_substr($kuhnyaIntro, 0, 180)) . '...';
-        }
-    } elseif (strlen($kuhnyaIntro) > 180) {
-        $kuhnyaIntro = rtrim(substr($kuhnyaIntro, 0, 180)) . '...';
     }
 }
 ?>

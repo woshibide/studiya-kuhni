@@ -1,16 +1,35 @@
 label: Поиск и соцсети
 icon: search
-sections:
-  seo_fields:
-    type: fields
-    fields:
-      seo:
-        extends: fields/seo
-      seo_noindex:
-        label: Скрыть страницу от поисковых систем
-        type: toggle
-        default: false
-        text:
-          - Нет
-          - Да
-        help: Запрет индексации не ограничивает доступ по ссылке. Для непубличной страницы используйте статус «Черновик». На подготовительном сайте индексация всегда отключена.
+columns:
+  editor:
+    width: 1/2
+    sections:
+      seo_fields:
+        type: fields
+        fields:
+          seo:
+            extends: fields/seo
+          seo_indexing_heading:
+            type: headline
+            label: Видимость в поиске
+          seo_noindex:
+            label: Скрыть страницу от поисковых систем
+            type: toggle
+            default: false
+            text:
+              - Разрешить индексацию на основном сайте
+              - Запретить индексацию этой страницы
+            help: Страница остаётся доступной по ссылке. Чтобы закрыть её для посетителей, переведите в черновик.
+  preview:
+    width: 1/2
+    sticky: true
+    sections:
+      seo_intro:
+        type: info
+        label: Как выглядит ссылка на страницу
+        text: Заголовок и описание видны в поиске и при отправке ссылки. Пустые поля заполняются автоматически. Результат виден в предпросмотре.
+      search_preview:
+        type: studio-search-preview
+        label: В поиске
+      sharing_preview:
+        type: studio-sharing-preview

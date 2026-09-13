@@ -1140,6 +1140,69 @@
             "install-path": "../guzzlehttp/psr7"
         },
         {
+            "name": "johannschopplich/kirby-serp-preview",
+            "version": "1.4.2",
+            "version_normalized": "1.4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johannschopplich/kirby-serp-preview.git",
+                "reference": "2a79f4564a78f38f2c542df4f0b9f174c76d86c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johannschopplich/kirby-serp-preview/zipball/2a79f4564a78f38f2c542df4f0b9f174c76d86c5",
+                "reference": "2a79f4564a78f38f2c542df4f0b9f174c76d86c5",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1"
+            },
+            "require-dev": {
+                "getkirby/cms": "^5"
+            },
+            "time": "2026-07-15T12:06:48+00:00",
+            "type": "kirby-plugin",
+            "extra": {
+                "kirby-cms-path": false
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Johann Schopplich",
+                    "email": "hello@johannschopplich.com",
+                    "homepage": "https://johannschopplich.com"
+                },
+                {
+                    "name": "Dennis Baum",
+                    "homepage": "https://github.com/dennisbaum"
+                }
+            ],
+            "description": "Kirby Panel plugin for search engine result page previews",
+            "homepage": "https://github.com/johannschopplich/kirby-serp-preview#readme",
+            "keywords": [
+                "SERP",
+                "google",
+                "kirby",
+                "search-engine",
+                "seo"
+            ],
+            "support": {
+                "issues": "https://github.com/johannschopplich/kirby-serp-preview/issues",
+                "source": "https://github.com/johannschopplich/kirby-serp-preview/tree/v1.4.2"
+            },
+            "funding": [
+                {
+                    "url": "https://kirby.tools",
+                    "type": "custom"
+                }
+            ],
+            "install-path": "../../site/plugins/kirby-serp-preview"
+        },
+        {
             "name": "jreisdorf/kirby-static-site-generator",
             "version": "2.4.0",
             "version_normalized": "2.4.0.0",
@@ -1377,6 +1440,57 @@
             "install-path": "../league/color-extractor"
         },
         {
+            "name": "mauricerenck/ogimage",
+            "version": "1.2.1",
+            "version_normalized": "1.2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mauricerenck/og-image.git",
+                "reference": "4af8ee7d83e6be5d8236d3f8fc3bd7ab15fa6d17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mauricerenck/og-image/zipball/4af8ee7d83e6be5d8236d3f8fc3bd7ab15fa6d17",
+                "reference": "4af8ee7d83e6be5d8236d3f8fc3bd7ab15fa6d17",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.2",
+                "php": ">=8.2.0"
+            },
+            "require-dev": {
+                "getkirby/cms": "^5"
+            },
+            "time": "2026-05-21T09:26:36+00:00",
+            "type": "kirby-plugin",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "mauricerenck\\OgImage\\": "lib/"
+                },
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maurice Renck",
+                    "email": "hello@maurice-renck.de"
+                }
+            ],
+            "description": "Creates an Open Graph Image for each page",
+            "homepage": "https://github.com/mauricerenck/og-image",
+            "support": {
+                "issues": "https://github.com/mauricerenck/og-image/issues",
+                "source": "https://github.com/mauricerenck/og-image/tree/v1.2.1"
+            },
+            "install-path": "../../site/plugins/ogimage"
+        },
+        {
             "name": "mcp/sdk",
             "version": "v0.8.1",
             "version_normalized": "0.8.1.0",
@@ -1573,6 +1687,70 @@
                 "source": "https://github.com/michelf/php-smartypants/tree/1.8.1"
             },
             "install-path": "../michelf/php-smartypants"
+        },
+        {
+            "name": "moinframe/kirby-loop",
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moinframe/kirby-loop.git",
+                "reference": "27fa21a47b64cb99a59ffa4f3e9cfb965bdca0c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moinframe/kirby-loop/zipball/27fa21a47b64cb99a59ffa4f3e9cfb965bdca0c4",
+                "reference": "27fa21a47b64cb99a59ffa4f3e9cfb965bdca0c4",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/cms": "^4.0||^5.0",
+                "getkirby/composer-installer": "^1.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0"
+            },
+            "time": "2026-06-11T08:12:17+00:00",
+            "type": "kirby-plugin",
+            "extra": {
+                "installer-name": "loop"
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Moinframe\\Loop\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Justus Kraft",
+                    "email": "justus@moinfra.me",
+                    "homepage": "https://moinfra.me"
+                }
+            ],
+            "description": "Interactive feedback tool for Kirby CMS websites that allows users to add contextual comments directly on page elements",
+            "homepage": "https://github.com/moinframe/kirby-loop",
+            "keywords": [
+                "cms",
+                "comments",
+                "feedback",
+                "kirby",
+                "loop",
+                "plugin",
+                "review"
+            ],
+            "support": {
+                "docs": "https://moinfra.me/docs/moinframe-loop",
+                "issues": "https://github.com/moinframe/kirby-loop/issues",
+                "source": "https://github.com/moinframe/kirby-loop"
+            },
+            "install-path": "../../site/plugins/loop"
         },
         {
             "name": "opis/json-schema",
@@ -1772,6 +1950,57 @@
                 "source": "https://github.com/opis/uri/tree/1.1.0"
             },
             "install-path": "../opis/uri"
+        },
+        {
+            "name": "pechente/kirby-admin-bar",
+            "version": "2.3.0",
+            "version_normalized": "2.3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Pechente/kirby-admin-bar.git",
+                "reference": "13194f33014b9ba4317d4e9082daaaa6353de184"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Pechente/kirby-admin-bar/zipball/13194f33014b9ba4317d4e9082daaaa6353de184",
+                "reference": "13194f33014b9ba4317d4e9082daaaa6353de184",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/cms": ">=4.0.0",
+                "getkirby/composer-installer": "^1.2",
+                "php": ">=8.0.0"
+            },
+            "time": "2026-08-23T11:21:54+00:00",
+            "type": "kirby-plugin",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "René Henrich",
+                    "email": "contact@rene-henrich.de"
+                }
+            ],
+            "description": "Kirby Admin Bar",
+            "homepage": "https://github.com/Pechente/kirby-admin-bar",
+            "keywords": [
+                "admin",
+                "frontend",
+                "kirby-cms",
+                "kirby-plugin",
+                "kirby4",
+                "kirby5",
+                "panel"
+            ],
+            "support": {
+                "docs": "https://github.com/Pechente/kirby-admin-bar/blob/main/README.md",
+                "issues": "https://github.com/Pechente/kirby-admin-bar/issues",
+                "source": "https://github.com/Pechente/kirby-admin-bar"
+            },
+            "install-path": "../../site/plugins/kirby-admin-bar"
         },
         {
             "name": "php-http/discovery",

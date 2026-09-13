@@ -384,6 +384,7 @@
             .kuhnya-features-list__text {
                 grid-column: 2 / span 3;
                 margin: 0;
+                text-wrap: balance;
             }
         }
     }
@@ -516,4 +517,3 @@
         height: var(--tap-target-size);
     }
 }
-

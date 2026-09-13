@@ -67,8 +67,7 @@ Designers-cards:
 
 - 
   name: Ателье Рыбкиных
-  image:
-    - file://lw1phakt15tfqssv
+  image: ""
   years: 8
   portfolio_url: https://google.cm
   projects: 42
@@ -79,8 +78,7 @@ Designers-cards:
     in id cursus mi pretium tellus.
 - 
   name: Студия Жмуркиных
-  image:
-    - file://tctilau9xpxhf3ep
+  image: ""
   years: 13
   portfolio_url: https://google.cm
   projects: 123
@@ -91,8 +89,7 @@ Designers-cards:
     in id cursus mi pretium tellus.
 - 
   name: Бюро Кошкиных
-  image:
-    - file://hff2matx6tfybuls
+  image: ""
   years: 20
   portfolio_url: https://google.cm
   projects: 321
