@@ -184,7 +184,9 @@ try {
     await cardReady();
     await textField('seo_title').fill('Студия современных кухонь');
     await textField('seo_description').fill('Общее описание для страниц сайта.');
-    await page.waitForFunction(() => document.querySelector('.k-serp-section h3')?.textContent.includes('Название страницы | Студия современных кухонь'));
+    await page.waitForFunction(() => document.querySelector('.k-serp-section h3')?.textContent.includes('Главная | Студия современных кухонь'));
+    assert.equal(await page.locator('.studio-social-card h3').innerText(), 'Главная');
+    assert.equal(await page.getByRole('link', { name: 'Изменить заголовок и описание главной' }).getAttribute('href'), '/panel/pages/home?tab=seo');
     await save();
     await page.goto(`${origin}/panel/pages/faq?tab=seo`);
     await cardReady();

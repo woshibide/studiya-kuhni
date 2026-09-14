@@ -82,9 +82,17 @@ final class Metadata
         $isSite = $model instanceof Site;
         $site = $model->kirby()->site();
         $image = $site->seo_image()->toFile();
+        $home = $isSite ? $site->homePage() : null;
+        $homeImage = $home && (self::imageMode($home) === 'cover' || (self::imageMode($home) === 'custom' && $home->seo_image()->toFile()))
+            ? self::image($home) : null;
         return [
             'isSite' => $isSite,
-            'pageTitle' => $isSite ? 'Название страницы' : self::text($model->title()),
+            'pageTitle' => $home ? self::title($home) : self::text($model->title()),
+            'homepage' => $home ? [
+                'description' => self::text($home->seo_description()),
+                'image' => $homeImage,
+                'settingsUrl' => $home->panel()->url(true) . '?tab=seo',
+            ] : null,
             'coverTitle' => $isSite ? '' : self::coverTitle($model),
             'coverDefault' => !$isSite && $model->intendedTemplate()->name() === 'kuhnya' && $model->parent() instanceof Page ? self::text($model->parent()->title()) . ",\n" . self::text($model->title()) : ($isSite ? '' : self::text($model->title())),
             'fallbackImage' => self::fallback(),

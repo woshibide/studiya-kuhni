@@ -74,7 +74,7 @@ try {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(origin + '/panel/loop');
     await page.getByText(note, { exact: true }).waitFor();
-    assert(await page.getByRole('link', { name: 'Обратная связь', exact: true }).count() > 0);
+    assert.equal(await page.getByRole('link', { name: 'Обратная связь', exact: true }).count(), 0, 'Feedback remains accessible directly without adding an item to the reduced Panel menu');
     assert(fs.existsSync(path.join(temporary, 'logs/loop/comments.sqlite')));
     assert.deepEqual(errors, [], 'No browser runtime errors');
     console.log('Editor tools: guest access, authenticated editing, feedback persistence, Panel integration and three viewport sizes passed.');

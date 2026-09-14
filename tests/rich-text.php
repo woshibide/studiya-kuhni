@@ -144,8 +144,13 @@ try {
     $assert(str_contains($card, 'Новая кухня Фабрика') && !str_contains($card, '"type":"doc"'), 'Kitchen card decodes JSON before excerpting');
 
     $brandPage = Page::create(['slug' => 'brand-fixture', 'template' => 'home', 'content' => ['title' => 'Brands', 'brands_heading' => 'Наши фабрики']]);
+    $accessibleBrandCount = static function (string $html): int {
+        $dom = new DOMDocument();
+        @$dom->loadHTML('<?xml encoding="UTF-8">' . $html);
+        return (new DOMXPath($dom))->query('//div[contains(concat(" ", normalize-space(@class), " "), " brand-item ")][not(ancestor::*[@aria-hidden="true"])]')->length;
+    };
     $brandHtml = snippet('brands', ['page' => $brandPage], true);
-    $assert(substr_count($brandHtml, 'class="brand-item ') === 13, 'Empty custom brand list retains all existing logos');
+    $assert($accessibleBrandCount($brandHtml) === 13, 'Empty custom brand list retains all existing logos without accessible duplicates');
     $assert(str_contains($brandHtml, '<h2>Наши фабрики</h2>'), 'Brand heading uses its Panel field');
     $logo = Kirby\Cms\File::create(['source' => $root . '/assets/icons/favicons/favicon32px.png', 'parent' => $brandPage, 'template' => 'image']);
     $fileLinkJson = $document([$paragraph('(link: ' . $logo->uuid()->toString() . ' text: Логотип)')]);
@@ -163,14 +168,14 @@ try {
         ['name' => 'Missing logo', 'logo' => 'missing.png'],
     ])]);
     $brandHtml = snippet('brands', ['page' => $brandPage], true);
-    $assert(substr_count($brandHtml, 'class="brand-item ') === 1, 'Configured brand list replaces fallback and skips invalid rows');
+    $assert($accessibleBrandCount($brandHtml) === 1, 'Configured brand list replaces fallback and skips invalid rows');
     $assert(str_contains($brandHtml, 'Custom &lt;script&gt;unsafe()&lt;/script&gt;') && !str_contains($brandHtml, '<script>unsafe()'), 'Custom brand names are escaped');
     $brandPage = $brandPage->update(['brands_items' => Yaml::encode([['name' => 'Missing logo', 'logo' => 'missing.png']])]);
     $brandHtml = snippet('brands', ['page' => $brandPage], true);
     $assert(!str_contains($brandHtml, 'class="brand-item '), 'Invalid configured list never silently restores unrelated logos');
 
     foreach ([
-        'designers' => ['designers_about', 'designers_work'],
+        'designers' => ['designers_work'],
         'mediakit' => ['mediakit_logos', 'mediakit_mission', 'mediakit_values', 'mediakit_press'],
     ] as $template => $sections) {
         $content = ['title' => 'Fixture'];

@@ -48,10 +48,12 @@
         ?>
 
         <div class="marquee-wrapper">
-            <?php foreach ($rows as $rowIndex => $rowBrands): ?>
+            <?php foreach (array_merge($rows, $rows) as $rowIndex => $rowBrands): ?>
                 <?php if (empty($rowBrands)) { continue; } ?>
-                <div class="marquee" data-direction="<?= $rowIndex % 2 === 0 ? 'ltr' : 'rtl' ?>" data-speed="<?= $rowIndex === 1 ? '96' : '84' ?>">
-                    <div class="marqueeInner marquee-track">
+                <div class="marquee<?= $rowIndex % 3 === 1 ? ' marquee--middle' : '' ?><?= $rowIndex >= 3 ? ' marquee--duplicate' : '' ?>" data-direction="<?= $rowIndex % 2 === 0 ? 'ltr' : 'rtl' ?>"<?= $rowIndex >= 3 ? ' aria-hidden="true" inert' : '' ?>>
+                    <div class="marquee-track">
+                        <?php for ($copy = 0; $copy < 3; $copy++): ?>
+                        <div class="marquee-content"<?= $copy > 0 ? ' aria-hidden="true" inert' : '' ?>>
                         <?php foreach ($rowBrands as $brand): ?>
                             <div class="brand-item marquee-item">
                                 <figure>
@@ -67,6 +69,8 @@
                                 </figure>
                             </div>
                         <?php endforeach; ?>
+                        </div>
+                        <?php endfor; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

@@ -114,3 +114,28 @@ Cta-button: Хочу сотрудничать
 ----
 
 Uuid: 1iafkihfyeagpnak
+
+----
+
+Designers-work-heading: Как мы работаем
+
+----
+
+Designers-work-text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+----
+
+Designers-work-steps:
+
+- heading: Знакомимся и обсуждаем проект
+  text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- heading: Подбираем решения
+  text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- heading: Согласовываем детали
+  text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- heading: Реализуем проект
+  text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+----
+
+Designers-about-text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

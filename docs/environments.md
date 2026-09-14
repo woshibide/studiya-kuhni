@@ -95,7 +95,7 @@ Retention and rollback must include content and media, not only Git code.
 - Confirm `luxor-kmv.ru` and `zpcalc.ru` still serve their baseline responses after any new virtual-host or FPM changes.
 
 Apache templates in `ops/` are inactive examples and must not be enabled before domains, authentication files, certificates, paths, and pool users exist.
-GitHub Pages automatic publishing has been removed; its legacy export workflow is manual only.
+Static export and GitHub Pages publishing have been removed.
 
 ## References
 

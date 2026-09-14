@@ -56,13 +56,14 @@ $needsMap = in_array($page->intendedTemplate()->name(), ['fabric', 'kuhnya'], tr
 </div>
 <?php endif ?>
 
+<script src="<?= esc(studio_asset_url('assets/js/credits.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(studio_asset_url('assets/js/site-motion.js'), 'attr') ?>" defer></script>
 
 <!-- embla carousel -->
 <script src="<?= esc(studio_asset_url('assets/js/node_modules/embla-carousel/embla-carousel.umd.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(studio_asset_url('assets/js/node_modules/embla-carousel-autoplay/embla-carousel-autoplay.umd.js'), 'attr') ?>" defer></script>
 
-<script src="<?= esc(studio_asset_url('assets/js/gsap-marquee.js'), 'attr') ?>" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="<?= esc(studio_asset_url('assets/js/brands.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(studio_asset_url('assets/js/gallery.js'), 'attr') ?>" defer></script>
 <script src="<?= esc(studio_asset_url('assets/js/navbar-menus.js'), 'attr') ?>" defer></script>

@@ -5,11 +5,12 @@ Sign in at `/panel`, then open the website in the same browser.
 Admin Bar appears above the site navigation and links to the current page's editor.
 Its account dropdown provides the Panel menu on smaller screens.
 Loop appears at the bottom: choose **Comment**, click a page element, and submit feedback.
-Saved feedback remains available after reloading and in the Panel's **Обратная связь** menu.
+Saved feedback remains available after reloading and to administrators at `/panel/loop`.
+The reduced Panel menu does not include a feedback entry.
 
 Both tools require a signed-in Kirby user.
 Guest feedback is disabled.
-The tools are omitted from command-line rendering, the static generator endpoint, and Kirby's `_preview` view.
+The tools are omitted from command-line rendering and Kirby's `_preview` view.
 Page caching remains disabled so personalized controls and CSRF tokens cannot enter shared cached HTML.
 
 Loop stores feedback in `site/logs/loop/comments.sqlite` by default.

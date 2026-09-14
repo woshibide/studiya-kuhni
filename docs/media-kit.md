@@ -1,5 +1,10 @@
 # Media Kit downloads
 
+The public page at `/mediakit` includes three logo previews from `assets/media-kit/SVG`.
+Each preview offers direct SVG, PNG, and JPG downloads, followed by the ZIP bundle and Illustrator source.
+These bundled assets are rendered by `site/snippets/mediakit-assets.php` independently of the optional Panel selections below.
+Keep the asset filenames and directory names intact when replacing the supplied files.
+
 Open Media Kit in Panel at `/panel/pages/mediakit`.
 The «Страница» tab follows the website's section order: «Логотипы», «Миссия», «Ценности», and «Пресс-кит».
 Each section has its own optional download list alongside its heading and text.

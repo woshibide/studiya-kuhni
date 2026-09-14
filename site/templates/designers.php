@@ -5,20 +5,11 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
 
 <?php snippet('header') ?>
 
-<main id="main-content" tabindex="-1">
+<main id="main-content" class="designers-page" tabindex="-1">
 
     <section>
         <?php snippet('simple-hero') ?>
     </section>
-
-
-    <section>
-        <h2><?= esc($page->designers_about_heading()->or('Студия кухни это')) ?></h2>
-        <?php if ($page->designers_about_text()->isNotEmpty()): ?>
-            <?= $page->designers_about_text()->studioText(false, 3) ?>
-        <?php endif ?>
-    </section>
-
     
     <section>
         <?php snippet('brands') ?>
@@ -91,18 +82,31 @@ $designersCards = $page->designers_cards()->isNotEmpty() ? $page->designers_card
         </div>
     </section>
     
-    <section>
-        <h2><?= esc($page->designers_work_heading()->or('what is the format of work')) ?></h2>
-        <?php if ($page->designers_work_text()->isNotEmpty()): ?>
-            <?= $page->designers_work_text()->studioText(false, 3) ?>
+    <section class="designers-work" aria-labelledby="designers-work-heading">
+        <div class="designers-work__intro">
+            <h2 id="designers-work-heading"><?= esc($page->designers_work_heading()->or('Как мы работаем')) ?></h2>
+            <?php if ($page->designers_work_text()->isNotEmpty()): ?>
+                <?= $page->designers_work_text()->studioText(false, 3) ?>
+            <?php endif ?>
+        </div>
+        <?php if ($page->designers_work_steps()->isNotEmpty()): ?>
+            <ol class="designers-work__steps" role="list">
+                <?php foreach ($page->designers_work_steps()->toStructure() as $step): ?>
+                    <li class="designers-work__step">
+                        <h3><?= esc($step->heading()) ?></h3>
+                        <?php if ($step->text()->isNotEmpty()): ?>
+                            <?= $step->text()->studioText(false, 4) ?>
+                        <?php endif ?>
+                    </li>
+                <?php endforeach ?>
+            </ol>
         <?php endif ?>
     </section>
         
-    <?php /* archive section hidden for the next launch
     <section>
-        <?php snippet('archive-posts') ?>
+        <?php snippet('faq-section') ?>
     </section>
-    */ ?>
+
 
 
 </main>

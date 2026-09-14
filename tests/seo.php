@@ -34,7 +34,20 @@ try {
     $preview = Metadata::preview($page);
     $assert($preview['siteTitle'] === 'Студия Кухни' && $preview['path'] === '/designers', 'Preview defaults match rendered metadata');
     $sitePreview = Metadata::preview($site);
-    $assert($sitePreview['isSite'] && $sitePreview['pageTitle'] === 'Название страницы', 'Site preview explicitly uses a sample page');
+    $assert($sitePreview['isSite'] && $sitePreview['pageTitle'] === Metadata::title($site->homePage()), 'Site preview uses the actual homepage title');
+    $home = $site->homePage()->update(['seo_title' => 'Кухни для вашего дома', 'seo_description' => 'Описание главной', 'seo_image_mode' => 'cover']);
+    $kirby->setSite();
+    $site = $kirby->site();
+    $sitePreview = Metadata::preview($site);
+    $assert($sitePreview['pageTitle'] === 'Кухни для вашего дома', 'Site preview respects the homepage SEO title');
+    $assert($sitePreview['homepage']['description'] === 'Описание главной', 'Site preview respects the homepage description');
+    $assert($sitePreview['homepage']['image'] === Metadata::image($home), 'Site preview uses the actual homepage cover');
+    $assert(str_ends_with($sitePreview['homepage']['settingsUrl'], '/pages/home?tab=seo'), 'Site preview links to homepage SEO settings');
+    $home->update(['seo_title' => '', 'seo_description' => '', 'seo_image_mode' => 'shared']);
+    $kirby->setSite();
+    $site = $kirby->site();
+    $sitePreview = Metadata::preview($site);
+    $assert($sitePreview['homepage']['image'] === null && $sitePreview['homepage']['description'] === '', 'Inherited homepage values remain available for live site edits');
 
     $before = $page->files()->count();
     $imageBefore = Metadata::image($page);

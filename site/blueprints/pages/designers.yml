@@ -33,11 +33,6 @@ tabs:
           about_heading_ui:
             type: headline
             label: 'О студии'
-          designers_about_heading:
-            label: 'Заголовок рассказа о студии'
-            type: text
-            placeholder: 'Студия кухни это'
-            help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
           designers_about_text:
             extends: fields/rich-text
             label: 'Рассказ о студии'
@@ -154,11 +149,32 @@ tabs:
           designers_work_heading:
             label: 'Заголовок формата работы'
             type: text
-            placeholder: 'what is the format of work'
+            placeholder: 'Как мы работаем'
             help: 'Если поле пустое, используется заголовок, показанный в подсказке.'
           designers_work_text:
             extends: fields/rich-text
             label: 'Описание формата работы'
-            help: 'Блок после карточек дизайнеров. Пока поле пустое, показан только заголовок.'
+            help: 'Вступление к этапам сотрудничества после карточек дизайнеров.'
+          designers_work_button:
+            label: 'Текст кнопки связи'
+            type: text
+            placeholder: 'Обсудить сотрудничество'
+            help: 'Открывает общую форму связи.'
+          designers_work_steps:
+            label: 'Этапы сотрудничества'
+            type: structure
+            help: 'Порядок этапов на странице совпадает с порядком в списке.'
+            columns:
+              heading:
+                label: Этап
+            fields:
+              heading:
+                label: 'Название этапа'
+                type: text
+                required: true
+              text:
+                extends: fields/rich-text
+                label: 'Описание этапа'
+                size: medium
   files: tabs/files
   seo: tabs/seo

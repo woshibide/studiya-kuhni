@@ -53,5 +53,4 @@ No deployment is configured by these changes.
 The future `design` hostname will be protected and non-indexable, with separate storage and PHP-FPM pools.
 The existing server websites retain their current PHP services until separately upgraded.
 
-The legacy static preview was published at <https://woshibide.github.io/studiya-kuhni/>.
-Its GitHub Pages workflow is now manual only and is not the intended production workflow.
+The website runs on Kirby/PHP; static export and GitHub Pages publishing have been removed.

@@ -8,11 +8,6 @@ if (!function_exists('relative_url')) {
 
         $siteUrl = kirby()->url();
         $siteHost = parse_url($siteUrl, PHP_URL_HOST) ?: '';
-        $basePath = kirby()->option('jr.static_site_generator.base_url', '/');
-        $basePath = '/' . trim((string)$basePath, '/') . '/';
-        if ($basePath === '//') {
-            $basePath = '/';
-        }
 
         if ($siteUrl !== '' && str_starts_with($path, $siteUrl)) {
             $path = substr($path, strlen($siteUrl));
@@ -27,21 +22,7 @@ if (!function_exists('relative_url')) {
             }
         }
 
-        $normalizedPath = '/' . ltrim($path, '/');
-        if ($basePath !== '/' && str_starts_with($normalizedPath, $basePath)) {
-            $normalizedPath = substr($normalizedPath, strlen(rtrim($basePath, '/')));
-            if ($normalizedPath === '' || $normalizedPath === false) {
-                $normalizedPath = '/';
-            }
-        }
-
-        $relativePath = ltrim($normalizedPath, '/');
-
-        if ($relativePath === '') {
-            return $basePath;
-        }
-
-        return $basePath . $relativePath;
+        return '/' . ltrim($path, '/');
     }
 }
 

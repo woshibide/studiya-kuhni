@@ -129,7 +129,7 @@ tabs:
             text: 'Описание и изображение используются страницами, где не заполнены собственные настройки поиска и соцсетей.'
           search_preview:
             type: studio-search-preview
-            label: Пример в поиске
+            label: Главная в поиске
           sharing_preview:
             type: studio-sharing-preview
           publishing:

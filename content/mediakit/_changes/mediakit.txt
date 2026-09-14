@@ -15,7 +15,3 @@ Simple-hero-button-label:
 ----
 
 Uuid: gdrkddtvgneuxdaa
-
-----
-
-Lock: UElTgRHr

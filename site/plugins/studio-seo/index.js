@@ -8,20 +8,21 @@
             ? clean(content.seo_title) || clean(content.title)
             : defaults.siteTitle || '';
         const title = defaults.isSite ? defaults.pageTitle : clean(content.seo_title) || clean(content.title) || defaults.pageTitle;
-        const description = clean(content.seo_description) || (defaults.isSite ? '' : defaults.description);
+        const description = (defaults.isSite && defaults.homepage?.description) || clean(content.seo_description) || (defaults.isSite ? '' : defaults.description);
         const selected = content.seo_image?.[0];
         const mode = ['cover', 'custom', 'shared'].includes(content.seo_image_mode)
             ? content.seo_image_mode : autoCover(content.seo_generate_image) ? 'cover' : selected?.url ? 'custom' : 'shared';
         const shared = (!defaults.isSite && defaults.siteImage) || defaults.fallbackImage;
-        const image = defaults.isSite ? selected?.url ? selected : shared
+        const image = defaults.isSite ? defaults.homepage?.image || (selected?.url ? selected : shared)
             : mode === 'cover' ? null : mode === 'custom' && selected?.url ? selected : shared;
         const coverTitle = coverText(content.seo_og_title) || clean(content.seo_title) || defaults.coverDefault || title;
         return {
             title: title || '', coverTitle, mode, siteTitle, description: description || '',
+            homepage: defaults.homepage,
             searchTitle: [title, siteTitle].filter(Boolean).join(' | '), image,
             titleInherited: !defaults.isSite && !clean(content.seo_title),
             descriptionInherited: !defaults.isSite && !clean(content.seo_description),
-            imageSource: !image ? 'Автоматическая обложка' : selected?.url === image.url ? 'Своё изображение' : image.url === defaults.fallbackImage?.url ? 'Фирменная обложка с адресом' : 'Общее изображение сайта',
+            imageSource: defaults.homepage?.image ? 'Изображение главной страницы' : !image ? 'Автоматическая обложка' : selected?.url === image.url ? 'Своё изображение' : image.url === defaults.fallbackImage?.url ? 'Фирменная обложка с адресом' : 'Общее изображение сайта',
             noindex: enabled(content.seo_noindex),
         };
     };
@@ -56,6 +57,10 @@
                             !state.description ? h('p', ['Описание не задано. Поисковая система может выбрать фрагмент страницы.']) : null,
                         ]),
                         h('p', { class: 'studio-seo-note' }, ['Пример выдачи. Поисковые системы могут изменить текст и длину сниппета.']),
+                        state.homepage ? h('p', { class: 'studio-seo-note' }, [
+                            'Показана главная страница с учётом её собственных настроек.',
+                        ]) : null,
+                        state.homepage ? h('k-button', { props: { link: state.homepage.settingsUrl, icon: 'edit', variant: 'dimmed' }, class: 'studio-seo-settings' }, ['Изменить заголовок и описание главной']) : null,
                     ]);
                 },
             },
@@ -167,7 +172,7 @@
                     if (!this.defaults) return h('p', { attrs: { role: 'status' } }, ['Загрузка предпросмотра…']);
                     const state = this.state;
                     return h('div', { class: 'studio-sharing-preview' }, [
-                        h('k-section', { props: { label: 'В соцсетях и мессенджерах' } }, [
+                        h('k-section', { props: { label: this.defaults.isSite ? 'Главная в соцсетях и мессенджерах' : 'В соцсетях и мессенджерах' } }, [
                             h('figure', { class: 'studio-social-card', attrs: { 'aria-label': 'Предпросмотр ссылки в соцсетях', 'aria-busy': String(this.generating) } }, [
                                 h('div', { class: 'studio-social-card-image' }, [
                                     this.imageUrl ? h('img', { key: this.imageUrl + this.imageAttempt, attrs: { src: this.editing && (this.drag || this.placement) ? this.defaults.templateImage : this.imageUrl, alt: state.image?.alt || `Обложка: ${state.title}`, width: 1200, height: 630 }, on: { error: () => { this.generationError = 'Изображение недоступно. Выберите другой файл или обновите предпросмотр.'; } } }) : null,
@@ -213,7 +218,7 @@
                         !this.defaults.isSite ? h('k-section', { props: { label: 'Сейчас в поиске' } }, [
                             h('k-box', { props: { theme: state.noindex || !this.defaults.publiclyVisible ? 'notice' : 'info', icon: 'info' }, attrs: { 'aria-live': 'polite' } }, [this.indexStatus]),
                             h('k-button', { props: { link: this.defaults.settingsUrl, icon: 'cog', variant: 'dimmed' }, class: 'studio-seo-settings' }, ['Общие настройки сайта']),
-                        ]) : h('p', { class: 'studio-seo-note' }, ['Пример для страницы без собственных настроек. Её заголовок подставится автоматически.']),
+                        ]) : h('p', { class: 'studio-seo-note' }, ['Показана главная страница. Общие настройки используются, если у неё не заданы собственные.']),
                     ]);
                 },
             },

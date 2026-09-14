@@ -12,8 +12,7 @@ $localRequest = (in_array($host, ['localhost', '127.0.0.1', '[::1]'], true) &&
 return [
     'ready' => static function ($kirby): array {
         $editorTools = PHP_SAPI !== 'cli' && $kirby->user() !== null &&
-            !$kirby->request()->query()->get('_preview') &&
-            $kirby->path() !== $kirby->option('api.slug', 'api') . '/' . $kirby->option('jr.static_site_generator.endpoint');
+            !$kirby->request()->query()->get('_preview');
 
         return [
             'pechente.kirby-admin-bar.active' => $editorTools,
@@ -51,15 +50,6 @@ return [
     // Locator 2.1 reads this default even with OpenStreetMap selected.
     // A string avoids its null array key deprecation on PHP 8.5.
     'sylvainjule.locator.mapbox.id' => 'mapbox/outdoors-v11',
-
-    // for github pages: /studiya-kuhni/
-    'jr.static_site_generator' => [
-        'endpoint' => $environment === 'local' ? 'generate-static-site' : null,
-        'output_folder' => './static',
-        'base_url' => '/',
-        'skip_media' => false,
-    ],
-
 
     'cache' => [
         'pages' => [

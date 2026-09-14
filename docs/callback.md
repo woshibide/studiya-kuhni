@@ -78,7 +78,7 @@ Review any existing role with wildcard permissions because those explicitly gran
 Hiding the menu is supplemented by permission checks on every view, dialog load, and submission.
 Write requests require Kirby's session CSRF header.
 The Panel supplies private, no-store responses.
-Requests never become Kirby content pages, files, public API records, sitemap entries, or static exports.
+Requests never become Kirby content pages, files, public API records, or sitemap entries.
 There is no import of previously emailed requests.
 
 ## Private storage setup

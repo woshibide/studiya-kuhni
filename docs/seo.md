@@ -51,7 +51,7 @@ PHP GD with FreeType is required; Composer checks the GD extension.
 Custom entry points must likewise pass `Studio\Seo\OgImage::routes()` in the Kirby constructor's `routes` property.
 Drafts, excluded archive pages, error pages and missing pages return 404 from these routes.
 Uploaded images retain their actual file format instead of being served with a forced PNG content type.
-The current PHP runtime serves these endpoints; the legacy static preview does not generate these routes.
+The PHP runtime serves these endpoints.
 
 Authenticated Panel previews accept unsaved text through `api/studio-seo/og-preview` and return a PNG data URL without saving content or adding cache entries.
 Public generation keeps one cache entry per page under Kirby's cache root.
