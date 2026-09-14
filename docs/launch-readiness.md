@@ -79,6 +79,13 @@ Browser checks against the deployed Nginx/FPM site passed for Panel login, draft
 Content/account checksums and feedback rows stayed unchanged through a second deployment and code rollback; an intentionally invalid notice release automatically restored the working release.
 Disposable test data was removed afterward, and Luxor still returns HTTP 200.
 
-Public activation remains pending: public DNS still returns NXDOMAIN, so certificates have not been issued or renewal-tested.
-A fresh real administrator must also be created before HTTPS activation; the temporary test account was removed.
-The environment guide documents the remaining commands.
+The main notice is now public over HTTPS, including both domains and their `www` aliases.
+Its certificate expires on 13 December 2026, and Certbot renewal plus the Nginx reload hook passed a dry run.
+External checks confirm canonical redirects, static assets, address-only copy, private-path 404s, and Luxor health.
+
+Design activation remains pending because authoritative Timeweb DNS still has no `design.studiya-kuhni-kmv.ru` A record.
+Kirby has no accounts and is prepared for first-run browser setup.
+A temporary password protects Panel/API routes, including alternate Kirby parameter paths; the public frontend remains password-free.
+The first administrator creation removes the setup gate automatically.
+The setup form was verified in a browser without creating an account.
+See the environment guide for setup access and the final HTTPS activation command.
