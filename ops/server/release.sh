@@ -12,11 +12,16 @@ previous=$(readlink -f "$base/current" || true)
 host=studiya-kuhni-kmv.ru
 [[ $target != design ]] || host=design.studiya-kuhni-kmv.ru
 health() {
-    local body
+    local body panel_status
     body=$(curl --fail --silent --show-error --retry 2 --retry-delay 1 --max-time 120 -H "Host: $host" http://127.0.0.1:8087/) || return 1
     [[ $body == *'<html'* && $body == *'<h1'* ]] || return 1
     if [[ $target == design ]]; then
-        curl --fail --silent --show-error --max-time 30 -H "Host: $host" http://127.0.0.1:8087/panel/login >/dev/null || return 1
+        panel_status=$(curl --silent --show-error --max-time 30 -o /dev/null -w '%{http_code}' -H "Host: $host" http://127.0.0.1:8087/panel/login) || return 1
+        if [[ -f $base/shared/setup/enabled ]]; then
+            [[ $panel_status == 401 ]] || return 1
+        else
+            [[ $panel_status == 200 || $panel_status == 302 ]] || return 1
+        fi
     fi
     curl --fail --silent --show-error --max-time 30 https://www.luxor-kmv.ru/ >/dev/null
 }

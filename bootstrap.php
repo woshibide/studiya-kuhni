@@ -19,7 +19,15 @@ if ($shared !== false && $shared !== '') {
         $properties['roots'][$directory] = $shared . '/' . $directory;
     }
     $properties['roots']['license'] = $shared . '/license/.license';
-    $properties['options']['panel']['install'] = false;
+    $setupMarker = $shared . '/setup/enabled';
+    $properties['options']['panel']['install'] = is_file($setupMarker) &&
+        Kirby\Cms\Users::load($shared . '/accounts')->count() === 0;
+    // Top-level extensions append to config and plugin hooks without replacing them.
+    $properties['hooks']['user.create:after'] = function (Kirby\Cms\User $user) use ($setupMarker): void {
+        if ($user->isAdmin() && is_file($setupMarker) && !unlink($setupMarker)) {
+            throw new RuntimeException('Administrator created, but the setup marker could not be removed.');
+        }
+    };
 }
 
 return new Kirby($properties);

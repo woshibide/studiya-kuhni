@@ -24,12 +24,17 @@ Upload `ops/` to `/srv/kuhni/setup/ops`, then run:
 ssh luxor 'bash /srv/kuhni/setup/ops/server/setup.sh'
 ./ops/deploy.sh notice
 ./ops/deploy.sh design --init
-ssh -t luxor 'runuser -u kuhni-design -- php /usr/local/lib/kuhni/create-admin.php'
+ssh luxor /usr/local/lib/kuhni/enable-panel-setup.sh
 ssh luxor /usr/local/lib/kuhni/enable-https.sh
 ```
 
-The administrator command asks for an email and hidden password; nothing is copied from local accounts.
-The public Panel installer stays disabled.
+Open `https://design.studiya-kuhni-kmv.ru/panel` after HTTPS activation.
+The temporary browser login uses username `setup`; retrieve its password from the root-only `/srv/kuhni/setup-access.txt` file over SSH.
+Kirby's first-run screen then lets you choose your administrator email and password.
+No local accounts are copied.
+The setup gate protects only Panel/API routes while the public preview stays password-free.
+Creating the first administrator automatically removes the setup marker, closes installation, and removes the temporary browser gate.
+If browser setup is not wanted, the alternative CLI command is `ssh -t luxor 'runuser -u kuhni-design -- php /usr/local/lib/kuhni/create-admin.php'`.
 Initial content can be seeded only once.
 If an initial release fails after seeding, fix the code and use a normal design deployment; never repeat the content import.
 
@@ -38,7 +43,10 @@ It configures HTTP ACME routes and loopback-only health checks on port 8087.
 Public application routes remain unavailable until HTTPS activation succeeds.
 Certbot uses the existing `/var/lib/letsencrypt` webroot and renewal timer.
 There is one certificate for the four main-domain names and one for design, with a dedicated Nginx reload hook.
-HTTPS activation checks DNS, creates certificates, validates Nginx, checks both sites and Luxor, then tests certificate renewal.
+HTTPS activation checks DNS, creates certificates, validates Nginx, checks both sites and Luxor, then tests certificate renewal and the reload hook.
+If design DNS is still missing, publish only the notice and aliases with `ssh luxor '/usr/local/lib/kuhni/enable-https.sh main'`.
+Run the default command afterward when design DNS resolves.
+Health checks retry briefly while Nginx starts its new workers.
 
 ## Deploy code
 
