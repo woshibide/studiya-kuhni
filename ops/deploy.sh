@@ -17,12 +17,13 @@ elif [[ $# != 1 ]]; then usage; fi
 revision=$(git rev-parse HEAD)
 release="$(date -u +%Y%m%dT%H%M%SZ)-${revision:0:12}"
 temporary=$(mktemp -d "${TMPDIR:-/tmp}/kuhni-deploy.XXXXXX")
+temporary=$(cd "$temporary" && pwd -P)
 trap 'rm -rf "$temporary"' EXIT
 mkdir "$temporary/source"
 git archive "$revision" | tar -xf - -C "$temporary/source"
 if [[ $target == design ]]; then
     (cd "$temporary/source" && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction && composer check-platform-reqs --no-dev)
-    npm ci --prefix "$temporary/source/assets/js" --ignore-scripts
+    (cd "$temporary/source/assets/js" && npm ci --ignore-scripts)
 fi
 python3 ops/package.py "$temporary/source" "$temporary/artifact" "$target" "$release" "$mode"
 ssh luxor 'install -d -m 700 /srv/kuhni/incoming'
