@@ -2,6 +2,7 @@
 
 $root = dirname(__DIR__);
 $commands = [
+    [PHP_BINARY, 'tests/deployment.php'],
     [PHP_BINARY, 'tests/site.php', 'local', 'localhost'],
     [PHP_BINARY, 'tests/site.php', 'staging', 'design.studio.example.com'],
     [PHP_BINARY, 'tests/site.php', 'production', 'studio.example.com'],

@@ -49,8 +49,9 @@ The “Поиск и соцсети” tab previews search results and social ca
 ## Runtime and publication
 
 See [technical readiness](docs/launch-readiness.md), [environment and promotion architecture](docs/environments.md), [callback configuration](docs/callback.md), and [factory maps](docs/maps.md).
-No deployment is configured by these changes.
-The future `design` hostname will be protected and non-indexable, with separate storage and PHP-FPM pools.
-The existing server websites retain their current PHP services until separately upgraded.
+Deploy with `./ops/deploy.sh design` or `./ops/deploy.sh notice` after initial server setup.
+The public design hostname is non-indexable, with persistent editorial storage and a dedicated PHP-FPM pool.
+Main domains serve a standalone notice; Luxor retains its existing configuration.
+See the environment guide for initial setup, HTTPS, rollback, and deferred content backups.
 
 The website runs on Kirby/PHP; static export and GitHub Pages publishing have been removed.

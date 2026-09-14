@@ -55,14 +55,17 @@ The [Media Kit editor guide](media-kit.md) explains uploads and publication with
 The disposable draft used for the editing round trip was removed; existing editorial text was not migrated or rewritten.
 These local checks do not establish production-server behavior or a complete accessibility certification.
 
-## Remaining launch gates
+## First publication and later launch gates
 
-1. Replace placeholder copy and photos, confirm business details, locations, prices, and image descriptions, and review page-specific search/social metadata.
-2. Choose the main domain, configure its exact production origin, and provision DNS and TLS for main and design hosts.
-3. Create isolated PHP 8.5 pools and protected staging storage using the [environment architecture](environments.md), then test server configuration, permissions, and restore procedures.
-4. Configure production SMTP and verify one authorized real enquiry through the full delivery path using the [callback guide](callback.md).
-5. Verify staging authentication and noindex headers on HTML, media, errors, Panel, and API at the actual host, then check production redirects, sitemap, robots rules, and both existing websites.
-6. Implement and review the future Panel promotion action when deployment work begins; the present design assumes promotion of one reviewed code/content/media snapshot.
-7. Activate the appropriate Kirby license for the production site; the local Panel currently shows its activation prompt.
+The initial publication now follows the [Nginx deployment workflow](environments.md).
+The design host is a public noindex preview; main domains serve a static notice with the studio address only.
+This supersedes the earlier protected-staging and whole-site promotion assumptions above.
 
-The current work does not install PHP on the remote server, modify its existing websites, activate staging, or publish a release.
+1. Finish initial DNS, HTTPS, administrator creation, and the deployment verification described in the environment guide.
+2. Fill and review editorial content on the design server, including business details, photos, locations, and page metadata.
+3. Add automatic content backups after the content is populated, before relying on it for the public launch.
+4. Plan main-domain Kirby publication and activate the appropriate Kirby license.
+5. Configure production SMTP and verify an authorized enquiry before enabling delivery.
+
+A Panel promotion action is not part of this deployment.
+Code releases and rollback preserve server editorial data; code rollback is not a content backup.
