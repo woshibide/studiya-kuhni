@@ -43,6 +43,6 @@ case "${RENEWED_LINEAGE:-}" in
 esac
 HOOK
 chmod 755 /etc/letsencrypt/renewal-hooks/deploy/kuhni-nginx
-certbot renew --dry-run --cert-name studiya-kuhni-kmv.ru
-certbot renew --dry-run --cert-name design.studiya-kuhni-kmv.ru
+certbot renew --dry-run --no-random-sleep-on-renew --run-deploy-hooks --cert-name studiya-kuhni-kmv.ru
+certbot renew --dry-run --no-random-sleep-on-renew --run-deploy-hooks --cert-name design.studiya-kuhni-kmv.ru
 echo 'Notice and design published with HTTPS.'
