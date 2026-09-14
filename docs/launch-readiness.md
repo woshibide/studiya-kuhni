@@ -61,7 +61,7 @@ The initial publication now follows the [Nginx deployment workflow](environments
 The design host is a public noindex preview; main domains serve a static notice with the studio address only.
 This supersedes the earlier protected-staging and whole-site promotion assumptions above.
 
-1. Finish initial DNS, HTTPS, administrator creation, and the deployment verification described in the environment guide.
+1. Create the first administrator through the protected Kirby setup screen described in the environment guide.
 2. Fill and review editorial content on the design server, including business details, photos, locations, and page metadata.
 3. Add automatic content backups after the content is populated, before relying on it for the public launch.
 4. Plan main-domain Kirby publication and activate the appropriate Kirby license.
@@ -83,9 +83,15 @@ The main notice is now public over HTTPS, including both domains and their `www`
 Its certificate expires on 13 December 2026, and Certbot renewal plus the Nginx reload hook passed a dry run.
 External checks confirm canonical redirects, static assets, address-only copy, private-path 404s, and Luxor health.
 
-Design activation remains pending because authoritative Timeweb DNS still has no `design.studiya-kuhni-kmv.ru` A record.
-Kirby has no accounts and is prepared for first-run browser setup.
+Design is now public at `https://design.studiya-kuhni-kmv.ru` after its DNS record propagated.
+Its separate certificate expires on 13 December 2026, and both certificates passed renewal dry runs with the Nginx reload hook.
+The existing Certbot renewal timer is enabled and active.
+External checks passed for all five HTTPS hostnames, permanent redirects, design noindex metadata and headers on HTML/media/errors, crawlable robots rules, sitemap exclusion, and private/executable-path blocking.
+Public browser checks passed for desktop/mobile layouts, real factory-map tiles, gallery navigation, and the notice at 1440, 390, and 320 pixels.
+Nginx and PHP-FPM configuration checks passed, and Luxor remains healthy.
+
+Kirby has no accounts and is ready for the owner's first-run browser setup.
 A temporary password protects Panel/API routes, including alternate Kirby parameter paths; the public frontend remains password-free.
 The first administrator creation removes the setup gate automatically.
-The setup form was verified in a browser without creating an account.
-See the environment guide for setup access and the final HTTPS activation command.
+The setup form was verified over public HTTPS without creating an account.
+See the environment guide for setup access and maintenance commands.
