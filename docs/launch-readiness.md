@@ -1,7 +1,7 @@
 # Technical launch preparation
 
 Review date: 12 September 2026.
-This pass covers accessibility, application behavior, Kirby editing, dependencies, and the architecture needed for a protected staging site.
+This pass covers accessibility, application behavior, Kirby editing, dependencies, and the pre-publication environment architecture.
 Editorial copy, photographs, final business locations, and production deployment remain separate work.
 
 ## Implemented
@@ -21,7 +21,7 @@ Editorial copy, photographs, final business locations, and production deployment
 | Factory maps | Locator 2.1.0 in the Panel and local Leaflet 1.9.4 assets on the frontend, with lazy tiles, attribution, keyboard controls, failure fallbacks, scoped Panel referrers that resolve blocked OpenStreetMap tiles, and EOX 2016 satellite imagery on public maps. |
 | Media Kit | Ordered uploads for each content section, editable download labels and descriptions, file type and size, and responsive visitor download links. |
 | Indexing | Only the exact configured HTTPS production origin is eligible for indexing; design hosts remain excluded even under an incorrect production setting. |
-| Publication | Separate environments and future immutable promotion are documented; deployment templates remain inactive. |
+| Publication | Code-only deploy and rollback preserve server editorial data; main domains use a static notice. |
 
 Four factories now have Locator values copied from their previous coordinates.
 The migration preserves the original fields and is safe to repeat.
@@ -69,3 +69,16 @@ This supersedes the earlier protected-staging and whole-site promotion assumptio
 
 A Panel promotion action is not part of this deployment.
 Code releases and rollback preserve server editorial data; code rollback is not a content backup.
+
+## Deployment verification, 14 September 2026
+
+Both code releases are installed under `/srv/kuhni`, with the PHP pool and Nginx loopback health routes active.
+The static notice contains only the studio address.
+Project tests, dependency audits, PHP platform checks, Nginx/FPM syntax checks, and desktop/mobile notice checks passed.
+Browser checks against the deployed Nginx/FPM site passed for Panel login, draft editing, image upload, feedback, real map tiles, and gallery interaction.
+Content/account checksums and feedback rows stayed unchanged through a second deployment and code rollback; an intentionally invalid notice release automatically restored the working release.
+Disposable test data was removed afterward, and Luxor still returns HTTP 200.
+
+Public activation remains pending: public DNS still returns NXDOMAIN, so certificates have not been issued or renewal-tested.
+A fresh real administrator must also be created before HTTPS activation; the temporary test account was removed.
+The environment guide documents the remaining commands.
