@@ -20,6 +20,7 @@ $commands = [
     [PHP_BINARY, 'tests/callback-route.php'],
     [PHP_BINARY, 'tests/callback-inbox.php'],
     ['node', 'tests/frontend.cjs'],
+    ['node', 'tests/fabrics.cjs'],
     ['node', 'tests/gallery.cjs'],
     ['node', 'tests/masonry.cjs'],
     ['node', 'tests/fabric-map.cjs'],

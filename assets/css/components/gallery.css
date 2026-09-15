@@ -1,3 +1,8 @@
+[data-gallery-embedded="true"] {
+    /* Overlay roots must not create empty items or gaps in the page layout. */
+    display: contents;
+}
+
 #gallery {
 
     h2 {

@@ -1,151 +1,107 @@
 <?php snippet('header') ?>
+<?php $galleryKitchens = []; ?>
 
-<main id="main-content" tabindex="-1">
-
-    <?php
-    $placeholderImageUrl = relative_url('assets/placeholder.svg');
-    $resolveKitchenGalleryImages = static fn ($kitchen) => $kitchen->studioKitchenImages();
-    $resolveOptimizedImageUrl = static function ($image, int $width = 1600) use ($placeholderImageUrl): string {
-        if (!$image || !is_object($image) || !method_exists($image, 'url')) {
-            return $placeholderImageUrl;
-        }
-
-        $extension = method_exists($image, 'extension') ? strtolower((string)$image->extension()) : '';
-        if ($extension === 'svg' || !method_exists($image, 'resize')) {
-            return relative_url($image->url());
-        }
-
-        $sourceWidth = method_exists($image, 'width') ? (int)$image->width() : 0;
-        if ($sourceWidth > 0 && $sourceWidth <= $width) {
-            return relative_url($image->url());
-        }
-
-        try {
-            return relative_url($image->resize($width)->url());
-        } catch (Throwable $e) {
-            return relative_url($image->url());
-        }
-    };
-    ?>
+<main id="main-content" class="fabrics-page" tabindex="-1">
 
     <section>
         <?php snippet('simple-hero') ?>
     </section>
 
-    <section class="fabric-grid">
+    <section class="fabric-grid" aria-label="Фотографии кухонь">
         <?php foreach ($page->children()->filter(fn ($entry) => $entry->studioPubliclyVisible()) as $fabric): ?>
             <?php
-            $kitchens = $fabric->children()->filter(fn ($entry) => $entry->studioPubliclyVisible());
-            $kitchenLinks = [];
-            $kitchenSlides = [];
-
-            if ($kitchens->count() === 1) {
-                $kuhnya = $kitchens->first();
-                if ($kuhnya) {
-                    $kitchenImages = $resolveKitchenGalleryImages($kuhnya);
-                    $primaryImage = $kitchenImages->first();
-                    $kitchenLinks[] = [
-                        'title' => (string)$kuhnya->title(),
-                        'url' => relative_url($kuhnya->url()),
-                        'image' => $resolveOptimizedImageUrl($primaryImage, 1200),
-                        'slideIndex' => 0,
-                    ];
-
-                    $galleryImages = $kitchenImages->limit(5);
-                    if ($galleryImages->isNotEmpty()) {
-                        foreach ($galleryImages as $image) {
-                            $kitchenSlides[] = [
-                                'image' => $resolveOptimizedImageUrl($image, 1600),
-                            ];
-                        }
-                    }
-                }
-            } else {
-                foreach ($kitchens as $index => $kuhnya) {
-                    $kitchenImage = $resolveKitchenGalleryImages($kuhnya)->first();
-                    $kitchenImageUrl = $resolveOptimizedImageUrl($kitchenImage, 1200);
-
-                    $kitchenLinks[] = [
-                        'title' => (string)$kuhnya->title(),
-                        'url' => relative_url($kuhnya->url()),
-                        'image' => $kitchenImageUrl,
-                        'slideIndex' => $index,
-                    ];
-
-                    $kitchenSlides[] = [
-                        'image' => $kitchenImageUrl,
-                    ];
-                }
-            }
-
-            if (empty($kitchenSlides)) {
-                $kitchenSlides[] = [
-                    'image' => $placeholderImageUrl,
-                ];
-            }
-
-            $cardImageUrl = $kitchenSlides[0]['image'];
+            $kitchens = $fabric->children()->filter(fn ($entry) => $entry->studioPubliclyVisible() && $entry->studioKitchenImages()->isNotEmpty());
+            if ($kitchens->isEmpty()) continue;
+            $isFirstFabricPhoto = true;
             ?>
-            <div class="fabric-grid__item" data-fabric-item>
-                <a class="fabric-card__header" href="<?= esc(relative_url($fabric->url()), 'attr') ?>">
-                    <h2 class="internal-link__hidden hover-underline"><?= $fabric->title() ?></h2>
-                </a>
-                <article
-                    class="fabric-card"
-                    data-fabric-card
-                    data-default-image="<?= esc($cardImageUrl, 'attr') ?>"
-                >
-                    <button type="button" class="fabric-card__toggle" data-fabric-toggle aria-expanded="false" aria-label="Увеличить фотографии <?= esc($fabric->title(), 'attr') ?>">+</button>
-                    <div class="fabric-card__media">
-                        <div class="fabric-card__media-viewport">
-                            <div class="fabric-card__media-container">
-                                <?php if (!empty($kitchenSlides)): ?>
-                                    <?php foreach ($kitchenSlides as $slide): ?>
-                                        <div
-                                            class="fabric-card__media-slide"
-                                            style="background-image: url('<?= esc($slide['image'], 'attr') ?>');"
-                                            aria-hidden="true"
-                                        ></div>
-                                    <?php endforeach ?>
-                                <?php else: ?>
-                                    <div
-                                        class="fabric-card__media-slide"
-                                        style="background-image: url('<?= esc($cardImageUrl, 'attr') ?>');"
-                                        aria-hidden="true"
-                                    ></div>
-                                <?php endif ?>
-                            </div>
+            <article class="fabric-grid__fabric" aria-labelledby="fabric-<?= esc($fabric->slug(), 'attr') ?>">
+            <?php foreach ($kitchens as $kitchen): ?>
+                <?php
+                $images = $kitchen->studioKitchenImages();
+                $galleryKitchens[] = $kitchen;
+                $imageCount = $images->count();
+                $imageIndex = 0;
+                $kitchenTitle = (string)$kitchen->title();
+                $photoTitle = $fabric->title() . ' ' . $kitchenTitle;
+                ?>
+                <?php foreach ($images as $image): ?>
+                    <?php
+                    $imageIndex++;
+                    $isFirstPhoto = $imageIndex === 1;
+                    ?>
+                    <?php if ($isFirstFabricPhoto): ?>
+                        <h2 class="fabric-grid__fabric-name" id="fabric-<?= esc($fabric->slug(), 'attr') ?>" translate="no"><a class="hover-underline" href="<?= esc(relative_url($fabric->url()), 'attr') ?>"><?= esc($fabric->title()) ?></a></h2>
+                    <?php endif ?>
+                    <?php if ($isFirstPhoto): ?>
+                        <?php
+                        $intro = $kitchen->intro()->studioPlainText();
+                        $country = trim((string)$kitchen->country_of_origin());
+                        $specs = [];
+                        foreach ($kitchen->kitchen_specs()->toStructure() as $spec) {
+                            $label = trim((string)$spec->label());
+                            $value = trim((string)$spec->value());
+                            if ($label === '' || $value === '' || preg_match('/цен|стоим|price|cost/iu', $label)) continue;
+                            $specs[] = ['label' => $label, 'value' => $value];
+                        }
+                        ?>
+                        <div class="fabric-grid__lead<?= $isFirstFabricPhoto ? ' fabric-grid__lead--fabric-start' : '' ?>" data-fabric-kitchen="<?= esc($kitchen->id(), 'attr') ?>">
+                            <article class="fabric-grid__details" aria-label="<?= esc('О кухне ' . $kitchenTitle, 'attr') ?>">
+                                <div class="fabric-grid__heading" aria-hidden="true"></div>
+                                <div class="fabric-grid__details-body">
+                                    <h3 class="fabric-grid__title" translate="no"><a class="hover-underline internal-link" href="<?= esc(relative_url($kitchen->url()), 'attr') ?>"><?= esc($kitchenTitle) ?></a></h3>
+                                    <?php if ($intro !== ''): ?>
+                                        <p><?= esc($intro) ?></p>
+                                    <?php endif ?>
+                                    <?php if ($country !== '' || $specs !== []): ?>
+                                        <dl data-scroll-reveal>
+                                            <?php if ($country !== ''): ?>
+                                                <div><dt>Производство</dt><dd><?= esc($country) ?></dd></div>
+                                            <?php endif ?>
+                                            <?php foreach ($specs as $spec): ?>
+                                                <div><dt><?= esc($spec['label']) ?></dt><dd><?= esc($spec['value']) ?></dd></div>
+                                            <?php endforeach ?>
+                                        </dl>
+                                    <?php endif ?>
+                                </div>
+                            </article>
+                    <?php endif ?>
+                    <a
+                        class="fabric-grid__photo<?= $isFirstPhoto ? ' fabric-grid__photo--first' : '' ?>"
+                        data-kitchen-photo="<?= esc($kitchen->id(), 'attr') ?>"
+                        data-gallery-catalog-open="<?= esc($image->id(), 'attr') ?>"
+                        href="<?= esc(relative_url($kitchen->url()) . '?gallery=' . rawurlencode($image->filename()), 'attr') ?>"
+                        aria-haspopup="dialog"
+                        aria-label="<?= esc($photoTitle . ', фото ' . $imageIndex . ' из ' . $imageCount, 'attr') ?>"
+                    >
+                        <div class="fabric-grid__heading" aria-hidden="true"></div>
+                        <span class="fabric-grid__image" style="aspect-ratio: <?= max(1, (int)$image->width()) ?> / <?= max(1, (int)$image->height()) ?>">
+                            <?php snippet('turbo-image', [
+                                'image' => $image,
+                                'alt' => $image->alt()->or($photoTitle)->value(),
+                                'width' => 1600,
+                                'sizes' => 'auto, 100vw',
+                            ]) ?>
+                        </span>
+                    </a>
+                    <?php if ($isFirstPhoto): ?>
                         </div>
-                    </div>
-                    <ul>
-                        <?php foreach ($kitchenLinks as $link): ?>
-                            <li>
-                                <a
-                                    class="internal-link"
-                                    href="<?= esc($link['url']) ?>"
-                                    data-fabric-image="<?= esc($link['image'], 'attr') ?>"
-                                    data-fabric-slide-index="<?= $link['slideIndex'] ?>"
-                                >
-                                    <?= esc($link['title']) ?>
-                                </a>
-                            </li>
-                        <?php endforeach ?>
-                    </ul>
-                </article>
-            </div>
+                    <?php endif ?>
+                    <?php $isFirstFabricPhoto = false; ?>
+                <?php endforeach ?>
+                <?php if ($images->isNotEmpty()): ?>
+                    <div class="fabric-grid__kitchen-space" aria-hidden="true"></div>
+                <?php endif ?>
+            <?php endforeach ?>
+            </article>
         <?php endforeach ?>
     </section>
 
-    <section>
-        <?php snippet('benefits') ?>
-    </section>
+    <?php foreach ($galleryKitchens as $galleryKitchen): ?>
+        <?php snippet('gallery', ['page' => $galleryKitchen, 'overlayOnly' => true]) ?>
+    <?php endforeach ?>
 
     <section>
         <?php snippet('big-message') ?>
-    </section>
-
-    <section>
-        <?php snippet('cta') ?>
     </section>
 
     <section>
@@ -153,7 +109,15 @@
     </section>
 
     <section>
+        <?php snippet('benefits') ?>
+    </section>
+
+    <section>
         <?php snippet('faq-section') ?>
+    </section>
+
+    <section>
+        <?php snippet('cta') ?>
     </section>
 
     <?php /* archive section hidden for the next launch

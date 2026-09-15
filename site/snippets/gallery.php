@@ -1,4 +1,5 @@
 <?php
+$overlayOnly = $overlayOnly ?? false;
 $galleryHeading = 'Привезти вам новую кухню?';
 $galleryImages = [];
 $isKitchenPage = $page->intendedTemplate()->name() === 'kuhnya';
@@ -70,11 +71,14 @@ if ($isKitchenPage) {
 }
 ?>
 
+<?php if (!$overlayOnly): ?>
 <div class="section-wrapper" id="gallery">
     <h2><?= esc($galleryHeading) ?></h2>
     <p class="gallery__intro">Рассмотрите кухню со всех сторон. Откройте галерею фотографий, чтобы изучить детали и принять решение.</p>
 
-    <div class="gallery" data-gallery data-gallery-count="<?= (int)count($galleryImages) ?>">
+<?php endif ?>
+    <div<?= $overlayOnly ? '' : ' class="gallery"' ?> data-gallery data-gallery-embedded="<?= $overlayOnly ? 'true' : 'false' ?>" data-gallery-count="<?= (int)count($galleryImages) ?>">
+        <?php if (!$overlayOnly): ?>
         <div class="gallery-inline__navigation" data-gallery-scroll-controls role="group" aria-label="Прокрутка фотографий" hidden>
             <button type="button" class="gallery-inline__arrow" data-gallery-scroll-prev aria-label="Прокрутить фотографии влево" disabled>
                 <svg width="32" height="24" viewBox="0 0 32 24" fill="none" aria-hidden="true"><path d="M29 12H3m9-9-9 9 9 9" stroke="currentColor" stroke-width="1.5" /></svg>
@@ -105,6 +109,7 @@ if ($isKitchenPage) {
                 <?php endforeach ?>
             </ul>
         </figure>
+        <?php endif ?>
 
         <dialog class="gallery-overlay" data-gallery-overlay aria-label="Галерея: <?= esc($kuhnyaTitle, 'attr') ?>" hidden>
             <div class="gallery-overlay__backdrop" data-gallery-close></div>
@@ -139,7 +144,7 @@ if ($isKitchenPage) {
                                         type="button"
                                         data-gallery-thumbnail
                                         data-index="<?= (int)$index ?>"
-                                        data-gallery-key="<?= esc($image->filename(), 'attr') ?>"
+                                        data-gallery-key="<?= esc($overlayOnly ? $image->id() : $image->filename(), 'attr') ?>"
                                         data-gallery-src="<?= esc(relative_url($image->resize(2200)->url()), 'attr') ?>"
                                         aria-label="Показать изображение <?= (int)$index + 1 ?>"
                                         aria-pressed="false"
@@ -166,8 +171,14 @@ if ($isKitchenPage) {
                                 </button>
                                 <span class="gallery-overlay__share-status" data-gallery-share-status role="status" aria-live="polite"></span>
                                 <article class="gallery-overlay__meta-card" aria-label="<?= esc($kuhnyaTitle, 'attr') ?>">
-                                    <a class="gallery-overlay__eyebrow" href="<?= esc($kuhnyaBrandUrl, 'attr') ?>"><?= esc($kuhnyaBrand) ?></a>
-                                    <h3 class="gallery-overlay__titleline"><?= esc($kuhnyaTitle) ?></h3>
+                                    <a class="gallery-overlay__eyebrow<?= $overlayOnly ? ' hover-underline' : '' ?>" href="<?= esc($kuhnyaBrandUrl, 'attr') ?>"><?= esc($kuhnyaBrand) ?></a>
+                                    <h3 class="gallery-overlay__titleline">
+                                        <?php if ($overlayOnly): ?>
+                                            <a class="hover-underline internal-link" href="<?= esc(relative_url($page->url()), 'attr') ?>"><?= esc($kuhnyaTitle) ?></a>
+                                        <?php else: ?>
+                                            <?= esc($kuhnyaTitle) ?>
+                                        <?php endif ?>
+                                    </h3>
 
                                     <?php if ($kuhnyaIntro !== ''): ?>
                                         <p class="gallery-overlay__intro"><?= esc($kuhnyaIntro) ?></p>
@@ -212,4 +223,6 @@ if ($isKitchenPage) {
             </div>
         </dialog>
     </div>
+<?php if (!$overlayOnly): ?>
 </div>
+<?php endif ?>

@@ -7,7 +7,9 @@
         const images = [dialog?.querySelector('[data-gallery-image]'), dialog?.querySelector('[data-gallery-image-buffer]')];
         let image = images[0];
         const frame = dialog?.querySelector('[data-gallery-frame]');
-        if (!buttons.length || !(dialog instanceof HTMLDialogElement) || !image || !frame || !thumbnails.length) return;
+        if (!(dialog instanceof HTMLDialogElement) || !image || !frame || !thumbnails.length) return;
+        const externalButtons = Array.from(document.querySelectorAll('[data-gallery-layout-open], [data-gallery-hero-open], [data-gallery-catalog-open]'));
+        const keyForButton = (button) => button.dataset.galleryLayoutOpen || button.dataset.galleryHeroOpen || button.dataset.galleryCatalogOpen;
 
         const closeButton = dialog.querySelector('button[data-gallery-close]');
         const slot = dialog.querySelector('[data-gallery-slot]');
@@ -65,7 +67,7 @@
         };
         const indexFromUrl = () => {
             const key = new URL(window.location.href).searchParams.get('gallery');
-            return key === '' ? 0 : thumbnails.findIndex((thumbnail) => thumbnail.dataset.galleryKey === key);
+            return key === '' && root.dataset.galleryEmbedded !== 'true' ? 0 : thumbnails.findIndex((thumbnail) => thumbnail.dataset.galleryKey === key);
         };
         const stopTracking = () => {
             tracking = false;
@@ -190,7 +192,7 @@
                     item.classList.remove('is-current');
                     item.classList.remove('is-underlay');
                 });
-                const preview = previewImage || buttons[selected].querySelector('img') || thumbnails[selected].querySelector('img');
+                const preview = previewImage || buttons[selected]?.querySelector('img') || thumbnails[selected].querySelector('img');
                 image.src = preview.currentSrc || preview.src;
                 image.alt = preview.alt;
                 image.width = preview.naturalWidth || Number(preview.getAttribute('width'));
@@ -222,12 +224,13 @@
             opener = button;
             open(selected);
         }));
-        document.querySelectorAll('[data-gallery-layout-open], [data-gallery-hero-open]').forEach((button) => {
-            const key = button.dataset.galleryLayoutOpen || button.dataset.galleryHeroOpen;
+        externalButtons.forEach((button) => {
+            const key = keyForButton(button);
             const selected = thumbnails.findIndex((thumbnail) => thumbnail.dataset.galleryKey === key);
             if (selected < 0) return;
             button.addEventListener('click', (event) => {
                 if (event.defaultPrevented) return;
+                if (button.dataset.galleryCatalogOpen && (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button > 0)) return;
                 if (button.dataset.galleryLayoutOpen) {
                     const card = button.closest('[data-kuhnya-layout-card]');
                     if (!card?.classList.contains('is-expanded') || card.closest('.kuhnya-layout-grid')?.classList.contains('is-animating')) return;
@@ -235,7 +238,7 @@
                 event.preventDefault();
                 event.stopPropagation();
                 opener = button;
-                open(selected, { expanded: true, previewImage: button.querySelector('img') });
+                open(selected, { expanded: !button.dataset.galleryCatalogOpen, previewImage: button.querySelector('img') });
             });
         });
         thumbnails.forEach((thumbnail, selected) => {
@@ -306,7 +309,7 @@
             stopTracking();
             dialog.classList.remove('is-open');
             dialog.hidden = true;
-            document.documentElement.classList.remove('is-gallery-overlay-open');
+            if (!document.querySelector('[data-gallery-overlay][open]')) document.documentElement.classList.remove('is-gallery-overlay-open');
             if (indexFromUrl() >= 0) {
                 if (history.state?.galleryEntry === historyKey) history.back();
                 else {
@@ -315,7 +318,8 @@
                     history.replaceState(history.state, '', url);
                 }
             }
-            if (!document.querySelector('[data-nav-contact].is-open')) (opener || buttons[0]).focus({ preventScroll: true });
+            const fallbackOpener = buttons[0] || externalButtons.find((button) => keyForButton(button) === thumbnails[0].dataset.galleryKey);
+            if (!document.querySelector('[data-nav-contact].is-open')) (opener || fallbackOpener)?.focus({ preventScroll: true });
         });
         dialog.addEventListener('keydown', (event) => {
             if (closing || event.target.matches('input, textarea') || event.altKey || event.metaKey || event.ctrlKey) return;

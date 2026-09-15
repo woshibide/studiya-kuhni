@@ -32,8 +32,9 @@ class Dialog extends Element {
   close() { this.open = false; this.emit('close'); }
 }
 const settle = () => new Promise((resolve) => setTimeout(resolve, 5));
-function boot({ url = 'https://studio.example/fabrics/kitchen?campaign=test#gallery', mobile = false, reduced = true, count = 3 } = {}) {
+function boot({ url = 'https://studio.example/fabrics/kitchen?campaign=test#gallery', mobile = false, reduced = true, count = 3, embedded = false } = {}) {
   const root = new Element(); const dialog = new Dialog(); const strip = new Element();
+  root.dataset.galleryEmbedded = String(embedded);
   const controls = Object.fromEntries(['image', 'image-buffer', 'frame', 'slot', 'error', 'expand', 'share-status', 'share-link', 'retry', 'share', 'prev', 'next'].map((key) => [key, new Element()]));
   for (const [key, element] of Object.entries(controls)) dialog.nodes[`[data-gallery-${key}]`] = element;
   controls.frame.clientWidth = 1000; controls.frame.clientHeight = 500;
@@ -45,7 +46,7 @@ function boot({ url = 'https://studio.example/fabrics/kitchen?campaign=test#gall
   const buttons = Array.from({ length: count }, () => new Element());
   const thumbnails = buttons.map((_, i) => {
     const node = new Element(); const map = new Element(); const crop = new Element();
-    node.dataset = { galleryKey: `photo ${i + 1}.jpg`, gallerySrc: `/photo-${i + 1}.jpg` };
+    node.dataset = { galleryKey: `${embedded ? 'fabrics/brand/kitchen/' : ''}photo ${i + 1}.jpg`, gallerySrc: `/photo-${i + 1}.jpg` };
     node.parentElement = strip; node.offsetLeft = i * 100;
     node.nodes['img'] = { alt: `Kitchen ${i + 1}`, src: `/preview-${i + 1}.jpg`, naturalWidth: 800, naturalHeight: 1000 };
     buttons[i].nodes['img'] = node.nodes['img'];
@@ -53,7 +54,7 @@ function boot({ url = 'https://studio.example/fabrics/kitchen?campaign=test#gall
     map.nodes['.gallery-overlay__crop'] = crop;
     return node;
   });
-  root.nodes['[data-gallery-open]'] = buttons;
+  root.nodes['[data-gallery-open]'] = embedded ? [] : buttons;
   root.nodes['[data-gallery-overlay]'] = dialog;
   root.nodes['[data-gallery-thumbnail]'] = thumbnails;
   const document = new Element(); document.documentElement = new Element(); document.title = 'Kitchen';
@@ -73,7 +74,15 @@ function boot({ url = 'https://studio.example/fabrics/kitchen?campaign=test#gall
     button.nodes.img = { ...thumbnail.nodes.img, src: '/hero-preview.jpg' };
     return button;
   });
-  document.nodes['[data-gallery-layout-open], [data-gallery-hero-open]'] = [...layoutButtons, ...heroButtons];
+  const catalogButtons = thumbnails.map((thumbnail) => {
+    const button = new Element();
+    button.dataset.galleryCatalogOpen = thumbnail.dataset.galleryKey;
+    button.nodes.img = { ...thumbnail.nodes.img, src: '/catalog-preview.jpg' };
+    return button;
+  });
+  const unrelatedPhoto = new Element();
+  unrelatedPhoto.dataset.galleryCatalogOpen = 'fabrics/another/kitchen/photo 1.jpg';
+  document.nodes['[data-gallery-layout-open], [data-gallery-hero-open], [data-gallery-catalog-open]'] = embedded ? [...catalogButtons, unrelatedPhoto] : [...layoutButtons, ...heroButtons];
   const window = new Element(); window.location = { href: url };
   const timers = new Map(); let timerId = 0;
   window.setTimeout = (fn, duration) => {
@@ -110,10 +119,41 @@ function boot({ url = 'https://studio.example/fabrics/kitchen?campaign=test#gall
   const load = async (number = pending.length - 1) => { pending[number].onload(); await pump(); };
   const runTimers = (duration) => { for (const [id, timer] of timers) { if (timer.duration === duration) { timers.delete(id); timer.fn(); } } };
   const currentImage = () => [controls.image, controls['image-buffer']].find((item) => item.classList.contains('is-current')); 
-  return { root, dialog, buttons, thumbnails, close, controls, pending, window, history, navigator, frames, media, load, flushFrames, currentImage, pump, runTimers, layoutButtons, layoutRow, heroButtons };
+  return { root, dialog, buttons, thumbnails, close, controls, pending, window, history, navigator, frames, media, load, flushFrames, currentImage, pump, runTimers, layoutButtons, layoutRow, heroButtons, catalogButtons, unrelatedPhoto };
 }
 
 (async () => {
+  for (const mobile of [false, true]) {
+    const catalogue = boot({ embedded: true, mobile, url: 'https://studio.example/fabrics?campaign=test#fabric-brand' });
+    await catalogue.unrelatedPhoto.emit('click');
+    assert.equal(catalogue.dialog.open, false, 'Identical filenames from another kitchen cannot open this gallery');
+    let prevented = false;
+    const event = { preventDefault() { prevented = true; }, stopPropagation() {} };
+    await catalogue.catalogButtons[1].emit('click', { ...event, metaKey: true });
+    assert.equal(prevented, false, 'Modified photo links retain native new-tab navigation');
+    assert.equal(catalogue.dialog.open, false);
+    await catalogue.catalogButtons[1].emit('click', event);
+    assert.equal(prevented, true);
+    assert.equal(catalogue.dialog.open, true, 'Catalogue opens without a duplicate inline gallery');
+    assert.equal(catalogue.dialog.classList.contains('is-expanded'), false, 'Catalogue photos open in the minimized gallery view');
+    assert.equal(catalogue.controls.expand.attrs['aria-pressed'], 'false');
+    assert.equal(catalogue.currentImage().src, '/catalog-preview.jpg');
+    await catalogue.load();
+    assert.equal(catalogue.currentImage().src, '/photo-2.jpg');
+    assert.equal(new URL(catalogue.window.location.href).searchParams.get('gallery'), 'fabrics/brand/kitchen/photo 2.jpg');
+    catalogue.history.back(); await settle();
+    assert.equal(catalogue.dialog.open, false);
+    assert.equal(catalogue.catalogButtons[1].focused, true, 'Close restores the clicked catalogue photo');
+    catalogue.history.forward(); await catalogue.load();
+    assert.equal(catalogue.currentImage().src, '/photo-2.jpg');
+  }
+  const directCatalogue = boot({ embedded: true, url: 'https://studio.example/fabrics?gallery=fabrics%2Fbrand%2Fkitchen%2Fphoto+3.jpg' });
+  await directCatalogue.load();
+  assert.equal(directCatalogue.currentImage().src, '/photo-3.jpg', 'Shared catalogue deep link opens its requested photo');
+  await directCatalogue.close.emit('click');
+  assert.equal(directCatalogue.window.location.href, 'https://studio.example/fabrics');
+  assert.equal(directCatalogue.catalogButtons[0].focused, true);
+  assert.equal(boot({ embedded: true, url: 'https://studio.example/fabrics?gallery=' }).dialog.open, false, 'An empty key must not open all embedded galleries');
   let test = boot();
   assert.equal(test.dialog.open, false);
   test.buttons[0].emit('click');

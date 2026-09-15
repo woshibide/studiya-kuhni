@@ -106,6 +106,33 @@ try {
         $dom = new DOMDocument();
         @$dom->loadHTML('<?xml encoding="UTF-8">' . $html);
         $xpath = new DOMXPath($dom);
+        if ($id === 'fabrics') {
+            $photoLinks = $xpath->query('//a[@data-gallery-catalog-open]');
+            $galleryKeys = [];
+            foreach ($xpath->query('//*[@data-gallery-embedded="true"]') as $gallery) {
+                $assert($xpath->query('.//*[@data-gallery-open]', $gallery)->length === 0, 'Catalogue reuses the overlay without duplicate inline photos');
+                foreach ($xpath->query('.//*[@data-gallery-key]', $gallery) as $thumbnail) {
+                    $key = $thumbnail->getAttribute('data-gallery-key');
+                    $assert(!isset($galleryKeys[$key]), 'Catalogue photo keys are unique across kitchens');
+                    $galleryKeys[$key] = true;
+                }
+            }
+            $assert($photoLinks->length > 0 && $photoLinks->length === count($galleryKeys), 'Every catalogue photo has exactly one gallery entry');
+            foreach ($photoLinks as $photoLink) {
+                $key = $photoLink->getAttribute('data-gallery-catalog-open');
+                $assert(isset($galleryKeys[$key]), 'Catalogue photo opens its matching gallery image');
+                $href = $photoLink->getAttribute('href');
+                $target = $kirby->site()->find(ltrim((string)parse_url($href, PHP_URL_PATH), '/'));
+                parse_str((string)parse_url($href, PHP_URL_QUERY), $query);
+                $assert($target && $target->studioPubliclyVisible() && $target->file($query['gallery'] ?? '')?->id() === $key, 'Photo fallback links to the correct published kitchen and image');
+            }
+            foreach ($xpath->query('//h2[contains(@class,"fabric-grid__fabric-name")]/a | //h3[contains(@class,"fabric-grid__title")]/a') as $nameLink) {
+                $target = $kirby->site()->find(ltrim($nameLink->getAttribute('href'), '/'));
+                $assert($target && $target->studioPubliclyVisible(), 'Factory and kitchen names link to published pages');
+                $assert(str_contains($nameLink->getAttribute('class'), 'hover-underline'), 'Catalogue names use the shared underline');
+                $assert(str_contains($nameLink->getAttribute('class'), 'internal-link') === ($target->intendedTemplate()->name() === 'kuhnya'), 'Only kitchen names display an arrow');
+            }
+        }
         $assert($xpath->evaluate('string(//html/@lang)') === 'ru', $id . ': Russian language declared');
         $assert($xpath->query('//h1')->length === 1, $id . ': one H1');
         $assert($xpath->query('//main[@id="main-content"]')->length === 1, $id . ': skip target present');
