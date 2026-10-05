@@ -3,3 +3,9 @@
     width: 100%;
     height: auto;
 }
+
+#simple-hero > h1,
+#simple-hero > .hero__description {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}

@@ -91,6 +91,7 @@ if (!$canIndex) $kirby->response()->header('X-Robots-Tag', 'noindex, nofollow, n
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/archive-posts.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/other-kitchens.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/brands.css'), 'attr') ?>">
+    <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/proof.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/other-fabrics.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/big-message.css'), 'attr') ?>">
     <link rel="stylesheet" href="<?= esc(studio_asset_url('assets/css/components/kuhnya-card-overview.css'), 'attr') ?>">

@@ -38,6 +38,10 @@
         animation: none;
     }
 
+    .home-hero-heading-reserve {
+        display: none;
+    }
+
     .home-hero-seo-copy {
         margin: 0;
         height: 0;
@@ -87,6 +91,26 @@
 
         h1 {
             font-size: var(--fs-xl);
+            width: 100%;
+        }
+
+        .home-hero-heading {
+            display: grid;
+        }
+
+        .home-hero-heading-live,
+        .home-hero-heading-reserve {
+            grid-area: 1 / 1;
+            min-width: 0;
+        }
+
+        .home-hero-heading-reserve {
+            display: block;
+            visibility: hidden;
+
+            .home-hero-typed {
+                animation: none;
+            }
         }
 
         .hero-description p {
@@ -388,5 +412,4 @@
 
 /* BENEFITS
  */
-
 

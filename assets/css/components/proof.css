@@ -1,0 +1,134 @@
+:is(.designers-proof, .machinery-proof) {
+	position: relative;
+}
+
+:is(.designers-proof__layout, .machinery-proof__layout) {
+	align-items: start;
+}
+
+:is(.designers-proof__intro, .machinery-proof__intro) {
+	grid-column: 2 / 5;
+	position: sticky;
+	top: var(--space-xxl);
+	align-self: start;
+	padding: var(--space-base);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+	border-radius: var(--fs-sm);
+    background-color: var(--jet-black);
+    color: var(--the-white);
+}
+
+:is(.designers-proof__heading, .machinery-proof__heading) {
+	font-size: var(--fs-lg);
+}
+
+:is(.designers-proof__lead, .machinery-proof__lead) {
+	text-wrap: balance;
+	font-size: var(--fs-sm);
+}
+
+:is(.designers-proof__cards, .machinery-proof__cards) {
+	grid-column: 1 / -1;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xxl);
+}
+
+:is(.designers-proof-card, .machinery-proof-card) {
+	grid-template-rows: auto auto;
+	row-gap: var(--space-sm);
+}
+
+:is(.designers-proof-card__name, .machinery-proof-card__name) {
+	grid-column: 6 / span 4;
+	grid-row: 1;
+	font-size: var(--fs-lg);
+}
+
+:is(.designers-proof-card__media, .machinery-proof-card__media) {
+	grid-column: 6 / span 4;
+	grid-row: 2;
+	margin: 0;
+	width: 100%;
+	aspect-ratio: 5 / 4;
+	background: var(--silver);
+	overflow: hidden;
+}
+
+:is(.designers-proof-card__media, .machinery-proof-card__media) img,
+:is(.designers-proof-card__media-placeholder, .machinery-proof-card__media-placeholder) {
+	width: 100%;
+	height: 100%;
+}
+
+:is(.designers-proof-card__media, .machinery-proof-card__media) img {
+	display: block;
+	object-fit: cover;
+}
+
+:is(.designers-proof-card__facts, .machinery-proof-card__facts) {
+	grid-column: 10 / span 3;
+	grid-row: 2;
+	align-self: start;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+}
+
+:is(.designers-proof-card__facts, .machinery-proof-card__facts) p {
+	font-size: var(--fs-sm);
+}
+
+:is(.designers-proof-card__description, .machinery-proof-card__description) {
+	grid-column: 10 / span 3;
+	grid-row: 2;
+	align-self: end;
+	font-size: var(--fs-sm);
+	line-height: 1.4;
+}
+
+@media (max-width: 64rem) {
+	:is(.designers-proof__intro, .machinery-proof__intro) {
+		grid-column: 1 / span 4;
+		bottom: var(--space-xl);
+	}
+
+	:is(.designers-proof-card__name, .machinery-proof-card__name),
+	:is(.designers-proof-card__media, .machinery-proof-card__media) {
+		grid-column: 4 / span 5;
+	}
+
+	:is(.designers-proof-card__facts, .machinery-proof-card__facts),
+	:is(.designers-proof-card__description, .machinery-proof-card__description) {
+		grid-column: 1 / span 3;
+	}
+}
+
+@media (max-width: 48rem) {
+	:is(.designers-proof__intro, .machinery-proof__intro),
+	:is(.designers-proof__cards, .machinery-proof__cards) {
+		grid-column: 1 / -1;
+	}
+
+	:is(.designers-proof__intro, .machinery-proof__intro) {
+		position: static;
+		padding: var(--space-sm);
+	}
+
+	:is(.designers-proof-card, .machinery-proof-card) {
+		grid-template-rows: auto;
+		row-gap: var(--space-sm);
+	}
+
+	:is(.designers-proof-card__name, .machinery-proof-card__name),
+	:is(.designers-proof-card__facts, .machinery-proof-card__facts),
+	:is(.designers-proof-card__media, .machinery-proof-card__media),
+	:is(.designers-proof-card__description, .machinery-proof-card__description) {
+		grid-column: 1 / -1;
+		grid-row: auto;
+	}
+}
+
+

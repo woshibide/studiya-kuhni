@@ -59,6 +59,50 @@ tabs:
             placeholder: Преимущества
           benefits_items:
             extends: fields/benefits
+      machinery:
+        type: fields
+        fields:
+          machinery_heading_ui:
+            type: headline
+            label: Оборудование
+          machinery_heading:
+            type: text
+            label: Заголовок блока оборудования
+            placeholder: Наше оборудование
+          machinery_lead:
+            extends: fields/rich-text-inline
+            label: Описание блока оборудования
+          machinery_items:
+            type: structure
+            label: Станки и оборудование
+            columns:
+              name:
+                label: Название
+            fields:
+              name:
+                type: text
+                label: Название станка
+                required: true
+              image:
+                type: files
+                label: Фото
+                max: 1
+                layout: cards
+                query: page.images
+                uploads:
+                  template: image
+              specifications:
+                type: structure
+                label: Характеристики
+                fields:
+                  text:
+                    type: text
+                    label: Характеристика
+                    required: true
+              description:
+                extends: fields/rich-text-inline
+                label: Что делает станок
+                size: small
       message:
         type: fields
         fields:

@@ -1,3 +1,9 @@
+#benefits > h2 {
+    margin-bottom: clamp(2rem, 4vw, 4rem);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+}
+
 .benefits-container {
     display: flex;
     flex-direction: row;
@@ -21,6 +27,33 @@
         object-fit: contain;
     }
 
+    figcaption {
+        display: flex;
+        flex-direction: column;
+        gap: 0.875rem;
+        max-width: 34rem;
+    }
+
+    h3 {
+        max-width: 24ch;
+        font-size: var(--fs-md);
+        line-height: 1.15;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+    }
+
+    p {
+        max-width: 42ch;
+        color: var(--text-muted);
+        font-size: clamp(1rem, 0.9rem + 0.25vw, 1.125rem);
+        overflow-wrap: anywhere;
+        text-wrap: pretty;
+    }
+
+    .studio-rich-text-inline {
+        text-wrap: pretty;
+    }
+
     @media (max-width: 48rem) {
         flex-direction: column;
         gap: var(--space-xxl);
@@ -30,7 +63,8 @@
             width: 100%;
             display: grid;
             grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-            gap: var(--space-xs);
+            column-gap: var(--space-xs);
+            row-gap: 1.5rem;
         }
 
         img {

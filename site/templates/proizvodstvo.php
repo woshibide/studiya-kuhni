@@ -26,6 +26,8 @@ $singleImageAlt = $page->single_image_alt();
         <?php snippet ('benefits') ?>
     </section>
     
+    <?php snippet('machinery') ?>
+
     <section>
         <?php snippet ('big-message') ?>
     </section>

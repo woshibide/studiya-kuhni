@@ -195,13 +195,6 @@
             width: 4rem;
         }
 
-        figcaption {
-            line-height: 1.45;
-        }
-
-        h3 {
-            margin-bottom: 0.5rem;
-        }
     }
 
     .fabric-grid {

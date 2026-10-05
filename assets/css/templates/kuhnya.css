@@ -317,6 +317,10 @@
     flex-direction: row;
     gap: var(--grid-col-gap);
 
+    .kuhnya-features-list__text {
+        font-size: var(--fs-md);
+    }
+
     .kuhnya-features-list__item {
         display: flex;
         flex-direction: column;

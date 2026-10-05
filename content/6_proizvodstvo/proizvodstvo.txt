@@ -114,3 +114,26 @@ Cta-button:
 ----
 
 Uuid: dxean4jcsh24ffow
+
+----
+
+Machinery-heading: Наше оборудование
+
+----
+
+Machinery-lead: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque.
+
+----
+
+Machinery-items:
+
+- name: Lorem ipsum
+  specifications:
+    - text: 'Lorem ipsum dolor sit amet'
+    - text: 'Consectetur adipiscing elit'
+  description: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat.
+- name: Lorem ipsum
+  specifications:
+    - text: 'Lorem ipsum dolor sit amet'
+    - text: 'Consectetur adipiscing elit'
+  description: Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat.

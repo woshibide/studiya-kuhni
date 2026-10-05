@@ -32,13 +32,21 @@ if ($heroWordsJson === false) {
         <div class="section-wrapper" id="home-hero">
             <h1>
                 <span class="sr-only"><?= esc($heroSeoText) ?></span>
-                <span aria-hidden="true">
+                <span class="home-hero-heading" aria-hidden="true">
+                <span class="home-hero-heading-live">
                 <span class="home-hero-prefix"><?= esc($heroHeading) ?></span>
                 <span
                     id="home-hero-typed"
                     class="home-hero-typed"
                     data-words="<?= esc($heroWordsJson, 'attr') ?>"
                 ><?= esc($heroWords[0]) ?></span>
+                </span>
+                <?php foreach ($heroWords as $heroWord): ?>
+                    <span class="home-hero-heading-reserve">
+                        <span class="home-hero-prefix"><?= esc($heroHeading) ?></span>
+                        <span class="home-hero-typed"><?= esc($heroWord) ?></span>
+                    </span>
+                <?php endforeach ?>
                 </span>
             </h1>
             <div class="hero-description">
